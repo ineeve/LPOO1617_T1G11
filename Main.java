@@ -90,7 +90,7 @@ public class Main {
             x = guard.x;
             y = guard.y;
         }
-        else if (character == '0') {
+        else if (character == 'O') {
             x = ogre.x;
             y = ogre.y;
         }
