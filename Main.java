@@ -69,21 +69,34 @@ public class Main {
 	
 	
 
-    public static void moveCharacter(char character, int h, int v){
-        for (int y = 0; y < board.length; y++){
-            for(int x = 0; x < board[y].length; x++){
-                if(character == board[y][x]){
-                    if('X' != board[y+v][x+h] && 'I' != board[y+v][x+h] && ((x+h != 0 || x+h !=board[y].length) || (x+v != 0 || y+v != board.length))){
-                        board[y][x] = ' ';
-                        if(board[y+v][x+h] == 'k'){
-                            changeAllDoorsToStairs();
-                        }
-                        board[y+v][x+h] = character;
-                    }
-                    return;
-                }
+    public static boolean moveCharacter(char character, int h, int v) {
+        int x = 0, y = 0;
+        if (character == 'H') {
+            x = hero.x;
+            y = hero.y;
+        } else if (character == 'G') {
+            x = guard.x;
+            y = guard.y;
+        }
+        if ('X' != board[y + v][x + h] && 'I' != board[y + v][x + h] && ((x + h != 0 || x + h != board[y].length) || (x + v != 0 || y + v != board.length))) {
+            board[y][x] = ' ';
+            if (board[y + v][x + h] == 'k') {
+                changeAllDoorsToStairs();
+            }
+            if (board[y + v][x + h] == 'S') {
+                board[y + v][x + h] = character;
+                return true;
+            }
+            board[y + v][x + h] = character;
+            if (character == 'H') {
+                hero.x = x + h;
+                hero.y = y + v;
+            } else if (character == 'G') {
+                guard.x = x + h;
+                guard.y = y + v;
             }
         }
+        return false;
     }
 
     public static void changeAllDoorsToStairs() {
