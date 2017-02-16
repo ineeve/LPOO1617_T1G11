@@ -14,6 +14,7 @@ public class Main {
 	public static Point guard;
 	
 	
+	
 	public static void setAgentsInitialLocations(){
 		for (int i = 0; i < board.length;i++){
 			for (int j = 0; j < board[i].length;j++){
@@ -26,6 +27,14 @@ public class Main {
 			}
 		}
 	}
+	
+	public static boolean guardCaughtHero(){
+		if (hero.distance(guard) <= 1.1){
+			return true;
+		}
+		return false;
+	}
+	
 	
 	public static void createBoard(int levelNumber) {
 		if (levelNumber == 1){
