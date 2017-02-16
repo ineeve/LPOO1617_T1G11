@@ -1,5 +1,3 @@
-import org.omg.PortableServer.POA;
-
 import java.awt.Point;
 import java.util.Random;
 import java.util.Scanner;
