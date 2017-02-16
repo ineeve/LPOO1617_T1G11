@@ -10,8 +10,9 @@ import java.util.Scanner;
 public class Main {
 	public static char board[][];
 	
-	public static Point hero;
-	public static Point guard;
+	public static Point hero = new Point(-1,-1);
+	public static Point guard = new Point(-1,-1);
+	public static Point ogre = new Point(-1,-1);
 	
 	
 	
@@ -126,7 +127,7 @@ public class Main {
         Scanner s = new Scanner(System.in);
         displayBoard();
         System.out.println("Insert next move: ");
-        char nextMove = s.nextLine().charAt(0);
+        char nextMove = s.next().charAt(0);
         char guardMovement[] = {'a','s','s','s','s','a','a','a','a','a','a','s','d','d','d','d','d','d','d','w','w','w','w','w'};
         char character = 'H';
         int moveIndex = 0;
@@ -163,8 +164,8 @@ public class Main {
     }
 
     public static void main(String[] args){
-    	setAgentsInitialLocations();
     	createBoard(1);
+    	setAgentsInitialLocations();
         game();
     }
 
