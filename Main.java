@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Point;
 import java.util.Scanner;
 
 /**
@@ -9,11 +9,24 @@ import java.util.Scanner;
 
 public class Main {
 	public static char board[][];
-
-	public static Point hero = new Point(1,1);
-
-    public static Point guard = new Point(8,1);
-
+	
+	public static Point hero;
+	public static Point guard;
+	
+	
+	public static void setAgentsInitialLocations(){
+		for (int i = 0; i < board.length;i++){
+			for (int j = 0; j < board[i].length;j++){
+				if (board[i][j] == 'H'){
+					hero.setLocation(j, i);
+				}
+				else if (board[i][j] == 'G'){
+					guard.setLocation(j, i);
+				}
+			}
+		}
+	}
+	
 	public static void createBoard(int levelNumber) {
 		if (levelNumber == 1){
 			board = new char[][] { 
@@ -141,6 +154,7 @@ public class Main {
     }
 
     public static void main(String[] args){
+    	setAgentsInitialLocations();
     	createBoard(1);
         game();
     }
