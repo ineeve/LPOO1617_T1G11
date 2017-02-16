@@ -1,4 +1,7 @@
+import org.omg.PortableServer.POA;
+
 import java.awt.Point;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -10,12 +13,16 @@ import java.util.Scanner;
 public class Main {
 	public static char board[][];
 	
-	public static Point hero;
-	public static Point guard;
+	public static Point hero = new Point(0,0);
+	public static Point guard = new Point(-1,-1);
+	public static Point ogre = new Point(-1,-1);
 	
 	
 	
 	public static void setAgentsInitialLocations(){
+	    hero.setLocation(-1,-1);
+	    guard.setLocation(-1,-1);
+	    ogre.setLocation(-1,-1);
 		for (int i = 0; i < board.length;i++){
 			for (int j = 0; j < board[i].length;j++){
 				if (board[i][j] == 'H'){
@@ -24,6 +31,9 @@ public class Main {
 				else if (board[i][j] == 'G'){
 					guard.setLocation(j, i);
 				}
+				else if(board[i][j] == 'O'){
+				    ogre.setLocation(j,i);
+                }
 			}
 		}
 	}
@@ -49,6 +59,7 @@ public class Main {
 				{ 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X' },
 				{ 'X', ' ', 'I', ' ', 'I', ' ', 'X', 'k', ' ', 'X' },
 				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' } };
+            setAgentsInitialLocations();
 		}
 		else if (levelNumber == 2){
 			board = new char[][] { 
@@ -61,6 +72,7 @@ public class Main {
 				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
 				{ 'X', 'H', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
 				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' } };
+            setAgentsInitialLocations();
 		}
 		else{
 			board = new char [][]{{}};
@@ -78,6 +90,10 @@ public class Main {
             x = guard.x;
             y = guard.y;
         }
+        else if (character == '0') {
+            x = ogre.x;
+            y = ogre.y;
+        }
         if ('X' != board[y + v][x + h] && 'I' != board[y + v][x + h] && ((x + h != 0 || x + h != board[y].length) || (x + v != 0 || y + v != board.length))) {
             board[y][x] = ' ';
             if (board[y + v][x + h] == 'k') {
@@ -94,6 +110,10 @@ public class Main {
             } else if (character == 'G') {
                 guard.x = x + h;
                 guard.y = y + v;
+            }
+            else if (character == 'O') {
+                ogre.x = x + h;
+                ogre.y = y + v;
             }
         }
         return false;
@@ -126,31 +146,48 @@ public class Main {
         Scanner s = new Scanner(System.in);
         displayBoard();
         System.out.println("Insert next move: ");
-        char nextMove = s.nextLine().charAt(0);
+        char nextMove = s.next().charAt(0);
         char guardMovement[] = {'a','s','s','s','s','a','a','a','a','a','a','s','d','d','d','d','d','d','d','w','w','w','w','w'};
-        char character = 'H';
+        char character;
+        boolean nextLevel = false;
         int moveIndex = 0;
         while(nextMove != 'q') {
             character = 'H';
             for(int i = 0; i <= 1; i++) {
                 switch (nextMove) {
                     case 'a':
-                        moveCharacter(character, -1, 0);
+                        nextLevel = moveCharacter(character, -1, 0);
                         break;
                     case 'd':
-                        moveCharacter(character, 1, 0);
+                        nextLevel = moveCharacter(character, 1, 0);
                         break;
                     case 'w':
-                        moveCharacter(character, 0, -1);
+                        nextLevel =  moveCharacter(character, 0, -1);
                         break;
                     case 's':
-                        moveCharacter(character, 0, 1);
+                        nextLevel = moveCharacter(character, 0, 1);
                         break;
                 }
-                character = 'G';
-                nextMove = guardMovement[moveIndex];
+                if(guardCaughtHero()){
+                    displayBoard();
+                    return;
+                }
+                if(nextLevel){
+                    createBoard(2);
+                    moveIndex = guardMovement.length;
+                    break;
+                }
+                if(guard.x != -1) {
+                    character = 'G';
+                    nextMove = guardMovement[moveIndex];
+                }
+                if(ogre.x != -1) {
+                    character = 'O';
+                    Random r = new Random();
+                    nextMove = guardMovement[r.nextInt(24)];
+                }
             }
-            if(moveIndex == guardMovement.length - 1){
+            if(moveIndex >= guardMovement.length - 1){
                 moveIndex = 0;
             }
             else{
@@ -163,9 +200,9 @@ public class Main {
     }
 
     public static void main(String[] args){
-    	setAgentsInitialLocations();
-    	createBoard(1);
+        createBoard(1);
         game();
+        System.out.println("End of Game!!");
     }
 
 
