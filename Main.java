@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Main {
 	public static char board[][];
 	
-	public static Point hero = new Point(0,0);
+	public static Point hero = new Point(-1,-1);
 	public static Point guard = new Point(-1,-1);
 	public static Point ogre = new Point(-1,-1);
 	
@@ -200,7 +200,7 @@ public class Main {
     }
 
     public static void main(String[] args){
-        createBoard(1);
+    	createBoard(1);
         game();
         System.out.println("End of Game!!");
     }
