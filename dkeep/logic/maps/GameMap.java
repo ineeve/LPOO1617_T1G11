@@ -1,7 +1,6 @@
 package dkeep.logic.maps;
 
 import java.awt.*;
-
 /**
  * Created by João on 23/02/2017.
  */

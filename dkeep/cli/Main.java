@@ -1,7 +1,6 @@
 package dkeep.cli;
 
 import dkeep.logic.Game;
-
 import java.util.Scanner;
 
 /**
@@ -31,5 +30,4 @@ public class Main {
         }
 
     }
-
 }
