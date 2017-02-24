@@ -1,7 +1,5 @@
 package dkeep.logic;
 
-import java.util.Scanner;
-
 public class Controller {
 
 	public static boolean runLevel(int currentLevel) {
@@ -108,16 +106,4 @@ public class Controller {
 			}
 		}
 	}
-	
-
-
-
-
-	public static char getUserInput() {
-		Scanner reader = new Scanner(System.in);
-		System.out.println("Next Move: ");
-		char input = reader.next().charAt(0);
-		return input;
-	}
-
 }
