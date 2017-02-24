@@ -25,7 +25,7 @@ public abstract class MovingAgent {
         agentCoords.y = y;
 	}
 
-    public void setAgentCoords(Point agentCoords) {
+  public void setAgentCoords(Point agentCoords) {
         this.agentCoords = agentCoords;
     }
 
