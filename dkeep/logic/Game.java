@@ -4,30 +4,32 @@ import dkeep.logic.maps.DungeonMap;
 import dkeep.logic.maps.GameMap;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by João on 23/02/2017.
  */
 public class Game {
     private GameMap map;
-    private MovingAgent[] agents;
-    private Key key;
+    private ArrayList<MovingAgent> agents = new ArrayList<>();
+    private Key key = new Key(new Point(0, 0));
 
     public Game() {
         map = new DungeonMap();
-        agents[0] = new Hero();
-        agents[0].setAgentCoords(new Point (1,1));
-        agents[1] = new Guard();
-        agents[1].setAgentCoords(new Point (8,1));
+        agents.add(new Hero(new Point(1,1)));
+        agents.add(new Guard(new Point(8,1)));
         key.setCoord(new Point(7,8));
     }
 
     public char[][] getMap() {
-        char[][] mapChar = map.getMap();
-        for(int i = 0; i < agents.length; i++){
-            int agentCoordY = agents[i].getAgentCoords().y;
-            int agentCoordX = agents[i].getAgentCoords().x;
-            char symbol = agents[i].getSymbol();
+        char [][] mapChar = map.getMap().clone();
+        for (int i = 0; i < map.getMap().length; i++){
+            mapChar[i] = map.getMap()[i].clone();
+        }
+        for(int i = 0; i < agents.size(); i++){
+            int agentCoordY = agents.get(i).getAgentCoords().y;
+            int agentCoordX = agents.get(i).getAgentCoords().x;
+            char symbol = agents.get(i).getSymbol();
             mapChar[agentCoordY][agentCoordX] = symbol;
         }
         return mapChar;
@@ -38,20 +40,21 @@ public class Game {
     }
 
     public void update() {
-        for(int i = 0; i < agents.length; i++){
-            Point lastPosition = agents[i].getAgentCoords();
-            agents[i].nextMove();
-            int isFreeResponse = map.isFree(agents[i].getAgentCoords());
+        for(int i = 0; i < agents.size(); i++){
+            int lastPositionX = agents.get(i).getAgentCoords().x;
+            int lastPositionY = agents.get(i).getAgentCoords().y;
+            agents.get(i).nextMove();
+            int isFreeResponse = map.isFree(agents.get(i).getAgentCoords());
             switch (isFreeResponse) {
                 case 0:
-                    agents[i].setAgentCoords(lastPosition);
+                    agents.get(i).setAgentCoords(new Point(lastPositionX, lastPositionY));
                     break;
                 case 1:
-                    if(key.getCoord() == agents[i].getAgentCoords()){
-                        agents[i].setKey(true);
+                    if(key.getCoord() == agents.get(i).getAgentCoords()){
+                        agents.get(i).setKey(true);
                     }
                     else{
-                        agents[i].setKey(false);
+                        agents.get(i).setKey(false);
                     }
                     break;
                 case 2:
@@ -62,7 +65,11 @@ public class Game {
 
     public boolean isGameOver(){
         boolean isOver = false;
-
+        for(int i = 1; i < agents.size(); i++){
+            if(agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1){
+                return true;
+            }
+        }
         return isOver;
     }
 }
