@@ -9,6 +9,11 @@ public class Ogre extends MovingAgent {
 	    symbol = 'O';
 	}
 
+    public Ogre(Point coord) {
+        symbol = 'O';
+        agentCoords = coord;
+    }
+
     public Point getClub() {
         return club;
     }

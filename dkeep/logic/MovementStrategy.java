@@ -23,10 +23,10 @@ public class MovementStrategy {
                 coord.x++;
                 break;
             case 's':
-                coord.y--;
+                coord.y++;
                 break;
             case 'w':
-                coord.y++;
+                coord.y--;
                 break;
         }
     }
@@ -43,10 +43,10 @@ public class MovementStrategy {
                 coord.x++;
                 break;
             case 2:
-                coord.y--;
+                coord.y++;
                 break;
             case 3:
-                coord.y++;
+                coord.y--;
                 break;
         }
     }
@@ -64,10 +64,10 @@ public class MovementStrategy {
                 coord.x++;
                 break;
             case 's':
-                coord.y--;
+                coord.y++;
                 break;
             case 'w':
-                coord.y++;
+                coord.y--;
                 break;
         }
     }
