@@ -7,12 +7,14 @@ public class Drunken extends Guard {
     public Drunken() {
         symbol = 'D';
         isSleeping = false;
+        currentDirection = 1;
     }
 
     public Drunken(Point coord) {
         symbol = 'D';
         agentCoords = coord;
         isSleeping = false;
+        currentDirection = 1;
     }
    
     void nextMove() {
@@ -21,20 +23,24 @@ public class Drunken extends Guard {
             if (random < 0.2){
                 symbol = 'D';
                 isSleeping = false;
-                movement.pathMovement(agentCoords, 1);
+                currentDirection = 1;
+                movement.pathMovement(agentCoords, currentDirection);
+                
             }
-            else if (random > 0.8){
+            else if (random > 0.5){
                 symbol = 'D';
                 isSleeping = false;
-                movement.pathMovement(agentCoords, 0);
+                currentDirection = 0;
+                movement.pathMovement(agentCoords, currentDirection);
+                
            }
         }
-        else if (random < 0.2){
+        else if (random < 0.5){
             symbol = 'd';
             isSleeping = true;
         }
         else{
-            movement.pathMovement(agentCoords, 1);
+            movement.pathMovement(agentCoords, currentDirection);
         }
     }
 }
