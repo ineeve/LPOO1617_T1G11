@@ -60,6 +60,9 @@ public class MovementStrategy {
     public void pathMovement(Point coord, int direction) {
         char nextChar = 0;
         if (direction == 1) {
+            if (pathIterator == path.length){
+                pathIterator--;
+            }
             nextChar = path[pathIterator++];
             if (pathIterator >= path.length) {
                 pathIterator = 0;

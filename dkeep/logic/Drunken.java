@@ -7,14 +7,12 @@ public class Drunken extends Guard {
     public Drunken() {
         symbol = 'D';
         isSleeping = false;
-        currentDirection = 1;
     }
 
     public Drunken(Point coord) {
         symbol = 'D';
         agentCoords = coord;
         isSleeping = false;
-        currentDirection = 1;
     }
    
     void nextMove() {

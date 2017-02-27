@@ -19,7 +19,9 @@ public class Game {
         map = new DungeonMap();
         agents.add(new Hero(new Point(1, 1)));
         //agents.add(new Guard(new Point(8,1)));
-        agents.add(new Drunken(new Point(8, 1)));
+        //agents.add(new Drunken(new Point(8, 1)));
+        //agents.add( new Rookie(new Point(8,1)));
+        agents.add( new Suspicious(new Point(8,1)));
         key.setCoord(new Point(7, 8));
     }
 
