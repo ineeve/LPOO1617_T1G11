@@ -1,4 +1,4 @@
-package dkeep.logic.guards;
+package dkeep.logic;
 
 import java.awt.Point;
 

@@ -10,23 +10,25 @@ import java.util.ArrayList;
  * Created by João on 23/02/2017.
  */
 public class Game {
+
     private GameMap map;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
     private Key key = new Key(new Point(0, 0));
 
     public Game() {
         map = new DungeonMap();
-        agents.add(new Hero(new Point(1,1)));
-        agents.add(new Guard(new Point(8,1)));
-        key.setCoord(new Point(7,8));
+        agents.add(new Hero(new Point(1, 1)));
+        //agents.add(new Guard(new Point(8,1)));
+        agents.add(new Drunken(new Point(8, 1)));
+        key.setCoord(new Point(7, 8));
     }
 
     public char[][] getMap() {
-        char [][] mapChar = map.getMap().clone();
-        for (int i = 0; i < map.getMap().length; i++){
+        char[][] mapChar = map.getMap().clone();
+        for (int i = 0; i < map.getMap().length; i++) {
             mapChar[i] = map.getMap()[i].clone();
         }
-        for(int i = 0; i < agents.size(); i++){
+        for (int i = 0; i < agents.size(); i++) {
             int agentCoordY = agents.get(i).getAgentCoords().y;
             int agentCoordX = agents.get(i).getAgentCoords().x;
             char symbol = agents.get(i).getSymbol();
@@ -40,7 +42,7 @@ public class Game {
     }
 
     public void update() {
-        for(int i = 0; i < agents.size(); i++){
+        for (int i = 0; i < agents.size(); i++) {
             int lastPositionX = agents.get(i).getAgentCoords().x;
             int lastPositionY = agents.get(i).getAgentCoords().y;
             agents.get(i).nextMove();
@@ -50,10 +52,9 @@ public class Game {
                     agents.get(i).setAgentCoords(new Point(lastPositionX, lastPositionY));
                     break;
                 case 1:
-                    if(key.getCoord() == agents.get(i).getAgentCoords()){
+                    if (key.getCoord() == agents.get(i).getAgentCoords()) {
                         agents.get(i).setKey(true);
-                    }
-                    else{
+                    } else {
                         agents.get(i).setKey(false);
                     }
                     break;
@@ -63,11 +64,13 @@ public class Game {
         }
     }
 
-    public boolean isGameOver(){
+    public boolean isGameOver() {
         boolean isOver = false;
-        for(int i = 1; i < agents.size(); i++){
-            if(agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1){
-                return true;
+        for (int i = 1; i < agents.size(); i++) {
+            if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
+                if (!agents.get(i).isSleeping) {
+                    return true;
+                }
             }
         }
         return isOver;

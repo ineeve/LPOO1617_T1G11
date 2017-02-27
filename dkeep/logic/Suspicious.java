@@ -1,6 +1,5 @@
-package dkeep.logic.guards;
+package dkeep.logic;
 
-import dkeep.logic.Guard;
 import java.awt.Point;
 
 public class Suspicious extends Guard{
