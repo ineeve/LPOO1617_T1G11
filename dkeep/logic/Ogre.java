@@ -1,6 +1,5 @@
 package dkeep.logic;
 import java.awt.*;
-import java.util.Random;
 
 public class Ogre extends MovingAgent {
 	private Point club;

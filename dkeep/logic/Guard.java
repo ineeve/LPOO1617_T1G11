@@ -13,7 +13,7 @@ public class Guard extends MovingAgent {
     }
 
     @Override
-    void nextMove() {
-        movement.pathMovement(agentCoords);
+    protected void nextMove() {
+        movement.pathMovement(agentCoords,1);
     }
 }
