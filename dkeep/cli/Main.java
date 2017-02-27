@@ -1,14 +1,12 @@
 package dkeep.cli;
 
 import dkeep.logic.Game;
-import java.util.Scanner;
 
 /**
- * Created by Jo√£o on 23/02/2017.
+ * Created by Jo„o and Renato on 23/02/2017.
  */
 public class Main {
     public static void main(String[] args) {
-        UserInput input = new UserInput();
         Game game = new Game();
         while (!game.isGameOver()){
             displayBoard(game.getMap());
