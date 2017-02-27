@@ -14,7 +14,7 @@ public class Main {
             displayBoard(game.getMap());
             game.update();
         }
-
+        displayBoard(game.getMap());
     }
 
     public static void displayBoard(char matrix[][]) {
