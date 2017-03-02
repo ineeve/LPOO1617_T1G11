@@ -8,7 +8,6 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
-        UserInput input = new UserInput();
         Game game = new Game();
         while (!game.isGameOver()){
             displayBoard(game.getMap());
