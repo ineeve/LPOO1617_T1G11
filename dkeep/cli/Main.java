@@ -8,7 +8,7 @@ import dkeep.logic.Game;
 public class Main {
     public static void main(String[] args) {
         Game game = new Game();
-        while (!game.isGameOver()){
+        while (!game.isGameOver()) {
             displayBoard(game.getMap());
             game.update();
         }

@@ -3,9 +3,9 @@ package dkeep.logic;
 import java.awt.*;
 
 public class Guard extends MovingAgent {
-    
-   int currentDirection;
-    
+
+    int currentDirection;
+
     public Guard() {
         symbol = 'G';
         isSleeping = false;
@@ -20,6 +20,6 @@ public class Guard extends MovingAgent {
 
     @Override
     void nextMove() {
-        movement.pathMovement(agentCoords,1);
+        movement.pathMovement(agentCoords, 1);
     }
 }

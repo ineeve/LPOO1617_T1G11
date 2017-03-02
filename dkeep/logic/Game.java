@@ -18,9 +18,17 @@ public class Game {
 
     public Game() {
         map = new DungeonMap();
-        agents = map.getAgents();
+        agents.add(new Hero(new Point(1, 1)));
+        //agents.add(new Guard(new Point(8,1)));
+        //agents.add(new Drunken(new Point(8, 1)));
+        //agents.add( new Rookie(new Point(8,1)));
+        agents.add( new Suspicious(new Point(8,1)));
         key.setCoord(new Point(3, 1));
         keyTaken = false;
+=======
+        agents.add(new Suspicious(new Point(8, 1)));
+        key.setCoord(new Point(7, 8));
+>>>>>>> Stashed changes
     }
     
     private void changeAllDoorsToStairs(char[][] map) {
@@ -99,3 +107,5 @@ public class Game {
         return isOver;
     }
 }
+
+        agents = map.getAgents();
