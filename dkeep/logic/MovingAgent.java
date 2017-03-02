@@ -3,10 +3,11 @@ package dkeep.logic;
 import java.awt.*;
 
 public abstract class MovingAgent {
-	protected Point agentCoords; // [x,y] current coordinates
+    protected Point agentCoords; // [x,y] current coordinates
     protected MovementStrategy movement = new MovementStrategy();
     protected char symbol;
     private boolean key;
+    protected boolean isSleeping;
 
 	public boolean isKey() {
 		return key;
