@@ -8,6 +8,7 @@ public abstract class MovingAgent {
     protected char symbol;
     protected boolean isSleeping;
     protected boolean key;
+    protected Weapon weapon;
     
     public boolean isKey() {
         return key;

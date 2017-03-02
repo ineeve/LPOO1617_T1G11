@@ -15,5 +15,7 @@ public class Hero extends MovingAgent {
     @Override
     void nextMove() {
         movement.userMovement(agentCoords);
+        weapon.setCoords(agentCoords);
+        movement.randomMovement(weapon.getCoords());
     }
 }

@@ -21,5 +21,7 @@ public class Guard extends MovingAgent {
     @Override
     void nextMove() {
         movement.pathMovement(agentCoords, 1);
+        weapon.setCoords(agentCoords);
+        movement.randomMovement(weapon.getCoords());
     }
 }

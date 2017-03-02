@@ -15,6 +15,7 @@ public class Drunken extends Guard {
         isSleeping = false;
     }
 
+    @Override
     void nextMove() {
         double random = Math.random();
         if (symbol == 'd') {
@@ -37,5 +38,7 @@ public class Drunken extends Guard {
         } else {
             movement.pathMovement(agentCoords, currentDirection);
         }
+        weapon.setCoords(agentCoords);
+        movement.randomMovement(weapon.getCoords());
     }
 }
