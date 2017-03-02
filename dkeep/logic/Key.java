@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by João on 24/02/2017.
  */
-public class Key {
+class Key {
     private Point coord;
 
     public Key(Point coord) {

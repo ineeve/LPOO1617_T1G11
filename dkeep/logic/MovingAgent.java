@@ -3,12 +3,12 @@ package dkeep.logic;
 import java.awt.*;
 
 public abstract class MovingAgent {
-    protected Point agentCoords; // [x,y] current coordinates
-    protected MovementStrategy movement = new MovementStrategy();
-    protected char symbol;
-    protected boolean isSleeping;
-    protected boolean key;
-    protected Weapon weapon;
+    Point agentCoords; // [x,y] current coordinates
+    final MovementStrategy movement = new MovementStrategy();
+    char symbol;
+    boolean isSleeping;
+    private boolean key;
+    Weapon weapon;
     
     public boolean isKey() {
         return key;

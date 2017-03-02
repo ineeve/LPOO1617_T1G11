@@ -2,14 +2,13 @@ package dkeep.logic.maps;
 
 import dkeep.logic.Hero;
 import dkeep.logic.Rookie;
-import dkeep.logic.Suspicious;
 import java.awt.Point;
 
 /**
  * Created by João on 23/02/2017.
  */
 public class DungeonMap extends GameMap {
-    private static Point heroPos = new Point(1,1);
+    private static final Point heroPos = new Point(1,1);
     private static Point guardPos = new Point(8,1);
     public DungeonMap() {
         map = new char[][] {

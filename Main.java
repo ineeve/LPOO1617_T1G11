@@ -8,15 +8,15 @@ import java.util.Scanner;
  */
 
 
-public class Main {
-    public static char board[][];
+class Main {
+    private static char[][] board;
 
-    public static Point hero = new Point(-1, -1);
-    public static Point guard = new Point(-1, -1);
-    public static Point ogre = new Point(-1, -1);
+    private static final Point hero = new Point(-1, -1);
+    private static final Point guard = new Point(-1, -1);
+    private static final Point ogre = new Point(-1, -1);
 
 
-    public static void setAgentsInitialLocations() {
+    private static void setAgentsInitialLocations() {
         hero.setLocation(-1, -1);
         guard.setLocation(-1, -1);
         ogre.setLocation(-1, -1);
@@ -33,15 +33,12 @@ public class Main {
         }
     }
 
-    public static boolean guardCaughtHero() {
-        if (hero.distance(guard) <= 1.1) {
-            return true;
-        }
-        return false;
+    private static boolean guardCaughtHero() {
+        return hero.distance(guard) <= 1.1;
     }
 
 
-    public static void createBoard(int levelNumber) {
+    private static void createBoard(int levelNumber) {
         if (levelNumber == 1) {
             board = new char[][]{
                     {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
@@ -73,7 +70,7 @@ public class Main {
     }
 
 
-    public static boolean moveCharacter(char character, int h, int v) {
+    private static boolean moveCharacter(char character, int h, int v) {
         int x = 0, y = 0;
         if (character == 'H') {
             x = hero.x;
@@ -109,7 +106,7 @@ public class Main {
         return false;
     }
 
-    public static void changeAllDoorsToStairs() {
+    private static void changeAllDoorsToStairs() {
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board[y].length; x++) {
                 if (board[y][x] == 'I') {
@@ -119,7 +116,7 @@ public class Main {
         }
     }
 
-    public static void displayBoard() {
+    private static void displayBoard() {
         System.out.println("\n\n");
         String currentLine;
 
@@ -133,7 +130,7 @@ public class Main {
 
     }
 
-    public static void game() {
+    private static void game() {
         Scanner s = new Scanner(System.in);
         displayBoard();
         System.out.println("Insert next move: ");

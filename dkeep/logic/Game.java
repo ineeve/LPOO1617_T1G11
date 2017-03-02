@@ -13,7 +13,7 @@ public class Game {
     
     private GameMap map;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
-    private Key key = new Key(new Point(0, 0));
+    private final Key key = new Key(new Point(0, 0));
     private boolean keyTaken;
     
     public Game() {
@@ -79,7 +79,6 @@ public class Game {
     }
     
     public boolean isGameOver() {
-        boolean isOver = false;
         for (int i = 1; i < agents.size(); i++) {
             if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
                 if (!agents.get(i).isSleeping) {
@@ -87,6 +86,6 @@ public class Game {
                 }
             }
         }
-        return isOver;
+        return false;
     }
 }

@@ -6,7 +6,7 @@ public class Guard extends MovingAgent {
     
     int currentDirection;
     
-    public Guard() {
+    Guard() {
         symbol = 'G';
         isSleeping = false;
         currentDirection = 1;

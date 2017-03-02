@@ -1,21 +1,20 @@
 package dkeep.logic;
 
-import dkeep.cli.UserInput;
-
 import java.awt.*;
 import java.util.Random;
+
+import static dkeep.cli.UserInput.*;
 
 /**
  * Created by João on 23/02/2017.
  */
-public class MovementStrategy {
+class MovementStrategy {
 
-    private char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+    private final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
     private int pathIterator = 0;
 
     public void userMovement(Point coord) {
-        UserInput input = new UserInput();
-        char nextChar = input.getChar();
+        char nextChar = getChar();
         switch (nextChar) {
             case 'a':
                 coord.x--;
@@ -53,7 +52,7 @@ public class MovementStrategy {
     }
 
     /**
-     * @param coord
+     * @param coord coords of movingagent
      * @param direction 1-Forward, 0-Backwards
      */
     public void pathMovement(Point coord, int direction) {

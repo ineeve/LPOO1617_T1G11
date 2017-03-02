@@ -7,9 +7,13 @@ import java.util.ArrayList;
  * Created by João on 23/02/2017.
  */
 public abstract class GameMap {
-    protected ArrayList<MovingAgent> agents = new ArrayList();
-    protected char[][] map;
-    
+    final ArrayList<MovingAgent> agents;
+    char[][] map;
+
+    GameMap() {
+        agents = new ArrayList<>();
+    }
+
     public char[][] getMap() {
         return map;
     }

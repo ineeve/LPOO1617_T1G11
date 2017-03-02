@@ -5,7 +5,7 @@ import dkeep.logic.Game;
 /**
  * Created by João on 23/02/2017.
  */
-public class Main {
+class Main {
     public static void main(String[] args) {
         Game game = new Game();
         while (!game.isGameOver()) {
@@ -15,7 +15,7 @@ public class Main {
         displayBoard(game.getMap());
     }
 
-    public static void displayBoard(char matrix[][]) {
+    private static void displayBoard(char matrix[][]) {
         System.out.println("\n\n");
         String currentLine;
 
