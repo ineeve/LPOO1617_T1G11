@@ -7,7 +7,7 @@ import java.awt.Point;
  * Created by João on 23/02/2017.
  */
 public class KeepMap extends GameMap{
-    private static Point heroPos = new Point(1,1);
+    private static Point heroPos = new Point(1,7);
     public KeepMap() {
         map = new char[][] {
                 { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },

@@ -10,12 +10,12 @@ import java.util.ArrayList;
  * Created by João on 23/02/2017.
  */
 public class Game {
-
+    
     private GameMap map;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
     private Key key = new Key(new Point(0, 0));
     private boolean keyTaken;
-
+    
     public Game() {
         map = new DungeonMap();
         agents = map.getAgents();
@@ -23,16 +23,7 @@ public class Game {
         keyTaken = false;
     }
     
-    private void changeAllDoorsToStairs(char[][] map) {
-        for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++) {
-                if (map[y][x] == 'I') {
-                    map[y][x] = 'S';
-                }
-            }
-        }
-    }
-
+    
     public char[][] getMap() {
         char[][] mapChar = map.getMap().clone();
         
@@ -41,8 +32,6 @@ public class Game {
         }
         if (!keyTaken){
             mapChar[key.getCoord().y][key.getCoord().x] = 'k';
-        }else{
-            changeAllDoorsToStairs(mapChar);
         }
         
         for (int i = 0; i < agents.size(); i++) {
@@ -53,11 +42,11 @@ public class Game {
         }
         return mapChar;
     }
-
+    
     public void setMap(GameMap map) {
         this.map = map;
     }
-
+    
     public void update() {
         for (int i = 0; i < agents.size(); i++) {
             int lastPositionX = agents.get(i).getAgentCoords().x;
@@ -69,11 +58,12 @@ public class Game {
                     agents.get(i).setAgentCoords(new Point(lastPositionX, lastPositionY));
                     break;
                 case 1:
-
-        if (key.getCoord().x == agents.get(i).getAgentCoords().x && key.getCoord().y == agents.get(i).getAgentCoords().y) {
+                    
+                    if (key.getCoord().x == agents.get(i).getAgentCoords().x && key.getCoord().y == agents.get(i).getAgentCoords().y) {
                         agents.get(i).setKey(true);
                         if (agents.get(i).symbol == 'H'){
                             keyTaken = true;
+                            map.changeAllDoorsToStairs();
                         }
                     } else {
                         agents.get(i).setKey(false);
@@ -82,11 +72,12 @@ public class Game {
                 case 2:
                     this.map = map.nextMap();
                     keyTaken = false;
+                    agents = map.getAgents();
                     break;
             }
         }
     }
-
+    
     public boolean isGameOver() {
         boolean isOver = false;
         for (int i = 1; i < agents.size(); i++) {
