@@ -8,31 +8,31 @@ public abstract class MovingAgent {
     protected char symbol;
     private boolean key;
     protected boolean isSleeping;
-
-	public boolean isKey() {
-		return key;
-	}
-
-	public void setKey(boolean key) {
-		this.key = key;
-	}
-
-	public Point getAgentCoords(){
-		return agentCoords;
-	}
-
-	public void setInitialPos(int x, int y){
-		agentCoords.x = x;
+    
+    public boolean isKey() {
+        return key;
+    }
+    
+    public void setKey(boolean key) {
+        this.key = key;
+    }
+    
+    public Point getAgentCoords(){
+        return agentCoords;
+    }
+    
+    public void setInitialPos(int x, int y){
+        agentCoords.x = x;
         agentCoords.y = y;
-	}
-
-  public void setAgentCoords(Point agentCoords) {
+    }
+    
+    public void setAgentCoords(Point agentCoords) {
         this.agentCoords = agentCoords;
     }
-
-	abstract void nextMove();
-
-	public char getSymbol() {
-		return symbol;
-	}
+    
+    abstract void nextMove();
+    
+    public char getSymbol() {
+        return symbol;
+    }
 }
