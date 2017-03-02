@@ -1,5 +1,6 @@
 package dkeep.logic.maps;
 
+import dkeep.cli.UserInput;
 import dkeep.logic.Hero;
 import dkeep.logic.Rookie;
 import dkeep.logic.Suspicious;
@@ -24,6 +25,7 @@ public class DungeonMap extends GameMap {
                 { 'X', ' ', 'I', ' ', 'I', ' ', 'X', ' ', ' ', 'X' },
                 { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' } };
         
+        key.setCoord(new Point(3,1));
         agents.add(new Hero(heroPos));
         //agents.add(new Guard(new Point(8,1)));
         //agents.add(new Drunken(new Point(8, 1)));
@@ -33,6 +35,7 @@ public class DungeonMap extends GameMap {
 
     @Override
     public GameMap nextMap() {
+       
         return new KeepMap();
     }
 }
