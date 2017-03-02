@@ -1,7 +1,6 @@
 package dkeep.cli;
 
 import dkeep.logic.Game;
-import java.util.Scanner;
 
 /**
  * Created by João on 23/02/2017.
