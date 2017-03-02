@@ -7,7 +7,6 @@ public abstract class MovingAgent {
     protected MovementStrategy movement = new MovementStrategy();
     protected char symbol;
     protected boolean isSleeping;
-<<<<<<< Updated upstream
     
     public boolean isKey() {
         return key;
@@ -31,8 +30,7 @@ public abstract class MovingAgent {
     }
     
     abstract void nextMove();
-    
-=======
+
     private boolean key;
 
     public boolean isKey() {
@@ -58,7 +56,6 @@ public abstract class MovingAgent {
 
     abstract void nextMove();
 
->>>>>>> Stashed changes
     public char getSymbol() {
         return symbol;
     }
