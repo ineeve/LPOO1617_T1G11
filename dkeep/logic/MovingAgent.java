@@ -7,6 +7,7 @@ public abstract class MovingAgent {
     protected MovementStrategy movement = new MovementStrategy();
     protected char symbol;
     protected boolean isSleeping;
+    protected boolean key;
     
     public boolean isKey() {
         return key;
@@ -29,31 +30,6 @@ public abstract class MovingAgent {
         this.agentCoords = agentCoords;
     }
     
-    abstract void nextMove();
-
-    private boolean key;
-
-    public boolean isKey() {
-        return key;
-    }
-
-    public void setKey(boolean key) {
-        this.key = key;
-    }
-
-    public Point getAgentCoords() {
-        return agentCoords;
-    }
-
-    public void setAgentCoords(Point agentCoords) {
-        this.agentCoords = agentCoords;
-    }
-
-    public void setInitialPos(int x, int y) {
-        agentCoords.x = x;
-        agentCoords.y = y;
-    }
-
     abstract void nextMove();
 
     public char getSymbol() {
