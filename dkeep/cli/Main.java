@@ -1,13 +1,14 @@
 package dkeep.cli;
 
 import dkeep.logic.Game;
+import dkeep.logic.maps.DungeonMap;
 
 /**
  * Created by João on 23/02/2017.
  */
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game();
+        Game game = new Game(new DungeonMap());
         while (!game.isGameOver()){
             displayBoard(game.getMap());
             game.update();

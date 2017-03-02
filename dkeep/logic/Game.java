@@ -17,11 +17,15 @@ public class Game {
     private Key key;
     private boolean keyTaken;
     
-    public Game() {
-        map = new DungeonMap();
+    public Game(GameMap initialMap) {
+        map = initialMap;
         agents = map.getAgents();
         key = map.getKey();
         keyTaken = false;
+    }
+    
+    public Point getHeroPos(){
+        return agents.get(0).getAgentCoords();
     }
     
     

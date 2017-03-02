@@ -1,6 +1,5 @@
 package dkeep.logic;
 import java.awt.*;
-import java.util.Random;
 
 public class Ogre extends MovingAgent {
 	private Point club;
@@ -19,9 +18,9 @@ public class Ogre extends MovingAgent {
     }
 
     @Override
-	public void setAgentCoords(Point agentCoords) {
-		super.setAgentCoords(agentCoords);
-	}
+    public void setAgentCoords(Point agentCoords) {
+	super.setAgentCoords(agentCoords);
+    }
 
     @Override
     void nextMove() {
