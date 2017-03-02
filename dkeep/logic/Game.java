@@ -18,13 +18,19 @@ public class Game {
 
     public Game() {
         map = new DungeonMap();
-        agents.add(new Hero(new Point(1, 1)));
-        //agents.add(new Guard(new Point(8,1)));
-        //agents.add(new Drunken(new Point(8, 1)));
-        //agents.add( new Rookie(new Point(8,1)));
-        agents.add( new Suspicious(new Point(8,1)));
+        agents = map.getAgents();
         key.setCoord(new Point(3, 1));
         keyTaken = false;
+    }
+    
+    private void changeAllDoorsToStairs(char[][] map) {
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++) {
+                if (map[y][x] == 'I') {
+                    map[y][x] = 'S';
+                }
+            }
+        }
     }
 
     public char[][] getMap() {
@@ -35,6 +41,8 @@ public class Game {
         }
         if (!keyTaken){
             mapChar[key.getCoord().y][key.getCoord().x] = 'k';
+        }else{
+            changeAllDoorsToStairs(mapChar);
         }
         
         for (int i = 0; i < agents.size(); i++) {
@@ -72,6 +80,8 @@ public class Game {
                     }
                     break;
                 case 2:
+                    this.map = map.nextMap();
+                    keyTaken = false;
                     break;
             }
         }
