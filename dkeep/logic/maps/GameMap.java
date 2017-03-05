@@ -29,20 +29,15 @@ public abstract class GameMap {
     public int isFree(Point coord){
         if(coord.y >= map.length && coord.y < 0){
             return 0;
-        }
-        else if(coord.x >= map[coord.y].length && coord.x < 0){
+        } else if (coord.x >= map[coord.y].length && coord.x < 0) {
             return 0;
-        }
-        else if('I' == map[coord.y][coord.x]){
+        } else if ('I' == map[coord.y][coord.x]) {
             return 0;
-        }
-        else if(' ' == map[coord.y][coord.x]){
+        } else if (' ' == map[coord.y][coord.x]) {
             return 1;
-        }
-        else if('S' == map[coord.y][coord.x]){
+        } else if ('S' == map[coord.y][coord.x]) {
             return 2;
-        }
-        else{
+        } else {
             return 0;
         }
     }

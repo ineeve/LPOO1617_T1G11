@@ -9,7 +9,7 @@ import dkeep.logic.maps.DungeonMap;
 public class Main {
     public static void main(String[] args) {
         Game game = new Game(new DungeonMap());
-        while (!game.isGameOver()){
+        while (!game.isGameOver()) {
             displayBoard(game.getMap());
             game.update();
         }

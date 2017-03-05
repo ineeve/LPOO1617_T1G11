@@ -1,18 +1,16 @@
 package dkeep.logic;
 
-import java.awt.Point;
-
-import dkeep.logic.Guard;
+import java.awt.*;
 
 public class Rookie extends Guard {
-	public Rookie() {
-		symbol = 'R';
-	}
+    public Rookie() {
+        symbol = 'R';
+    }
 
-	public Rookie(Point coord) {
-		symbol = 'R';
-		agentCoords = coord;
-	}
-        
+    public Rookie(Point coord) {
+        symbol = 'R';
+        agentCoords = coord;
+    }
+
 
 }
