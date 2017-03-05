@@ -20,7 +20,7 @@ public class Ogre extends MovingAgent {
 
     @Override
     public void setAgentCoords(Point agentCoords) {
-        super.setAgentCoords(agentCoords);
+	      super.setAgentCoords(agentCoords);
     }
 
     @Override

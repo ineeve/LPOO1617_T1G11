@@ -35,4 +35,7 @@ public abstract class MovingAgent {
     public char getSymbol() {
         return symbol;
     }
+    public void setSymbol(char newSymbol){
+        symbol = newSymbol;
+    }
 }

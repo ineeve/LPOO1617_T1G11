@@ -15,4 +15,9 @@ public class UserInput {
         char input = reader.next().charAt(0);
         return input;
     }
+    public static int getInt(){
+        Scanner reader = new Scanner(System.in);
+        int input = reader.nextInt();
+        return input; 
+    }
 }
