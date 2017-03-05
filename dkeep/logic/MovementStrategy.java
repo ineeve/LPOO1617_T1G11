@@ -53,14 +53,13 @@ public class MovementStrategy {
     }
 
     /**
-     *
      * @param coord
      * @param direction 1-Forward, 0-Backwards
      */
     public void pathMovement(Point coord, int direction) {
         char nextChar = 0;
         if (direction == 1) {
-            if (pathIterator == path.length){
+            if (pathIterator == path.length) {
                 pathIterator--;
             }
             nextChar = path[pathIterator++];

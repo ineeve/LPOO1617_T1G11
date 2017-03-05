@@ -1,4 +1,4 @@
-import java.awt.Point;
+import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,75 +9,69 @@ import java.util.Scanner;
 
 
 public class Main {
-	public static char board[][];
-	
-	public static Point hero = new Point(-1,-1);
-	public static Point guard = new Point(-1,-1);
-	public static Point ogre = new Point(-1,-1);
-	
-	
-	
-	public static void setAgentsInitialLocations(){
-	    hero.setLocation(-1,-1);
-	    guard.setLocation(-1,-1);
-	    ogre.setLocation(-1,-1);
-		for (int i = 0; i < board.length;i++){
-			for (int j = 0; j < board[i].length;j++){
-				if (board[i][j] == 'H'){
-					hero.setLocation(j, i);
-				}
-				else if (board[i][j] == 'G'){
-					guard.setLocation(j, i);
-				}
-				else if(board[i][j] == 'O'){
-				    ogre.setLocation(j,i);
+    public static char board[][];
+
+    public static Point hero = new Point(-1, -1);
+    public static Point guard = new Point(-1, -1);
+    public static Point ogre = new Point(-1, -1);
+
+
+    public static void setAgentsInitialLocations() {
+        hero.setLocation(-1, -1);
+        guard.setLocation(-1, -1);
+        ogre.setLocation(-1, -1);
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == 'H') {
+                    hero.setLocation(j, i);
+                } else if (board[i][j] == 'G') {
+                    guard.setLocation(j, i);
+                } else if (board[i][j] == 'O') {
+                    ogre.setLocation(j, i);
                 }
-			}
-		}
-	}
-	
-	public static boolean guardCaughtHero(){
-		if (hero.distance(guard) <= 1.1){
-			return true;
-		}
-		return false;
-	}
-	
-	
-	public static void createBoard(int levelNumber) {
-		if (levelNumber == 1){
-			board = new char[][] { 
-			    { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
-				{ 'X', 'H', ' ', ' ', 'I', ' ', 'X', ' ', 'G', 'X' },
-				{ 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', 'X' },
-				{ 'X', ' ', 'I', ' ', 'I', ' ', 'X', ' ', ' ', 'X' },
-				{ 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', 'X' },
-				{ 'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X' },
-				{ 'X', ' ', 'I', ' ', 'I', ' ', 'X', 'k', ' ', 'X' },
-				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' } };
+            }
+        }
+    }
+
+    public static boolean guardCaughtHero() {
+        if (hero.distance(guard) <= 1.1) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public static void createBoard(int levelNumber) {
+        if (levelNumber == 1) {
+            board = new char[][]{
+                    {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
+                    {'X', 'H', ' ', ' ', 'I', ' ', 'X', ' ', 'G', 'X'},
+                    {'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', 'X'},
+                    {'X', ' ', 'I', ' ', 'I', ' ', 'X', ' ', ' ', 'X'},
+                    {'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', 'X'},
+                    {'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X'},
+                    {'X', ' ', 'I', ' ', 'I', ' ', 'X', 'k', ' ', 'X'},
+                    {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
             setAgentsInitialLocations();
-		}
-		else if (levelNumber == 2){
-			board = new char[][] { 
-			    { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
-				{ 'I', ' ', ' ', ' ', 'O', ' ', ' ', 'k', 'X' },
-				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', 'H', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
-				{ 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' } };
+        } else if (levelNumber == 2) {
+            board = new char[][]{
+                    {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
+                    {'I', ' ', ' ', ' ', 'O', ' ', ' ', 'k', 'X'},
+                    {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'X', 'H', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
+                    {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
             setAgentsInitialLocations();
-		}
-		else{
-			board = new char [][]{{}};
-		}
-	}
-	
-	
+        } else {
+            board = new char[][]{{}};
+        }
+    }
+
 
     public static boolean moveCharacter(char character, int h, int v) {
         int x = 0, y = 0;
@@ -87,8 +81,7 @@ public class Main {
         } else if (character == 'G') {
             x = guard.x;
             y = guard.y;
-        }
-        else if (character == 'O') {
+        } else if (character == 'O') {
             x = ogre.x;
             y = ogre.y;
         }
@@ -108,8 +101,7 @@ public class Main {
             } else if (character == 'G') {
                 guard.x = x + h;
                 guard.y = y + v;
-            }
-            else if (character == 'O') {
+            } else if (character == 'O') {
                 ogre.x = x + h;
                 ogre.y = y + v;
             }
@@ -118,40 +110,41 @@ public class Main {
     }
 
     public static void changeAllDoorsToStairs() {
-		for (int y = 0; y < board.length; y++) {
-			for (int x = 0; x < board[y].length; x++) {
-				if (board[y][x] == 'I') {
-					board[y][x] = 'S';
-				}
-			}
-		}
-	}
+        for (int y = 0; y < board.length; y++) {
+            for (int x = 0; x < board[y].length; x++) {
+                if (board[y][x] == 'I') {
+                    board[y][x] = 'S';
+                }
+            }
+        }
+    }
+
     public static void displayBoard() {
-		System.out.println("\n\n");
-		String currentLine;
+        System.out.println("\n\n");
+        String currentLine;
 
-		for (int i = 0; i < board.length; i++) {
-			currentLine = "";
-			for (int j = 0; j < board[i].length; j++) {
-				currentLine += " " + board[i][j];
-			}
-			System.out.println(currentLine);
-		}
-		
-	}
+        for (int i = 0; i < board.length; i++) {
+            currentLine = "";
+            for (int j = 0; j < board[i].length; j++) {
+                currentLine += " " + board[i][j];
+            }
+            System.out.println(currentLine);
+        }
 
-    public static void game(){
+    }
+
+    public static void game() {
         Scanner s = new Scanner(System.in);
         displayBoard();
         System.out.println("Insert next move: ");
         char nextMove = s.next().charAt(0);
-        char guardMovement[] = {'a','s','s','s','s','a','a','a','a','a','a','s','d','d','d','d','d','d','d','w','w','w','w','w'};
+        char guardMovement[] = {'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
         char character;
         boolean nextLevel = false;
         int moveIndex = 0;
-        while(nextMove != 'q') {
+        while (nextMove != 'q') {
             character = 'H';
-            for(int i = 0; i <= 1; i++) {
+            for (int i = 0; i <= 1; i++) {
                 switch (nextMove) {
                     case 'a':
                         nextLevel = moveCharacter(character, -1, 0);
@@ -160,35 +153,34 @@ public class Main {
                         nextLevel = moveCharacter(character, 1, 0);
                         break;
                     case 'w':
-                        nextLevel =  moveCharacter(character, 0, -1);
+                        nextLevel = moveCharacter(character, 0, -1);
                         break;
                     case 's':
                         nextLevel = moveCharacter(character, 0, 1);
                         break;
                 }
-                if(guardCaughtHero()){
+                if (guardCaughtHero()) {
                     displayBoard();
                     return;
                 }
-                if(nextLevel){
+                if (nextLevel) {
                     createBoard(2);
                     moveIndex = guardMovement.length;
                     break;
                 }
-                if(guard.x != -1) {
+                if (guard.x != -1) {
                     character = 'G';
                     nextMove = guardMovement[moveIndex];
                 }
-                if(ogre.x != -1) {
+                if (ogre.x != -1) {
                     character = 'O';
                     Random r = new Random();
                     nextMove = guardMovement[r.nextInt(24)];
                 }
             }
-            if(moveIndex >= guardMovement.length - 1){
+            if (moveIndex >= guardMovement.length - 1) {
                 moveIndex = 0;
-            }
-            else{
+            } else {
                 moveIndex++;
             }
             displayBoard();
@@ -197,8 +189,8 @@ public class Main {
         }
     }
 
-    public static void main(String[] args){
-    	createBoard(1);
+    public static void main(String[] args) {
+        createBoard(1);
         game();
         System.out.println("End of Game!!");
     }
