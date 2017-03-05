@@ -1,5 +1,6 @@
 package dkeep.logic.maps;
 
+import dkeep.logic.Key;
 import dkeep.logic.MovingAgent;
 import java.awt.*;
 import java.util.ArrayList;
@@ -7,15 +8,15 @@ import java.util.ArrayList;
  * Created by João on 23/02/2017.
  */
 public abstract class GameMap {
-    final ArrayList<MovingAgent> agents;
-    char[][] map;
-
-    GameMap() {
-        agents = new ArrayList<>();
-    }
-
+    protected ArrayList<MovingAgent> agents = new ArrayList();
+    protected Key key = new Key(new Point(0,0));
+    protected char[][] map;
+    
     public char[][] getMap() {
         return map;
+    }
+    public Key getKey(){
+        return key;
     }
     
     public void setMap(char[][] map) {

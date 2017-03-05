@@ -1,5 +1,6 @@
 package dkeep.logic;
 
+import dkeep.cli.UserInput;
 import dkeep.logic.maps.DungeonMap;
 import dkeep.logic.maps.GameMap;
 
@@ -13,14 +14,18 @@ public class Game {
     
     private GameMap map;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
-    private final Key key = new Key(new Point(0, 0));
+    private Key key;
     private boolean keyTaken;
     
-    public Game() {
-        map = new DungeonMap();
+    public Game(GameMap initialMap) {
+        map = initialMap;
         agents = map.getAgents();
-        key.setCoord(new Point(3, 1));
+        key = map.getKey();
         keyTaken = false;
+    }
+    
+    public Point getHeroPos(){
+        return agents.get(0).getAgentCoords();
     }
     
     
@@ -61,7 +66,7 @@ public class Game {
                     
                     if (key.getCoord().x == agents.get(i).getAgentCoords().x && key.getCoord().y == agents.get(i).getAgentCoords().y) {
                         agents.get(i).setKey(true);
-                        if (agents.get(i).symbol == 'H'){
+                        if (agents.get(i) instanceof Hero){
                             keyTaken = true;
                             map.changeAllDoorsToStairs();
                         }
@@ -70,6 +75,8 @@ public class Game {
                     }
                     break;
                 case 2:
+                    
+                    
                     this.map = map.nextMap();
                     keyTaken = false;
                     agents = map.getAgents();

@@ -14,4 +14,9 @@ public class UserInput {
         System.out.println("Next Move: ");
         return reader.next().charAt(0);
     }
+    public static int getInt(){
+        Scanner reader = new Scanner(System.in);
+        int input = reader.nextInt();
+        return input; 
+    }
 }
