@@ -13,6 +13,7 @@ public class Suspicious extends Guard {
         agentCoords = coord;
     }
 
+    @Override
     void nextMove() {
         double random = Math.random();
         if (random < 0.2) {
@@ -21,7 +22,13 @@ public class Suspicious extends Guard {
             } else
                 currentDirection = 1;
         }
-        movement.pathMovement(agentCoords, currentDirection);
+        char nextChar = movement.pathMovement(currentDirection);
+        super.nextPos(nextChar);
+        if(weapon.getSymbol() != ' ') {
+            weapon.setCoords(agentCoords);
+            nextChar = movement.randomMovement();
+            weapon.nextMove(nextChar);
+        }
     }
 
 
