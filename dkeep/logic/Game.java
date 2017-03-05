@@ -27,7 +27,9 @@ public class Game {
     public Point getHeroPos(){
         return agents.get(0).getAgentCoords();
     }
-    
+    public void moveHero(char direction){
+        agents.get(0).nextMove();
+    }
     
     public char[][] getMap() {
         char[][] mapChar = map.getMap().clone();
