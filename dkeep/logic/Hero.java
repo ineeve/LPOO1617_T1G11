@@ -10,12 +10,15 @@ public class Hero extends MovingAgent {
     public Hero(Point coord) {
         symbol = 'H';
         agentCoords = coord;
+        weapon.setSymbol(' ');
     }
 
     @Override
     void nextMove() {
         movement.userMovement(agentCoords);
-        weapon.setCoords(agentCoords);
-        movement.randomMovement(weapon.getCoords());
+        if(weapon.getSymbol() != ' ') {
+            weapon.setCoords(agentCoords);
+            movement.randomMovement(weapon.getCoords());
+        }
     }
 }

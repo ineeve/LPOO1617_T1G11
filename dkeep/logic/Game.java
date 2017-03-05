@@ -11,16 +11,17 @@ import java.util.ArrayList;
  * Created by João on 23/02/2017.
  */
 public class Game {
-    
+    private Configs config;
     private GameMap map;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
     private Key key;
     private boolean keyTaken;
     
-    public Game(GameMap initialMap) {
-        map = initialMap;
-        agents = map.getAgents();
-        key = map.getKey();
+    public Game(int startLevel) {
+        config = new Configs(startLevel);
+        map = config.getNextMap();
+        agents = config.getAgents();
+        key = config.getKey();
         keyTaken = false;
     }
     
@@ -63,7 +64,6 @@ public class Game {
                     agents.get(i).setAgentCoords(new Point(lastPositionX, lastPositionY));
                     break;
                 case 1:
-                    
                     if (key.getCoord().x == agents.get(i).getAgentCoords().x && key.getCoord().y == agents.get(i).getAgentCoords().y) {
                         agents.get(i).setKey(true);
                         if (agents.get(i) instanceof Hero){
@@ -75,12 +75,11 @@ public class Game {
                     }
                     break;
                 case 2:
-                    
-                    
-                    this.map = map.nextMap();
+                    config.prepareNextLevel();
+                    map = config.getNextMap();
+                    agents = config.getAgents();
                     keyTaken = false;
-                    agents = map.getAgents();
-                    break;
+                    return;
             }
         }
     }

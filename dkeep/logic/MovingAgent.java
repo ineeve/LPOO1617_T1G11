@@ -8,7 +8,7 @@ public abstract class MovingAgent {
     char symbol;
     boolean isSleeping;
     private boolean key;
-    Weapon weapon;
+    Weapon weapon = new Weapon();
     
     public boolean isKey() {
         return key;
