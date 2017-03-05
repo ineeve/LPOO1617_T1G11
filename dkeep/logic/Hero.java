@@ -14,13 +14,9 @@ public class Hero extends MovingAgent {
         weapon.setSymbol(' ');
     }
 
+    @Override
     void nextMove() {
         char nextChar =  movement.userMovement();
         super.nextPos(nextChar);
-        if(weapon.getSymbol() != ' ') {
-            weapon.setCoords(agentCoords);
-            nextChar = movement.randomMovement();
-            weapon.nextMove(nextChar);
-        }
     }
 }
