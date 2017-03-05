@@ -63,23 +63,24 @@ public class Game {
     
     public int update() {
         for (int i = 0; i < agents.size(); i++) {
-            int lastPositionX = agents.get(i).getAgentCoords().x;
-            int lastPositionY = agents.get(i).getAgentCoords().y;
-            agents.get(i).nextMove();
-            int isFreeResponse = map.isFree(agents.get(i).getAgentCoords());
+            MovingAgent actualAgent = agents.get(i);
+            int lastPositionX = actualAgent.getAgentCoords().x;
+            int lastPositionY = actualAgent.getAgentCoords().y;
+            actualAgent.nextMove();
+            int isFreeResponse = map.isFree(actualAgent.getAgentCoords());
             switch (isFreeResponse) {
                 case 0:
-                    agents.get(i).setAgentCoords(new Point(lastPositionX, lastPositionY));
+                    actualAgent.setAgentCoords(new Point(lastPositionX, lastPositionY));
                     break;
                 case 1:
-                    if (key.getCoord().x == agents.get(i).getAgentCoords().x && key.getCoord().y == agents.get(i).getAgentCoords().y) {
-                        agents.get(i).setKey(true);
-                        if (agents.get(i) instanceof Hero){
+                    if (key.getCoord().x == actualAgent.getAgentCoords().x && key.getCoord().y == actualAgent.getAgentCoords().y) {
+                        actualAgent.setKey(true);
+                        if (actualAgent instanceof Hero){
                             keyTaken = true;
                             map.changeAllDoorsToStairs();
                         }
                     } else {
-                        agents.get(i).setKey(false);
+                        actualAgent.setKey(false);
                     }
                     break;
                 case 2:
@@ -90,6 +91,14 @@ public class Game {
                     agents = config.getAgents();
                     keyTaken = false;
                     return 0;
+            }
+            if(actualAgent.weapon.getSymbol() != ' ') {
+                actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+                actualAgent.weapon.nextMove();
+                while (map.isFree(actualAgent.weapon.getCoords()) != 1){
+                    actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+                    actualAgent.weapon.nextMove();
+                }
             }
         }
         return 0;

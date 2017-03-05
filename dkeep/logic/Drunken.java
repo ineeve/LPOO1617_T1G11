@@ -42,10 +42,5 @@ public class Drunken extends Guard {
             nextChar = movement.pathMovement(currentDirection);
             super.nextPos(nextChar);
         }
-        if(weapon.getSymbol() != ' ') {
-            weapon.setCoords(agentCoords);
-            nextChar = movement.randomMovement();
-            weapon.nextMove(nextChar);
-        }
     }
 }

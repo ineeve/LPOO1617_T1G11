@@ -1,5 +1,7 @@
 package dkeep.logic;
 
+import dkeep.cli.MovementStrategy;
+
 import java.awt.*;
 
 /**
@@ -8,6 +10,7 @@ import java.awt.*;
 public class Weapon {
     private Point coords;
     private char symbol;
+    private MovementStrategy movement = new MovementStrategy();
 
     public Weapon() {
     }
@@ -27,7 +30,8 @@ public class Weapon {
     public void setSymbol(char symbol) {
         this.symbol = symbol;
     }
-    public void nextMove(char nextChar){
+    public void nextMove(){
+        char nextChar = movement.randomMovement();
         switch (nextChar) {
             case 'a':
                 coords.x--;
