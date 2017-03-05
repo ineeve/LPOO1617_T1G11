@@ -8,22 +8,14 @@ import java.util.ArrayList;
  * Created by João on 23/02/2017.
  */
 public abstract class GameMap {
-    protected ArrayList<MovingAgent> agents = new ArrayList();
-    protected Key key = new Key(new Point(0,0));
     protected char[][] map;
     
     public char[][] getMap() {
         return map;
     }
-    public Key getKey(){
-        return key;
-    }
     
     public void setMap(char[][] map) {
         this.map = map;
-    }
-    public ArrayList<MovingAgent> getAgents(){
-        return agents;
     }
     
     public int isFree(Point coord){

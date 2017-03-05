@@ -11,16 +11,17 @@ import java.util.ArrayList;
  * Created by João on 23/02/2017.
  */
 public class Game {
-    
+    private Configs config;
     private GameMap map;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
     private Key key;
     private boolean keyTaken;
     
-    public Game(GameMap initialMap) {
-        map = initialMap;
-        agents = map.getAgents();
-        key = map.getKey();
+    public Game(int startLevel) {
+        config = new Configs(startLevel);
+        map = config.getNextMap();
+        agents = config.getAgents();
+        key = config.getKey();
         keyTaken = false;
     }
     
@@ -46,6 +47,12 @@ public class Game {
             int agentCoordX = agents.get(i).getAgentCoords().x;
             char symbol = agents.get(i).getSymbol();
             mapChar[agentCoordY][agentCoordX] = symbol;
+            if(agents.get(i).weapon.getSymbol() != ' '){
+                int weaponCoordY = agents.get(i).weapon.getCoords().y;
+                int weaponCoordX = agents.get(i).weapon.getCoords().x;
+                symbol = agents.get(i).weapon.getSymbol();
+                mapChar[weaponCoordY][weaponCoordX] = symbol;
+            }
         }
         return mapChar;
     }
@@ -54,7 +61,7 @@ public class Game {
         this.map = map;
     }
     
-    public void update() {
+    public int update() {
         for (int i = 0; i < agents.size(); i++) {
             int lastPositionX = agents.get(i).getAgentCoords().x;
             int lastPositionY = agents.get(i).getAgentCoords().y;
@@ -65,7 +72,6 @@ public class Game {
                     agents.get(i).setAgentCoords(new Point(lastPositionX, lastPositionY));
                     break;
                 case 1:
-                    
                     if (key.getCoord().x == agents.get(i).getAgentCoords().x && key.getCoord().y == agents.get(i).getAgentCoords().y) {
                         agents.get(i).setKey(true);
                         if (agents.get(i) instanceof Hero){
@@ -77,18 +83,19 @@ public class Game {
                     }
                     break;
                 case 2:
-                    
-                    
-                    this.map = map.nextMap();
+                    if(config.prepareNextLevel() != 0){
+                        return 1;
+                    }
+                    map = config.getNextMap();
+                    agents = config.getAgents();
                     keyTaken = false;
-                    agents = map.getAgents();
-                    break;
+                    return 0;
             }
         }
+        return 0;
     }
     
     public boolean isGameOver() {
-        boolean isOver = false;
         for (int i = 1; i < agents.size(); i++) {
             if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
                 if (!agents.get(i).isSleeping) {
@@ -96,6 +103,6 @@ public class Game {
                 }
             }
         }
-        return isOver;
+        return false;
     }
 }

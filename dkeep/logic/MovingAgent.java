@@ -1,13 +1,16 @@
 package dkeep.logic;
 
+import dkeep.cli.MovementStrategy;
+
 import java.awt.*;
 
 public abstract class MovingAgent {
-    protected Point agentCoords; // [x,y] current coordinates
-    protected MovementStrategy movement = new MovementStrategy();
-    protected char symbol;
-    protected boolean isSleeping;
-    protected boolean key;
+    Point agentCoords; // [x,y] current coordinates
+    final MovementStrategy movement = new MovementStrategy();
+    char symbol;
+    boolean isSleeping;
+    private boolean key;
+    Weapon weapon = new Weapon();
     
     public boolean isKey() {
         return key;
@@ -29,8 +32,25 @@ public abstract class MovingAgent {
     public void setAgentCoords(Point agentCoords) {
         this.agentCoords = agentCoords;
     }
-    
+
     abstract void nextMove();
+
+    public void nextPos(char nextChar){
+        switch (nextChar) {
+            case 'a':
+                agentCoords.x--;
+                break;
+            case 'd':
+                agentCoords.x++;
+                break;
+            case 's':
+                agentCoords.y++;
+                break;
+            case 'w':
+                agentCoords.y--;
+                break;
+        }
+    }
 
     public char getSymbol() {
         return symbol;
