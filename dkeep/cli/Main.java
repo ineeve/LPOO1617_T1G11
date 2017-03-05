@@ -11,7 +11,10 @@ class Main {
         Game game = new Game(1);
         while (!game.isGameOver()) {
             displayBoard(game.getMap());
-            game.update();
+            if(game.update() != 0){
+                System.out.println("End Game!");
+                return;
+            };
         }
         displayBoard(game.getMap());
     }

@@ -18,13 +18,14 @@ public class Guard extends MovingAgent {
         agentCoords = coord;
         currentDirection = 1;
     }
-    
-    @Override
+
     void nextMove() {
-        movement.pathMovement(agentCoords, 1);
+        char nextChar = movement.pathMovement(1);
+        super.nextPos(nextChar);
         if(weapon.getSymbol() != ' ') {
             weapon.setCoords(agentCoords);
-            movement.randomMovement(weapon.getCoords());
+            nextChar = movement.randomMovement();
+            weapon.nextMove(nextChar);
         }
     }
 }

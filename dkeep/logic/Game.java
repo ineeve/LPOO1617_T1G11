@@ -47,6 +47,12 @@ public class Game {
             int agentCoordX = agents.get(i).getAgentCoords().x;
             char symbol = agents.get(i).getSymbol();
             mapChar[agentCoordY][agentCoordX] = symbol;
+            if(agents.get(i).weapon.getSymbol() != ' '){
+                int weaponCoordY = agents.get(i).weapon.getCoords().y;
+                int weaponCoordX = agents.get(i).weapon.getCoords().x;
+                symbol = agents.get(i).weapon.getSymbol();
+                mapChar[weaponCoordY][weaponCoordX] = symbol;
+            }
         }
         return mapChar;
     }
@@ -55,7 +61,7 @@ public class Game {
         this.map = map;
     }
     
-    public void update() {
+    public int update() {
         for (int i = 0; i < agents.size(); i++) {
             int lastPositionX = agents.get(i).getAgentCoords().x;
             int lastPositionY = agents.get(i).getAgentCoords().y;
@@ -77,13 +83,16 @@ public class Game {
                     }
                     break;
                 case 2:
-                    config.prepareNextLevel();
+                    if(config.prepareNextLevel() != 0){
+                        return 1;
+                    }
                     map = config.getNextMap();
                     agents = config.getAgents();
                     keyTaken = false;
-                    return;
+                    return 0;
             }
         }
+        return 0;
     }
     
     public boolean isGameOver() {

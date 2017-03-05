@@ -18,27 +18,34 @@ public class Drunken extends Guard {
     @Override
     void nextMove() {
         double random = Math.random();
+        char nextChar;
         if (symbol == 'd') {
             if (random < 0.2) {
                 symbol = 'D';
                 isSleeping = false;
                 currentDirection = 1;
-                movement.pathMovement(agentCoords, currentDirection);
+                nextChar = movement.pathMovement(currentDirection);
+                super.nextPos(nextChar);
 
             } else if (random > 0.5) {
                 symbol = 'D';
                 isSleeping = false;
                 currentDirection = 0;
-                movement.pathMovement(agentCoords, currentDirection);
+                nextChar =movement.pathMovement(currentDirection);
+                super.nextPos(nextChar);
 
             }
         } else if (random < 0.5) {
             symbol = 'd';
             isSleeping = true;
         } else {
-            movement.pathMovement(agentCoords, currentDirection);
+            nextChar = movement.pathMovement(currentDirection);
+            super.nextPos(nextChar);
         }
-        weapon.setCoords(agentCoords);
-        movement.randomMovement(weapon.getCoords());
+        if(weapon.getSymbol() != ' ') {
+            weapon.setCoords(agentCoords);
+            nextChar = movement.randomMovement();
+            weapon.nextMove(nextChar);
+        }
     }
 }

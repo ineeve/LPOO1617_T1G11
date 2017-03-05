@@ -12,14 +12,16 @@ public class Ogre extends MovingAgent {
         symbol = 'O';
         agentCoords = coord;
         weapon.setSymbol('*');
+        weapon.setCoords(agentCoords);
     }
 
-    @Override
     void nextMove() {
-        movement.randomMovement(agentCoords);
-        while(weapon.getSymbol() != ' ') {
+        char nextChar = movement.randomMovement();
+        super.nextPos(nextChar);
+        if(weapon.getSymbol() != ' ') {
             weapon.setCoords(agentCoords);
-            movement.randomMovement(weapon.getCoords());
+            nextChar = movement.randomMovement();
+            weapon.nextMove(nextChar);
         }
     }
 }

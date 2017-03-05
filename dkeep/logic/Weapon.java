@@ -27,4 +27,20 @@ public class Weapon {
     public void setSymbol(char symbol) {
         this.symbol = symbol;
     }
+    public void nextMove(char nextChar){
+        switch (nextChar) {
+            case 'a':
+                coords.x--;
+                break;
+            case 'd':
+                coords.x++;
+                break;
+            case 's':
+                coords.y++;
+                break;
+            case 'w':
+                coords.y--;
+                break;
+        }
+    }
 }

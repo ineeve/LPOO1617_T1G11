@@ -1,5 +1,7 @@
 package dkeep.logic;
 
+import dkeep.cli.MovementStrategy;
+
 import java.awt.*;
 
 public abstract class MovingAgent {
@@ -30,7 +32,6 @@ public abstract class MovingAgent {
     public void setAgentCoords(Point agentCoords) {
         this.agentCoords = agentCoords;
     }
-    
     abstract void nextMove();
 
     public char getSymbol() {

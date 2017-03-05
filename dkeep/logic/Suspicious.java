@@ -22,9 +22,13 @@ public class Suspicious extends Guard {
             } else
                 currentDirection = 1;
         }
-        movement.pathMovement(agentCoords, currentDirection);
-        weapon.setCoords(agentCoords);
-        movement.randomMovement(weapon.getCoords());
+        char nextChar = movement.pathMovement(currentDirection);
+        super.nextPos(nextChar);
+        if(weapon.getSymbol() != ' ') {
+            weapon.setCoords(agentCoords);
+            nextChar = movement.randomMovement();
+            weapon.nextMove(nextChar);
+        }
     }
 
 
