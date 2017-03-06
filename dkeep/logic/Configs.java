@@ -77,8 +77,9 @@ public class Configs {
             case 2:
                 HEROSTARTPOS = new Point(1,7);
                 KEYSTARTPOS = new Point(7,1);
+                
 
-                key.setCoord(KEYSTARTPOS);
+                //key.setCoord(KEYSTARTPOS);
                 if(map != null) {
                     map = new KeepMap();
                 }
@@ -86,15 +87,15 @@ public class Configs {
                     map = map.nextMap();
                 }
                 agents.add(new Hero(HEROSTARTPOS));
-
+                agents.add(new Ogre(new Point(2,5)));
                 /* Ogres */
                 System.out.println("How many Ogres do you wish to fight?");
-                int numOgres = UserInput.getInt();
+                /*int numOgres = UserInput.getInt();
                 for (int i = 0; i < numOgres; i++){
                     int rnX = ThreadLocalRandom.current().nextInt(3, 7);
                     int rnY = ThreadLocalRandom.current().nextInt(1, 7);
                     agents.add(new Ogre(new Point(rnX,rnY)));
-                }
+                }*/
 
                 level = 3;
                 return 0;

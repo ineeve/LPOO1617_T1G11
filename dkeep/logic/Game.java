@@ -16,6 +16,8 @@ public class Game {
     private ArrayList<MovingAgent> agents = new ArrayList<>();
     private Key key;
     private boolean keyTaken;
+    public enum status {DEFEAT,PLAYING,VICTORY};
+    private status gameStatus;
     
     public Game(int startLevel) {
         config = new Configs(startLevel);
@@ -23,7 +25,13 @@ public class Game {
         agents = config.getAgents();
         key = config.getKey();
         keyTaken = false;
+        gameStatus = status.PLAYING;
     }
+    
+    public status getGameStatus(){
+        return gameStatus;
+    }
+    
     
     public Point getHeroPos(){
         return agents.get(0).getAgentCoords();
@@ -108,6 +116,7 @@ public class Game {
         for (int i = 1; i < agents.size(); i++) {
             if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
                 if (!agents.get(i).isSleeping) {
+                    gameStatus = status.DEFEAT;
                     return true;
                 }
             }

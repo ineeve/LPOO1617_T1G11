@@ -6,6 +6,7 @@
 package dkeep.test;
 
 import dkeep.logic.Game;
+import dkeep.logic.Game.status;
 import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,13 +15,14 @@ import static org.junit.Assert.*;
  *
  * @author ineeve
  */
-public class testDungeonGameLogic {
+public class DungeonGameLogicTest {
     
-    public testDungeonGameLogic() {
+    public DungeonGameLogicTest() {
     }
 
     @Test
     public void testMoveHeroToFreeCell(){
+        System.out.println("Testing Move Hero to Free Cell)");
         Game game = new Game(0);
         assertEquals(new Point(1,1), game.getHeroPos());
         game.moveHero('s');
@@ -28,11 +30,11 @@ public class testDungeonGameLogic {
     }
     
     @Test
-    public void teHeroIsCapturedByGuard(){
+    public void testHeroIsCapturedByGuard(){
     Game game = new Game(0);
     assertFalse(game.isGameOver());
     game.moveHero('d');
     assertTrue(game.isGameOver());
+    assertEquals(status.DEFEAT, game.getGameStatus());
     }
-    
 }
