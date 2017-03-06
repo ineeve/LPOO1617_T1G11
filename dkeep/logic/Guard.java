@@ -6,10 +6,11 @@ public class Guard extends MovingAgent {
     
     int currentDirection;
     
-    public Guard() {
+    Guard() {
         symbol = 'G';
         isSleeping = false;
         currentDirection = 1;
+        weapon.setSymbol(' ');
     }
     
     public Guard(Point coord) {
@@ -17,9 +18,10 @@ public class Guard extends MovingAgent {
         agentCoords = coord;
         currentDirection = 1;
     }
-    
+
     @Override
     void nextMove() {
-        movement.pathMovement(agentCoords, 1);
+        char nextChar = movement.pathMovement(1);
+        super.nextPos(nextChar);
     }
 }

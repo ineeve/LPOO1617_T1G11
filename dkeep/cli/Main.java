@@ -6,17 +6,20 @@ import dkeep.logic.maps.DungeonMap;
 /**
  * Created by João on 23/02/2017.
  */
-public class Main {
+class Main {
     public static void main(String[] args) {
-        Game game = new Game(new DungeonMap());
+        Game game = new Game(1);
         while (!game.isGameOver()) {
             displayBoard(game.getMap());
-            game.update();
+            if(game.update() != 0){
+                System.out.println("End Game!");
+                return;
+            };
         }
         displayBoard(game.getMap());
     }
 
-    public static void displayBoard(char matrix[][]) {
+    private static void displayBoard(char matrix[][]) {
         System.out.println("\n\n");
         String currentLine;
 

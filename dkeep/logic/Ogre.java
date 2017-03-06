@@ -3,7 +3,6 @@ package dkeep.logic;
 import java.awt.*;
 
 public class Ogre extends MovingAgent {
-    private Point club;
 
     public Ogre() {
         symbol = 'O';
@@ -12,21 +11,14 @@ public class Ogre extends MovingAgent {
     public Ogre(Point coord) {
         symbol = 'O';
         agentCoords = coord;
-    }
-
-    public Point getClub() {
-        return club;
-    }
-
-    @Override
-    public void setAgentCoords(Point agentCoords) {
-	      super.setAgentCoords(agentCoords);
+        weapon.setSymbol('*');
+        weapon.setCoords((Point) agentCoords.clone());
+        weapon.getCoords().x--;
     }
 
     @Override
     void nextMove() {
-        movement.randomMovement(agentCoords);
-        club = agentCoords;
-        movement.randomMovement(club);
+        char nextChar = movement.randomMovement();
+        super.nextPos(nextChar);
     }
 }

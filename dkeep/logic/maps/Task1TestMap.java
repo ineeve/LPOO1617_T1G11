@@ -15,10 +15,18 @@ import java.awt.Point;
  * @author ineeve
  */
 public class Task1TestMap extends GameMap{
-    public Task1TestMap(char [][]map){
-        this.map = map;
-        agents.add(new Hero(new Point(1,1)));
-        agents.add(new Rookie(new Point(3,1)));
+    public Task1TestMap(){
+        map = new char[][] {
+                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' },
+                { 'X', ' ', ' ', ' ', 'I', ' ', 'X', ' ', ' ', 'X' },
+                { 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', 'X' },
+                { 'X', ' ', 'I', ' ', 'I', ' ', 'X', ' ', ' ', 'X' },
+                { 'X', 'X', 'X', ' ', 'X', 'X', 'X', ' ', ' ', 'X' },
+                { 'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+                { 'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X' },
+                { 'X', 'X', 'X', ' ', 'X', 'X', 'X', 'X', ' ', 'X' },
+                { 'X', ' ', 'I', ' ', 'I', ' ', 'X', ' ', ' ', 'X' },
+                { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X' } };
     }
 
     @Override
