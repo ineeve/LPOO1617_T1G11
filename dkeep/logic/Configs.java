@@ -47,7 +47,8 @@ public class Configs {
         switch (level){
             case 0:
                 HEROSTARTPOS = new Point(1,1);
-                GUARDSTARTPOS =  new Point(8,1);
+                GUARDSTARTPOS =  new Point(3,1);
+                KEYSTARTPOS = new Point(1,3);
 
                 map = new Task1TestMap();
 

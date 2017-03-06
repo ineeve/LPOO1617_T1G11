@@ -29,7 +29,7 @@ public class Game {
         return agents.get(0).getAgentCoords();
     }
     public void moveHero(char direction){
-        agents.get(0).nextMove();
+        agents.get(0).nextPos(direction);
     }
     
     public char[][] getMap() {
