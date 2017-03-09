@@ -1,6 +1,5 @@
 package dkeep.logic;
 
-import dkeep.cli.UserInput;
 import dkeep.logic.maps.DungeonMap;
 import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
@@ -8,7 +7,6 @@ import dkeep.logic.maps.Task1TestMap;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by João on 05/03/2017.
@@ -86,8 +84,10 @@ public class Configs {
                 else{
                     map = map.nextMap();
                 }
-                agents.add(new Hero(HEROSTARTPOS));
-                agents.add(new Ogre(new Point(2,5)));
+                Hero newHero = new Hero(HEROSTARTPOS,'A','/');
+                
+                agents.add(newHero);
+                agents.add(new Ogre(new Point(4,3)));
                 /* Ogres */
                 System.out.println("How many Ogres do you wish to fight?");
                 /*int numOgres = UserInput.getInt();

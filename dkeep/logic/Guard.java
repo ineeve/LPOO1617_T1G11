@@ -10,13 +10,15 @@ public class Guard extends MovingAgent {
         symbol = 'G';
         isSleeping = false;
         currentDirection = 1;
-        weapon.setSymbol(' ');
+        weapon = new Weapon (' ',agentCoords);
     }
     
     public Guard(Point coord) {
         symbol = 'G';
         agentCoords = coord;
+        isSleeping = false;
         currentDirection = 1;
+        weapon = new Weapon (' ',agentCoords);
     }
 
     @Override

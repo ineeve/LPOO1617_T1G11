@@ -1,8 +1,8 @@
 package dkeep.logic;
 
-import dkeep.cli.UserInput;
 import dkeep.logic.maps.DungeonMap;
 import dkeep.logic.maps.GameMap;
+import dkeep.logic.maps.KeepMap;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -74,8 +74,23 @@ public class Game {
             MovingAgent actualAgent = agents.get(i);
             int lastPositionX = actualAgent.getAgentCoords().x;
             int lastPositionY = actualAgent.getAgentCoords().y;
+            
+            if (actualAgent instanceof Ogre){
+                if (((Ogre) actualAgent).isStunned()){
+                    ((Ogre) actualAgent).recoverFromStun();
+                    actualAgent.weapon.nextMove();
+                    while (map.isFree(actualAgent.weapon.getCoords()) != 1){
+                        actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+                        actualAgent.weapon.nextMove();
+                        continue;
+                    }
+                }
+            }
             actualAgent.nextMove();
+            
+            
             int isFreeResponse = map.isFree(actualAgent.getAgentCoords());
+            
             switch (isFreeResponse) {
                 case 0:
                     actualAgent.setAgentCoords(new Point(lastPositionX, lastPositionY));
@@ -85,7 +100,11 @@ public class Game {
                         actualAgent.setKey(true);
                         if (actualAgent instanceof Hero){
                             keyTaken = true;
-                            map.changeAllDoorsToStairs();
+                            if (!(map instanceof KeepMap)){
+                                map.changeAllDoorsToStairs();
+                            }else{
+                                actualAgent.setSymbol('K');
+                            }
                         }
                     } else {
                         actualAgent.setKey(false);
@@ -99,22 +118,53 @@ public class Game {
                     agents = config.getAgents();
                     keyTaken = false;
                     return 0;
+                case 3:
+                    if (actualAgent instanceof Hero){
+                        if ( keyTaken){
+                            if (map instanceof KeepMap){
+                                map.changeAllDoorsToStairs();
+                            }
+                        }
+                    }
+                    
+                    
+                    actualAgent.setAgentCoords(new Point(lastPositionX, lastPositionY));
+                    break;
             }
             if(actualAgent.weapon.getSymbol() != ' ') {
                 actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
                 actualAgent.weapon.nextMove();
-                while (map.isFree(actualAgent.weapon.getCoords()) != 1){
+                while (map.isFree(actualAgent.weapon.getCoords()) != 1 && map.isFree(actualAgent.weapon.getCoords()) != 4 ){
                     actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
                     actualAgent.weapon.nextMove();
                 }
+                
             }
+            
+            if (actualAgent instanceof Ogre){
+                if (actualAgent.getAgentCoords().distance(agents.get(0).weapon.getCoords()) <= 1){
+                    ((Ogre) actualAgent).setStunned();
+                }
+            }
+            
         }
+        
+        
+        
         return 0;
     }
     
     public boolean isGameOver() {
         for (int i = 1; i < agents.size(); i++) {
-            if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
+            
+            if (agents.get(i) instanceof Ogre){
+                if (agents.get(i).weapon.getCoords().distance(agents.get(0).getAgentCoords()) <= 1){
+                    gameStatus = status.DEFEAT;
+                    return true;
+                }
+            }
+            
+            else if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
                 if (!agents.get(i).isSleeping) {
                     gameStatus = status.DEFEAT;
                     return true;

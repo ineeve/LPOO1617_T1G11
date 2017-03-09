@@ -9,8 +9,9 @@ public abstract class MovingAgent {
     final MovementStrategy movement = new MovementStrategy();
     char symbol;
     boolean isSleeping;
-    private boolean key;
-    Weapon weapon = new Weapon();
+    protected boolean key;
+    
+    Weapon weapon;
     
     public boolean isKey() {
         return key;
@@ -58,4 +59,6 @@ public abstract class MovingAgent {
     public void setSymbol(char newSymbol){
         symbol = newSymbol;
     }
+    
+
 }

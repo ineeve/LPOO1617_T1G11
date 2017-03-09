@@ -1,6 +1,7 @@
 package dkeep.cli;
 
 import dkeep.logic.Game;
+import dkeep.logic.Game.status;
 import dkeep.logic.maps.DungeonMap;
 
 /**
@@ -11,12 +12,10 @@ class Main {
         Game game = new Game(1);
         while (!game.isGameOver()) {
             displayBoard(game.getMap());
-            if(game.update() != 0){
-                System.out.println("End Game!");
-                return;
-            };
+            game.update();
         }
         displayBoard(game.getMap());
+        System.out.println("You lost, try again!");
     }
 
     private static void displayBoard(char matrix[][]) {
