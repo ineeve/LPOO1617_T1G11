@@ -78,12 +78,13 @@ public class Game {
             if (actualAgent instanceof Ogre){
                 if (((Ogre) actualAgent).isStunned()){
                     ((Ogre) actualAgent).recoverFromStun();
+                    actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
                     actualAgent.weapon.nextMove();
                     while (map.isFree(actualAgent.weapon.getCoords()) != 1){
                         actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
                         actualAgent.weapon.nextMove();
-                        continue;
                     }
+                    continue;
                 }
             }
             actualAgent.nextMove();
@@ -112,6 +113,7 @@ public class Game {
                     break;
                 case 2:
                     if(config.prepareNextLevel() != 0){
+                        gameStatus = status.VICTORY;
                         return 1;
                     }
                     map = config.getNextMap();

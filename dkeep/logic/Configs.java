@@ -76,7 +76,6 @@ public class Configs {
                 HEROSTARTPOS = new Point(1,7);
                 KEYSTARTPOS = new Point(7,1);
                 
-
                 //key.setCoord(KEYSTARTPOS);
                 if(map != null) {
                     map = new KeepMap();

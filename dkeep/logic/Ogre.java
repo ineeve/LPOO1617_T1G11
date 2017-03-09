@@ -9,37 +9,38 @@ public class Ogre extends MovingAgent {
         symbol = 'O';
         roundsStunned = 0;
     }
-
+    
     public Ogre(Point coord) {
         symbol = 'O';
         agentCoords = coord;
         weapon = new Weapon('*',agentCoords);
         weapon.setCoords((Point) agentCoords.clone());
-        weapon.getCoords().x--;
         roundsStunned = 0;
     }
-
+    
     @Override
     void nextMove() {
         char nextChar = movement.randomMovement();
         super.nextPos(nextChar);
     }
-    
-        void recoverFromStun(){
+            
+    void recoverFromStun(){
         if (roundsStunned > 0){
             roundsStunned--;
-        }
-        else{
-            symbol= 'O';
+            }
+        if (roundsStunned == 0){
+            symbol = 'O';
         }
     }
     boolean isStunned(){
         return roundsStunned > 0;
     }
-    
+    /**
+     * roundsStunned = 3 = (2+1) because roundsStunned is decremented in the round that it is set
+     */        
     void setStunned(){
-        roundsStunned = 2;
+        roundsStunned = 3;
         symbol = '8';
     }
-    
+            
 }

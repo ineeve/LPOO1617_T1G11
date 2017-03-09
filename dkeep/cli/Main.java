@@ -12,10 +12,13 @@ class Main {
         Game game = new Game(1);
         while (!game.isGameOver()) {
             displayBoard(game.getMap());
-            game.update();
+            if (game.update()==1){
+                 System.out.println("Congratulations,you've escaped");
+                 return;
+            }
         }
         displayBoard(game.getMap());
-        System.out.println("You lost, try again!");
+        System.out.println("You have been captured");
     }
 
     private static void displayBoard(char matrix[][]) {
