@@ -18,11 +18,7 @@ public class Ogre extends MovingAgent {
         roundsStunned = 0;
     }
     
-    @Override
-    void nextMove() {
-        char nextChar = movement.randomMovement();
-        super.nextPos(nextChar);
-    }
+
             
     void recoverFromStun(){
         if (roundsStunned > 0){
@@ -42,5 +38,10 @@ public class Ogre extends MovingAgent {
         roundsStunned = 3;
         symbol = '8';
     }
+
+	@Override
+	public char getNextDirection() {
+		return  movement.randomMovement();
+	}
             
 }

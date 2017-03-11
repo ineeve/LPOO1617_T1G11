@@ -1,6 +1,5 @@
 package dkeep.logic;
 
-import dkeep.cli.UserInput;
 import java.awt.*;
 
 public class Hero extends MovingAgent {
@@ -22,9 +21,13 @@ public class Hero extends MovingAgent {
         key = false;
     }
 
-    @Override
-    void nextMove() {
-        char nextChar =  movement.userMovement();
-        super.nextPos(nextChar);
-    }
+
+	@Override
+	public char getNextDirection() {
+		return movement.userMovement();
+	}
+	
+	public char getRandomDirection(){
+		return movement.randomMovement();
+	}
 }

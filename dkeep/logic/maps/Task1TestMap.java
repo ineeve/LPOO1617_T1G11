@@ -5,15 +5,7 @@
  */
 package dkeep.logic.maps;
 
-import dkeep.logic.Guard;
-import dkeep.logic.Hero;
-import dkeep.logic.Rookie;
-import java.awt.Point;
 
-/**
- *
- * @author ineeve
- */
 public class Task1TestMap extends GameMap{
     public Task1TestMap(){
         map = new char[][] {

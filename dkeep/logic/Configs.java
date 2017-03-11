@@ -47,7 +47,12 @@ public class Configs {
                 HEROSTARTPOS = new Point(1,1);
                 GUARDSTARTPOS =  new Point(3,1);
                 KEYSTARTPOS = new Point(1,3);
-
+                if (key == null){
+                	key = new Key(KEYSTARTPOS);
+                }else{
+                	key.setCoord(KEYSTARTPOS);
+                }
+                
                 map = new Task1TestMap();
 
                 agents.add(new Hero(HEROSTARTPOS));
@@ -75,8 +80,11 @@ public class Configs {
             case 2:
                 HEROSTARTPOS = new Point(1,7);
                 KEYSTARTPOS = new Point(7,1);
-                
-                //key.setCoord(KEYSTARTPOS);
+                if (key != null){
+                key.setCoord(KEYSTARTPOS);
+                }else{
+                	key = new Key(KEYSTARTPOS);
+                }
                 if(map == null) {
                     map = new KeepMap();
                 }
@@ -84,6 +92,7 @@ public class Configs {
                     map = map.nextMap();
                 }
                 Hero newHero = new Hero(HEROSTARTPOS,'A','/');
+                
                 
                 agents.add(newHero);
                 agents.add(new Ogre(new Point(4,3)));

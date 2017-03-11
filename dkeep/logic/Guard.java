@@ -21,9 +21,9 @@ public class Guard extends MovingAgent {
         weapon = new Weapon (' ',agentCoords);
     }
 
-    @Override
-    void nextMove() {
-        char nextChar = movement.pathMovement(1);
-        super.nextPos(nextChar);
-    }
+
+	@Override
+	char getNextDirection() {
+		return movement.pathMovement(1);
+	}
 }

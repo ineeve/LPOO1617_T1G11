@@ -37,7 +37,7 @@ public class Weapon {
         this.symbol = symbol;
     }
     public void nextMove(){
-        char nextChar = movement.randomMovement();
+        char nextChar = getNextDirection();
         switch (nextChar) {
             case 'a':
                 coords.x--;
@@ -53,4 +53,8 @@ public class Weapon {
                 break;
         }
     }
+    public char getNextDirection(){
+    	 return movement.randomMovement();
+    }
+    
 }

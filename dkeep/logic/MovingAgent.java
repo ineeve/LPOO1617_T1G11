@@ -11,7 +11,7 @@ public abstract class MovingAgent {
     boolean isSleeping;
     protected boolean key;
     
-    Weapon weapon;
+    public Weapon weapon;
     
     public boolean isKey() {
         return key;
@@ -34,8 +34,15 @@ public abstract class MovingAgent {
         this.agentCoords = agentCoords;
     }
 
-    abstract void nextMove();
+    void nextMove(){
+    	char nextChar = getNextDirection();
+    	if (nextChar != '0'){
+    		nextPos(nextChar);
+    	}
+    }
 
+    abstract char getNextDirection();
+    
     public void nextPos(char nextChar){
         switch (nextChar) {
             case 'a':

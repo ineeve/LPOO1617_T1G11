@@ -1,6 +1,5 @@
 package dkeep.cli;
 
-import java.awt.*;
 import java.util.Random;
 
 import static dkeep.cli.UserInput.*;
