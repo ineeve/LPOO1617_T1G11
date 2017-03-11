@@ -11,10 +11,7 @@ import java.awt.Point;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author ineeve
- */
+
 public class DungeonGameLogicTest {
     
     public DungeonGameLogicTest() {
@@ -22,7 +19,7 @@ public class DungeonGameLogicTest {
 
     @Test
     public void testMoveHeroToFreeCell(){
-        System.out.println("Testing Move Hero to Free Cell)");
+        System.out.println("Testing Move Hero to Free Cell");
         Game game = new Game(0);
         assertEquals(new Point(1,1), game.getHeroPos());
         game.moveHero('s');
@@ -31,6 +28,7 @@ public class DungeonGameLogicTest {
     
     @Test
     public void testHeroIsCapturedByGuard(){
+    	System.out.println("HeroIsCapturedByGuard");
     Game game = new Game(0);
     assertFalse(game.isGameOver());
     game.moveHero('d');

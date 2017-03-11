@@ -77,7 +77,7 @@ public class Configs {
                 KEYSTARTPOS = new Point(7,1);
                 
                 //key.setCoord(KEYSTARTPOS);
-                if(map != null) {
+                if(map == null) {
                     map = new KeepMap();
                 }
                 else{
