@@ -1,6 +1,5 @@
 package dkeep.logic;
 
-import dkeep.cli.UserInput;
 import dkeep.logic.maps.DungeonMap;
 import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
@@ -8,7 +7,6 @@ import dkeep.logic.maps.Task1TestMap;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by João on 05/03/2017.
@@ -47,8 +45,14 @@ public class Configs {
         switch (level){
             case 0:
                 HEROSTARTPOS = new Point(1,1);
-                GUARDSTARTPOS =  new Point(8,1);
-
+                GUARDSTARTPOS =  new Point(3,1);
+                KEYSTARTPOS = new Point(1,3);
+                if (key == null){
+                	key = new Key(KEYSTARTPOS);
+                }else{
+                	key.setCoord(KEYSTARTPOS);
+                }
+                
                 map = new Task1TestMap();
 
                 agents.add(new Hero(HEROSTARTPOS));
@@ -76,24 +80,30 @@ public class Configs {
             case 2:
                 HEROSTARTPOS = new Point(1,7);
                 KEYSTARTPOS = new Point(7,1);
-
+                if (key != null){
                 key.setCoord(KEYSTARTPOS);
-                if(map != null) {
+                }else{
+                	key = new Key(KEYSTARTPOS);
+                }
+                if(map == null) {
                     map = new KeepMap();
                 }
                 else{
                     map = map.nextMap();
                 }
-                agents.add(new Hero(HEROSTARTPOS));
-
+                Hero newHero = new Hero(HEROSTARTPOS,'A','/');
+                
+                
+                agents.add(newHero);
+                agents.add(new Ogre(new Point(4,3)));
                 /* Ogres */
                 System.out.println("How many Ogres do you wish to fight?");
-                int numOgres = UserInput.getInt();
+                /*int numOgres = UserInput.getInt();
                 for (int i = 0; i < numOgres; i++){
                     int rnX = ThreadLocalRandom.current().nextInt(3, 7);
                     int rnY = ThreadLocalRandom.current().nextInt(1, 7);
                     agents.add(new Ogre(new Point(rnX,rnY)));
-                }
+                }*/
 
                 level = 3;
                 return 0;

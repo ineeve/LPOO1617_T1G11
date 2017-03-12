@@ -1,9 +1,6 @@
 package dkeep.logic.maps;
 
-import dkeep.cli.UserInput;
-import dkeep.logic.Hero;
-import dkeep.logic.Rookie;
-import java.awt.Point;
+
 
 /**
  * Created by João on 23/02/2017.

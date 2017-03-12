@@ -12,7 +12,8 @@ public class UserInput {
     public static char getChar() {
         Scanner reader = new Scanner(System.in);
         System.out.println("Next Move: ");
-        return reader.next().charAt(0);
+        char r = reader.next().charAt(0);
+        return r;
     }
     public static int getInt(){
         Scanner reader = new Scanner(System.in);

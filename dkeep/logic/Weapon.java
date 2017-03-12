@@ -8,11 +8,17 @@ import java.awt.*;
  * Created by João on 02/03/2017.
  */
 public class Weapon {
-    private Point coords;
+    private Point coords = new Point();
     private char symbol;
     private MovementStrategy movement = new MovementStrategy();
 
-    public Weapon() {
+    public Weapon(char symbol,Point wepCoords){
+        this.symbol = symbol;
+        coords = wepCoords;
+    }
+
+    Weapon() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Point getCoords() {
@@ -31,7 +37,7 @@ public class Weapon {
         this.symbol = symbol;
     }
     public void nextMove(){
-        char nextChar = movement.randomMovement();
+        char nextChar = getNextDirection();
         switch (nextChar) {
             case 'a':
                 coords.x--;
@@ -47,4 +53,8 @@ public class Weapon {
                 break;
         }
     }
+    public char getNextDirection(){
+    	 return movement.randomMovement();
+    }
+    
 }

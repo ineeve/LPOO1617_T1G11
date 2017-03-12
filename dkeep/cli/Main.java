@@ -1,7 +1,6 @@
 package dkeep.cli;
 
 import dkeep.logic.Game;
-import dkeep.logic.maps.DungeonMap;
 
 /**
  * Created by João on 23/02/2017.
@@ -9,14 +8,15 @@ import dkeep.logic.maps.DungeonMap;
 class Main {
     public static void main(String[] args) {
         Game game = new Game(1);
-        while (!game.isGameOver()) {
+        while (game.isGameOver() == false) {
             displayBoard(game.getMap());
-            if(game.update() != 0){
-                System.out.println("End Game!");
-                return;
-            };
+            if (game.moveAllAgents()==1){
+                 System.out.println("Congratulations,you've escaped");
+                 return;
+            }
         }
         displayBoard(game.getMap());
+        System.out.println("You have been captured");
     }
 
     private static void displayBoard(char matrix[][]) {
