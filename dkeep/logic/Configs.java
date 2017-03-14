@@ -1,6 +1,5 @@
 package dkeep.logic;
 
-import dkeep.cli.UserInput;
 import dkeep.logic.maps.DungeonMap;
 import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
@@ -19,6 +18,8 @@ public class Configs {
     private static Point HEROSTARTPOS;
     private static Point GUARDSTARTPOS;
     private static final GameMap STARTMAP = new DungeonMap();
+    public static int NUMBEROFOGRES;
+    public static int GUARDPERSONALITY;
 
     static int level = 0;
     ArrayList<MovingAgent> agents = new ArrayList<>();
@@ -27,28 +28,33 @@ public class Configs {
 
     public Configs(int startLevel){
         level = startLevel;
-        this.prepareNextLevel();
     }
 
-    ArrayList<MovingAgent> getAgents(){
+    public ArrayList<MovingAgent> getAgents(){
         return agents;
     }
 
-    Key getKey(){
+    public Key getKey(){
         return key;
     }
 
-    GameMap getNextMap(){
+    public GameMap getMap(){
         return map;
     }
 
-    int prepareNextLevel(){
+    public int prepareNextLevel(){
         agents.clear();
         switch (level){
             case 0:
                 HEROSTARTPOS = new Point(1,1);
-                GUARDSTARTPOS =  new Point(8,1);
-
+                GUARDSTARTPOS =  new Point(3,1);
+                KEYSTARTPOS = new Point(1,3);
+                if (key == null){
+                	key = new Key(KEYSTARTPOS);
+                }else{
+                	key.setCoord(KEYSTARTPOS);
+                }
+                
                 map = new Task1TestMap();
 
                 agents.add(new Hero(HEROSTARTPOS));
@@ -65,31 +71,38 @@ public class Configs {
                 map = STARTMAP;
 
                 agents.add(new Hero(HEROSTARTPOS));
-                //agents.add(new Guard(GUARDSTARTPOS));
-                agents.add( new Rookie(GUARDSTARTPOS));
-                //agents.add(new Guard(GUARDSTARTPOS));
-                //agents.add(new Drunken(GUARDSTARTPOS));
-                //agents.add( new Suspicious(GUARDSTARTPOS));;
+                switch (GUARDPERSONALITY){
+                    case 0:
+                        agents.add(new Rookie(GUARDSTARTPOS));
+                        break;
+                    case 1:
+                        agents.add(new Drunken(GUARDSTARTPOS));
+                        break;
+                    case 2:
+                        agents.add(new Suspicious(GUARDSTARTPOS));
+                        break;
+                }
 
                 level = 2;
                 return 0;
             case 2:
                 HEROSTARTPOS = new Point(1,7);
                 KEYSTARTPOS = new Point(7,1);
-
-                key.setCoord(KEYSTARTPOS);
-                if(map != null) {
+                if (key != null){
+                    key.setCoord(KEYSTARTPOS);
+                }
+                else{
+                	key = new Key(KEYSTARTPOS);
+                }
+                if(map == null) {
                     map = new KeepMap();
                 }
                 else{
                     map = map.nextMap();
                 }
-                agents.add(new Hero(HEROSTARTPOS));
-
-                /* Ogres */
-                System.out.println("How many Ogres do you wish to fight?");
-                int numOgres = UserInput.getInt();
-                for (int i = 0; i < numOgres; i++){
+                Hero newHero = new Hero(HEROSTARTPOS,'A','/');
+                agents.add(newHero);
+                for (int i = 0; i < NUMBEROFOGRES; i++){
                     int rnX = ThreadLocalRandom.current().nextInt(3, 7);
                     int rnY = ThreadLocalRandom.current().nextInt(1, 7);
                     agents.add(new Ogre(new Point(rnX,rnY)));

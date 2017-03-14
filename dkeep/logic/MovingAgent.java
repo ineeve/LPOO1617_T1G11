@@ -9,8 +9,9 @@ public abstract class MovingAgent {
     final MovementStrategy movement = new MovementStrategy();
     char symbol;
     boolean isSleeping;
-    private boolean key;
-    Weapon weapon = new Weapon();
+    protected boolean key;
+    
+    public Weapon weapon;
     
     public boolean isKey() {
         return key;
@@ -33,8 +34,15 @@ public abstract class MovingAgent {
         this.agentCoords = agentCoords;
     }
 
-    abstract void nextMove();
+    void nextMove(){
+    	char nextChar = getNextDirection();
+    	if (nextChar != '0'){
+    		nextPos(nextChar);
+    	}
+    }
 
+    abstract char getNextDirection();
+    
     public void nextPos(char nextChar){
         switch (nextChar) {
             case 'a':
@@ -58,4 +66,6 @@ public abstract class MovingAgent {
     public void setSymbol(char newSymbol){
         symbol = newSymbol;
     }
+    
+
 }

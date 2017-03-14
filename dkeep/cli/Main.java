@@ -1,22 +1,51 @@
 package dkeep.cli;
 
+import dkeep.logic.Configs;
 import dkeep.logic.Game;
-import dkeep.logic.maps.DungeonMap;
 
 /**
  * Created by João on 23/02/2017.
  */
 class Main {
     public static void main(String[] args) {
-        Game game = new Game(1);
-        while (!game.isGameOver()) {
+        Configs config = new Configs(1);
+        Game game = new Game();
+
+        /*Guard personality*/
+        System.out.println("What guard personality you want?");
+        System.out.println("0) Rookie");
+        System.out.println("1) Drunken");
+        System.out.println("2) Suspicious");
+        config.GUARDPERSONALITY = UserInput.getInt();
+        /*Number of Ogres*/
+        System.out.println("How many Ogres do you wish to fight?");
+        config.NUMBEROFOGRES = UserInput.getInt();
+
+        config.prepareNextLevel();
+        game.setMap(config.getMap());
+        game.setAgents(config.getAgents());
+        game.setKey(config.getKey());
+        game.setKeyTaken(false);
+        game.gameStatus = Game.status.PLAYING;
+        while (game.isGameOver() == false) {
             displayBoard(game.getMap());
-            if(game.update() != 0){
-                System.out.println("End Game!");
-                return;
-            };
+            switch (game.moveAllAgents()){
+                case 0:
+                    break;
+                case 1:
+                    config.prepareNextLevel();
+                    game.setMap(config.getMap());
+                    game.setAgents(config.getAgents());
+                    game.setKey(config.getKey());
+                    game.setKeyTaken(false);
+                    break;
+                case 2:
+                    System.out.println("Congratulations,you've escaped");
+                    return;
+            }
         }
         displayBoard(game.getMap());
+        System.out.println("You have been captured");
     }
 
     private static void displayBoard(char matrix[][]) {
