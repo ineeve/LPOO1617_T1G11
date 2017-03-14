@@ -22,7 +22,6 @@ public class DungeonMap extends GameMap {
 
     @Override
     public GameMap nextMap() {
-       
         return new KeepMap();
     }
 }

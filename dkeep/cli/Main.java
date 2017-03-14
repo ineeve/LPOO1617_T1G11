@@ -1,5 +1,6 @@
 package dkeep.cli;
 
+import dkeep.logic.Configs;
 import dkeep.logic.Game;
 
 /**
@@ -7,12 +8,37 @@ import dkeep.logic.Game;
  */
 class Main {
     public static void main(String[] args) {
-        Game game = new Game(1);
+        Configs config = new Configs(1);
+        Game game = new Game();
+
+        /*Guard personality*/
+        System.out.println("What guard personality you want?");
+        config.GUARDPERSONALITY = UserInput.getInt();
+        /*Number of Ogres*/
+        System.out.println("How many Ogres do you wish to fight?");
+        config.NUMBEROFOGRES = UserInput.getInt();
+
+        config.prepareNextLevel();
+        game.setMap(config.getMap());
+        game.setAgents(config.getAgents());
+        game.setKey(config.getKey());
+        game.setKeyTaken(false);
+        game.gameStatus = Game.status.PLAYING;
         while (game.isGameOver() == false) {
             displayBoard(game.getMap());
-            if (game.moveAllAgents()==1){
-                 System.out.println("Congratulations,you've escaped");
-                 return;
+            switch (game.moveAllAgents()){
+                case 0:
+                    break;
+                case 1:
+                    config.prepareNextLevel();
+                    game.setMap(config.getMap());
+                    game.setAgents(config.getAgents());
+                    game.setKey(config.getKey());
+                    game.setKeyTaken(false);
+                    break;
+                case 2:
+                    System.out.println("Congratulations,you've escaped");
+                    return;
             }
         }
         displayBoard(game.getMap());
