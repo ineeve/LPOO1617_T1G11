@@ -87,9 +87,9 @@ public class Game {
 		return gameStatus;
 	}
 
-	public void moveHero(char direction){
+	public int moveHero(char direction){
 		MovingAgent actualAgent = agents.get(0);
-		moveAgent(actualAgent,direction);
+		return moveAgent(actualAgent,direction);
 	}
 
 	public void moveOgres(){
@@ -102,7 +102,15 @@ public class Game {
 	}
 
 	public int moveAllAgents(){
-		for (int i = 0; i< agents.size(); i++){
+		int returnValue = moveAgent(agents.get(0),agents.get(0).getNextDirection());
+		if (returnValue != 0){
+			return returnValue;
+		}
+		return moveBots();
+
+	}
+	public int moveBots(){
+		for (int i = 1; i< agents.size(); i++){
 			MovingAgent actualAgent = agents.get(i);
 			char nextDirection = actualAgent.getNextDirection();
 			int returnValue = moveAgent(actualAgent,nextDirection);
@@ -111,9 +119,13 @@ public class Game {
 			}
 		}
 		return 0;
-
 	}
-
+	/**
+	 * 
+	 * @param actualAgent theAgent to move
+	 * @param direction the direction
+	 * @return 0-Nothing, 1-ChangeToNextMap 2-Victory
+	 */
 	public int moveAgent(MovingAgent actualAgent, char direction){
 		int lastPositionX = actualAgent.getAgentCoords().x;
 		int lastPositionY = actualAgent.getAgentCoords().y;

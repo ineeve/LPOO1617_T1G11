@@ -49,6 +49,9 @@ public class MovementStrategy {
                 pathIterator = 0;
             }
         } else if (direction == 0) {
+        	if (pathIterator == 0){
+        		pathIterator=path.length;
+        	}
             nextChar = path[--pathIterator];
             if (pathIterator <= 0) {
                 pathIterator = path.length;

@@ -73,10 +73,11 @@ public class Configs {
                 agents.add(new Hero(HEROSTARTPOS));
                 switch (GUARDPERSONALITY){
                     case 0:
-                        agents.add(new Rookie(GUARDSTARTPOS));
+                    	agents.add(new Drunken(GUARDSTARTPOS));
                         break;
+                        
                     case 1:
-                        agents.add(new Drunken(GUARDSTARTPOS));
+                    	agents.add(new Rookie(GUARDSTARTPOS));
                         break;
                     case 2:
                         agents.add(new Suspicious(GUARDSTARTPOS));
