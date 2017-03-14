@@ -7,6 +7,7 @@ import dkeep.logic.maps.Task1TestMap;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by João on 05/03/2017.
@@ -17,6 +18,8 @@ public class Configs {
     private static Point HEROSTARTPOS;
     private static Point GUARDSTARTPOS;
     private static final GameMap STARTMAP = new DungeonMap();
+    public static int NUMBEROFOGRES;
+    public static int GUARDPERSONALITY;
 
     static int level = 0;
     ArrayList<MovingAgent> agents = new ArrayList<>();
@@ -25,22 +28,21 @@ public class Configs {
 
     public Configs(int startLevel){
         level = startLevel;
-        this.prepareNextLevel();
     }
 
-    ArrayList<MovingAgent> getAgents(){
+    public ArrayList<MovingAgent> getAgents(){
         return agents;
     }
 
-    Key getKey(){
+    public Key getKey(){
         return key;
     }
 
-    GameMap getNextMap(){
+    public GameMap getMap(){
         return map;
     }
 
-    int prepareNextLevel(){
+    public int prepareNextLevel(){
         agents.clear();
         switch (level){
             case 0:
@@ -81,8 +83,9 @@ public class Configs {
                 HEROSTARTPOS = new Point(1,7);
                 KEYSTARTPOS = new Point(7,1);
                 if (key != null){
-                key.setCoord(KEYSTARTPOS);
-                }else{
+                    key.setCoord(KEYSTARTPOS);
+                }
+                else{
                 	key = new Key(KEYSTARTPOS);
                 }
                 if(map == null) {
@@ -92,18 +95,12 @@ public class Configs {
                     map = map.nextMap();
                 }
                 Hero newHero = new Hero(HEROSTARTPOS,'A','/');
-                
-                
                 agents.add(newHero);
-                agents.add(new Ogre(new Point(4,3)));
-                /* Ogres */
-                System.out.println("How many Ogres do you wish to fight?");
-                /*int numOgres = UserInput.getInt();
-                for (int i = 0; i < numOgres; i++){
+                for (int i = 0; i < NUMBEROFOGRES; i++){
                     int rnX = ThreadLocalRandom.current().nextInt(3, 7);
                     int rnY = ThreadLocalRandom.current().nextInt(1, 7);
                     agents.add(new Ogre(new Point(rnX,rnY)));
-                }*/
+                }
 
                 level = 3;
                 return 0;
