@@ -13,6 +13,9 @@ class Main {
 
         /*Guard personality*/
         System.out.println("What guard personality you want?");
+        System.out.println("0) Rookie");
+        System.out.println("1) Drunken");
+        System.out.println("2) Suspicious");
         config.GUARDPERSONALITY = UserInput.getInt();
         /*Number of Ogres*/
         System.out.println("How many Ogres do you wish to fight?");

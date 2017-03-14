@@ -71,11 +71,17 @@ public class Configs {
                 map = STARTMAP;
 
                 agents.add(new Hero(HEROSTARTPOS));
-                //agents.add(new Guard(GUARDSTARTPOS));
-                agents.add( new Rookie(GUARDSTARTPOS));
-                //agents.add(new Guard(GUARDSTARTPOS));
-                //agents.add(new Drunken(GUARDSTARTPOS));
-                //agents.add( new Suspicious(GUARDSTARTPOS));;
+                switch (GUARDPERSONALITY){
+                    case 0:
+                        agents.add(new Rookie(GUARDSTARTPOS));
+                        break;
+                    case 1:
+                        agents.add(new Drunken(GUARDSTARTPOS));
+                        break;
+                    case 2:
+                        agents.add(new Suspicious(GUARDSTARTPOS));
+                        break;
+                }
 
                 level = 2;
                 return 0;
