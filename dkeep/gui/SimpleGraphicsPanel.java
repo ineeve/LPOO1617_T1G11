@@ -1,23 +1,47 @@
 package dkeep.gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener {
-	private int x1 = 0, y1 = 0, x2 = 0, y2 = 0; 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
+public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener { 
+	// Coordinates of the elipse �bounding rectangle�
+	private int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+	BufferedImage wall = null;
+	
 	// Constructor, adding mouse and keyboard listeneres 
 	public SimpleGraphicsPanel() { 
 		addMouseListener(this); 
 		addMouseMotionListener(this); 
-		addKeyListener(this); 
+		addKeyListener(this);
+		init();
+	}
+	
+	private void init(){
+		try{
+			wall = ImageIO.read(new File("C:\\Users\\ineeve\\Documents\\GitHub\\LPOO1617_T1G11\\assets\\tempWall.png"));
+		}catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	// Redraws the panel, only when requested by SWING
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g); // limpa fundo ... 
-		g.setColor(Color.BLUE); 
-		g.fillOval(x1, y1, x2 - x1 + 1, y2 - y1 + 1); 
+		//g.setColor(Color.BLUE); 
+		//g.fillOval(x1, y1, x2 - x1 + 1, y2 - y1 + 1); 
+		g.drawImage(wall,10,10,null);
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
