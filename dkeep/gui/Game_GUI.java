@@ -6,10 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import net.miginfocom.swing.MigLayout;
-import dkeep.cli.UserInput;
 import dkeep.logic.Configs;
 import dkeep.logic.Game;
-import dkeep.logic.Hero;
 public class Game_GUI {
 
 	private JFrame frmEscapeGame;
@@ -119,7 +117,7 @@ public class Game_GUI {
 		frmEscapeGame = new JFrame();
 		frmEscapeGame.setTitle("Escape Game");
 		frmEscapeGame.setBounds(100, 100, 575, 358);
-		frmEscapeGame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmEscapeGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmEscapeGame.getContentPane().setLayout(new MigLayout("", "[grow][grow][][][][][][grow][][][][][]", "[][][][][grow][][grow][][][][][][][][]"));
 
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres");
@@ -232,6 +230,8 @@ public class Game_GUI {
 			}
 		});
 		frmEscapeGame.getContentPane().add(btnExit, "cell 7 14 5 1,sizegroupx 2,alignx center,sizegroupy 2");
+		frmEscapeGame.pack();
+		
 	}
 	class MyIntFilter extends DocumentFilter {
 		@Override
