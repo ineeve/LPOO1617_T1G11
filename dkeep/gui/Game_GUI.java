@@ -172,7 +172,7 @@ public class Game_GUI {
 		});
 		frmEscapeGame.getContentPane().add(btnNewGame, "cell 6 2 5 1,sizegroupx 2,alignx center,sizegroupy 2,aligny center");
 
-		scrollPane = new JScrollPane();
+		/*scrollPane = new JScrollPane();
 		frmEscapeGame.getContentPane().add(scrollPane, "cell 0 4 5 10,grow");
 
 
@@ -180,7 +180,11 @@ public class Game_GUI {
 		textArea = new JTextArea();
 		textArea.setFont(new Font("Courier New",Font.PLAIN,14));
 		textArea.setEditable(false);
-		scrollPane.setViewportView(textArea);
+		scrollPane.setViewportView(textArea);*/
+		
+		JPanel graphicsPanel = new SimpleGraphicsPanel(); 
+		frmEscapeGame.getContentPane().add(graphicsPanel,"cell 0 4 5 10,grow");
+		graphicsPanel.repaint();
 
 		panel = new JPanel();
 		frmEscapeGame.getContentPane().add(panel, "cell 7 5 5 4,alignx center");
