@@ -20,8 +20,13 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 		g.fillOval(x1, y1, x2 - x1 + 1, y2 - y1 + 1); 
 	}
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent e) {
+		switch(e.getKeyCode()){ 
+		case KeyEvent.VK_LEFT: x1--; x2--; repaint(); break; 
+		case KeyEvent.VK_RIGHT: x1++; x2++; repaint(); break;  
+		case KeyEvent.VK_UP: y1--; y2--; repaint(); break; 
+		case KeyEvent.VK_DOWN: y1++; y2++; repaint(); break; 
+		}
 
 	}
 	@Override
@@ -36,7 +41,9 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		x2 = e.getX();  
+		y2 = e.getY();  
+		repaint();
 
 	}
 	@Override
@@ -61,7 +68,9 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		x2 = x1 = e.getX();  
+		y2 = y1 = e.getY(); 
+		repaint();
 
 	}
 	@Override

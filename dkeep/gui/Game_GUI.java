@@ -18,13 +18,14 @@ public class Game_GUI {
 	private JLabel gameStatsLlb;
 	private JButton btnNewGame;
 	private JButton btnExit;
-	private JScrollPane scrollPane;
+	//private JScrollPane scrollPane;
 	private JTextArea textArea;
 	private JPanel panel;
 	private JButton btnUp;
 	private JButton btnLeft;
 	private JButton btnDown;
 	private JButton btnRight;
+	private JPanel graphicsPanel;
 
 	//Logic Variables
 	private Game game;
@@ -39,6 +40,8 @@ public class Game_GUI {
 				try {
 					Game_GUI window = new Game_GUI();
 					window.frmEscapeGame.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -182,9 +185,11 @@ public class Game_GUI {
 		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);*/
 		
-		JPanel graphicsPanel = new SimpleGraphicsPanel(); 
+		graphicsPanel = new SimpleGraphicsPanel(); 
 		frmEscapeGame.getContentPane().add(graphicsPanel,"cell 0 4 5 10,grow");
+		graphicsPanel.setVisible(true);
 		graphicsPanel.repaint();
+		
 
 		panel = new JPanel();
 		frmEscapeGame.getContentPane().add(panel, "cell 7 5 5 4,alignx center");
@@ -236,7 +241,10 @@ public class Game_GUI {
 			}
 		});
 		frmEscapeGame.getContentPane().add(btnExit, "cell 7 14 5 1,sizegroupx 2,alignx center,sizegroupy 2");
+		
 		frmEscapeGame.pack();
+		graphicsPanel.requestFocusInWindow();
+		
 		
 	}
 	class MyIntFilter extends DocumentFilter {
