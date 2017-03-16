@@ -1,8 +1,11 @@
 package dkeep.gui;
 
+import dkeep.logic.Configs;
+import dkeep.logic.Game;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
