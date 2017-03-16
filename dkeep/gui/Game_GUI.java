@@ -1,13 +1,12 @@
 package dkeep.gui;
 
-import javax.swing.text.*;
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import net.miginfocom.swing.MigLayout;
-import dkeep.logic.Configs;
-import dkeep.logic.Game;
+
 public class Game_GUI {
 
 	private JFrame frmEscapeGame;
