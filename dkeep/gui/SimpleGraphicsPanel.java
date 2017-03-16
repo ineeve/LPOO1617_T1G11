@@ -1,17 +1,10 @@
 package dkeep.gui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JPanel;
-
-public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener { 
-	// Coordinates of the elipse “bounding rectangle”
+public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener {
 	private int x1 = 0, y1 = 0, x2 = 0, y2 = 0; 
 	// Constructor, adding mouse and keyboard listeneres 
 	public SimpleGraphicsPanel() { 
