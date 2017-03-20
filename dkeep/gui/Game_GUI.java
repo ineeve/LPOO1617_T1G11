@@ -2,7 +2,6 @@ package dkeep.gui;
 
 import dkeep.logic.Configs;
 import dkeep.logic.Game;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.text.*;
@@ -12,16 +11,25 @@ import java.awt.event.ActionListener;
 
 public class Game_GUI {
 
-	private JFrame frmEscapeGame;
-	private JTextField numberOfOgres;
-	private JComboBox personalityChooser;
-	private JLabel gameStatsLlb;
-	private PlayPanel playPanel;
-	private InitialMenuPanel menuPanel = new InitialMenuPanel();
-
+	Game game = new Game();
+	Configs config = new Configs(0);
+	
+	JFrame mainFrame = new JFrame("Escape Game");
+	JPanel containerPanel = new JPanel();
+	JPanel menuPanel = new InitialMenuPanel();
+	JPanel playPanel = new JPanel();
+	JPanel settingsPanel = new SettingsPanel(config);
+	CardLayout cl = new CardLayout();
+	
+	JButton btnSettings = new JButton("Settings");
+	JButton btnCreateMap = new JButton("Create Map");
+	JButton btnPlay = new JButton("Play Game");
+	JButton btnExit = new JButton("Exit");
+	JButton btnBack1 = new JButton("Back");
+	JButton btnBack2 = new JButton("Back");
+	
 	//Logic Variables
-	private Game game;
-	private Configs config;
+	
 
 	/**
 	 * Launch the application.
@@ -31,7 +39,7 @@ public class Game_GUI {
 			public void run() {
 				try {
 					Game_GUI window = new Game_GUI();
-					window.frmEscapeGame.setVisible(true);
+					window.mainFrame.setVisible(true);
 					
 					
 				} catch (Exception e) {
@@ -47,8 +55,6 @@ public class Game_GUI {
 	 * Create the application.
 	 */
 	public Game_GUI() {
-		
-		menuPanel.setLayout(null);
 		initialize();
 	}
 
@@ -56,38 +62,71 @@ public class Game_GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		containerPanel.setLayout(cl);
 		
-		frmEscapeGame = new JFrame();
-		frmEscapeGame.setTitle("Escape Game");
-		frmEscapeGame.setBounds(100, 100, 465, 332);
-		frmEscapeGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frmEscapeGame.getContentPane().setLayout(null);
-		frmEscapeGame.getContentPane().add(menuPanel);
-		menuPanel.setVisible(true);
+		menuPanel.add(btnSettings);
+		menuPanel.add(btnCreateMap);
+		menuPanel.add(btnPlay);
+		menuPanel.add(btnExit);
+		playPanel.add(btnBack1);
+		settingsPanel.add(btnBack2);
 		
-		/*
-		JLabel lblNumberOfOgres = new JLabel("Number of Ogres");
-		lblNumberOfOgres.setBounds(0, 0, 0, 0);
-		frmEscapeGame.getContentPane().add(lblNumberOfOgres);
+		playPanel.setBackground(Color.GREEN);
+		settingsPanel.setBackground(Color.RED);
+		
+		containerPanel.add(menuPanel, "1"); // "1" is the identifing string
+		containerPanel.add(settingsPanel,"2");
+		containerPanel.add(playPanel, "3");
+		cl.show(containerPanel, "1"); //which panel is set initially
+		
+		btnSettings.addActionListener(new ActionListener(){
 
-		numberOfOgres = new JTextField(10);
-		numberOfOgres.setBounds(0, 0, 0, 0);
-		frmEscapeGame.getContentPane().add(numberOfOgres);
-		PlainDocument doc = (PlainDocument) numberOfOgres.getDocument();
-		doc.setDocumentFilter(new MyIntFilter());
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(containerPanel, "2");
+			}
+			
+		});
+		btnPlay.addActionListener(new ActionListener(){
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(containerPanel, "3");
+			}
+			
+		});
+		btnExit.addActionListener(new ActionListener(){
 
-		JLabel lblGuardPersonality = new JLabel("Guard Personality");
-		lblGuardPersonality.setBounds(0, 0, 0, 0);
-		frmEscapeGame.getContentPane().add(lblGuardPersonality);
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+			
+		});
+		btnBack1.addActionListener(new ActionListener(){
 
-		String[] personalities = {"Drunken","Rookie","Suspicious"};
-		personalityChooser = new JComboBox(personalities);
-		personalityChooser.setBounds(0, 0, 0, 0);
-		personalityChooser.setSelectedIndex(0);
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(containerPanel, "1");
+			}
+			
+		});
+		btnBack2.addActionListener(new ActionListener(){
 
-		frmEscapeGame.getContentPane().add(personalityChooser);
-*/
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(containerPanel, "1");
+			}
+			
+		});
+		
+		mainFrame.add(containerPanel);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+		
+		
+
 		/*btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gameStatsLlb.setText("You can play now!");
@@ -114,91 +153,7 @@ public class Game_GUI {
 			}
 		});
 		*/
-
-		/*scrollPane = new JScrollPane();
-		frmEscapeGame.getContentPane().add(scrollPane, "cell 0 4 5 10,grow");
-
-
-
-		textArea = new JTextArea();
-		textArea.setFont(new Font("Courier New",Font.PLAIN,14));
-		textArea.setEditable(false);
-		scrollPane.setViewportView(textArea);*/
-		
-		//frmEscapeGame.pack();
-		frmEscapeGame.setVisible(true);
-		
-		
-
-		
 		
 	}
-	class MyIntFilter extends DocumentFilter {
-		@Override
-		public void insertString(FilterBypass fb, int offset, String string,
-				AttributeSet attr) throws BadLocationException {
-
-			Document doc = fb.getDocument();
-			StringBuilder sb = new StringBuilder();
-			sb.append(doc.getText(0, doc.getLength()));
-			sb.insert(offset, string);
-
-			if (test(sb.toString())) {
-				super.insertString(fb, offset, string, attr);
-			} else {
-				// warn the user and don't allow the insert
-			}
-		}
-
-		private boolean test(String text) {
-			try {
-				int valueRead = Integer.parseInt(text);
-				if (valueRead < 6 && valueRead > 0){
-					return true;
-				}
-				return false;
-			} catch (NumberFormatException e) {
-				return false;
-			}
-		}
-
-		@Override
-		public void replace(FilterBypass fb, int offset, int length, String text,
-				AttributeSet attrs) throws BadLocationException {
-
-			Document doc = fb.getDocument();
-			StringBuilder sb = new StringBuilder();
-			sb.append(doc.getText(0, doc.getLength()));
-			sb.replace(offset, offset + length, text);
-
-			if (test(sb.toString())) {
-				super.replace(fb, offset, length, text, attrs);
-			} else {
-				// warn the user and don't allow the insert
-			}
-
-		}
-
-		@Override
-		public void remove(FilterBypass fb, int offset, int length)
-				throws BadLocationException {
-			Document doc = fb.getDocument();
-			StringBuilder sb = new StringBuilder();
-			sb.append(doc.getText(0, doc.getLength()));
-			sb.delete(offset, offset + length);
-
-			if(sb.toString().length() == 0) {
-				super.replace(fb, offset, length, "", null); 
-			} 
-			else { 
-				if (test(sb.toString())) { 
-					super.remove(fb, offset, length); 
-				} 
-				else { 
-					// warn the user and don't allow the insert } }
-				}
-			}
-
-		}
-	}
+	
 }

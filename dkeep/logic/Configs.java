@@ -41,6 +41,10 @@ public class Configs {
     public GameMap getMap(){
         return map;
     }
+    public void setLevel(int newLevel){
+    	level = newLevel;
+    }
+    
 
     public int prepareNextLevel(){
         agents.clear();
