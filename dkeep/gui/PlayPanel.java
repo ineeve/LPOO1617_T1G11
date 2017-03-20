@@ -1,38 +1,55 @@
 package dkeep.gui;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import dkeep.logic.Configs;
 import dkeep.logic.Game;
 
 public class PlayPanel extends JPanel{
 	private JLabel gameStatsLlb;
-	private JButton btnExit;
-	private JPanel moveButtonsPanel;
-	private JButton btnUp;
-	private JButton btnLeft;
-	private JButton btnDown;
-	private JButton btnRight;
-	private JPanel graphicsPanel;
-	private Game game;
-	private Configs config;
+	private JPanel moveButtonsPanel = new JPanel(new BorderLayout());
+	private JButton btnUp = new JButton("");
+	private JButton btnLeft = new JButton("");
+	private JButton btnDown = new JButton("");
+	private JButton btnRight = new JButton("");
+	private SimpleGraphicsPanel graphicsPanel = new SimpleGraphicsPanel();
+	private Game game = new Game();
+	private Configs config = null;
 
 	PlayPanel(Configs conf){
 		config = conf;
-		game = new Game();
+		config.prepareNextLevel();
+		game.setMap(config.getMap());
+        game.setAgents(config.getAgents());
+        game.setKey(config.getKey());
+        game.setKeyTaken(false);
+        game.gameStatus = Game.status.PLAYING;
 		init();
+		graphicsPanel.setMap(game.getMap());
+		graphicsPanel.repaint();
 	}
 	public void init(){
-		setLayout(new FlowLayout());
-		graphicsPanel = new SimpleGraphicsPanel();
-		add(graphicsPanel);
-		graphicsPanel.setVisible(true);
+		setLayout(new BorderLayout());
+		setBackground(Color.BLUE);
+		add(graphicsPanel,BorderLayout.CENTER);
 		
+		btnUp.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_up.png")));
+		btnLeft.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_left.png")));
+		btnRight.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_right.png")));
+		btnDown.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_down.png")));
+		
+		moveButtonsPanel.add(btnUp, BorderLayout.NORTH);
+		moveButtonsPanel.add(btnLeft, BorderLayout.WEST);
+		moveButtonsPanel.add(btnRight, BorderLayout.EAST);
+		moveButtonsPanel.add(btnDown, BorderLayout.SOUTH);
+		add(moveButtonsPanel,BorderLayout.EAST);
 	}
 	
 	

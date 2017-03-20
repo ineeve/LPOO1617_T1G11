@@ -1,5 +1,6 @@
 package dkeep.gui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,7 +29,7 @@ public class SettingsPanel extends JPanel {
 		init();
 	}
 	public void init(){
-
+		setBackground(Color.RED);
 		add(lblnumOgres);
 		add(numberOfOgres);
 		add(lblGuardPersonality);
@@ -40,7 +41,7 @@ public class SettingsPanel extends JPanel {
 		personalityChooser.setSelectedIndex(0);
 		add(personalityChooser);
 		add(lblLevelChooser);
-		String[] maps = {"Dungeon","Ogre's Keep","Custom Map"};
+		String[] maps = {"Test Map","Dungeon","Ogre's Keep","Custom Map"};
 		levelChooser = new JComboBox(maps);
 		levelChooser.setSelectedIndex(0);
 		add(levelChooser);
@@ -55,7 +56,6 @@ public class SettingsPanel extends JPanel {
 				}
 				Configs.NUMBEROFOGRES = Integer.parseInt(numberOfOgres.getText());
 				Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
-				conf.prepareNextLevel();
 			}
 
 		});
