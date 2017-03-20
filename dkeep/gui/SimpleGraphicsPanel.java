@@ -1,7 +1,8 @@
 package dkeep.gui;
 
-import java.awt.Color;
+
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -29,12 +30,12 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	}
 	
 	private void init(){
-		try{
-			wall = ImageIO.read(new File("C:\\Users\\ineeve\\Documents\\GitHub\\LPOO1617_T1G11\\assets\\tempWall.png"));
-		}catch(IOException e){
+		try {
+			wall = ImageIO.read(new File("src/assets/Horizontal_Wall.png"));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+		}
 
 	// Redraws the panel, only when requested by SWING
 	public void paintComponent(Graphics g) { 

@@ -188,7 +188,6 @@ public class Game_GUI {
 		graphicsPanel = new SimpleGraphicsPanel(); 
 		frmEscapeGame.getContentPane().add(graphicsPanel,"cell 0 4 5 10,grow");
 		graphicsPanel.setVisible(true);
-		graphicsPanel.repaint();
 		
 
 		panel = new JPanel();
