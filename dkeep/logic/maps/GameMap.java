@@ -24,6 +24,8 @@ public abstract class GameMap {
             return 0;
         } else if (coord.x >= map[coord.y].length || coord.x < 0) {
             return 0;
+        } else if ('X' == map[coord.y][coord.x]) {
+            return 0;
         } else if ('I' == map[coord.y][coord.x]) {
             return 3;
         } else if (' ' == map[coord.y][coord.x]) {

@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener { 
-	// Coordinates of the elipse “bounding rectangle”
+	// Coordinates of the elipse ï¿½bounding rectangleï¿½
 	private int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 	BufferedImage wall = null;
 	
