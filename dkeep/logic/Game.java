@@ -87,9 +87,9 @@ public class Game {
 		return gameStatus;
 	}
 
-	public void moveHero(char direction){
+	public int moveHero(char direction){
 		MovingAgent actualAgent = agents.get(0);
-		moveAgent(actualAgent,direction);
+		return moveAgent(actualAgent,direction);
 	}
 
 	public void moveOgres(){
@@ -102,7 +102,15 @@ public class Game {
 	}
 
 	public int moveAllAgents(){
-		for (int i = 0; i< agents.size(); i++){
+		int returnValue = moveAgent(agents.get(0),agents.get(0).getNextDirection());
+		if (returnValue != 0){
+			return returnValue;
+		}
+		return moveBots();
+
+	}
+	public int moveBots(){
+		for (int i = 1; i< agents.size(); i++){
 			MovingAgent actualAgent = agents.get(i);
 			char nextDirection = actualAgent.getNextDirection();
 			int returnValue = moveAgent(actualAgent,nextDirection);
@@ -111,80 +119,109 @@ public class Game {
 			}
 		}
 		return 0;
-
 	}
 
-	public int moveAgent(MovingAgent actualAgent, char direction){
-		int lastPositionX = actualAgent.getAgentCoords().x;
-		int lastPositionY = actualAgent.getAgentCoords().y;
+    private void ogreStunned(MovingAgent actualAgent){
+        if (actualAgent instanceof Ogre){ /* Verify if can be stunned */
+            if (actualAgent.getAgentCoords().distance(agents.get(0).weapon.getCoords()) <= 1){
+                ((Ogre) actualAgent).setStunned();
+            }
+        }
+    }
 
-		if (actualAgent instanceof Ogre){
-			if (((Ogre) actualAgent).isStunned()){
-				((Ogre) actualAgent).recoverFromStun();
-				actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
-				actualAgent.weapon.nextMove();
-				while (map.isFree(actualAgent.weapon.getCoords()) != 1){
-					actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
-					actualAgent.weapon.nextMove();
-				}
-				return 0;
-			}
-			
-		}
-		actualAgent.nextPos(direction);
-
-		int isFreeResponse = map.isFree(actualAgent.getAgentCoords());
-
-		switch (isFreeResponse) {
-		case 0:
-			actualAgent.setAgentCoords(new Point(lastPositionX, lastPositionY));
-			break;
-		case 1:
-			if (key.getCoord().x == actualAgent.getAgentCoords().x && key.getCoord().y == actualAgent.getAgentCoords().y) {
-				actualAgent.setKey(true);
-				if (actualAgent instanceof Hero){
-					keyTaken = true;
-					if (!(map instanceof KeepMap)){
-						map.changeAllDoorsToStairs();
-					}else{
-						actualAgent.setSymbol('K');
-					}
-				}
-			} else {
-				actualAgent.setKey(false);
-			}
-			break;
-		case 2:
-			if(map.nextMap() == null){
-				gameStatus = status.VICTORY;
-				return 2;
-			}
-			return 1;
-		case 3:
-			if (actualAgent instanceof Hero){
-				if ( keyTaken){
-					if (map instanceof KeepMap){
-						map.changeAllDoorsToStairs();
-					}
-				}
-			}
-			actualAgent.setAgentCoords(new Point(lastPositionX, lastPositionY));
-			break;
-		}
-		if(actualAgent.weapon.getSymbol() != ' ') {
+	private int ogreHandler(MovingAgent actualAgent){
+		if (((Ogre) actualAgent).isStunned()){
+			((Ogre) actualAgent).recoverFromStun();
 			actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
 			actualAgent.weapon.nextMove();
-			while (map.isFree(actualAgent.weapon.getCoords()) != 1 && map.isFree(actualAgent.weapon.getCoords()) != 4 ){
+			while (map.isFree(actualAgent.weapon.getCoords()) != 1){
 				actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
 				actualAgent.weapon.nextMove();
 			}
+			return 1;
+		}
+		return 0;
+	}
 
+	private void keyHandler(MovingAgent actualAgent){
+        if (key.getCoord().distance(actualAgent.getAgentCoords()) == 0) {
+		    actualAgent.setKey(true);
+		    if (actualAgent instanceof Hero){
+			    keyTaken = true;
+			    if (!(map instanceof KeepMap)){
+                    map.changeAllDoorsToStairs();
+			    }else{
+				    actualAgent.setSymbol('K');
+			    }
+		    }
+        }
+        else {
+            actualAgent.setKey(false);
+        }
+	}
+
+	private int responseHandler(MovingAgent actualAgent, int isFreeResponse, Point lastPosition){
+		switch (isFreeResponse) {
+			case 0:
+				actualAgent.setAgentCoords(lastPosition);
+				break;
+			case 1:
+			    keyHandler(actualAgent);
+			    ogreStunned(actualAgent);
+				break;
+			case 2:
+				if(map.nextMap() == null){
+					gameStatus = status.VICTORY;
+					return 2;
+				}
+				return 1;
+			case 3:
+				if (actualAgent instanceof Hero){
+					if (keyTaken){
+						if (map instanceof KeepMap){
+							map.changeAllDoorsToStairs();
+						}
+					}
+				}
+				actualAgent.setAgentCoords(lastPosition);
+				break;
 		}
+		return 0;
+	}
+
+	private void moveWeapon(MovingAgent actualAgent){
+		actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+		actualAgent.weapon.nextMove();
+		while (map.isFree(actualAgent.weapon.getCoords()) != 1 && map.isFree(actualAgent.weapon.getCoords()) != 4 ){
+			actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+			actualAgent.weapon.nextMove();
+		}
+	}
+
+	/**
+	 * 
+	 * @param actualAgent theAgent to move
+	 * @param direction the direction
+	 * @return 0-Nothing, 1-ChangeToNextMap 2-Victory
+	 */
+	public int moveAgent(MovingAgent actualAgent, char direction){
+		Point lastPosition = (Point) actualAgent.getAgentCoords().clone();
+
 		if (actualAgent instanceof Ogre){
-			if (actualAgent.getAgentCoords().distance(agents.get(0).weapon.getCoords()) <= 1){
-				((Ogre) actualAgent).setStunned();
-			}
+			if(ogreHandler(actualAgent) != 0) return 0; /* Verify if ogre is stun */
 		}
+
+		actualAgent.nextPos(direction);
+		int isFreeResponse = map.isFree(actualAgent.getAgentCoords()); /* Verify if next position is free */
+		int handlerResponse = responseHandler(actualAgent, isFreeResponse, lastPosition);/* Handler for next position of agent */
+		if (handlerResponse != 0){
+			return handlerResponse;
+		}
+
+		if(actualAgent.weapon.getSymbol() != ' ') {
+			moveWeapon(actualAgent);
+		}
+
 		return 0;
 	}
 
