@@ -18,7 +18,7 @@ public class Configs {
     private static Point HEROSTARTPOS;
     private static Point GUARDSTARTPOS;
     private static final GameMap STARTMAP = new DungeonMap();
-    public static int NUMBEROFOGRES;
+    public static int NUMBEROFOGRES = 1;
     public static int GUARDPERSONALITY;
 
     static int level = 0;

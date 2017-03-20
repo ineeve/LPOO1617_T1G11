@@ -5,6 +5,7 @@
  */
 package dkeep.test;
 
+import dkeep.logic.Configs;
 import dkeep.logic.Game;
 import dkeep.logic.Game.status;
 import dkeep.logic.Hero;
@@ -21,7 +22,15 @@ public class KeepMapTest {
 	@Test
 	public void testHeroIsKilledByOgre(){
 		System.out.println("Testing Hero dies if it is adjacent to Ogre");
-		Game game = new Game(2);
+		Game game = new Game();
+		Configs config = new Configs(2);
+		config.prepareNextLevel();
+		game.setMap(config.getMap());
+        game.setAgents(config.getAgents());
+        game.setKey(config.getKey());
+        game.setKeyTaken(false);
+        game.gameStatus = Game.status.PLAYING;
+        game.getFirstOgre().setAgentCoords(new Point(4,3));
 		game.moveHero('d');
 		game.moveHero('d');
 		game.moveHero('d');

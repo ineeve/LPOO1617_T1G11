@@ -31,7 +31,7 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	
 	private void init(){
 		try {
-			wall = ImageIO.read(new File("LPOO1617_T1G1/assets/tempWall.png"));
+			wall = ImageIO.read(new File("src/assets/Horizontal_Wall.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
