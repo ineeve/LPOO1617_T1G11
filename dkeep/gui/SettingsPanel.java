@@ -21,6 +21,7 @@ public class SettingsPanel extends JPanel {
 	SettingsPanel(){
 		init();
 	}
+
 	public void init(){
 		setBackground(Color.RED);
 		add(lblnumOgres);
@@ -41,6 +42,7 @@ public class SettingsPanel extends JPanel {
 		levelChooser.setSelectedIndex(0);
 		add(levelChooser);
 		add(save);
+
 		save.addActionListener(new ActionListener(){
 
 			@Override
@@ -50,7 +52,6 @@ public class SettingsPanel extends JPanel {
 				Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
 				conf.prepareNextLevel();
 			}
-
 		});
 	}
 	public Configs getConf(){

@@ -1,16 +1,11 @@
 package dkeep.gui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.EventQueue;
+import dkeep.logic.Configs;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import dkeep.logic.Configs;
 
 public class Game_GUI {
 	
@@ -30,6 +25,8 @@ public class Game_GUI {
 	JButton btnBack2 = new JButton("Back");
 	JButton btnBack3 = new JButton("Back");
 	
+	//Logic Variables
+	
 
 	/**
 	 * Launch the application.
@@ -40,16 +37,12 @@ public class Game_GUI {
 				try {
 					Game_GUI window = new Game_GUI();
 					window.mainFrame.setVisible(true);
-					
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-	
-	
 
 	/**
 	 * Create the application.
@@ -70,7 +63,8 @@ public class Game_GUI {
 		menuPanel.add(btnExit);
 		playPanel.add(btnBack1,BorderLayout.PAGE_END);
 		settingsPanel.add(btnBack2);
-		editMapPanel.add(btnBack3);
+		createMapPanel.add(btnBack3);
+		
 		
 		
 		containerPanel.add(menuPanel, "1"); // "1" is the identifing string
@@ -85,7 +79,6 @@ public class Game_GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(containerPanel, "2");
 			}
-			
 		});
 		btnCreateMap.addActionListener(new ActionListener(){
 
@@ -93,7 +86,6 @@ public class Game_GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(containerPanel, "3");
 			}
-			
 		});
 		
 		
@@ -104,7 +96,6 @@ public class Game_GUI {
 				cl.show(containerPanel, "4");
 				playPanel.enableMoveButtons();
 			}
-			
 		});
 		btnExit.addActionListener(new ActionListener(){
 
@@ -112,7 +103,6 @@ public class Game_GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}
-			
 		});
 		btnBack1.addActionListener(new ActionListener(){
 
@@ -121,7 +111,6 @@ public class Game_GUI {
 				cl.show(containerPanel, "1");
 				btnPlay.setEnabled(false);
 			}
-			
 		});
 		btnBack2.addActionListener(new ActionListener(){
 
@@ -131,7 +120,6 @@ public class Game_GUI {
 				btnPlay.setEnabled(true);
 				playPanel.setConfigs(settingsPanel.getConf());
 			}
-			
 		});
 		btnBack3.addActionListener(new ActionListener(){
 
@@ -139,7 +127,6 @@ public class Game_GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(containerPanel, "1");
 			}
-			
 		});
 		
 		mainFrame.add(containerPanel);
