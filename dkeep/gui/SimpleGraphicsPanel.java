@@ -2,18 +2,12 @@ package dkeep.gui;
 
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
-
-
 
 
 public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener { 
