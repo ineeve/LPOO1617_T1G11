@@ -1,12 +1,12 @@
 package dkeep.gui;
 
-import dkeep.logic.Configs;
 import dkeep.logic.Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class PlayPanel extends JPanel{
+public class PlayPanel extends JPanel {
 	JPanel moveButtonsPanel = new JPanel(new BorderLayout());
 	JPanel northPanel = new JPanel (new FlowLayout());
 	JButton btnUp = new JButton("");
@@ -116,10 +116,5 @@ public class PlayPanel extends JPanel{
 		game = g;
 		graphicsPanel.setGame(game);
 	}
-
-
-
-
-
 
 }

@@ -1,18 +1,18 @@
 package dkeep.gui;
 
 
+import dkeep.logic.Game;
+
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JPanel;
 
-import dkeep.logic.Configs;
-import dkeep.logic.Game;
-
-public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener { 
+public class SimpleGraphicsPanel extends JPanel implements KeyListener {
 
 	Game game;
 	char[][] map = null;
@@ -37,8 +37,6 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	// Constructor, adding mouse and keyboard listeneres 
 	public SimpleGraphicsPanel() {
 		setBackground(Color.black);
-		addMouseListener(this); 
-		addMouseMotionListener(this); 
 		addKeyListener(this);
 		init();
 	}
@@ -182,56 +180,16 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	@Override
 	public void keyReleased(KeyEvent e) {
 
-
 	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 
-
 	}
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		x2 = e.getX();  
-		y2 = e.getY();  
-		repaint();
-
-	}
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		x2 = x1 = e.getX();  
-		y2 = y1 = e.getY(); 
-		repaint();
-
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	} 
 
 	/**
 	 * Resizes an image using a Graphics2D object backed by a BufferedImage.
-	 * @param srcImg - source image to scale
+	 * @param src - source image to scale
 	 * @param w - desired width
 	 * @param h - desired height
 	 * @return - the new resized image

@@ -1,13 +1,12 @@
 package dkeep.gui;
 
 import dkeep.logic.Configs;
+import dkeep.logic.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import dkeep.logic.Game;
 public class Game_GUI {
 	
 	JFrame mainFrame = new JFrame("Escape Game");
