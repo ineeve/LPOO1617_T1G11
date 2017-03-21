@@ -29,6 +29,23 @@ public class Game {
 		gameStatus = status.PLAYING;
 	}
 
+	public void setConfigs(Configs config){
+		this.config = config;
+	}
+	public Configs getConfig(){
+		return config;
+	}
+	
+	public void resetLevel(){
+		this.config = new Configs(config.level);
+		config.prepareNextLevel();
+		map = config.getMap();
+		agents = config.getAgents();
+		key = config.getKey();
+		keyTaken = false;
+		gameStatus = status.PLAYING;
+	}
+	
 	public void setMap(GameMap map) {
 		this.map = map;
 	}

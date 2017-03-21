@@ -19,7 +19,7 @@ public class Configs {
     private static Point GUARDSTARTPOS;
     private static final GameMap STARTMAP = new DungeonMap();
     public static int NUMBEROFOGRES = 1;
-    public static int GUARDPERSONALITY;
+    public static int GUARDPERSONALITY = 0;
 
     static int level = 0;
     ArrayList<MovingAgent> agents = new ArrayList<>();
@@ -28,6 +28,9 @@ public class Configs {
 
     public Configs(int startLevel){
         level = startLevel;
+    }
+    public void decreaseLevel(){
+    	level--;
     }
 
     public ArrayList<MovingAgent> getAgents(){

@@ -13,10 +13,9 @@ public class PlayPanel extends JPanel{
 	JButton btnLeft = new JButton("");
 	JButton btnDown = new JButton("");
 	JButton btnRight = new JButton("");
-	JButton btnNewGame = new JButton("New Game");
 	JLabel gameStatsLlb = new JLabel("Game Status");
 	SimpleGraphicsPanel graphicsPanel = new SimpleGraphicsPanel();
-	Configs config = new Configs(0);
+	Game game;
 
 	PlayPanel(){
 		init();
@@ -37,21 +36,9 @@ public class PlayPanel extends JPanel{
 		moveButtonsPanel.add(btnDown, BorderLayout.SOUTH);
 		add(moveButtonsPanel,BorderLayout.EAST);
 
-		northPanel.add(btnNewGame);
+
 		northPanel.add(gameStatsLlb);
 		add(northPanel,BorderLayout.NORTH);
-
-		btnNewGame.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				gameStatsLlb.setText("You can play now");
-				graphicsPanel.setConfig(config);
-				
-				btnNewGame.setEnabled(false);
-			}
-
-		});
 		btnUp.addActionListener(new ActionListener(){
 
 			@Override
@@ -93,7 +80,7 @@ public class PlayPanel extends JPanel{
 
 		});
 
-		
+
 		graphicsPanel.requestFocusInWindow();
 	}
 
@@ -104,7 +91,7 @@ public class PlayPanel extends JPanel{
 				gameStatsLlb.setText("You have been captured, press New Game to Try Again");
 			}else{
 				gameStatsLlb.setText("You have escaped, congrats!");
-				
+
 			}
 			;
 		}
@@ -125,8 +112,9 @@ public class PlayPanel extends JPanel{
 		graphicsPanel.repaint();
 	}
 
-	public void setConfigs(Configs conf){
-		config = conf;
+	public void setGame(Game g){
+		game = g;
+		graphicsPanel.setGame(game);
 	}
 
 

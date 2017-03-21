@@ -14,8 +14,7 @@ import dkeep.logic.Game;
 
 public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener { 
 
-	Game game = new Game();
-	Configs config = null;
+	Game game;
 	char[][] map = null;
 	int currentX = 0;
 	int currentY = 0;
@@ -44,13 +43,8 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 		init();
 	}
 
-	public void setConfig(Configs conf){
-		config = conf;
-		game.setMap(config.getMap());
-        game.setAgents(config.getAgents());
-        game.setKey(config.getKey());
-        game.setKeyTaken(false);
-        game.gameStatus = Game.status.PLAYING;
+	public void setGame(Game g){
+		game = g;
 		map = game.getMap();
 		repaint();
 	}
@@ -89,15 +83,11 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 			e.printStackTrace();
 		}
 	}
-	
+
 	public int moveAgents_GUI(char heroDirection){
 
 		if (game.moveHero(heroDirection)==1){ //change To next level
-			config.prepareNextLevel();
-			game.setMap(config.getMap());
-			game.setAgents(config.getAgents());
-			game.setKey(config.getKey());
-			game.setKeyTaken(false);
+			game.resetLevel();
 			map = game.getMap();
 			repaint();
 			return 0;
@@ -123,76 +113,80 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g); // cleans background 
 		if (map != null){
-		for (int i = 0; i < map.length; i++){
-			for (int j = 0; j < map[i].length;j++){
-				switch (map[i][j]){
-				case 'X':
-					g.drawImage(wall, currentX, currentY, null);
-					break;
-				case ' ':
-					g.drawImage(floor, currentX, currentY, null);
-					break;
-				case 'H':
-					g.drawImage(hero, currentX, currentY, null);
-					break;
-				case 'A':
-					g.drawImage(hero, currentX, currentY, null);
-					break;
-				case 'K':
-					g.drawImage(heroWithKey, currentX, currentY, null);
-					break;
-				case '*':
-					g.drawImage(club, currentX, currentY, null);
-					break;
-				case '8':
-					g.drawImage(ogreStunned, currentX, currentY, null);
-					break;
-				case 'G':
-					g.drawImage(guard, currentX, currentY, null);
-					break;
-				case 'S':
-					g.drawImage(stairs, currentX, currentY, null);
-					break;
-				case 'k':
-					g.drawImage(key, currentX, currentY, null);
-					break;
-				case 'O':
-					g.drawImage(ogre, currentX, currentY, null);
-					break;
-				case 'I':
-					g.drawImage(door, currentX, currentY, null);
-					break;
-				default:
-					g.drawImage(defaultImg, currentX, currentY, null);
-					break;
+			for (int i = 0; i < map.length; i++){
+				for (int j = 0; j < map[i].length;j++){
+					switch (map[i][j]){
+					case 'X':
+						g.drawImage(wall, currentX, currentY, null);
+						break;
+					case ' ':
+						g.drawImage(floor, currentX, currentY, null);
+						break;
+					case 'H':
+						g.drawImage(hero, currentX, currentY, null);
+						break;
+					case 'A':
+						g.drawImage(hero, currentX, currentY, null);
+						break;
+					case 'K':
+						g.drawImage(heroWithKey, currentX, currentY, null);
+						break;
+					case '*':
+						g.drawImage(club, currentX, currentY, null);
+						break;
+					case '8':
+						g.drawImage(ogreStunned, currentX, currentY, null);
+						break;
+					case 'G':
+						g.drawImage(guard, currentX, currentY, null);
+						break;
+					case 'S':
+						g.drawImage(stairs, currentX, currentY, null);
+						break;
+					case 'k':
+						g.drawImage(key, currentX, currentY, null);
+						break;
+					case 'O':
+						g.drawImage(ogre, currentX, currentY, null);
+						break;
+					case 'I':
+						g.drawImage(door, currentX, currentY, null);
+						break;
+					default:
+						g.drawImage(defaultImg, currentX, currentY, null);
+						break;
 
+					}
+					currentX += imagesSize;
 				}
-				currentX += imagesSize;
+				currentX = 0;
+				currentY+=imagesSize;
 			}
-			currentX = 0;
-			currentY+=imagesSize;
-		}
-		currentY = 0;
+			currentY = 0;
 		}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()){ 
-		case KeyEvent.VK_LEFT: moveAgents_GUI('a'); break; 
-		case KeyEvent.VK_RIGHT:moveAgents_GUI('d'); break;  
-		case KeyEvent.VK_UP: moveAgents_GUI('w');break; 
-		case KeyEvent.VK_DOWN: moveAgents_GUI('s'); break; 
+		case KeyEvent.VK_LEFT:
+			moveAgents_GUI('a'); break; 
+		case KeyEvent.VK_RIGHT:
+			moveAgents_GUI('d'); break;  
+		case KeyEvent.VK_UP:
+			moveAgents_GUI('w');break; 
+		case KeyEvent.VK_DOWN:
+			moveAgents_GUI('s'); break; 
 		}
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+
 
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 
 	}
 	@Override
@@ -270,5 +264,5 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 			return 2;
 		}
 		return 0;
-}
+	}
 }
