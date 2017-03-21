@@ -1,27 +1,21 @@
 package dkeep.gui;
 
-import java.awt.Color;
+import dkeep.logic.Configs;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.text.PlainDocument;
-
-import dkeep.logic.Configs;
 
 
 public class SettingsPanel extends JPanel {
 	JLabel lblnumOgres = new JLabel("Number of Ogres");
-	JTextField numberOfOgres = new JTextField(10);
 	JLabel lblGuardPersonality = new JLabel("Guard Personality");
 	JLabel lblLevelChooser = new JLabel("Initial level");
 	JComboBox personalityChooser;
 	JComboBox levelChooser;
 	JButton save = new JButton("Save Options");
+	JSlider numberOfOgres = new JSlider();
 	Configs conf = new Configs(0);
 
 	SettingsPanel(){
@@ -32,8 +26,10 @@ public class SettingsPanel extends JPanel {
 		add(lblnumOgres);
 		add(numberOfOgres);
 		add(lblGuardPersonality);
-		PlainDocument doc = (PlainDocument) numberOfOgres.getDocument();
-		doc.setDocumentFilter(new MyIntFilter());
+		
+		numberOfOgres.setMaximum(5);
+		numberOfOgres.setMinimum(1);
+		numberOfOgres.setValue(numberOfOgres.getMinimum());
 
 		String[] personalities = {"Drunken","Rookie","Suspicious"};
 		personalityChooser = new JComboBox(personalities);
@@ -50,10 +46,7 @@ public class SettingsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				conf.setLevel(levelChooser.getSelectedIndex());
-				if (numberOfOgres.getText().equals("")){
-					numberOfOgres.setText("1");
-				}
-				Configs.NUMBEROFOGRES = Integer.parseInt(numberOfOgres.getText());
+				Configs.NUMBEROFOGRES = numberOfOgres.getValue();
 				Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
 				conf.prepareNextLevel();
 			}
