@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import dkeep.logic.Configs;
+import dkeep.logic.Game;
 
 public class Game_GUI {
 	
@@ -26,9 +27,10 @@ public class Game_GUI {
 	JButton btnCreateMap = new JButton("Create Map");
 	JButton btnPlay = new JButton("Play Game");
 	JButton btnExit = new JButton("Exit");
-	JButton btnBack1 = new JButton("Back");
-	JButton btnBack2 = new JButton("Back");
-	JButton btnBack3 = new JButton("Back");
+	JButton btnBackPlay = new JButton("Back");
+	JButton btnBackSettings = new JButton("Back");
+	JButton btnBackEditMap = new JButton("Back");
+	Game game = new Game();
 	
 
 	/**
@@ -55,6 +57,8 @@ public class Game_GUI {
 	 * Create the application.
 	 */
 	public Game_GUI() {
+		game.setConfigs(new Configs(0));
+		settingsPanel.setConfigs(game.getConfig());
 		initialize();
 	}
 
@@ -63,14 +67,13 @@ public class Game_GUI {
 	 */
 	private void initialize() {
 		containerPanel.setLayout(cl);
-		btnPlay.setEnabled(false);
 		menuPanel.add(btnSettings);
 		menuPanel.add(btnCreateMap);
 		menuPanel.add(btnPlay);
 		menuPanel.add(btnExit);
-		playPanel.add(btnBack1,BorderLayout.PAGE_END);
-		settingsPanel.add(btnBack2);
-		editMapPanel.add(btnBack3);
+		playPanel.add(btnBackPlay,BorderLayout.PAGE_END);
+		settingsPanel.add(btnBackSettings);
+		editMapPanel.add(btnBackEditMap);
 		
 		
 		containerPanel.add(menuPanel, "1"); // "1" is the identifing string
@@ -101,8 +104,11 @@ public class Game_GUI {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				game.resetLevel();
+				playPanel.setGame(game);
 				cl.show(containerPanel, "4");
 				playPanel.enableMoveButtons();
+				playPanel.repaint();
 			}
 			
 		});
@@ -114,26 +120,25 @@ public class Game_GUI {
 			}
 			
 		});
-		btnBack1.addActionListener(new ActionListener(){
+		btnBackPlay.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(containerPanel, "1");
-				btnPlay.setEnabled(false);
+				game.getConfig().decreaseLevel();
 			}
 			
 		});
-		btnBack2.addActionListener(new ActionListener(){
+		btnBackSettings.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(containerPanel, "1");
 				btnPlay.setEnabled(true);
-				playPanel.setConfigs(settingsPanel.getConf());
 			}
 			
 		});
-		btnBack3.addActionListener(new ActionListener(){
+		btnBackEditMap.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
