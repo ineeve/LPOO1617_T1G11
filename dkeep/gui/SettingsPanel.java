@@ -22,10 +22,9 @@ public class SettingsPanel extends JPanel {
 	JComboBox personalityChooser;
 	JComboBox levelChooser;
 	JButton save = new JButton("Save Options");
-	Configs conf;
+	Configs conf = new Configs(0);
 
-	SettingsPanel(Configs config){
-		conf = config;
+	SettingsPanel(){
 		init();
 	}
 	public void init(){
@@ -56,8 +55,13 @@ public class SettingsPanel extends JPanel {
 				}
 				Configs.NUMBEROFOGRES = Integer.parseInt(numberOfOgres.getText());
 				Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
+				conf.prepareNextLevel();
 			}
 
 		});
 	}
+	public Configs getConf(){
+		return conf;
+	}
+	
 }

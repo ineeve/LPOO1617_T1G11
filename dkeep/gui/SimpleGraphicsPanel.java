@@ -18,13 +18,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-
-
+import dkeep.logic.Configs;
+import dkeep.logic.Game;
 
 
 public class SimpleGraphicsPanel extends JPanel  implements MouseListener, MouseMotionListener, KeyListener { 
 
-	char map[][] = null;
+	Game game = new Game();
+	Configs config = null;
+	char[][] map = null;
 	int currentX = 0;
 	int currentY = 0;
 	int x1 = 0, x2, y1= 0, y2= 0;
@@ -34,11 +36,14 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 	BufferedImage door = null;
 	BufferedImage guard = null;
 	BufferedImage hero = null;
+	BufferedImage heroWithKey = null;
 	BufferedImage floor = null;
 	BufferedImage key = null;
 	BufferedImage lever = null;
 	BufferedImage ogre = null;
 	BufferedImage stairs = null;
+	BufferedImage club = null;
+	BufferedImage ogreStunned = null;
 	BufferedImage defaultImg = null;
 	// Constructor, adding mouse and keyboard listeneres 
 	public SimpleGraphicsPanel() {
@@ -49,8 +54,15 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 		init();
 	}
 
-	public void setMap(char [][] matrix){
-		map = matrix;
+	public void setConfig(Configs conf){
+		config = conf;
+		game.setMap(config.getMap());
+        game.setAgents(config.getAgents());
+        game.setKey(config.getKey());
+        game.setKeyTaken(false);
+        game.gameStatus = Game.status.PLAYING;
+		map = game.getMap();
+		repaint();
 	}
 
 	private void init(){
@@ -62,6 +74,8 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 			door = getScaledImage(door,imagesSize,imagesSize);
 			hero = ImageIO.read(new File("src/assets/Hero.png"));
 			hero = getScaledImage(hero,imagesSize,imagesSize);
+			heroWithKey = ImageIO.read(new File("src/assets/HeroWithKey.png"));
+			heroWithKey = getScaledImage(heroWithKey,imagesSize,imagesSize);
 			guard = ImageIO.read(new File("src/assets/drunken.png"));
 			guard = getScaledImage(guard,imagesSize,imagesSize);
 			key = ImageIO.read(new File("src/assets/key.png"));
@@ -74,6 +88,10 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 			stairs = getScaledImage(stairs,imagesSize,imagesSize);
 			floor = ImageIO.read(new File("src/assets/floor.png"));
 			floor = getScaledImage(floor,imagesSize,imagesSize);
+			club = ImageIO.read(new File("src/assets/club.png"));
+			club = getScaledImage(club,imagesSize,imagesSize);
+			ogreStunned= ImageIO.read(new File("src/assets/OgreStunned.png"));
+			ogreStunned = getScaledImage(ogreStunned,imagesSize,imagesSize);
 			defaultImg = ImageIO.read(new File("src/assets/default.png"));
 			defaultImg = getScaledImage(defaultImg,imagesSize,imagesSize);
 
@@ -81,10 +99,40 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 			e.printStackTrace();
 		}
 	}
+	
+	public int moveAgents_GUI(char heroDirection){
+
+		if (game.moveHero(heroDirection)==1){ //change To next level
+			config.prepareNextLevel();
+			game.setMap(config.getMap());
+			game.setAgents(config.getAgents());
+			game.setKey(config.getKey());
+			game.setKeyTaken(false);
+			map = game.getMap();
+			repaint();
+			return 0;
+		}
+		map = game.getMap();
+		repaint();
+		int gameStatus;
+		if ((gameStatus = checkForGameOver()) > 0 ){
+			return gameStatus; 
+		}
+		else{
+			game.moveBots();
+			map = game.getMap();
+			repaint();
+		}
+		if ((gameStatus = checkForGameOver()) > 0 ){
+			return gameStatus;
+		}
+		return 0;
+	}
 
 	// Redraws the panel, only when requested by SWING
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g); // cleans background 
+		if (map != null){
 		for (int i = 0; i < map.length; i++){
 			for (int j = 0; j < map[i].length;j++){
 				switch (map[i][j]){
@@ -97,13 +145,19 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 				case 'H':
 					g.drawImage(hero, currentX, currentY, null);
 					break;
-				case 'D':
-					g.drawImage(guard, currentX, currentY, null);
+				case 'A':
+					g.drawImage(hero, currentX, currentY, null);
+					break;
+				case 'K':
+					g.drawImage(heroWithKey, currentX, currentY, null);
+					break;
+				case '*':
+					g.drawImage(club, currentX, currentY, null);
+					break;
+				case '8':
+					g.drawImage(ogreStunned, currentX, currentY, null);
 					break;
 				case 'G':
-					g.drawImage(guard, currentX, currentY, null);
-					break;
-				case 'R':
 					g.drawImage(guard, currentX, currentY, null);
 					break;
 				case 'S':
@@ -129,29 +183,26 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 			currentY+=imagesSize;
 		}
 		currentY = 0;
+		}
 	}
-
-
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()){ 
-		case KeyEvent.VK_LEFT: x1--; x2--; repaint(); break; 
-		case KeyEvent.VK_RIGHT: x1++; x2++; repaint(); break;  
-		case KeyEvent.VK_UP: y1--; y2--; repaint(); break; 
-		case KeyEvent.VK_DOWN: y1++; y2++; repaint(); break; 
+		case KeyEvent.VK_LEFT: moveAgents_GUI('a'); break; 
+		case KeyEvent.VK_RIGHT:moveAgents_GUI('d'); break;  
+		case KeyEvent.VK_UP: moveAgents_GUI('w');break; 
+		case KeyEvent.VK_DOWN: moveAgents_GUI('s'); break; 
 		}
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
 
 	}
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyTyped(KeyEvent e) {
+		
 
 	}
 	@Override
@@ -220,4 +271,14 @@ public class SimpleGraphicsPanel extends JPanel  implements MouseListener, Mouse
 		g2.dispose();
 		return resizedImg;
 	}
+	public int checkForGameOver(){
+		game.isGameOver(); //To update status value in game object.
+		if (game.getGameStatus() == Game.status.DEFEAT){
+			return 1;
+		}
+		else if (game.getGameStatus() == Game.status.VICTORY){
+			return 2;
+		}
+		return 0;
+}
 }
