@@ -5,12 +5,12 @@ import java.awt.*;
 public class Drunken extends Guard {
 
     public Drunken() {
-        symbol = 'D';
+        symbol = 'G';
         isSleeping = false;
     }
 
     public Drunken(Point coord) {
-        symbol = 'D';
+        symbol = 'G';
         agentCoords = coord;
         isSleeping = false;
     }

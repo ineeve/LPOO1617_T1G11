@@ -6,7 +6,7 @@ public class Rookie extends Guard {
 
 
     public Rookie(Point coord) {
-        symbol = 'R';
+        symbol = 'G';
         agentCoords = coord;
     }
 

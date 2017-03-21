@@ -5,11 +5,11 @@ import java.awt.*;
 public class Suspicious extends Guard {
 
     public Suspicious() {
-        symbol = 'S';
+        symbol = 'G';
     }
 
     public Suspicious(Point coord) {
-        symbol = 'S';
+        symbol = 'G';
         agentCoords = coord;
     }
 
