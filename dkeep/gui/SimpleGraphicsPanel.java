@@ -12,14 +12,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class SimpleGraphicsPanel extends JPanel implements KeyListener {
+public class SimpleGraphicsPanel extends JPanel { 
 
 	Game game;
 	char[][] map = null;
 	int currentX = 0;
 	int currentY = 0;
 	int x1 = 0, x2, y1= 0, y2= 0;
-	int imagesSize = 64;
+	Dimension imageSize = new Dimension(100,100);
 
 	BufferedImage wall = null;
 	BufferedImage door = null;
@@ -37,7 +37,6 @@ public class SimpleGraphicsPanel extends JPanel implements KeyListener {
 	// Constructor, adding mouse and keyboard listeneres 
 	public SimpleGraphicsPanel() {
 		setBackground(Color.black);
-		addKeyListener(this);
 		init();
 	}
 
@@ -47,39 +46,48 @@ public class SimpleGraphicsPanel extends JPanel implements KeyListener {
 		repaint();
 	}
 
+	
+	public void rescaleImages(){
+		wall = getScaledImage(wall,imageSize.width,imageSize.height);
+		door = getScaledImage(door,imageSize.width,imageSize.height);
+		hero = getScaledImage(hero,imageSize.width,imageSize.height);
+		heroWithKey = getScaledImage(heroWithKey,imageSize.width,imageSize.height);
+		guard = getScaledImage(guard,imageSize.width,imageSize.height);
+		key = getScaledImage(key,imageSize.width,imageSize.height);
+		lever = getScaledImage(lever,imageSize.width,imageSize.height);
+		ogre = getScaledImage(ogre,imageSize.width,imageSize.height);
+		stairs = getScaledImage(stairs,imageSize.width,imageSize.height);
+		floor = getScaledImage(floor,imageSize.width,imageSize.height);
+		club = getScaledImage(club,imageSize.width,imageSize.height);
+		ogreStunned = getScaledImage(ogreStunned,imageSize.width,imageSize.height);
+		defaultImg = getScaledImage(defaultImg,imageSize.width,imageSize.height);
+	}
+
 	private void init(){
-		setPreferredSize(new Dimension(400,400));
+		
+		setPreferredSize(new Dimension(500,500));
 		try {
 			wall = ImageIO.read(new File("src/assets/Horizontal_Wall.png"));
-			wall = getScaledImage(wall,imagesSize,imagesSize);
+			
 			door = ImageIO.read(new File("src/assets/door.png"));
-			door = getScaledImage(door,imagesSize,imagesSize);
+			
 			hero = ImageIO.read(new File("src/assets/Hero.png"));
-			hero = getScaledImage(hero,imagesSize,imagesSize);
+			
 			heroWithKey = ImageIO.read(new File("src/assets/HeroWithKey.png"));
-			heroWithKey = getScaledImage(heroWithKey,imagesSize,imagesSize);
 			guard = ImageIO.read(new File("src/assets/drunken.png"));
-			guard = getScaledImage(guard,imagesSize,imagesSize);
 			key = ImageIO.read(new File("src/assets/key.png"));
-			key = getScaledImage(key,imagesSize,imagesSize);
 			lever = ImageIO.read(new File("src/assets/lever.png"));
-			lever = getScaledImage(lever,imagesSize,imagesSize);
 			ogre = ImageIO.read(new File("src/assets/Ogre.png"));
-			ogre = getScaledImage(ogre,imagesSize,imagesSize);
 			stairs = ImageIO.read(new File("src/assets/stairs.png"));
-			stairs = getScaledImage(stairs,imagesSize,imagesSize);
 			floor = ImageIO.read(new File("src/assets/floor.png"));
-			floor = getScaledImage(floor,imagesSize,imagesSize);
 			club = ImageIO.read(new File("src/assets/club.png"));
-			club = getScaledImage(club,imagesSize,imagesSize);
 			ogreStunned= ImageIO.read(new File("src/assets/OgreStunned.png"));
-			ogreStunned = getScaledImage(ogreStunned,imagesSize,imagesSize);
 			defaultImg = ImageIO.read(new File("src/assets/default.png"));
-			defaultImg = getScaledImage(defaultImg,imagesSize,imagesSize);
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		rescaleImages();
 	}
 
 	public int moveAgents_GUI(char heroDirection){
@@ -155,37 +163,17 @@ public class SimpleGraphicsPanel extends JPanel implements KeyListener {
 						break;
 
 					}
-					currentX += imagesSize;
+					currentX += imageSize.width;
 				}
 				currentX = 0;
-				currentY+=imagesSize;
+				currentY+=imageSize.height;
 			}
 			currentY = 0;
 		}
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()){ 
-		case KeyEvent.VK_LEFT:
-			moveAgents_GUI('a'); break; 
-		case KeyEvent.VK_RIGHT:
-			moveAgents_GUI('d'); break;  
-		case KeyEvent.VK_UP:
-			moveAgents_GUI('w');break; 
-		case KeyEvent.VK_DOWN:
-			moveAgents_GUI('s'); break; 
-		}
-	}
-	@Override
-	public void keyReleased(KeyEvent e) {
 
-	}
-	
-	@Override
-	public void keyTyped(KeyEvent e) {
 
-	}
 
 	/**
 	 * Resizes an image using a Graphics2D object backed by a BufferedImage.
@@ -223,4 +211,8 @@ public class SimpleGraphicsPanel extends JPanel implements KeyListener {
 		}
 		return 0;
 	}
+
+
+
+
 }
