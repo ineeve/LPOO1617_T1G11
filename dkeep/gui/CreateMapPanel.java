@@ -6,13 +6,17 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class CreateMapPanel extends JPanel implements MouseListener {
 
-	ArrayList<JButton> mapComponents;
 	EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
 	JPanel componentsPanel = new JPanel();
+	JButton hero = new JButton("Hero");
+	JButton wall = new JButton("Wall");
+	JButton ogre = new JButton("Ogre");
+	JButton key = new JButton("Key");
 	
 	CreateMapPanel(){
 		init();
