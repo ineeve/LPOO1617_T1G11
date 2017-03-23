@@ -4,25 +4,23 @@ import dkeep.logic.Configs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
-public class SettingsPanel extends JPanel {
-	JLabel lblnumOgres = new JLabel("Number of Ogres");
-	JLabel lblGuardPersonality = new JLabel("Guard Personality");
-	JLabel lblLevelChooser = new JLabel("Initial level");
-	JComboBox personalityChooser;
-	JComboBox levelChooser;
-	JButton save = new JButton("Save Options");
-	JSlider numberOfOgres = new JSlider();
-	Configs conf = null;
+class SettingsPanel extends JPanel {
+	private JLabel lblnumOgres = new JLabel("Number of Ogres");
+	private JLabel lblGuardPersonality = new JLabel("Guard Personality");
+	private JLabel lblLevelChooser = new JLabel("Initial level");
+	private JComboBox personalityChooser;
+	private JComboBox levelChooser;
+	private JButton save = new JButton("Save Options");
+	private JSlider numberOfOgres = new JSlider();
+	private Configs conf = null;
 
 	SettingsPanel(){
 		init();
 	}
 
-	public void init(){
+	private void init(){
 		setBackground(Color.RED);
 		add(lblnumOgres);
 		add(numberOfOgres);
@@ -43,22 +41,14 @@ public class SettingsPanel extends JPanel {
 		add(levelChooser);
 		add(save);
 
-		save.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				conf.setLevel(levelChooser.getSelectedIndex());
-				Configs.NUMBEROFOGRES = numberOfOgres.getValue();
-				Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
-			}
-		});
+		save.addActionListener(e -> {
+            conf.setLevel(levelChooser.getSelectedIndex());
+            Configs.NUMBEROFOGRES = numberOfOgres.getValue();
+            Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
+        });
 	}
 	public void setConfigs(Configs config){
 		conf = config;
-	}
-	
-	public Configs getConf(){
-		return conf;
 	}
 	
 }

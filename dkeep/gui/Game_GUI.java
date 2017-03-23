@@ -5,40 +5,36 @@ import dkeep.logic.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Game_GUI{
-	JFrame mainFrame = new JFrame("Escape Game");
-	JPanel containerPanel = new JPanel();
-	JPanel menuPanel = new InitialMenuPanel();
-	SettingsPanel settingsPanel = new SettingsPanel();
-	PlayPanel playPanel = new PlayPanel();
-	JPanel editMapPanel = new CreateMapPanel();
-	CardLayout cl = new CardLayout();
-	JButton btnSettings = new JButton("Settings");
-	JButton btnCreateMap = new JButton("Create Map");
-	JButton btnPlay = new JButton("Play Game");
-	JButton btnExit = new JButton("Exit");
-	JButton btnBackPlay = new JButton("Back");
-	JButton btnBackSettings = new JButton("Back");
-	JButton btnBackEditMap = new JButton("Back");
-	Game game = new Game();
+class Game_GUI{
+	private JFrame mainFrame = new JFrame("Escape Game");
+	private JPanel containerPanel = new JPanel();
+	private JPanel menuPanel = new InitialMenuPanel();
+	private SettingsPanel settingsPanel = new SettingsPanel();
+	private PlayPanel playPanel = new PlayPanel();
+	private JPanel editMapPanel = new CreateMapPanel();
+	private CardLayout cl = new CardLayout();
+	private JButton btnSettings = new JButton("Settings");
+	private JButton btnCreateMap = new JButton("Create Map");
+	private JButton btnPlay = new JButton("Play Game");
+	private JButton btnExit = new JButton("Exit");
+	private JButton btnBackPlay = new JButton("Back");
+	private JButton btnBackSettings = new JButton("Back");
+	private JButton btnBackEditMap = new JButton("Back");
+	private Game game = new Game();
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Game_GUI window = new Game_GUI();
-					window.mainFrame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		EventQueue.invokeLater(() -> {
+            try {
+                Game_GUI window = new Game_GUI();
+                window.mainFrame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 	}
 
 
@@ -46,7 +42,7 @@ public class Game_GUI{
 	/**
 	 * Create the application.
 	 */
-	public Game_GUI() {
+	private Game_GUI() {
 		game.setConfigs(new Configs(0));
 		settingsPanel.setConfigs(game.getConfig());
 		initialize();
@@ -71,65 +67,32 @@ public class Game_GUI{
 		containerPanel.add(playPanel, "4");
 		cl.show(containerPanel, "1"); //which panel is set initially
 
-		btnSettings.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				cl.show(containerPanel, "2");
-			}
-		});
-		btnCreateMap.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				cl.show(containerPanel, "3");
-			}
-		});
+		btnSettings.addActionListener(arg0 -> cl.show(containerPanel, "2"));
+		btnCreateMap.addActionListener(arg0 -> cl.show(containerPanel, "3"));
 
 
-		btnPlay.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				game.resetLevel();
-				playPanel.addListeners();
-				playPanel.resetGameStatusLabel();
-				playPanel.setGame(game);
-				cl.show(containerPanel, "4");
-				playPanel.enableMoveButtons();
-				playPanel.repaint();
-			}
-		});
-		btnExit.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-		btnBackPlay.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				cl.show(containerPanel, "1");
-				game.getConfig().decreaseLevel();
-			}
-		});
-		btnBackSettings.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				cl.show(containerPanel, "1");
-				btnPlay.setEnabled(true);
-			}
-		});
-		btnBackEditMap.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				cl.show(containerPanel, "1");
-			}
-		});
+		btnPlay.addActionListener(arg0 -> {
+            game.resetLevel();
+            playPanel.addListeners();
+            playPanel.resetGameStatusLabel();
+            playPanel.setGame(game);
+            cl.show(containerPanel, "4");
+            playPanel.enableMoveButtons();
+            playPanel.repaint();
+        });
+		btnExit.addActionListener(arg0 -> System.exit(0));
+		btnBackPlay.addActionListener(arg0 -> {
+            cl.show(containerPanel, "1");
+            game.getConfig().decreaseLevel();
+        });
+		btnBackSettings.addActionListener(arg0 -> {
+            cl.show(containerPanel, "1");
+            btnPlay.setEnabled(true);
+        });
+		btnBackEditMap.addActionListener(arg0 -> {
+            cl.show(containerPanel, "1");
+            ((CreateMapPanel)editMapPanel).saveMapEdited();
+        });
 
 		mainFrame.add(containerPanel);
 		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -13,8 +13,7 @@ public class MovementStrategy {
     private int pathIterator = 0;
 
     public char userMovement() {
-        char nextChar = getChar();
-        return nextChar;
+        return getChar();
     }
 
     public char randomMovement() {

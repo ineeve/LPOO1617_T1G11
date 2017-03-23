@@ -17,9 +17,6 @@ public class Weapon {
         coords = wepCoords;
     }
 
-    Weapon() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public Point getCoords() {
         return coords;
@@ -33,9 +30,6 @@ public class Weapon {
         this.coords = coords;
     }
 
-    public void setSymbol(char symbol) {
-        this.symbol = symbol;
-    }
     public void nextMove(){
         char nextChar = getNextDirection();
         switch (nextChar) {

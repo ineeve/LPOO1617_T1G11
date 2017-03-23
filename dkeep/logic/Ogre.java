@@ -3,12 +3,7 @@ package dkeep.logic;
 import java.awt.*;
 
 public class Ogre extends MovingAgent {
-    protected int roundsStunned;
-    
-    public Ogre() {
-        symbol = 'O';
-        roundsStunned = 0;
-    }
+    private int roundsStunned;
     
     public Ogre(Point coord) {
         symbol = 'O';

@@ -15,7 +15,8 @@ public class Game {
 	private ArrayList<MovingAgent> agents = new ArrayList<>();
 	private Key key;
 	private boolean keyTaken;
-	public enum status {DEFEAT,PLAYING,VICTORY};
+	public enum status {DEFEAT,PLAYING,VICTORY}
+
 	public static status gameStatus;
 
 	public Game(){}
@@ -37,7 +38,7 @@ public class Game {
 	}
 	
 	public void resetLevel(){
-		this.config = new Configs(config.level);
+		this.config = new Configs(Configs.level);
 		config.prepareNextLevel();
 		map = config.getMap();
 		agents = config.getAgents();
@@ -72,15 +73,15 @@ public class Game {
 			mapChar[key.getCoord().y][key.getCoord().x] = 'k';
 		}
 
-		for (int i = 0; i < agents.size(); i++) {
-			int agentCoordY = agents.get(i).getAgentCoords().y;
-			int agentCoordX = agents.get(i).getAgentCoords().x;
-			char symbol = agents.get(i).getSymbol();
+		for (MovingAgent agent : agents) {
+			int agentCoordY = agent.getAgentCoords().y;
+			int agentCoordX = agent.getAgentCoords().x;
+			char symbol = agent.getSymbol();
 			mapChar[agentCoordY][agentCoordX] = symbol;
-			if(agents.get(i).weapon.getSymbol() != ' '){
-				int weaponCoordY = agents.get(i).weapon.getCoords().y;
-				int weaponCoordX = agents.get(i).weapon.getCoords().x;
-				symbol = agents.get(i).weapon.getSymbol();
+			if (agent.weapon.getSymbol() != ' ') {
+				int weaponCoordY = agent.weapon.getCoords().y;
+				int weaponCoordX = agent.weapon.getCoords().x;
+				symbol = agent.weapon.getSymbol();
 				mapChar[weaponCoordY][weaponCoordX] = symbol;
 			}
 		}

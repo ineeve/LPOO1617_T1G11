@@ -12,19 +12,16 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by João on 05/03/2017.
  */
+
 public class Configs {
-    /*  CONSTANTS  */
-    private static Point KEYSTARTPOS;
-    private static Point HEROSTARTPOS;
-    private static Point GUARDSTARTPOS;
     private static final GameMap STARTMAP = new DungeonMap();
     public static int NUMBEROFOGRES = 1;
     public static int GUARDPERSONALITY = 0;
 
     static int level = 0;
-    ArrayList<MovingAgent> agents = new ArrayList<>();
-    GameMap map;
-    Key key;
+    private ArrayList<MovingAgent> agents = new ArrayList<>();
+    private GameMap map;
+    private Key key;
 
     public Configs(int startLevel){
         level = startLevel;
@@ -53,9 +50,9 @@ public class Configs {
         agents.clear();
         switch (level){
             case 0:
-                HEROSTARTPOS = new Point(1,1);
-                GUARDSTARTPOS =  new Point(3,1);
-                KEYSTARTPOS = new Point(1,3);
+                Point HEROSTARTPOS = new Point(1, 1);
+                Point GUARDSTARTPOS = new Point(3, 1);
+                Point KEYSTARTPOS = new Point(1, 3);
                 if (key == null){
                 	key = new Key(KEYSTARTPOS);
                 }else{
@@ -72,7 +69,7 @@ public class Configs {
             case 1:
                 HEROSTARTPOS = new Point(1,1);
                 GUARDSTARTPOS =  new Point(8,1);
-                KEYSTARTPOS  = new Point(3,1);
+                KEYSTARTPOS = new Point(3,1);
 
                 key = new Key(new Point(KEYSTARTPOS));
                 map = STARTMAP;

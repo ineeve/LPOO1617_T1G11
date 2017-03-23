@@ -1,5 +1,7 @@
 package dkeep.gui;
 
+import dkeep.logic.maps.KeepMap;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -7,32 +9,32 @@ import java.util.HashMap;
 import static dkeep.gui.Read.readImages;
 
 
-public class CreateMapPanel extends JPanel{
+class CreateMapPanel extends JPanel{
 
-	EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
-	JPanel componentsPanel;
-	//public enum icon {HERO,WALL,OGRE,KEY};
-	//public static icon IconSelected;
-	final int EastPanelSize = 200;
-	HashMap<Character,Image> imageMap = new HashMap<>();
+	private EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
+	private HashMap<Character,Image> imageMap = new HashMap<>();
 
 	CreateMapPanel(){
 		init();
 	}
 
-	public void loadImages(){
+	private void loadImages(){
 		imageMap = readImages();
 	}
 
-	public void init(){
+	private void init(){
 		loadImages();
-		componentsPanel = new ImageOptionsPanel(imageMap);
+		JPanel componentsPanel = new ImageOptionsPanel(imageMap);
 		setLayout(new BorderLayout());
-		
-		componentsPanel.setPreferredSize(new Dimension(EastPanelSize,EastPanelSize));
+
+		int eastPanelSize = 200;
+		componentsPanel.setPreferredSize(new Dimension(eastPanelSize, eastPanelSize));
 		add(componentsPanel,BorderLayout.EAST);
 		add(editPanel,BorderLayout.CENTER);
 	}
 
+	public void saveMapEdited(){
+		KeepMap.setMapEdited(editPanel.getMapEdited());
+	}
 
 }

@@ -1,19 +1,13 @@
 package dkeep.gui;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 
+class SpecialButton extends JButton{
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-public class SpecialButton extends JButton{
-
-	Dimension position;
-	Image image;
-	Character typeOfButton;
+	private Dimension position;
+	private Image image;
+	private Character typeOfButton;
 	
 	public SpecialButton(Dimension pos,Image img, Character type){
 		super();

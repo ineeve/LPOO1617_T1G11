@@ -9,15 +9,15 @@ import java.util.HashMap;
 
 import static dkeep.gui.Read.readImages;
 
-public class BoardGraphics extends JPanel {
+class BoardGraphics extends JPanel {
 
-	Game game;
-	char[][] map = null;
-	int currentX = 0;
-	int currentY = 0;
-	public static final int WIDTHDIMENSION = 500;
-    public static final int HEIGHTDIMENSION = 500;
-	HashMap<Character, Image> imageMap;
+	private Game game;
+	private char[][] map = null;
+	private int currentX = 0;
+	private int currentY = 0;
+	private static final int WIDTHDIMENSION = 500;
+    private static final int HEIGHTDIMENSION = 500;
+	private HashMap<Character, Image> imageMap;
 
 
 	// Constructor, adding mouse and keyboard listeneres 
@@ -69,10 +69,10 @@ public class BoardGraphics extends JPanel {
 		int heightScale = this.getHeight()/map[0].length;
 		imageMap = readImages();
 		if (map != null){
-			for (int i = 0; i < map.length; i++){
-				for (int j = 0; j < map[i].length;j++){
-					Image imageToDraw = imageMap.get(map[i][j]);
-						g.drawImage(imageToDraw, currentX, currentY, widthScale, heightScale , null);
+			for (char[] aMap : map) {
+				for (char anAMap : aMap) {
+					Image imageToDraw = imageMap.get(anAMap);
+					g.drawImage(imageToDraw, currentX, currentY, widthScale, heightScale, null);
 					currentX += widthScale;
 				}
 				currentX = 0;
@@ -82,7 +82,7 @@ public class BoardGraphics extends JPanel {
 		}
 	}
 
-	public int checkForGameOver(){
+	private int checkForGameOver(){
 		game.isGameOver(); //To update status value in game object.
 		if (game.getGameStatus() == Game.status.DEFEAT){
 			return 1;

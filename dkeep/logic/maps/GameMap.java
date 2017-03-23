@@ -6,7 +6,7 @@ import java.security.InvalidParameterException;
 
 
 public abstract class GameMap {
-    protected char[][] map;
+    char[][] map;
     
     public char[][] getMap() {
         return map;
@@ -51,12 +51,14 @@ public abstract class GameMap {
             }
         }
     }
+
     public void editPos(int x, int y, char n){
     	if (y > map.length || y < 0 || x<0 || x>map[0].length){
     		throw new InvalidParameterException();
     	}
     	map[x][y] = n;
     }
+
     public void resize(int newXSize, int newYSize){
     	if (newXSize < 5 || newYSize < 5 || newXSize > 60 || newYSize > 60){
     		throw new InvalidParameterException();

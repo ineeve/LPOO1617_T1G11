@@ -10,11 +10,11 @@ import dkeep.logic.Game;
 import dkeep.logic.Game.status;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import java.awt.Point;
+import java.awt.*;
+
+import static org.junit.Assert.*;
 
 
 public class KeepMapTest {
@@ -29,7 +29,7 @@ public class KeepMapTest {
         game.setAgents(config.getAgents());
         game.setKey(config.getKey());
         game.setKeyTaken(false);
-        game.gameStatus = Game.status.PLAYING;
+        Game.gameStatus = Game.status.PLAYING;
         game.getFirstOgre().setAgentCoords(new Point(4,3));
 		game.moveHero('d');
 		game.moveHero('d');

@@ -6,16 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PlayPanel extends JPanel implements MouseListener, KeyListener{
-	JPanel moveButtonsPanel = new JPanel(new BorderLayout());
-	JPanel northPanel = new JPanel (new FlowLayout());
-	JButton btnUp = new JButton("");
-	JButton btnLeft = new JButton("");
-	JButton btnDown = new JButton("");
-	JButton btnRight = new JButton("");
-	JLabel gameStatsLlb = new JLabel("Try to Escape");
-	BoardGraphics graphicsPanel;
-	Game game;
+class PlayPanel extends JPanel implements MouseListener, KeyListener{
+	private JPanel moveButtonsPanel = new JPanel(new BorderLayout());
+	private JPanel northPanel = new JPanel (new FlowLayout());
+	private JButton btnUp = new JButton("");
+	private JButton btnLeft = new JButton("");
+	private JButton btnDown = new JButton("");
+	private JButton btnRight = new JButton("");
+	private JLabel gameStatsLlb = new JLabel("Try to Escape");
+	private BoardGraphics graphicsPanel;
 
 	PlayPanel(){
 		init();
@@ -32,7 +31,7 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	}
 	
 	
-	public void init(){
+	private void init(){
 		graphicsPanel = new BoardGraphics();
 		gameStatsLlb.setOpaque(true);
 		graphicsPanel.setFocusable(true);
@@ -55,45 +54,25 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		northPanel.add(gameStatsLlb);
 		add(northPanel,BorderLayout.NORTH);
 
-		btnUp.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				checkGameStatus(graphicsPanel.moveAgents_GUI('w'));
-				requestFocusInWindow();
-			}
-
-		});
-		btnRight.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				checkGameStatus(graphicsPanel.moveAgents_GUI('d'));
-				requestFocusInWindow();
-			}
-
-		});
-		btnLeft.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
-				requestFocusInWindow();
-			}
-
-		});
-		btnDown.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
-				requestFocusInWindow();
-			}
-
-		});
+		btnUp.addActionListener(arg0 -> {
+            checkGameStatus(graphicsPanel.moveAgents_GUI('w'));
+            requestFocusInWindow();
+        });
+		btnRight.addActionListener(arg0 -> {
+            checkGameStatus(graphicsPanel.moveAgents_GUI('d'));
+            requestFocusInWindow();
+        });
+		btnLeft.addActionListener(arg0 -> {
+            checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
+            requestFocusInWindow();
+        });
+		btnDown.addActionListener(arg0 -> {
+            checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
+            requestFocusInWindow();
+        });
 	}
 
-	public void checkGameStatus(int val){
+	private void checkGameStatus(int val){
 		if (val > 0){
 			disableMoveButtons();
 			removeKeyListener(this);
@@ -108,7 +87,7 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		}
 	}
 
-	public void disableMoveButtons(){
+	private void disableMoveButtons(){
 
 		btnUp.setEnabled(false);
 		btnLeft.setEnabled(false);
@@ -124,7 +103,7 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	}
 
 	public void setGame(Game g){
-		game = g;
+		Game game = g;
 		graphicsPanel.setGame(game);
 	}
 	@Override

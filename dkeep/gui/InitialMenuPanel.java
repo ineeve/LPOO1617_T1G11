@@ -1,17 +1,16 @@
 package dkeep.gui;
 
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.JPanel;
-
-public class InitialMenuPanel extends JPanel{
+class InitialMenuPanel extends JPanel{
 	
 	
 	public InitialMenuPanel(){
 		init();
 	}
-	public void init(){
+	private void init(){
 		
 
 		setBackground(Color.BLUE);

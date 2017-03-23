@@ -16,14 +16,13 @@ class Main {
         System.out.println("0) Rookie");
         System.out.println("1) Drunken");
         System.out.println("2) Suspicious");
-        config.GUARDPERSONALITY = UserInput.getInt();
+        Configs.GUARDPERSONALITY = UserInput.getInt();
         /*Number of Ogres*/
         System.out.println("How many Ogres do you wish to fight?");
-        config.NUMBEROFOGRES = UserInput.getInt();
-
+        Configs.NUMBEROFOGRES = UserInput.getInt();
         game.setConfigs(config);
         game.resetLevel();
-        while (game.isGameOver() == false) {
+        while (!game.isGameOver()) {
             displayBoard(game.getMap());
             switch (game.moveAllAgents()){
                 case 0:
@@ -44,10 +43,10 @@ class Main {
         System.out.println("\n\n");
         String currentLine;
 
-        for (int i = 0; i < matrix.length; i++) {
+        for (char[] aMatrix : matrix) {
             currentLine = "";
-            for (int j = 0; j < matrix[i].length; j++) {
-                currentLine += " " + matrix[i][j];
+            for (char anAMatrix : aMatrix) {
+                currentLine += " " + anAMatrix;
             }
             System.out.println(currentLine);
         }
