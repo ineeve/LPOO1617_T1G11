@@ -27,13 +27,7 @@ public class CreateMapPanel extends JPanel{
 
 	EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
 	JPanel componentsPanel;
-	JButton heroBtn = new JButton();
-	JButton wallBtn = new JButton();
-	JButton ogreBtn = new JButton();
-	JButton keyBtn = new JButton();
-	//public enum icon {HERO,WALL,OGRE,KEY};
-	//public static icon IconSelected;
-	final int EastPanelSize = 200;
+	final int EastPanelSize = 150;
 	HashMap<Character,Image> imageMap = new HashMap<Character,Image>();
 
 	CreateMapPanel(){
@@ -51,10 +45,10 @@ public class CreateMapPanel extends JPanel{
 		loadImages();
 		componentsPanel = new ImageOptionsPanel(imageMap);
 		setLayout(new BorderLayout());
-		
-		componentsPanel.setPreferredSize(new Dimension(EastPanelSize,EastPanelSize));
+		componentsPanel.setPreferredSize(new Dimension(EastPanelSize, EastPanelSize));
 		add(componentsPanel,BorderLayout.EAST);
 		add(editPanel,BorderLayout.CENTER);
+		
 	}
 
 

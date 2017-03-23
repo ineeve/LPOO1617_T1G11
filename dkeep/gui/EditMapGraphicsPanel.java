@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EditMapGraphicsPanel extends JPanel{
@@ -30,6 +29,7 @@ public class EditMapGraphicsPanel extends JPanel{
 		init();
 	}
 	public void init(){
+
 		getImages();
 		setLayout(gl);
 		addButtons();
@@ -39,6 +39,7 @@ public class EditMapGraphicsPanel extends JPanel{
 		imageMap = r1.getImageMap();
 	}
 	public void addButtons(){
+		System.out.println(gl.getRows() + " " + gl.getColumns());
 		for (int i = 0; i < gl.getRows();i++){
 			for (int j = 0; j < gl.getColumns(); j++){
 				SpecialButton j1 = new SpecialButton(new Dimension(i,j),imageMap.get(map[i][j]), map[i][j]);
@@ -48,7 +49,9 @@ public class EditMapGraphicsPanel extends JPanel{
 					map[j1.getPosition().width][j1.getPosition().height] = ImageOptionsPanel.buttonPressed;
 					j1.setImage(imageMap.get(ImageOptionsPanel.buttonPressed));
 					}});
+				add(j1);
 			}
+			
 		}
 	}
 
