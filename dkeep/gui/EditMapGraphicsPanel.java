@@ -23,6 +23,7 @@ class EditMapGraphicsPanel extends JPanel{
 		setLayout(gl);
 		addButtons();
 	}
+  
 	private void getImages() {
 		imageMap = readImages();
 	}

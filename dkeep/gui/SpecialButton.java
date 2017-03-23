@@ -13,7 +13,8 @@ class SpecialButton extends JButton{
 		super();
 		typeOfButton = type;
 		position = pos;
-		setMargin(new Insets(0, 0, 0, 0));
+		setBorder(new LineBorder(Color.BLACK));
+		//setMargin(new Insets(0, 0, 0, 0));
         image = img;
 	}
 	

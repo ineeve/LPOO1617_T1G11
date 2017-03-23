@@ -26,11 +26,11 @@ class CreateMapPanel extends JPanel{
 		loadImages();
 		JPanel componentsPanel = new ImageOptionsPanel(imageMap);
 		setLayout(new BorderLayout());
-
 		int eastPanelSize = 200;
 		componentsPanel.setPreferredSize(new Dimension(eastPanelSize, eastPanelSize));
 		add(componentsPanel,BorderLayout.EAST);
 		add(editPanel,BorderLayout.CENTER);
+		
 	}
 
 	public void saveMapEdited(){
