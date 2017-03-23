@@ -71,6 +71,19 @@ public class Game_GUI{
 		containerPanel.add(playPanel, "4");
 		cl.show(containerPanel, "1"); //which panel is set initially
 
+		addListenersToButtons();
+		
+
+		mainFrame.add(containerPanel);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+
+	}
+
+
+
+	private void addListenersToButtons() {
 		btnSettings.addActionListener(new ActionListener(){
 
 			@Override
@@ -130,12 +143,7 @@ public class Game_GUI{
 				cl.show(containerPanel, "1");
 			}
 		});
-
-		mainFrame.add(containerPanel);
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-
+		
 	}
 
 }
