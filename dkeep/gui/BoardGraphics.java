@@ -1,41 +1,38 @@
 package dkeep.gui;
 
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.swing.JPanel;
-
-import dkeep.logic.Configs;
 import dkeep.logic.Game;
 
-public class SimpleGraphicsPanel extends JPanel { 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
+public class BoardGraphics extends JPanel {
 
 	Game game;
 	char[][] map = null;
 	int currentX = 0;
 	int currentY = 0;
-	int x1 = 0, x2, y1= 0, y2= 0;
-	Dimension imageSize = new Dimension(100,100);
+	public static final int WIDTHDIMENSION = 500;
+    public static final int HEIGHTDIMENSION = 500;
 
-	BufferedImage wall = null;
-	BufferedImage door = null;
-	BufferedImage guard = null;
-	BufferedImage hero = null;
-	BufferedImage heroWithKey = null;
-	BufferedImage floor = null;
-	BufferedImage key = null;
-	BufferedImage lever = null;
-	BufferedImage ogre = null;
-	BufferedImage stairs = null;
-	BufferedImage club = null;
-	BufferedImage ogreStunned = null;
-	BufferedImage defaultImg = null;
+	Image wall = null;
+	Image door = null;
+	Image guard = null;
+	Image hero = null;
+	Image heroWithKey = null;
+	Image floor = null;
+	Image key = null;
+	Image lever = null;
+	Image ogre = null;
+	Image stairs = null;
+	Image club = null;
+	Image ogreStunned = null;
+	Image defaultImg = null;
 	// Constructor, adding mouse and keyboard listeneres 
-	public SimpleGraphicsPanel() {
+	public BoardGraphics() {
 		setBackground(Color.black);
 		init();
 	}
@@ -48,46 +45,93 @@ public class SimpleGraphicsPanel extends JPanel {
 
 	
 	public void rescaleImages(){
-		wall = getScaledImage(wall,imageSize.width,imageSize.height);
-		door = getScaledImage(door,imageSize.width,imageSize.height);
-		hero = getScaledImage(hero,imageSize.width,imageSize.height);
-		heroWithKey = getScaledImage(heroWithKey,imageSize.width,imageSize.height);
-		guard = getScaledImage(guard,imageSize.width,imageSize.height);
-		key = getScaledImage(key,imageSize.width,imageSize.height);
-		lever = getScaledImage(lever,imageSize.width,imageSize.height);
-		ogre = getScaledImage(ogre,imageSize.width,imageSize.height);
-		stairs = getScaledImage(stairs,imageSize.width,imageSize.height);
-		floor = getScaledImage(floor,imageSize.width,imageSize.height);
-		club = getScaledImage(club,imageSize.width,imageSize.height);
-		ogreStunned = getScaledImage(ogreStunned,imageSize.width,imageSize.height);
-		defaultImg = getScaledImage(defaultImg,imageSize.width,imageSize.height);
+        readImage();
+		wall = wall.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_FAST);
+		door = door.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		hero = hero.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		heroWithKey = heroWithKey.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		guard =  guard.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		key = key.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		lever = lever.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		ogre = ogre.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		stairs = stairs.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		floor = floor.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		club = club.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		ogreStunned = ogreStunned.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
+		defaultImg = defaultImg.getScaledInstance((int) (this.getWidth()*0.1),(int) (this.getHeight()*0.1), Image.SCALE_SMOOTH);
 	}
 
-	private void init(){
-		
-		setPreferredSize(new Dimension(500,500));
+	private void readImage(){
 		try {
-			wall = ImageIO.read(new File("src/assets/Horizontal_Wall.png"));
-			
-			door = ImageIO.read(new File("src/assets/door.png"));
-			
-			hero = ImageIO.read(new File("src/assets/Hero.png"));
-			
-			heroWithKey = ImageIO.read(new File("src/assets/HeroWithKey.png"));
-			guard = ImageIO.read(new File("src/assets/drunken.png"));
-			key = ImageIO.read(new File("src/assets/key.png"));
-			lever = ImageIO.read(new File("src/assets/lever.png"));
-			ogre = ImageIO.read(new File("src/assets/Ogre.png"));
-			stairs = ImageIO.read(new File("src/assets/stairs.png"));
-			floor = ImageIO.read(new File("src/assets/floor.png"));
-			club = ImageIO.read(new File("src/assets/club.png"));
-			ogreStunned= ImageIO.read(new File("src/assets/OgreStunned.png"));
-			defaultImg = ImageIO.read(new File("src/assets/default.png"));
-
+			wall = ImageIO.read(new File("src/assets/wall.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		rescaleImages();
+		try {
+			door = ImageIO.read(new File("src/assets/door.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try	{
+			hero = ImageIO.read(new File("src/assets/Hero.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			heroWithKey = ImageIO.read(new File("src/assets/HeroWithKey.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			guard = ImageIO.read(new File("src/assets/drunken.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try{
+			key = ImageIO.read(new File("src/assets/key.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			lever = ImageIO.read(new File("src/assets/lever.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			ogre = ImageIO.read(new File("src/assets/Ogre.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			stairs = ImageIO.read(new File("src/assets/stairs.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			floor = ImageIO.read(new File("src/assets/floor.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			club = ImageIO.read(new File("src/assets/club.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			ogreStunned= ImageIO.read(new File("src/assets/OgreStunned.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			defaultImg = ImageIO.read(new File("src/assets/default.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void init(){
+		setPreferredSize(new Dimension(this.getWidth(),this.getHeight()));
+        readImage();
 	}
 
 	public int moveAgents_GUI(char heroDirection){
@@ -117,7 +161,8 @@ public class SimpleGraphicsPanel extends JPanel {
 
 	// Redraws the panel, only when requested by SWING
 	public void paintComponent(Graphics g) { 
-		super.paintComponent(g); // cleans background 
+		super.paintComponent(g); // cleans background
+        rescaleImages();
 		if (map != null){
 			for (int i = 0; i < map.length; i++){
 				for (int j = 0; j < map[i].length;j++){
@@ -161,46 +206,16 @@ public class SimpleGraphicsPanel extends JPanel {
 					default:
 						g.drawImage(defaultImg, currentX, currentY, null);
 						break;
-
 					}
-					currentX += imageSize.width;
+					currentX += wall.getWidth(null);
 				}
 				currentX = 0;
-				currentY+=imageSize.height;
+				currentY += wall.getHeight(null);
 			}
 			currentY = 0;
 		}
 	}
 
-
-
-
-	/**
-	 * Resizes an image using a Graphics2D object backed by a BufferedImage.
-	 * @param srcImg - source image to scale
-	 * @param w - desired width
-	 * @param h - desired height
-	 * @return - the new resized image
-	 */
-	private BufferedImage getScaledImage(BufferedImage src, int w, int h){
-		int finalw = w;
-		int finalh = h;
-		double factor = 1.0d;
-		if(src.getWidth() > src.getHeight()){
-			factor = ((double)src.getHeight()/(double)src.getWidth());
-			finalh = (int)(finalw * factor);                
-		}else{
-			factor = ((double)src.getWidth()/(double)src.getHeight());
-			finalw = (int)(finalh * factor);
-		}   
-
-		BufferedImage resizedImg = new BufferedImage(finalw, finalh, BufferedImage.TRANSLUCENT);
-		Graphics2D g2 = resizedImg.createGraphics();
-		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g2.drawImage(src, 0, 0, finalw, finalh, null);
-		g2.dispose();
-		return resizedImg;
-	}
 	public int checkForGameOver(){
 		game.isGameOver(); //To update status value in game object.
 		if (game.getGameStatus() == Game.status.DEFEAT){
