@@ -9,9 +9,10 @@ import dkeep.logic.Configs;
 import dkeep.logic.Game;
 import dkeep.logic.Game.status;
 import dkeep.logic.Hero;
-
-import java.awt.Point;
 import org.junit.Test;
+
+import java.awt.*;
+
 import static org.junit.Assert.*;
 
 
