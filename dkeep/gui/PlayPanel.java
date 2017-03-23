@@ -157,14 +157,17 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 
 		switch(e.getKeyCode()){ 
 		case KeyEvent.VK_LEFT:
-			checkGameStatus(graphicsPanel.moveAgents_GUI('a'));;
+			checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
 			break; 
 		case KeyEvent.VK_RIGHT:
-			checkGameStatus(graphicsPanel.moveAgents_GUI('d'));; break;  
+			checkGameStatus(graphicsPanel.moveAgents_GUI('d'));
+			break;
 		case KeyEvent.VK_UP:
-			checkGameStatus(graphicsPanel.moveAgents_GUI('w'));;break; 
+			checkGameStatus(graphicsPanel.moveAgents_GUI('w'));
+			break;
 		case KeyEvent.VK_DOWN:
-			checkGameStatus(graphicsPanel.moveAgents_GUI('s'));; break; 
+			checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
+			break;
 		}
 
 
@@ -179,9 +182,4 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		// TODO Auto-generated method stub
 
 	}
-
-	public void resiveImages(){
-		graphicsPanel.rescaleImages();
-	}
-
 }
