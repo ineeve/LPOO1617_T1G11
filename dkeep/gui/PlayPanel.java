@@ -1,25 +1,10 @@
 package dkeep.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import dkeep.logic.Configs;
 import dkeep.logic.Game;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	JPanel moveButtonsPanel = new JPanel(new BorderLayout());
@@ -29,11 +14,10 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	JButton btnDown = new JButton("");
 	JButton btnRight = new JButton("");
 	JLabel gameStatsLlb = new JLabel("Try to Escape");
-	SimpleGraphicsPanel graphicsPanel = new SimpleGraphicsPanel();
+	BoardGraphics graphicsPanel;
 	Game game;
 
 	PlayPanel(){
-
 		init();
 	}
 	
@@ -49,8 +33,7 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	
 	
 	public void init(){
-		
-		
+		graphicsPanel = new BoardGraphics();
 		gameStatsLlb.setOpaque(true);
 		graphicsPanel.setFocusable(true);
 		setLayout(new BorderLayout());
@@ -71,6 +54,7 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 
 		northPanel.add(gameStatsLlb);
 		add(northPanel,BorderLayout.NORTH);
+
 		btnUp.addActionListener(new ActionListener(){
 
 			@Override
@@ -196,10 +180,8 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 
 	}
 
-
-
-
-
-
+	public void resiveImages(){
+		graphicsPanel.rescaleImages();
+	}
 
 }
