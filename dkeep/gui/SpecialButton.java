@@ -15,19 +15,21 @@ public class SpecialButton extends JButton{
 	Image image;
 	Character typeOfButton;
 	
-	public SpecialButton(Dimension pos,ImageIcon icon, Character type){
+	public SpecialButton(Dimension pos,Image img, Character type){
 		super();
 		typeOfButton = type;
 		position = pos;
 		setMargin(new Insets(0, 0, 0, 0));
-        image = icon.getImage();
+        image = img;
 	}
 	
 	
 	public Character getType() {
 		return typeOfButton;
 	}
-
+	public void setImage(Image newImage){
+		image = newImage;
+	}
 
 
 
