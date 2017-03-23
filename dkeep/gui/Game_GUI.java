@@ -96,7 +96,6 @@ public class Game_GUI{
 				playPanel.resetGameStatusLabel();
 				playPanel.setGame(game);
 				cl.show(containerPanel, "4");
-				playPanel.resiveImages();
 				playPanel.enableMoveButtons();
 				playPanel.repaint();
 			}
