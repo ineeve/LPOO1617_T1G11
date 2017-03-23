@@ -11,8 +11,6 @@ public class CreateMapPanel extends JPanel{
 
 	EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
 	JPanel componentsPanel;
-	//public enum icon {HERO,WALL,OGRE,KEY};
-	//public static icon IconSelected;
 	final int EastPanelSize = 200;
 	HashMap<Character,Image> imageMap = new HashMap<>();
 
@@ -28,11 +26,10 @@ public class CreateMapPanel extends JPanel{
 		loadImages();
 		componentsPanel = new ImageOptionsPanel(imageMap);
 		setLayout(new BorderLayout());
-		
-		componentsPanel.setPreferredSize(new Dimension(EastPanelSize,EastPanelSize));
+		componentsPanel.setPreferredSize(new Dimension(EastPanelSize, EastPanelSize));
 		add(componentsPanel,BorderLayout.EAST);
 		add(editPanel,BorderLayout.CENTER);
+		
 	}
-
-
+  
 }

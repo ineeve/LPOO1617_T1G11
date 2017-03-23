@@ -21,15 +21,20 @@ public class EditMapGraphicsPanel extends JPanel{
 	EditMapGraphicsPanel(){
 		init();
 	}
+  
 	public void init(){
+
 		getImages();
 		setLayout(gl);
 		addButtons();
 	}
+  
 	private void getImages() {
 		imageMap = readImages();
 	}
+  
 	public void addButtons(){
+		System.out.println(gl.getRows() + " " + gl.getColumns());
 		for (int i = 0; i < gl.getRows();i++){
 			for (int j = 0; j < gl.getColumns(); j++){
 				SpecialButton j1 = new SpecialButton(new Dimension(i,j),imageMap.get(map[i][j]), map[i][j]);
@@ -44,6 +49,4 @@ public class EditMapGraphicsPanel extends JPanel{
 			}
 		}
 	}
-
-
 }

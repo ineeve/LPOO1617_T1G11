@@ -1,5 +1,6 @@
 package dkeep.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,6 +9,7 @@ import java.awt.Insets;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.border.LineBorder;
 
 public class SpecialButton extends JButton{
 
@@ -19,7 +21,8 @@ public class SpecialButton extends JButton{
 		super();
 		typeOfButton = type;
 		position = pos;
-		setMargin(new Insets(0, 0, 0, 0));
+		setBorder(new LineBorder(Color.BLACK));
+		//setMargin(new Insets(0, 0, 0, 0));
         image = img;
 	}
 	
