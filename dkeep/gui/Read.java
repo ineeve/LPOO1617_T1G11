@@ -1,27 +1,14 @@
 package dkeep.gui;
 
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
-public class ReadImages {
-
-	
-	HashMap<Character,Image> imageMap = new HashMap<Character,Image>();
-	
-	public ReadImages(){
-		initMap();
-	}
-	
-	public HashMap<Character, Image> getImageMap() {
-		return imageMap;
-	}
-
-	private void initMap(){
+public abstract class Read {
+	public static HashMap<Character, Image> readImages() {
+		HashMap<Character, Image> imageMap = new HashMap<>();
 		try {
 			imageMap.put('X', ImageIO.read(new File("src/assets/wall.png")));
 		} catch (IOException e) {
@@ -32,7 +19,7 @@ public class ReadImages {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		try	{
+		try {
 			Image Hero = ImageIO.read(new File("src/assets/Hero.png"));
 			imageMap.put('H', Hero);
 			imageMap.put('A', Hero);
@@ -49,7 +36,7 @@ public class ReadImages {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		try{
+		try {
 			imageMap.put('k', ImageIO.read(new File("src/assets/key.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -66,7 +53,7 @@ public class ReadImages {
 			e.printStackTrace();
 		}
 		try {
-	
+
 			imageMap.put('S', ImageIO.read(new File("src/assets/stairs.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -95,6 +82,6 @@ public class ReadImages {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return imageMap;
 	}
-	
 }

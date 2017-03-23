@@ -21,23 +21,15 @@ class Main {
         System.out.println("How many Ogres do you wish to fight?");
         config.NUMBEROFOGRES = UserInput.getInt();
 
-        config.prepareNextLevel();
-        game.setMap(config.getMap());
-        game.setAgents(config.getAgents());
-        game.setKey(config.getKey());
-        game.setKeyTaken(false);
-        game.gameStatus = Game.status.PLAYING;
+        game.setConfigs(config);
+        game.resetLevel();
         while (game.isGameOver() == false) {
             displayBoard(game.getMap());
             switch (game.moveAllAgents()){
                 case 0:
                     break;
                 case 1:
-                    config.prepareNextLevel();
-                    game.setMap(config.getMap());
-                    game.setAgents(config.getAgents());
-                    game.setKey(config.getKey());
-                    game.setKeyTaken(false);
+                    game.resetLevel();
                     break;
                 case 2:
                     System.out.println("Congratulations,you've escaped");
