@@ -49,8 +49,6 @@ public class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	
 	
 	public void init(){
-		
-		
 		gameStatsLlb.setOpaque(true);
 		graphicsPanel.setFocusable(true);
 		setLayout(new BorderLayout());

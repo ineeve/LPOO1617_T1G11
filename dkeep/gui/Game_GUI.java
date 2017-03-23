@@ -72,7 +72,7 @@ public class Game_GUI{
 		menuPanel.add(btnExit);
 		playPanel.add(btnBackPlay,BorderLayout.PAGE_END);
 		settingsPanel.add(btnBackSettings);
-		editMapPanel.add(btnBackEditMap);
+		editMapPanel.add(btnBackEditMap,BorderLayout.PAGE_END);
 
 
 		containerPanel.add(menuPanel, "1"); // "1" is the identifing string
