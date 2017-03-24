@@ -9,13 +9,8 @@ public abstract class MovingAgent {
     final MovementStrategy movement = new MovementStrategy();
     char symbol;
     boolean isSleeping;
-    boolean key;
     
     public Weapon weapon;
-    
-    public void setKey(boolean key) {
-        this.key = key;
-    }
     
     public Point getAgentCoords(){
         return agentCoords;
@@ -47,6 +42,7 @@ public abstract class MovingAgent {
     public char getSymbol() {
         return symbol;
     }
+
     public void setSymbol(char newSymbol){
         symbol = newSymbol;
     }

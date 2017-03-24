@@ -81,10 +81,11 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 			disableMoveButtons();
 			removeKeyListener(this);
 			removeMouseListener(this);
-			if (val == 1){
+			if (val == 3){
 				gameStatsLlb.setBackground(Color.RED);
 				gameStatsLlb.setText("You have been captured, go Back to Try Again");
-			}else{
+			}
+			else if(val == 2){
 				gameStatsLlb.setBackground(Color.GREEN);
 				gameStatsLlb.setText("You have escaped, congrats!");
 			}

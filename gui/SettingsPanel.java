@@ -22,10 +22,9 @@ class SettingsPanel extends JPanel {
 
 	private void init(){
 		setBackground(Color.RED);
-		addComponentsToJpanel();
 		sliderNumberOfOgres();
 
-		String[] personalities = {"Drunken","Rookie","Suspicious"};
+		String[] personalities = {"Rookie","Drunken","Suspicious"};
 		personalityChooser = new JComboBox(personalities);
 		personalityChooser.setSelectedIndex(0);
 
@@ -33,12 +32,19 @@ class SettingsPanel extends JPanel {
 		levelChooser = new JComboBox(maps);
 		levelChooser.setSelectedIndex(0);
 
+        addComponentsToJpanel();
 		addSaveListener();
 	}
 
 	public void setConfigs(Configs config){
 		conf = config;
 	}
+
+    private void sliderNumberOfOgres(){
+        numberOfOgres.setMaximum(5);
+        numberOfOgres.setMinimum(1);
+        numberOfOgres.setValue(numberOfOgres.getMinimum());
+    }
 
 	private void addComponentsToJpanel(){
 		add(lblnumOgres);
@@ -48,12 +54,6 @@ class SettingsPanel extends JPanel {
 		add(lblLevelChooser);
 		add(levelChooser);
 		add(save);
-	}
-
-	private void sliderNumberOfOgres(){
-		numberOfOgres.setMaximum(5);
-		numberOfOgres.setMinimum(1);
-		numberOfOgres.setValue(numberOfOgres.getMinimum());
 	}
 
 	private void addSaveListener(){

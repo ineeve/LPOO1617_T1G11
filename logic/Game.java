@@ -122,21 +122,21 @@ public class Game {
 	public int moveAllAgents(char heroNextDirection){
 		int returnValue = moveAgent(agents.get(0),heroNextDirection);
 		if (returnValue != 0){
-			return returnValue;
+			return returnValue; //nextlevel & victory
 		}
-		isGameOver();
-		return moveBots();
+        moveBots();
+		if(isGameOver()){
+		    return 3; //defeat
+        }
+        return 0; //nextround
 	}
-	public int moveBots(){
+
+	private void moveBots(){
 		for (int i = 1; i< agents.size(); i++){
 			MovingAgent actualAgent = agents.get(i);
 			char nextDirection = actualAgent.getNextDirection();
-			int returnValue = moveAgent(actualAgent,nextDirection);
-			if(returnValue != 0){
-				return returnValue;
-			}
+			moveAgent(actualAgent,nextDirection);
 		}
-		return 0;
 	}
 
     private void ogreStunned(MovingAgent actualAgent){
@@ -163,7 +163,6 @@ public class Game {
 
 	private void keyHandler(MovingAgent actualAgent){
         if (key.getCoord().distance(actualAgent.getAgentCoords()) == 0) {
-		    actualAgent.setKey(true);
 		    if (actualAgent instanceof Hero){
 			    keyTaken = true;
 			    if (!(map instanceof KeepMap)){
@@ -172,9 +171,6 @@ public class Game {
 				    actualAgent.setSymbol('K');
 			    }
 		    }
-        }
-        else {
-            actualAgent.setKey(false);
         }
 	}
 
@@ -188,11 +184,17 @@ public class Game {
 			    ogreStunned(actualAgent);
 				break;
 			case 2:
-				if(map.nextMap() == null){
-					gameStatus = status.VICTORY;
-					return 2;
-				}
-				return 1;
+			    if(actualAgent instanceof Hero) {
+                    if (map.nextMap() == null) {
+                        gameStatus = status.VICTORY;
+                        return 2;
+                    }
+                    return 1;
+                }
+                else{
+                    actualAgent.setAgentCoords(lastPosition);
+                }
+                break;
 			case 3:
 				if (actualAgent instanceof Hero && keyTaken && map instanceof KeepMap){
 					map.changeAllDoorsToStairs();
