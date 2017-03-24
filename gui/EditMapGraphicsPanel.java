@@ -39,6 +39,8 @@ class EditMapGraphicsPanel extends JPanel{
 			}
 		}
 	}
+	
+	
 
 
 	public char[][] getMapEdited() {

@@ -13,7 +13,7 @@ class CreateMapPanel extends JPanel{
 
 	private EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
 	private HashMap<Character,Image> imageMap = new HashMap<>();
-
+	private MapSizeSelectorPanel mapSizePanel = new MapSizeSelectorPanel();
 	CreateMapPanel(){
 		init();
 	}
@@ -29,7 +29,9 @@ class CreateMapPanel extends JPanel{
 		int eastPanelSize = 200;
 		componentsPanel.setPreferredSize(new Dimension(eastPanelSize, eastPanelSize));
 		add(componentsPanel,BorderLayout.EAST);
+		add(mapSizePanel,BorderLayout.NORTH);
 		add(editPanel,BorderLayout.CENTER);
+		
 		
 	}
 
