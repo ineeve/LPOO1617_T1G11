@@ -39,10 +39,10 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		setBackground(Color.BLUE);
 		add(graphicsPanel,BorderLayout.CENTER);
 
-		btnUp.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_up.png")));
-		btnLeft.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_left.png")));
-		btnRight.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_right.png")));
-		btnDown.setIcon(new ImageIcon(Button.class.getResource("/assets/arrow_down.png")));
+		btnUp.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_up.png")));
+		btnLeft.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_left.png")));
+		btnRight.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_right.png")));
+		btnDown.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_down.png")));
 
 		moveButtonsPanel.add(btnUp, BorderLayout.NORTH);
 		moveButtonsPanel.add(btnLeft, BorderLayout.WEST);

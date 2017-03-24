@@ -35,7 +35,7 @@ class SettingsPanel extends JPanel {
 		personalityChooser.setSelectedIndex(0);
 		add(personalityChooser);
 		add(lblLevelChooser);
-		String[] maps = {"Test Map","Dungeon","Ogre's Keep","Custom Map"};
+		String[] maps = {"Test Map","Dungeon","Ogre's Keep"};
 		levelChooser = new JComboBox(maps);
 		levelChooser.setSelectedIndex(0);
 		add(levelChooser);

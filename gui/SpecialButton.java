@@ -1,6 +1,7 @@
 package dkeep.gui;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 class SpecialButton extends JButton{
