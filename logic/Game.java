@@ -119,13 +119,13 @@ public class Game {
 		}
 	}
 
-	public int moveAllAgents(){
-		int returnValue = moveAgent(agents.get(0),agents.get(0).getNextDirection());
+	public int moveAllAgents(char heroNextDirection){
+		int returnValue = moveAgent(agents.get(0),heroNextDirection);
 		if (returnValue != 0){
 			return returnValue;
 		}
+		isGameOver();
 		return moveBots();
-
 	}
 	public int moveBots(){
 		for (int i = 1; i< agents.size(); i++){
@@ -194,12 +194,8 @@ public class Game {
 				}
 				return 1;
 			case 3:
-				if (actualAgent instanceof Hero){
-					if (keyTaken){
-						if (map instanceof KeepMap){
-							map.changeAllDoorsToStairs();
-						}
-					}
+				if (actualAgent instanceof Hero && keyTaken && map instanceof KeepMap){
+					map.changeAllDoorsToStairs();
 				}
 				actualAgent.setAgentCoords(lastPosition);
 				break;
@@ -232,12 +228,13 @@ public class Game {
 		actualAgent.nextPos(direction);
 		int isFreeResponse = map.isFree(actualAgent.getAgentCoords()); /* Verify if next position is free */
 		int handlerResponse = responseHandler(actualAgent, isFreeResponse, lastPosition);/* Handler for next position of agent */
+
+        if(actualAgent.weapon.getSymbol() != ' ') {
+            moveWeapon(actualAgent);
+        }
+
 		if (handlerResponse != 0){
 			return handlerResponse;
-		}
-
-		if(actualAgent.weapon.getSymbol() != ' ') {
-			moveWeapon(actualAgent);
 		}
 
 		return 0;
@@ -245,7 +242,6 @@ public class Game {
 
 	public boolean isGameOver() {
 		for (int i = 1; i < agents.size(); i++) {
-
 			if (agents.get(i) instanceof Ogre){
 				if (agents.get(i).weapon.getCoords().distance(agents.get(0).getAgentCoords()) <= 1){
 					gameStatus = status.DEFEAT;
