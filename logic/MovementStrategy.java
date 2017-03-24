@@ -1,8 +1,6 @@
-package dkeep.cli;
+package dkeep.logic;
 
 import java.util.Random;
-
-import static dkeep.cli.UserInput.*;
 
 /**
  * Created by João on 23/02/2017.
@@ -11,10 +9,6 @@ public class MovementStrategy {
 
     private final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
     private int pathIterator = 0;
-
-    public char userMovement() {
-        return getChar();
-    }
 
     public char randomMovement() {
         Random r = new Random();
