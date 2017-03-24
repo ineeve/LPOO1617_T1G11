@@ -54,22 +54,26 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		northPanel.add(gameStatsLlb);
 		add(northPanel,BorderLayout.NORTH);
 
+		initListeners();
+	}
+
+	private void initListeners(){
 		btnUp.addActionListener(arg0 -> {
-            checkGameStatus(graphicsPanel.moveAgents_GUI('w'));
-            requestFocusInWindow();
-        });
+			checkGameStatus(graphicsPanel.moveAgents_GUI('w'));
+			requestFocusInWindow();
+		});
 		btnRight.addActionListener(arg0 -> {
-            checkGameStatus(graphicsPanel.moveAgents_GUI('d'));
-            requestFocusInWindow();
-        });
+			checkGameStatus(graphicsPanel.moveAgents_GUI('d'));
+			requestFocusInWindow();
+		});
 		btnLeft.addActionListener(arg0 -> {
-            checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
-            requestFocusInWindow();
-        });
+			checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
+			requestFocusInWindow();
+		});
 		btnDown.addActionListener(arg0 -> {
-            checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
-            requestFocusInWindow();
-        });
+			checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
+			requestFocusInWindow();
+		});
 	}
 
 	private void checkGameStatus(int val){

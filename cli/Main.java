@@ -3,6 +3,9 @@ package dkeep.cli;
 import dkeep.logic.Configs;
 import dkeep.logic.Game;
 
+import static dkeep.cli.UserInput.getChar;
+import static dkeep.cli.UserInput.getInt;
+
 /**
  * Created by João on 23/02/2017.
  */
@@ -16,15 +19,15 @@ class Main {
         System.out.println("0) Rookie");
         System.out.println("1) Drunken");
         System.out.println("2) Suspicious");
-        Configs.GUARDPERSONALITY = UserInput.getInt();
+        Configs.GUARDPERSONALITY = getInt();
         /*Number of Ogres*/
         System.out.println("How many Ogres do you wish to fight?");
-        Configs.NUMBEROFOGRES = UserInput.getInt();
+        Configs.NUMBEROFOGRES = getInt();
         game.setConfigs(config);
         game.resetLevel();
-        while (!game.isGameOver()) {
+        while (Game.gameStatus != Game.status.DEFEAT) {
             displayBoard(game.getMap());
-            switch (game.moveAllAgents()){
+            switch (game.moveAllAgents(getChar())){
                 case 0:
                     break;
                 case 1:
