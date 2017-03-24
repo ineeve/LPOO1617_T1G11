@@ -78,7 +78,7 @@ public abstract class Read {
 		}
 		try {
 
-			imageMap.put('/', ImageIO.read(new File("src/assets/default.png")));
+			imageMap.put('/', ImageIO.read(new File("src/assets/weapon.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
