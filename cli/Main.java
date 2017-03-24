@@ -14,15 +14,8 @@ class Main {
         Configs config = new Configs(1);
         Game game = new Game();
 
-        /*Guard personality*/
-        System.out.println("What guard personality you want?");
-        System.out.println("0) Rookie");
-        System.out.println("1) Drunken");
-        System.out.println("2) Suspicious");
-        Configs.GUARDPERSONALITY = getInt();
-        /*Number of Ogres*/
-        System.out.println("How many Ogres do you wish to fight?");
-        Configs.NUMBEROFOGRES = getInt();
+        getStartInputs();
+
         game.setConfigs(config);
         game.resetLevel();
         while (Game.gameStatus != Game.status.DEFEAT) {
@@ -54,5 +47,17 @@ class Main {
             System.out.println(currentLine);
         }
 
+    }
+
+    private static void getStartInputs(){
+        /*Guard personality*/
+        System.out.println("What guard personality you want?");
+        System.out.println("0) Rookie");
+        System.out.println("1) Drunken");
+        System.out.println("2) Suspicious");
+        Configs.GUARDPERSONALITY = getInt();
+        /*Number of Ogres*/
+        System.out.println("How many Ogres do you wish to fight?");
+        Configs.NUMBEROFOGRES = getInt();
     }
 }

@@ -181,7 +181,7 @@ public class Game {
 	private int responseHandler(MovingAgent actualAgent, int isFreeResponse, Point lastPosition){
 		switch (isFreeResponse) {
 			case 0:
-				actualAgent.setAgentCoords(lastPosition);
+			    actualAgent.setAgentCoords(lastPosition);
 				break;
 			case 1:
 			    keyHandler(actualAgent);
