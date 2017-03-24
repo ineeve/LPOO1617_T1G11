@@ -67,8 +67,20 @@ class Game_GUI{
 		containerPanel.add(playPanel, "4");
 		cl.show(containerPanel, "1"); //which panel is set initially
 
-		btnSettings.addActionListener(arg0 -> cl.show(containerPanel, "2"));
-		btnCreateMap.addActionListener(arg0 -> cl.show(containerPanel, "3"));
+		addListenersToButtons();
+		
+
+		mainFrame.add(containerPanel);
+		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+
+	}
+
+
+
+	private void addListenersToButtons() {
+		btnSettings.addActionListener(new ActionListener(){
 
 
 		btnPlay.addActionListener(arg0 -> {
@@ -94,11 +106,51 @@ class Game_GUI{
             ((CreateMapPanel)editMapPanel).saveMapEdited();
         });
 
-		mainFrame.add(containerPanel);
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		mainFrame.pack();
-		mainFrame.setVisible(true);
 
+		btnPlay.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				game.resetLevel();
+				playPanel.addListeners();
+				playPanel.resetGameStatusLabel();
+				playPanel.setGame(game);
+				cl.show(containerPanel, "4");
+				playPanel.enableMoveButtons();
+				playPanel.repaint();
+			}
+		});
+		btnExit.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		btnBackPlay.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(containerPanel, "1");
+				game.getConfig().decreaseLevel();
+			}
+		});
+		btnBackSettings.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(containerPanel, "1");
+				btnPlay.setEnabled(true);
+			}
+		});
+		btnBackEditMap.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(containerPanel, "1");
+			}
+		});
+		
 	}
 
 }
