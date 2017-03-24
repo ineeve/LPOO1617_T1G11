@@ -9,13 +9,9 @@ public abstract class MovingAgent {
     final MovementStrategy movement = new MovementStrategy();
     char symbol;
     boolean isSleeping;
-    protected boolean key;
+    boolean key;
     
     public Weapon weapon;
-    
-    public boolean isKey() {
-        return key;
-    }
     
     public void setKey(boolean key) {
         this.key = key;
@@ -25,20 +21,8 @@ public abstract class MovingAgent {
         return agentCoords;
     }
     
-    public void setInitialPos(int x, int y){
-        agentCoords.x = x;
-        agentCoords.y = y;
-    }
-    
     public void setAgentCoords(Point agentCoords) {
         this.agentCoords = agentCoords;
-    }
-
-    void nextMove(){
-    	char nextChar = getNextDirection();
-    	if (nextChar != '0'){
-    		nextPos(nextChar);
-    	}
     }
 
     abstract char getNextDirection();

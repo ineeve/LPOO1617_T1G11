@@ -2,11 +2,7 @@ package dkeep.logic;
 
 import java.awt.*;
 
-public class Suspicious extends Guard {
-
-    public Suspicious() {
-        symbol = 'G';
-    }
+class Suspicious extends Guard {
 
     public Suspicious(Point coord) {
         symbol = 'G';

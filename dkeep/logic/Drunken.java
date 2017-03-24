@@ -2,12 +2,7 @@ package dkeep.logic;
 
 import java.awt.*;
 
-public class Drunken extends Guard {
-
-    public Drunken() {
-        symbol = 'G';
-        isSleeping = false;
-    }
+class Drunken extends Guard {
 
     public Drunken(Point coord) {
         symbol = 'G';

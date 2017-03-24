@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-public abstract class Read {
+abstract class Read {
 	public static HashMap<Character, Image> readImages() {
 		HashMap<Character, Image> imageMap = new HashMap<>();
 		try {

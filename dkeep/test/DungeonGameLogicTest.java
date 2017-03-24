@@ -31,7 +31,7 @@ public class DungeonGameLogicTest {
         game.setAgents(config.getAgents());
         game.setKey(config.getKey());
         game.setKeyTaken(false);
-        game.gameStatus = Game.status.PLAYING;
+        Game.gameStatus = Game.status.PLAYING;
 		Hero actualHero = game.getHero();
 		assertEquals(new Point(1,1), actualHero.getAgentCoords());
 		game.moveHero('s');
@@ -48,7 +48,7 @@ public class DungeonGameLogicTest {
         game.setAgents(config.getAgents());
         game.setKey(config.getKey());
         game.setKeyTaken(false);
-        game.gameStatus = Game.status.PLAYING;
+        Game.gameStatus = Game.status.PLAYING;
 		assertFalse(game.isGameOver());
 		game.moveHero('d');
 		assertTrue(game.isGameOver());

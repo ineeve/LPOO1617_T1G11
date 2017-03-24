@@ -10,11 +10,11 @@ import dkeep.logic.Game;
 import dkeep.logic.Game.status;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
-
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import java.awt.Point;
+import java.awt.*;
+
+import static org.junit.Assert.*;
 
 
 public class KeepMapTest {
