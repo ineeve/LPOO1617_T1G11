@@ -19,22 +19,8 @@ public class Game {
 
 	public static status gameStatus;
 
-	public Game(){}
-
-	public Game(int startLevel) {
-		config = new Configs(startLevel);
-		map = config.getMap();
-		agents = config.getAgents();
-		key = config.getKey();
-		keyTaken = false;
-		gameStatus = status.PLAYING;
-	}
-
-	public void setConfigs(Configs config){
-		this.config = config;
-	}
-	public Configs getConfig(){
-		return config;
+	public Game(Configs c){
+		config = c;
 	}
 	
 	public void resetLevel(){
@@ -51,27 +37,18 @@ public class Game {
 		this.map = map;
 	}
 
-	public void setAgents(ArrayList<MovingAgent> agentsArray){
-		agents = agentsArray;
-	}
-
-	public void setKey(Key newKey){
-		key = newKey;
-	}
-
-	public void setKeyTaken(boolean key){
-		keyTaken = key;
-	}
+	private char[][] getArrayMap(){
+	    return map.getMap();
+    }
 
 	public char[][] getMap() {
-		char[][] mapChar = map.getMap().clone();
+		char[][] mapChar = getArrayMap().clone();
 
-		for (int i = 0; i < map.getMap().length; i++) {
-			mapChar[i] = map.getMap()[i].clone();
-		}
-		if (!keyTaken){
-			mapChar[key.getCoord().y][key.getCoord().x] = 'k';
-		}
+		for (int i = 0; i < getArrayMap().length; i++)
+			mapChar[i] = getArrayMap()[i].clone();
+
+		if (!keyTaken)
+		    mapChar[key.getCoord().y][key.getCoord().x] = 'k';
 
 		for (MovingAgent agent : agents) {
 			int agentCoordY = agent.getAgentCoords().y;
@@ -93,16 +70,10 @@ public class Game {
 	}
 
 	public Ogre getFirstOgre(){
-		for (MovingAgent agent: agents){
-			if (agent instanceof Ogre){
+		for (MovingAgent agent: agents)
+			if (agent instanceof Ogre)
 				return (Ogre) agent;
-			}
-		}
 		return null;
-	}
-
-	public status getGameStatus(){
-		return gameStatus;
 	}
 
 	public int moveHero(char direction){
@@ -110,17 +81,8 @@ public class Game {
 		return moveAgent(actualAgent,direction);
 	}
 
-	public void moveOgres(){
-		for (int i = 1; i < agents.size(); i++){
-			MovingAgent actualAgent = agents.get(i);
-			if (actualAgent instanceof Ogre){
-				moveAgent(actualAgent, actualAgent.getNextDirection());
-			}
-		}
-	}
-
 	public int moveAllAgents(char heroNextDirection){
-		int returnValue = moveAgent(agents.get(0),heroNextDirection);
+		int returnValue = moveHero(heroNextDirection);
 		if (returnValue != 0){
 			return returnValue; //nextlevel & victory
 		}
@@ -131,7 +93,7 @@ public class Game {
         return 0; //nextround
 	}
 
-	private void moveBots(){
+	public void moveBots(){
 		for (int i = 1; i< agents.size(); i++){
 			MovingAgent actualAgent = agents.get(i);
 			char nextDirection = actualAgent.getNextDirection();
@@ -166,7 +128,7 @@ public class Game {
 		    if (actualAgent instanceof Hero){
 			    keyTaken = true;
 			    if (!(map instanceof KeepMap)){
-                    map.changeAllDoorsToStairs();
+                    changeAllDoors();
 			    }else{
 				    actualAgent.setSymbol('K');
 			    }
@@ -197,13 +159,17 @@ public class Game {
                 break;
 			case 3:
 				if (actualAgent instanceof Hero && keyTaken && map instanceof KeepMap){
-					map.changeAllDoorsToStairs();
+                    changeAllDoors();
 				}
 				actualAgent.setAgentCoords(lastPosition);
 				break;
 		}
 		return 0;
 	}
+
+	private void changeAllDoors(){
+        map.changeAllDoorsToStairs();
+    }
 
 	private void moveWeapon(MovingAgent actualAgent){
 		actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
