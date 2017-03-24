@@ -50,7 +50,6 @@ public class Configs {
         level = newLevel;
     }
 
-
     public int prepareNextLevel() {
         heroStartPoint = new Point(1, 1);
         guardStartPoint = new Point(3, 1);
