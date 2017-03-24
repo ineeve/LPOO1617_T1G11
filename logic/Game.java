@@ -21,6 +21,10 @@ public class Game {
 
 	public Game(){}
 
+	public Game(Configs c){
+		config = c;
+	}
+
 	public Game(int startLevel) {
 		config = new Configs(startLevel);
 		map = config.getMap();

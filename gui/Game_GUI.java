@@ -21,7 +21,7 @@ class Game_GUI {
 	private JButton btnBackPlay = new JButton("Back");
 	private JButton btnBackSettings = new JButton("Back");
 	private JButton btnBackEditMap = new JButton("Back");
-	private Game game = new Game();
+	private Game game;
 	private Configs config;
 
 	/**
@@ -44,7 +44,7 @@ class Game_GUI {
 	 */
 	private Game_GUI() {
 		config = new Configs(0);
-		game.setConfigs(config);
+		game = new Game(config);
 		settingsPanel.setConfigs(config);
 		initialize();
 	}

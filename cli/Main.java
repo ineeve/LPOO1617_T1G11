@@ -12,11 +12,9 @@ import static dkeep.cli.UserInput.getInt;
 class Main {
     public static void main(String[] args) {
         Configs config = new Configs(1);
-        Game game = new Game();
-
         getStartInputs();
 
-        game.setConfigs(config);
+        Game game = new Game(config);
         resetLevel(game);
         while (Game.gameStatus != Game.status.DEFEAT) {
             displayBoard(getMap(game));
