@@ -1,7 +1,5 @@
 package dkeep.gui;
 
-import dkeep.logic.maps.KeepMap;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -34,7 +32,7 @@ class CreateMapPanel extends JPanel{
 	}
 
 	public void saveMapEdited(){
-		KeepMap.setMapEdited(editPanel.getMapEdited());
+		//KeepMap.setMapEdited(editPanel.getMapEdited());
 	}
 
 }
