@@ -12,10 +12,6 @@ public abstract class GameMap {
         return map;
     }
 
-    public void setMap(char[][] map) {
-        this.map = map;
-    }
-
     /**
      * @param coord Agent coordinates
      * @return 0-Out of map; 1 - ' '; 2 - 'S',3-'I'; 4-'O';

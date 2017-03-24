@@ -39,27 +39,14 @@ class BoardGraphics extends JPanel {
 	}
 
 	public int moveAgents_GUI(char heroDirection){
-		if (game.moveHero(heroDirection)==1){ //change To next level
+		int gameStatus = game.moveAllAgents(heroDirection);
+		if(gameStatus == 1){
 			game.resetLevel();
-			map = game.getMap();
-			repaint();
-			return 0;
+			gameStatus = 0;
 		}
 		map = game.getMap();
 		repaint();
-		int gameStatus;
-		if ((gameStatus = checkForGameOver()) > 0 ){
-			return gameStatus; 
-		}
-		else{
-			game.moveBots();
-			map = game.getMap();
-			repaint();
-		}
-		if ((gameStatus = checkForGameOver()) > 0 ){
-			return gameStatus;
-		}
-		return 0;
+		return gameStatus;
 	}
 
 	// Redraws the panel, only when requested by SWING
@@ -81,19 +68,4 @@ class BoardGraphics extends JPanel {
 			currentY = 0;
 		}
 	}
-
-	private int checkForGameOver(){
-		game.isGameOver(); //To update status value in game object.
-		if (game.getGameStatus() == Game.status.DEFEAT){
-			return 1;
-		}
-		else if (game.getGameStatus() == Game.status.VICTORY){
-			return 2;
-		}
-		return 0;
-	}
-
-
-
-
 }

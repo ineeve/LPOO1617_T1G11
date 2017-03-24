@@ -50,7 +50,7 @@ public class Configs {
         level = newLevel;
     }
 
-    public int prepareNextLevel() {
+    public void prepareNextLevel() {
         heroStartPoint = new Point(1, 1);
         guardStartPoint = new Point(3, 1);
         keyStartPoint = new Point(1, 3);
@@ -58,15 +58,13 @@ public class Configs {
         switch (level) {
             case 0:
                 prepareTestLevel();
-                return 0;
+                return;
             case 1:
                 prepareLevelOne();
-                return 0;
+                return;
             case 2:
                 prepareLevelTwo();
-                return 0;
-            default:
-                return 1;
+                return;
         }
     }
 
