@@ -22,6 +22,7 @@ class Game_GUI {
 	private JButton btnBackSettings = new JButton("Back");
 	private JButton btnBackEditMap = new JButton("Back");
 	private Game game = new Game();
+	private Configs config;
 
 	/**
 	 * Launch the application.
@@ -42,8 +43,9 @@ class Game_GUI {
 	 * Create the application.
 	 */
 	private Game_GUI() {
-		game.setConfigs(new Configs(0));
-		settingsPanel.setConfigs(game.getConfig());
+		config = new Configs(0);
+		game.setConfigs(config);
+		settingsPanel.setConfigs(config);
 		initialize();
 	}
 
@@ -118,7 +120,7 @@ class Game_GUI {
     private void listenerbtnBackPlay(){
         btnBackPlay.addActionListener(arg0 -> {
             cl.show(containerPanel, "1");
-            game.getConfig().decreaseLevel();
+            config.decreaseLevel();
         });
     }
 
