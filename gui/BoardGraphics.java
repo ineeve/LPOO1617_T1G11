@@ -28,8 +28,7 @@ class BoardGraphics extends JPanel {
 
 	public void setGame(Game g){
 		game = g;
-		map = game.getMap();
-		repaint();
+		updateMap();
 	}
 
 	private void init(){
@@ -44,9 +43,13 @@ class BoardGraphics extends JPanel {
 			game.resetLevel();
 			gameStatus = 0;
 		}
+		updateMap();
+		return gameStatus;
+	}
+
+	private void updateMap(){
 		map = game.getMap();
 		repaint();
-		return gameStatus;
 	}
 
 	// Redraws the panel, only when requested by SWING

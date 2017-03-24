@@ -17,22 +17,30 @@ class Main {
         getStartInputs();
 
         game.setConfigs(config);
-        game.resetLevel();
+        resetLevel(game);
         while (Game.gameStatus != Game.status.DEFEAT) {
-            displayBoard(game.getMap());
+            displayBoard(getMap(game));
             switch (game.moveAllAgents(getChar())){
                 case 0:
                     break;
                 case 1:
-                    game.resetLevel();
+                    resetLevel(game);
                     break;
                 case 2:
                     System.out.println("Congratulations,you've escaped");
                     return;
             }
         }
-        displayBoard(game.getMap());
+        displayBoard(getMap(game));
         System.out.println("You have been captured");
+    }
+
+    private static void resetLevel(Game game){
+        game.resetLevel();
+    }
+
+    private static char[][] getMap(Game game){
+        return game.getMap();
     }
 
     private static void displayBoard(char matrix[][]) {
