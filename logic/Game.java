@@ -17,7 +17,7 @@ public class Game {
 	private boolean keyTaken;
 	public enum status {DEFEAT,PLAYING,VICTORY}
 
-	public status gameStatus;
+	private status gameStatus;
 
 	public Game(Configs c){
 		config = c;
@@ -36,11 +36,11 @@ public class Game {
         this.config = config;
     }
 
-    public void setMap(GameMap map) {
-		this.map = map;
-	}
+    public status getGameStatus() {
+        return gameStatus;
+    }
 
-	private char[][] getArrayMap(){
+    private char[][] getArrayMap(){
 	    return map.getMap();
     }
 

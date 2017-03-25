@@ -33,10 +33,6 @@ public class Configs {
         level--;
     }
 
-    public int getLevel() {
-        return level;
-    }
-
     public void setNumberOfOgres(int nOgres) {
         this.numberOfOgres = nOgres;
     }
@@ -69,13 +65,13 @@ public class Configs {
         switch (level) {
             case 0:
                 prepareTestLevel();
-                return;
+                break;
             case 1:
                 prepareLevelOne();
-                return;
+                break;
             case 2:
                 prepareLevelTwo();
-                return;
+                break;
         }
     }
 

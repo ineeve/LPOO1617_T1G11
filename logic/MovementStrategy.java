@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Created by João on 23/02/2017.
  */
-public class MovementStrategy {
+class MovementStrategy {
 
     private final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
     private int pathIterator = 0;

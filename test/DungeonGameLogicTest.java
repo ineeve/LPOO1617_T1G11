@@ -42,7 +42,7 @@ public class DungeonGameLogicTest {
 		assertFalse(game.isGameOver());
 		game.moveHero('d');
 		assertTrue(game.isGameOver());
-		assertEquals(status.DEFEAT, Game.gameStatus);
+		assertEquals(status.DEFEAT, game.getGameStatus());
 	}
 
 

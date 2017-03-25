@@ -85,7 +85,7 @@ public class KeepMapTest {
 		for (int i = 0; i < 8; i++){
 			game.moveHero('a');
 		}
-		assertTrue(Game.gameStatus == status.VICTORY);
+		assertTrue(game.getGameStatus() == status.VICTORY);
 	}
 	
 	
@@ -151,7 +151,7 @@ public class KeepMapTest {
 		assertFalse(game.isGameOver());
 		game.moveHero('d');
 		assertTrue(game.isGameOver());
-		assertEquals(status.DEFEAT, Game.gameStatus);
+		assertEquals(status.DEFEAT, game.getGameStatus());
 	}
 	
 
