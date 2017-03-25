@@ -17,7 +17,7 @@ public class Game {
 	private boolean keyTaken;
 	public enum status {DEFEAT,PLAYING,VICTORY}
 
-	private status gameStatus;
+	public status gameStatus;
 
 	public Game(Configs c){
 		config = c;
@@ -34,10 +34,6 @@ public class Game {
 
     public void setConfig(Configs config) {
         this.config = config;
-    }
-
-    public status getGameStatus() {
-        return gameStatus;
     }
 
     private char[][] getArrayMap(){

@@ -16,7 +16,7 @@ class Main {
 
         Game game = new Game(config);
         resetLevel(game);
-        while (game.getGameStatus() != Game.status.DEFEAT) {
+        while (game.gameStatus != Game.status.DEFEAT) {
             displayBoard(getMap(game));
             switch (game.moveAllAgents(getChar())){
                 case 0:
