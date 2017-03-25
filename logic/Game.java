@@ -16,7 +16,6 @@ public class Game {
 	private Key key;
 	private boolean keyTaken;
 	public enum status {DEFEAT,PLAYING,VICTORY}
-
 	public status gameStatus;
 
 	public Game(Configs c){
@@ -224,5 +223,9 @@ public class Game {
 			}
 		}
 		return false;
+	}
+
+	public int getLevel(){
+		return config.getLevel();
 	}
 }

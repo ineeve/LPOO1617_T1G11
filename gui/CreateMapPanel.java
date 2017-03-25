@@ -14,7 +14,7 @@ import static dkeep.gui.Read.readImages;
 
 
 class CreateMapPanel extends JPanel{
-	private EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
+	private EditMapGraphicsPanel editPanel;
 	private HashMap<Character,Image> imageMap = new HashMap<>();
 	private MapSizeSelectorPanel mapSizePanel = new MapSizeSelectorPanel();
 	final int MIN_SIZE = 5;
@@ -31,11 +31,12 @@ class CreateMapPanel extends JPanel{
 	}
 
 	private void loadImages(){
-		imageMap = readImages();
+		imageMap = readImages(2);
 	}
 
 	private void init(){
 		loadImages();
+		editPanel = new EditMapGraphicsPanel(imageMap);
 		JPanel componentsPanel = new ImageOptionsPanel(imageMap);
 		componentsPanel.setBorder(new EmptyBorder(0, 2, 2, 2));
 		setLayout(new BorderLayout());
