@@ -69,7 +69,6 @@ class CreateMapPanel extends JPanel{
 				System.out.println(source.getValue() + " " + ySizeSlider.getValue());
 				KeepMap.resize(source.getValue(),ySizeSlider.getValue());
 				editPanel.redraw();
-				editPanel.repaint();
 			}
 		});
 	}
@@ -81,7 +80,6 @@ class CreateMapPanel extends JPanel{
 				System.out.println(xSizeSlider.getValue() + " " + source.getValue());
 				KeepMap.resize(xSizeSlider.getValue(),source.getValue());
 				editPanel.redraw();
-				editPanel.repaint();
 			}
 		});
 	}

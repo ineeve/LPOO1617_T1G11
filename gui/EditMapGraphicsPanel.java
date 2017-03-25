@@ -45,6 +45,7 @@ class EditMapGraphicsPanel extends JPanel{
 		removeAll();
         map = (new KeepMap()).getMap();
 		gl = new GridLayout(map.length,map[0].length);
+		setLayout(gl);
 		addButtons();
 		revalidate();
 		repaint();
