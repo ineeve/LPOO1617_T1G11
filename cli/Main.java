@@ -7,11 +7,11 @@ import static dkeep.cli.UserInput.getChar;
 import static dkeep.cli.UserInput.getInt;
 
 /**
- * Created by João on 23/02/2017.
+ * Main class of command line interface;
  */
 class Main {
 
-    /** Main Function containes de cycle of running Game
+    /** Main Function contains de cycle of running Game
      *
      * @param args String[] - with a arguments from command line
      */

@@ -3,36 +3,62 @@ package dkeep.logic;
 import java.awt.*;
 
 class Drunken extends Guard {
+    /**Constant char that contains the symbol of Drunken awake*/
+    private final char DRUNKENSYMBOLAWAKE = 'G';
+    /**Constant char that contains the symbol of Drunken sleep*/
+    private final char DRUNKENSYMBOLSLEEP = 'g';
+    /**Constant value that correspond if Suspicious is going forward*/
+    private final int FORWARD = 1;
+    /**Constant value that correspond if Suspicious is going backward*/
+    private final int BACKWARD = 0;
 
+
+    /* CONSTRUCTOR */
+
+    /** Constructor of Drunken;
+     *  Initialize Drunken and set your's start position;
+     *
+     * @param coord - Point to set your's start position;
+     */
     public Drunken(Point coord) {
-        symbol = 'G';
+        symbol = DRUNKENSYMBOLAWAKE;
         agentCoords = coord;
         isSleeping = false;
     }
 
+    /* GETTERS */
+
+    /** Function to get next direction to move;
+     *  This function returns one char that correspond to next direction;
+     *  But because this MovingAgent is a Drunken, he does not follow the movement of the original path;
+     *  Sometimes the Drunken may fall asleep and when he wakes up, we may go in the backward direction.
+     *
+     * @Override Guard::getNextDirection();
+     *
+     * @return char - that contains next direction to move
+     */
     @Override
 	char getNextDirection() { //returns '0' if should stay in same position
     	double random = Math.random();
         char nextChar = '0';
-        if (symbol == 'd') {
+        if (symbol == DRUNKENSYMBOLSLEEP) {
             if (random < 0.2) {
-                symbol = 'D';
+                symbol = DRUNKENSYMBOLAWAKE;
                 isSleeping = false;
-                currentDirection = 1;
+                currentDirection = FORWARD;
                 nextChar = movement.pathMovement(currentDirection);
             } else if (random > 0.5) {
-                symbol = 'D';
+                symbol = DRUNKENSYMBOLAWAKE;
                 isSleeping = false;
-                currentDirection = 0;
-                nextChar =movement.pathMovement(currentDirection);
+                currentDirection = BACKWARD;
+                nextChar = movement.pathMovement(currentDirection);
             }
         } else if (random < 0.5) {
-            symbol = 'd';
+            symbol = DRUNKENSYMBOLSLEEP;
             isSleeping = true;
         } else {
             nextChar = movement.pathMovement(currentDirection);
             }
         return nextChar;
-		
 	}
 }
