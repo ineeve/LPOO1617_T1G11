@@ -21,7 +21,8 @@ class Game_GUI {
 	private JButton btnBackPlay = new JButton("Back");
 	private JButton btnBackSettings = new JButton("Back");
 	private JButton btnBackEditMap = new JButton("Back");
-	private Game game = new Game();
+	private Game game;
+	private Configs config;
 
 	/**
 	 * Launch the application.
@@ -42,8 +43,9 @@ class Game_GUI {
 	 * Create the application.
 	 */
 	private Game_GUI() {
-		game.setConfigs(new Configs(0));
-		settingsPanel.setConfigs(game.getConfig());
+		config = new Configs(0);
+		game = new Game(config);
+		settingsPanel.setConfigs(config);
 		initialize();
 	}
 
@@ -75,18 +77,31 @@ class Game_GUI {
 
 	}
 
-
 	private void addListenersToButtons() {
+		listenerbtnSettings();
+		listenerbtnCreateMap();
+		listenerbtnPlay();
+        listenerbtnExit();
+        listenerbtnBackPlay();
+        listenerbtnBackSettings();
+        listenerbtnBackEditMap();
+	}
 
-		btnSettings.addActionListener(argv0 ->
-				cl.show(containerPanel, "2")
-		);
+	private void listenerbtnSettings(){
+        btnSettings.addActionListener(argv0 ->
+                cl.show(containerPanel, "2")
+        );
+	}
 
-		btnCreateMap.addActionListener(nargv0 ->
-				cl.show(containerPanel, "3")
-		);
+	private void listenerbtnCreateMap(){
+        btnCreateMap.addActionListener(nargv0 ->
+                cl.show(containerPanel, "3")
+        );
+	}
 
+	private void listenerbtnPlay(){
 		btnPlay.addActionListener(arg0 -> {
+			game.setConfig(config);
 			game.resetLevel();
 			playPanel.addListeners();
 			playPanel.resetGameStatusLabel();
@@ -95,23 +110,33 @@ class Game_GUI {
 			playPanel.enableMoveButtons();
 			playPanel.repaint();
 		});
-
-		btnExit.addActionListener(arg0 -> System.exit(0));
-
-		btnBackPlay.addActionListener(arg0 -> {
-			cl.show(containerPanel, "1");
-			game.getConfig().decreaseLevel();
-		});
-
-		btnBackSettings.addActionListener(arg0 -> {
-			cl.show(containerPanel, "1");
-			btnPlay.setEnabled(true);
-		});
-
-		btnBackEditMap.addActionListener(arg0 -> {
-			cl.show(containerPanel, "1");
-			((CreateMapPanel) editMapPanel).saveMapEdited();
-		});
-
 	}
+
+	private void listenerbtnExit(){
+        btnExit.addActionListener(arg0 ->
+                System.exit(0)
+        );
+    }
+
+    private void listenerbtnBackPlay(){
+        btnBackPlay.addActionListener(arg0 -> {
+            cl.show(containerPanel, "1");
+            config.decreaseLevel();
+        });
+    }
+
+    private void listenerbtnBackSettings(){
+        btnBackSettings.addActionListener(arg0 -> {
+            cl.show(containerPanel, "1");
+            btnPlay.setEnabled(true);
+        });
+    }
+
+    private void listenerbtnBackEditMap(){
+        btnBackEditMap.addActionListener(arg0 ->
+				cl.show(containerPanel, "1")
+		);
+    }
+
 }
+

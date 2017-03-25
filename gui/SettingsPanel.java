@@ -22,33 +22,45 @@ class SettingsPanel extends JPanel {
 
 	private void init(){
 		setBackground(Color.RED);
-		add(lblnumOgres);
-		add(numberOfOgres);
-		add(lblGuardPersonality);
-		
-		numberOfOgres.setMaximum(5);
-		numberOfOgres.setMinimum(1);
-		numberOfOgres.setValue(numberOfOgres.getMinimum());
+		sliderNumberOfOgres();
 
-		String[] personalities = {"Drunken","Rookie","Suspicious"};
+		String[] personalities = {"Rookie","Drunken","Suspicious"};
 		personalityChooser = new JComboBox(personalities);
 		personalityChooser.setSelectedIndex(0);
-		add(personalityChooser);
-		add(lblLevelChooser);
+
 		String[] maps = {"Test Map","Dungeon","Ogre's Keep"};
 		levelChooser = new JComboBox(maps);
 		levelChooser.setSelectedIndex(0);
-		add(levelChooser);
-		add(save);
 
-		save.addActionListener(e -> {
-            conf.setLevel(levelChooser.getSelectedIndex());
-            Configs.NUMBEROFOGRES = numberOfOgres.getValue();
-            Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
-        });
+        addComponentsToJpanel();
+		addSaveListener();
 	}
+
 	public void setConfigs(Configs config){
 		conf = config;
 	}
-	
+
+    private void sliderNumberOfOgres(){
+        numberOfOgres.setMaximum(5);
+        numberOfOgres.setMinimum(1);
+        numberOfOgres.setValue(numberOfOgres.getMinimum());
+    }
+
+	private void addComponentsToJpanel(){
+		add(lblnumOgres);
+		add(numberOfOgres);
+		add(lblGuardPersonality);
+		add(personalityChooser);
+		add(lblLevelChooser);
+		add(levelChooser);
+		add(save);
+	}
+
+	private void addSaveListener(){
+		save.addActionListener(e -> {
+			conf.setLevel(levelChooser.getSelectedIndex());
+			conf.NUMBEROFOGRES = numberOfOgres.getValue();
+			conf.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
+		});
+	}
 }
