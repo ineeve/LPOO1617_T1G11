@@ -13,14 +13,14 @@ abstract class Read {
 			imageMap.put('X', ImageIO.read(new File("src/dkeep/assets/wall.png")));
 			imageMap.put('I', ImageIO.read(new File("src/dkeep/assets/door.png")));
 			Image Hero = ImageIO.read(new File("src/dkeep/assets/Hero.png"));
-			imageMap.put('H', Hero);
-			imageMap.put('A', Hero);
+			
 			if(level == 1 || level == 2) {
+				imageMap.put('H', Hero);
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/lever.png")));
 				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/leverPressed.png")));
-				
 			}
 			else{
+				imageMap.put('A', Hero);
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/key.png")));
 				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/HeroWithKey.png")));
 			}

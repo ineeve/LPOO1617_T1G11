@@ -26,7 +26,9 @@ class SpecialButton extends JButton{
 	public void setImage(Image newImage){
 		image = newImage;
 	}
-
+	public Image getImage(){
+		return image;
+	}
 
 
 	Dimension getPosition(){

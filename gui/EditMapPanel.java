@@ -13,7 +13,7 @@ import java.util.HashMap;
 import static dkeep.gui.Read.readImages;
 
 
-class CreateMapPanel extends JPanel{
+class EditMapPanel extends JPanel{
 	private EditMapGraphicsPanel editPanel;
 	private HashMap<Character,Image> imageMap = new HashMap<>();
 	private MapSizeSelectorPanel mapSizePanel = new MapSizeSelectorPanel();
@@ -26,12 +26,18 @@ class CreateMapPanel extends JPanel{
 	JSlider ySizeSlider = new JSlider(JSlider.HORIZONTAL,
 			MIN_SIZE, MAX_SIZE, INIT_SIZE);
 	
-	CreateMapPanel(){
+	EditMapPanel(){
 		init();
 	}
 
 	private void loadImages(){
-		imageMap = readImages(2);
+		imageMap = readImages(3);
+	}
+	public Point getKeyPos(){
+		return editPanel.getKeyPos();
+	}
+	public Point getHeroPos(){
+		return editPanel.getHeroPos();
 	}
 
 	private void init(){

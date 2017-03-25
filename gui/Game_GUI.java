@@ -12,7 +12,7 @@ class Game_GUI {
 	private JPanel menuPanel = new InitialMenuPanel();
 	private SettingsPanel settingsPanel = new SettingsPanel();
 	private PlayPanel playPanel = new PlayPanel();
-	private JPanel editMapPanel = new CreateMapPanel();
+	private EditMapPanel editMapPanel = new EditMapPanel();
 	private CardLayout cl = new CardLayout();
 	private JButton btnSettings = new JButton("Settings");
 	private JButton btnCreateMap = new JButton("Create Map");
@@ -81,22 +81,22 @@ class Game_GUI {
 		listenerbtnSettings();
 		listenerbtnCreateMap();
 		listenerbtnPlay();
-        listenerbtnExit();
-        listenerbtnBackPlay();
-        listenerbtnBackSettings();
-        listenerbtnBackEditMap();
+		listenerbtnExit();
+		listenerbtnBackPlay();
+		listenerbtnBackSettings();
+		listenerbtnBackEditMap();
 	}
 
 	private void listenerbtnSettings(){
-        btnSettings.addActionListener(argv0 ->
-                cl.show(containerPanel, "2")
-        );
+		btnSettings.addActionListener(argv0 ->
+		cl.show(containerPanel, "2")
+				);
 	}
 
 	private void listenerbtnCreateMap(){
-        btnCreateMap.addActionListener(nargv0 ->
-                cl.show(containerPanel, "3")
-        );
+		btnCreateMap.addActionListener(nargv0 ->
+		cl.show(containerPanel, "3")
+				);
 	}
 
 	private void listenerbtnPlay(){
@@ -113,30 +113,34 @@ class Game_GUI {
 	}
 
 	private void listenerbtnExit(){
-        btnExit.addActionListener(arg0 ->
-                System.exit(0)
-        );
-    }
+		btnExit.addActionListener(arg0 ->
+		System.exit(0)
+				);
+	}
 
-    private void listenerbtnBackPlay(){
-        btnBackPlay.addActionListener(arg0 -> {
-            cl.show(containerPanel, "1");
-            config.decreaseLevel();
-        });
-    }
+	private void listenerbtnBackPlay(){
+		btnBackPlay.addActionListener(arg0 -> {
+			cl.show(containerPanel, "1");
+			config.decreaseLevel();
+			Point heroPos = editMapPanel.getHeroPos(); Point keyPos = editMapPanel.getKeyPos();
+			config.setDungeonHeroAndKey(heroPos, keyPos);
+		});
+	}
 
-    private void listenerbtnBackSettings(){
-        btnBackSettings.addActionListener(arg0 -> {
-            cl.show(containerPanel, "1");
-            btnPlay.setEnabled(true);
-        });
-    }
+	private void listenerbtnBackSettings(){
+		btnBackSettings.addActionListener(arg0 -> {
+			cl.show(containerPanel, "1");
+			btnPlay.setEnabled(true);
+		});
+	}
 
-    private void listenerbtnBackEditMap(){
-        btnBackEditMap.addActionListener(arg0 ->
-				cl.show(containerPanel, "1")
-		);
-    }
+	private void listenerbtnBackEditMap(){
+		btnBackEditMap.addActionListener(arg0 ->{
+			cl.show(containerPanel, "1");
+			config.setDungeonHeroAndKey(editMapPanel.getHeroPos(), editMapPanel.getKeyPos());
+
+		});
+	}
 
 }
 

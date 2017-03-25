@@ -9,7 +9,7 @@ public class Key {
     private Point coord;
     
     public Key(Point coord) {
-        this.coord = coord;
+        this.coord = (Point) coord.clone();
     }
 
     public Point getCoord() {
