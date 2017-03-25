@@ -82,7 +82,7 @@ public class Configs {
     	heroStartPoint = new Point(1, 1);
         guardStartPoint = new Point(3, 1);
         leverStartPoint = new Point(1,3);
-        Point[] openableDoors = new Point[]{new Point(0,1),new Point(1,2)};
+        Point[] openableDoors = new Point[]{new Point(0,2),new Point(0,3)};
         lever = new Lever(leverStartPoint,openableDoors);
         map = new Task1TestMap();
         agents.add(new Hero(heroStartPoint));
