@@ -133,9 +133,9 @@ class Game_GUI {
     }
 
     private void listenerbtnBackEditMap(){
-        btnBackEditMap.addActionListener(arg0 -> {
-            cl.show(containerPanel, "1");
-        });
+        btnBackEditMap.addActionListener(arg0 ->
+				cl.show(containerPanel, "1")
+		);
     }
 
 }

@@ -6,14 +6,10 @@ import java.security.InvalidParameterException;
 
 
 public abstract class GameMap {
-    protected char[][] map;
+    char[][] map;
 
     public char[][] getMap() {
         return map;
-    }
-
-    public void setMap(char[][] newMap){
-        map = newMap;
     }
 
     /**
