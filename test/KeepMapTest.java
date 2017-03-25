@@ -125,7 +125,7 @@ public class KeepMapTest {
 		game.moveHero('w');
 		game.moveHero('d');
 		while(!game.isGameOver()){
-			game.moveAgent(theHero, theHero.getRandomDirection());
+			game.moveAgent(theHero, theHero.getNextDirection());
 			game.moveBots();
 		}
 	}

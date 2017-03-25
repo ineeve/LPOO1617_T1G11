@@ -24,7 +24,6 @@ public class Game {
 	}
 	
 	public void resetLevel(){
-		this.config = new Configs(Configs.level);
 		config.prepareNextLevel();
 		map = config.getMap();
 		agents = config.getAgents();
@@ -32,8 +31,12 @@ public class Game {
 		keyTaken = false;
 		gameStatus = status.PLAYING;
 	}
-	
-	public void setMap(GameMap map) {
+
+    public void setConfig(Configs config) {
+        this.config = config;
+    }
+
+    public void setMap(GameMap map) {
 		this.map = map;
 	}
 

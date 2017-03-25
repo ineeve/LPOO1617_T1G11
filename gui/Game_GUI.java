@@ -101,6 +101,7 @@ class Game_GUI {
 
 	private void listenerbtnPlay(){
 		btnPlay.addActionListener(arg0 -> {
+			game.setConfig(config);
 			game.resetLevel();
 			playPanel.addListeners();
 			playPanel.resetGameStatusLabel();
@@ -134,7 +135,6 @@ class Game_GUI {
     private void listenerbtnBackEditMap(){
         btnBackEditMap.addActionListener(arg0 -> {
             cl.show(containerPanel, "1");
-            ((CreateMapPanel) editMapPanel).saveMapEdited();
         });
     }
 

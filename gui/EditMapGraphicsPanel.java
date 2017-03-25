@@ -11,6 +11,7 @@ import static dkeep.gui.Read.readImages;
 class EditMapGraphicsPanel extends JPanel{
 	private char [][] map;
 	private GridLayout gl;
+
 	private HashMap<Character,Image> imageMap;
 	
 	EditMapGraphicsPanel(KeepMap keepLevel){
@@ -40,10 +41,12 @@ class EditMapGraphicsPanel extends JPanel{
 		}
 	}
 	
-	
-
-
-	public char[][] getMapEdited() {
-		return map;
+	public void redraw(){
+		removeAll();
+		gl = new GridLayout(map.length,map[0].length);
+		addButtons();
+		revalidate();
+		repaint();
 	}
+
 }
