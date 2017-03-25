@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 abstract class Read {
-	public static HashMap<Character, Image> readImages() {
+	public static HashMap<Character, Image> readImages(int level) {
 		HashMap<Character, Image> imageMap = new HashMap<>();
 		try {
 			imageMap.put('X', ImageIO.read(new File("src/dkeep/assets/wall.png")));
@@ -15,10 +15,15 @@ abstract class Read {
 			Image Hero = ImageIO.read(new File("src/dkeep/assets/Hero.png"));
 			imageMap.put('H', Hero);
 			imageMap.put('A', Hero);
-			imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/HeroWithKey.png")));
+			if(level == 0) {
+				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/lever.png")));
+				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/leverPressed.png")));
+			}
+			else{
+				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/key.png")));
+				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/HeroWithKey.png")));
+			}
 			imageMap.put('G', ImageIO.read(new File("src/dkeep/assets/drunken.png")));
-			imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/key.png")));
-			imageMap.put('L', ImageIO.read(new File("src/dkeep/assets/lever.png")));
 			imageMap.put('O', ImageIO.read(new File("src/dkeep/assets/Ogre.png")));
 			imageMap.put('S', ImageIO.read(new File("src/dkeep/assets/stairs.png")));
 			imageMap.put(' ', ImageIO.read(new File("src/dkeep/assets/floor.png")));

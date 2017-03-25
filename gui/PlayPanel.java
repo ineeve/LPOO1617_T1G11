@@ -110,34 +110,29 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	public void setGame(Game g){
 		graphicsPanel.setGame(g);
 	}
+
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		requestFocusInWindow();
-
 	}
+
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		requestFocusInWindow();
 
 	}
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
-	}
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseExited(MouseEvent arg0) {}
 
-	}
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mousePressed(MouseEvent arg0) {}
 
-	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
-
 		switch(e.getKeyCode()){ 
 		case KeyEvent.VK_LEFT:
 			checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
@@ -152,17 +147,11 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 			checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
 			break;
 		}
-
-
 	}
+
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent arg0) {}
 
-	}
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void keyTyped(KeyEvent arg0) {}
 }

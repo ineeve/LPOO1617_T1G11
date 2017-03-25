@@ -6,28 +6,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
-import static dkeep.gui.Read.readImages;
-
 class EditMapGraphicsPanel extends JPanel{
 	private char [][] map;
 	private GridLayout gl;
 
 	private HashMap<Character,Image> imageMap;
 	
-	EditMapGraphicsPanel(){
+	EditMapGraphicsPanel(HashMap<Character,Image> hashImages){
+		imageMap = hashImages;
 		map = (new KeepMap()).getMap();
 		gl = new GridLayout(map.length,map[0].length);
 		init();
 	}
 	private void init(){
-		getImages();
 		setLayout(gl);
 		addButtons();
 	}
-  
-	private void getImages() {
-		imageMap = readImages();
-	}
+
 	private void addButtons(){
 		for (int i = 0; i < gl.getRows();i++){
 			for (int j = 0; j < gl.getColumns(); j++){
