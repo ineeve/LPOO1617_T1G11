@@ -48,27 +48,8 @@ public abstract class GameMap {
         }
     }
 
-    public void editPos(int x, int y, char n) {
-        if (y > map.length || y < 0 || x < 0 || x > map[0].length) {
-            throw new InvalidParameterException();
-        }
-        map[x][y] = n;
-    }
-
-    public void resize(int newXSize, int newYSize) {
-        if (newXSize < 5 || newYSize < 5 || newXSize > 60 || newYSize > 60) {
-            throw new InvalidParameterException();
-        }
-        map = new char[newYSize][newXSize];
-        for (int i = 0; i < newYSize; i++) {
-            for (int j = 0; j < newXSize; j++) {
-                if (i == 0 || i == newYSize - 1 || j == 0 || j == newXSize - 1) {
-                    map[i][j] = 'X';
-                } else {
-                    map[i][j] = ' ';
-                }
-            }
-        }
-    }
+    
+   
+    
 }
 

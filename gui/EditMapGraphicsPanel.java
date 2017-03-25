@@ -1,6 +1,5 @@
 package dkeep.gui;
 
-import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
 
 import javax.swing.*;
@@ -10,12 +9,13 @@ import java.util.HashMap;
 import static dkeep.gui.Read.readImages;
 
 class EditMapGraphicsPanel extends JPanel{
-	private GameMap keepLevel = new KeepMap();
-	private char [][] map = keepLevel.getMap();
-	private GridLayout gl = new GridLayout(map.length,map[0].length);
+	private char [][] map;
+	private GridLayout gl;
 	private HashMap<Character,Image> imageMap;
 	
-	EditMapGraphicsPanel(){
+	EditMapGraphicsPanel(KeepMap keepLevel){
+		map = keepLevel.getMap();
+		gl = new GridLayout(map.length,map[0].length);
 		init();
 	}
 	private void init(){
