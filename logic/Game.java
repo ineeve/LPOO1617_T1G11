@@ -35,6 +35,21 @@ public class Game {
 		gameStatus = status.PLAYING;
 	}
 
+	public void readElementsFromMap(){
+		char [][]tempMap = map.getMap();
+		for (int y = 0; y < tempMap.length; y++){
+			for (int x = 0; x < tempMap[0].length;x++){
+				char charAtPos = tempMap[y][x];
+				if (charAtPos != 'X' && charAtPos != 'I'){
+					tempMap[y][x] = ' ';
+					if (charAtPos == 'H' || charAtPos == 'K'){
+						agents.get(0).setAgentCoords(new Point(x,y));
+					}
+					else if (charAtPos == 'k'){
+						if (key != null) key.setCoords(new Point(x,y));
+						else lever.setCoords(new Point(x,y));}}}}
+	}
+
 	public void setConfig(Configs config) {
 		this.config = config;
 	}

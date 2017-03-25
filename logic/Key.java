@@ -15,5 +15,8 @@ public class Key {
     public Point getCoord() {
         return coord;
     }
+    public void setCoords(Point coords){
+    	coord = coords;
+    }
     
 }

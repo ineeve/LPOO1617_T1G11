@@ -5,8 +5,6 @@ import java.awt.Point;
 public class Lever {
 	private Point coords;
 	private Point[] doors;
-	private char notActivatedSymbol = 'k';
-	private char activatedSymbol = 'K';
 	public Lever(Point coords, Point[] doors) {
 		super();
 		this.coords = coords;
@@ -18,11 +16,8 @@ public class Lever {
 	public Point[] getDoors() {
 		return doors;
 	}
-	public char getNotActivatedSymbol(){
-		return notActivatedSymbol;
-	}
-	public char getActivatedSymbol() {
-		return activatedSymbol;
+	public void setCoords(Point coords){
+		this.coords = coords;
 	}
 	
 	

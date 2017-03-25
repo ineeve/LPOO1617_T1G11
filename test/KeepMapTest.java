@@ -130,6 +130,7 @@ public class KeepMapTest {
 		}
 	}
 	
+	//Test Dungeon Map
 	@Test
 	public void testMoveHeroToFreeCell(){
 		System.out.println("Testing Move Hero to Free Cell");
@@ -144,7 +145,7 @@ public class KeepMapTest {
 
 	@Test
 	public void testHeroIsCapturedByGuard(){
-		System.out.println("HeroIsCapturedByGuard");
+		System.out.println("Testing if Hero Is Captured By Guard");
 		Configs config = new Configs(0);
 		Game game = new Game(config);
         game.resetLevel();
@@ -153,6 +154,7 @@ public class KeepMapTest {
 		assertTrue(game.isGameOver());
 		assertEquals(status.DEFEAT, game.gameStatus);
 	}
+	
 	
 
 }

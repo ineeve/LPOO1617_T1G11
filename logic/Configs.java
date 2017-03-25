@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Configs {
     /**Contains information of number of ogres how will play on keep level*/
     public int NUMBEROFOGRES = 1;
-    /**Contains information of that is guard personalty*/
+    /**Contains information about the guard personality*/
     public int GUARDPERSONALITY = 0;
     /**Contains information of start position of hero for every level*/
     private Point heroStartPoint;
@@ -123,7 +123,7 @@ public class Configs {
         agents.add(newHero);
         for (int i = 0; i < NUMBEROFOGRES; i++) {
            Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1,map.getMap()[0].length-1),ThreadLocalRandom.current().nextInt(1, map.getMap().length-1));
-           if (ogrePoint.distance(heroStartPoint) > 3){agents.add(new Ogre(ogrePoint));}
+           if (ogrePoint.distance(heroStartPoint) > 3){agents.add(new Ogre(ogrePoint));} else i--;
         }
         level = 3;
     }
