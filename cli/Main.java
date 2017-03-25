@@ -13,7 +13,6 @@ class Main {
     public static void main(String[] args) {
         Configs config = new Configs(1);
         getStartInputs(config);
-
         Game game = new Game(config);
         resetLevel(game);
         while (game.gameStatus != Game.status.DEFEAT) {
