@@ -55,8 +55,8 @@ class BoardGraphics extends JPanel {
 	// Redraws the panel, only when requested by SWING
 	public void paintComponent(Graphics g) { 
 		super.paintComponent(g); // cleans background
-		int widthScale = this.getWidth()/map.length;
-		int heightScale = this.getHeight()/map[0].length;
+		int widthScale = this.getWidth()/map[0].length;
+		int heightScale = this.getHeight()/map.length;
 		imageMap = readImages();
 		if (map != null){
 			for (char[] aMap : map) {

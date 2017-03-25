@@ -14,8 +14,8 @@ class EditMapGraphicsPanel extends JPanel{
 
 	private HashMap<Character,Image> imageMap;
 	
-	EditMapGraphicsPanel(KeepMap keepLevel){
-		map = keepLevel.getMap();
+	EditMapGraphicsPanel(){
+		map = (new KeepMap()).getMap();
 		gl = new GridLayout(map.length,map[0].length);
 		init();
 	}
@@ -43,10 +43,10 @@ class EditMapGraphicsPanel extends JPanel{
 	
 	public void redraw(){
 		removeAll();
+        map = (new KeepMap()).getMap();
 		gl = new GridLayout(map.length,map[0].length);
 		addButtons();
 		revalidate();
 		repaint();
 	}
-
 }

@@ -1,23 +1,22 @@
 package dkeep.gui;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.HashMap;
+import dkeep.logic.maps.KeepMap;
 
-import static dkeep.gui.Read.readImages;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.util.HashMap;
 
-import dkeep.logic.maps.KeepMap;
+import static dkeep.gui.Read.readImages;
 
 
 class CreateMapPanel extends JPanel{
-	private KeepMap keepLevel = new KeepMap();
-	private EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel(keepLevel);
+	private EditMapGraphicsPanel editPanel = new EditMapGraphicsPanel();
 	private HashMap<Character,Image> imageMap = new HashMap<>();
-	private MapSizeSelectorPanel mapSizePanel = new MapSizeSelectorPanel(keepLevel);
+	private MapSizeSelectorPanel mapSizePanel = new MapSizeSelectorPanel();
 	final int MIN_SIZE = 5;
 	final int MAX_SIZE = 60;
 	final int INIT_SIZE = 9;
@@ -68,7 +67,7 @@ class CreateMapPanel extends JPanel{
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
 				System.out.println(source.getValue() + " " + ySizeSlider.getValue());
-				mapSizePanel.updateMapSize(source.getValue(),ySizeSlider.getValue() );
+				KeepMap.resize(source.getValue(),ySizeSlider.getValue());
 				editPanel.redraw();
 				editPanel.repaint();
 			}
@@ -79,8 +78,8 @@ class CreateMapPanel extends JPanel{
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
-				System.out.println(source.getValue() + " " + ySizeSlider.getValue());
-				mapSizePanel.updateMapSize(source.getValue(),ySizeSlider.getValue() );
+				System.out.println(xSizeSlider.getValue() + " " + source.getValue());
+				KeepMap.resize(xSizeSlider.getValue(),source.getValue());
 				editPanel.redraw();
 				editPanel.repaint();
 			}

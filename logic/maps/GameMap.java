@@ -2,7 +2,6 @@ package dkeep.logic.maps;
 
 
 import java.awt.*;
-import java.security.InvalidParameterException;
 
 
 public abstract class GameMap {

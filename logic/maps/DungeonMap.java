@@ -19,7 +19,7 @@ public class DungeonMap extends GameMap {
             {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'}};
 
     public DungeonMap() {
-        super.map = map;
+        super.map = DungeonMap.map;
     }
 
     @Override
