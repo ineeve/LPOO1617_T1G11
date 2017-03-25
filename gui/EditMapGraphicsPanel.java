@@ -12,6 +12,9 @@ class EditMapGraphicsPanel extends JPanel{
 
 	private HashMap<Character,Image> imageMap;
 	
+	private boolean hasKey;
+	private boolean hasHero;
+
 	EditMapGraphicsPanel(HashMap<Character,Image> hashImages){
 		imageMap = hashImages;
 		map = (new KeepMap()).getMap();
@@ -28,17 +31,23 @@ class EditMapGraphicsPanel extends JPanel{
 			for (int j = 0; j < gl.getColumns(); j++){
 				SpecialButton j1 = new SpecialButton(new Dimension(i,j),imageMap.get(map[i][j]), map[i][j]);
 				j1.addActionListener(arg0 -> {
-					map[j1.getPosition().width][j1.getPosition().height] = ImageOptionsPanel.buttonPressed;
-					j1.setImage(imageMap.get(ImageOptionsPanel.buttonPressed));
-					});
-				add(j1);
+					if (checkValidMap()){
+						map[j1.getPosition().width][j1.getPosition().height] = ImageOptionsPanel.buttonPressed;
+						j1.setImage(imageMap.get(ImageOptionsPanel.buttonPressed));
+					}
+				});
+					add(j1);
 			}
 		}
 	}
-	
+
+	private boolean checkValidMap() {
+		
+		return true;
+	}
 	public void redraw(){
 		removeAll();
-        map = (new KeepMap()).getMap();
+		map = (new KeepMap()).getMap();
 		gl = new GridLayout(map.length,map[0].length);
 		setLayout(gl);
 		addButtons();

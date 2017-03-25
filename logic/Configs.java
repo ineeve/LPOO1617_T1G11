@@ -117,7 +117,7 @@ public class Configs {
     	lever = null;
         heroStartPoint = new Point(1, 7);
         keyStartPoint = new Point(7, 1);
-        key = new Key(keyStartPoint,new Point(0,1));
+        key = new Key(keyStartPoint);
         map = new KeepMap();
         Hero newHero = new Hero(heroStartPoint, 'A', '/');
         agents.add(newHero);
