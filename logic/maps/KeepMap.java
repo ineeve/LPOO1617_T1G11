@@ -43,11 +43,7 @@ public class KeepMap extends GameMap{
 		for (int i = 0; i < newYSize; i++) {
 			for (int j = 0; j < newXSize; j++) {
 				if (tempMap[i][j] == 0){
-					if (i == 0 || i == newYSize - 1 || j == 0 || j == newXSize - 1) {
-						tempMap[i][j] = 'X';
-					} else {
-						tempMap[i][j] = ' ';
-					}
+					tempMap[i][j] = ' ';
 				}
 			}
 		}
