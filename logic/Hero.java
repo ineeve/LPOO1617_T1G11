@@ -18,10 +18,6 @@ public class Hero extends MovingAgent {
 
 	@Override
 	public char getNextDirection() {
-		return movement.userMovement();
-	}
-	
-	public char getRandomDirection(){
 		return movement.randomMovement();
 	}
 }

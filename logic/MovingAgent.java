@@ -1,7 +1,5 @@
 package dkeep.logic;
 
-import dkeep.cli.MovementStrategy;
-
 import java.awt.*;
 
 public abstract class MovingAgent {

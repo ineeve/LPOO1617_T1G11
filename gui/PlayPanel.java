@@ -108,8 +108,7 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	}
 
 	public void setGame(Game g){
-		Game game = g;
-		graphicsPanel.setGame(game);
+		graphicsPanel.setGame(g);
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg0) {

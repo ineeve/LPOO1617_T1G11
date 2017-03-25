@@ -12,11 +12,11 @@ import static dkeep.cli.UserInput.getInt;
 class Main {
     public static void main(String[] args) {
         Configs config = new Configs(1);
-        getStartInputs();
+        getStartInputs(config);
 
         Game game = new Game(config);
         resetLevel(game);
-        while (Game.gameStatus != Game.status.DEFEAT) {
+        while (game.gameStatus != Game.status.DEFEAT) {
             displayBoard(getMap(game));
             switch (game.moveAllAgents(getChar())){
                 case 0:
@@ -55,15 +55,15 @@ class Main {
 
     }
 
-    private static void getStartInputs(){
+    private static void getStartInputs(Configs config){
         /*Guard personality*/
         System.out.println("What guard personality you want?");
         System.out.println("0) Rookie");
         System.out.println("1) Drunken");
         System.out.println("2) Suspicious");
-        Configs.GUARDPERSONALITY = getInt();
+        config.GUARDPERSONALITY = getInt();
         /*Number of Ogres*/
         System.out.println("How many Ogres do you wish to fight?");
-        Configs.NUMBEROFOGRES = getInt();
+        config.NUMBEROFOGRES = getInt();
     }
 }
