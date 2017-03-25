@@ -14,8 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 public class Configs {
-    private int numberOfOgres = 1;
-    private int guardPersonality = 0;
+    public int NUMBEROFOGRES = 1;
+    public int GUARDPERSONALITY = 0;
     private Point heroStartPoint;
     private Point guardStartPoint;
     private Point keyStartPoint;
@@ -31,14 +31,6 @@ public class Configs {
 
     public void decreaseLevel() {
         level--;
-    }
-
-    public void setNumberOfOgres(int nOgres) {
-        this.numberOfOgres = nOgres;
-    }
-
-    public void setGuardPersonality(int gPersonality) {
-        this.guardPersonality = gPersonality;
     }
 
     public ArrayList<MovingAgent> getAgents() {
@@ -99,7 +91,7 @@ public class Configs {
         map = new DungeonMap();
 
         agents.add(new Hero(heroStartPoint));
-        switch (guardPersonality) {
+        switch (GUARDPERSONALITY) {
             case 0:
                 agents.add(new Rookie(guardStartPoint));
                 break;
@@ -127,7 +119,7 @@ public class Configs {
 
         Hero newHero = new Hero(heroStartPoint, 'A', '/');
         agents.add(newHero);
-        for (int i = 0; i < numberOfOgres; i++) {
+        for (int i = 0; i < NUMBEROFOGRES; i++) {
             int rnX = ThreadLocalRandom.current().nextInt(3, 7);
             int rnY = ThreadLocalRandom.current().nextInt(1, 7);
             agents.add(new Ogre(new Point(rnX, rnY)));

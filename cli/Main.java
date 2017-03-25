@@ -61,9 +61,9 @@ class Main {
         System.out.println("0) Rookie");
         System.out.println("1) Drunken");
         System.out.println("2) Suspicious");
-        config.setGuardPersonality(getInt());
+        config.GUARDPERSONALITY = getInt();
         /*Number of Ogres*/
         System.out.println("How many Ogres do you wish to fight?");
-        config.setNumberOfOgres(getInt());
+        config.NUMBEROFOGRES = getInt();
     }
 }
