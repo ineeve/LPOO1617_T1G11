@@ -45,7 +45,6 @@ class Suspicious extends Guard {
                 currentDirection = FORWARD;
         }
         return movement.pathMovement(currentDirection);
-		
 	}
 
 }

@@ -17,4 +17,5 @@ class Rookie extends Guard {
         symbol = ROOKIESYMBOL;
         agentCoords = coord;
     }
+
 }

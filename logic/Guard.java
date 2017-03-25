@@ -32,4 +32,5 @@ class Guard extends MovingAgent {
 	char getNextDirection() {
 		return movement.pathMovement(1);
 	}
+
 }

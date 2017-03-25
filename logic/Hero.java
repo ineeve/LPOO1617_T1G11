@@ -46,4 +46,5 @@ public class Hero extends MovingAgent {
 	public char getNextDirection() {
 		return movement.randomMovement();
 	}
+
 }

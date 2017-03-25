@@ -1,13 +1,12 @@
 package dkeep.logic;
 
 import dkeep.logic.maps.GameMap;
-import dkeep.logic.maps.KeepMap;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Created by João on 23/02/2017.
+ * Class responsible for Game;
  */
 public class Game {
 	private Configs config;

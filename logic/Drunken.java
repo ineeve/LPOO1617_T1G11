@@ -61,4 +61,5 @@ class Drunken extends Guard {
             }
         return nextChar;
 	}
+
 }
