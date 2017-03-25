@@ -59,8 +59,8 @@ class SettingsPanel extends JPanel {
 	private void addSaveListener(){
 		save.addActionListener(e -> {
 			conf.setLevel(levelChooser.getSelectedIndex());
-			Configs.NUMBEROFOGRES = numberOfOgres.getValue();
-			Configs.GUARDPERSONALITY = personalityChooser.getSelectedIndex();
+			conf.setNumberOfOgres(numberOfOgres.getValue());
+			conf.setGuardPersonality(personalityChooser.getSelectedIndex());
 		});
 	}
 }

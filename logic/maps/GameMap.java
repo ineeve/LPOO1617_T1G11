@@ -38,7 +38,9 @@ public abstract class GameMap {
         }
     }
 
-    public abstract GameMap nextMap();
+    public GameMap nextMap() {
+        return new Task1TestMap();
+    }
 
     public void changeAllDoorsToStairs() {
         for (int y = 0; y < map.length; y++) {

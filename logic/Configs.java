@@ -14,14 +14,13 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 public class Configs {
-    private static final GameMap STARTMAP = new DungeonMap();
-    public static int NUMBEROFOGRES = 1;
-    public static int GUARDPERSONALITY = 0;
+    private int numberOfOgres = 1;
+    private int guardPersonality = 0;
     private Point heroStartPoint;
     private Point guardStartPoint;
     private Point keyStartPoint;
 
-    static int level = 0;
+    private int level = 0;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
     private GameMap map;
     private Key key;
@@ -32,6 +31,18 @@ public class Configs {
 
     public void decreaseLevel() {
         level--;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setNumberOfOgres(int nOgres) {
+        this.numberOfOgres = nOgres;
+    }
+
+    public void setGuardPersonality(int gPersonality) {
+        this.guardPersonality = gPersonality;
     }
 
     public ArrayList<MovingAgent> getAgents() {
@@ -89,10 +100,10 @@ public class Configs {
         keyStartPoint = new Point(3, 1);
 
         key = new Key(new Point(keyStartPoint));
-        map = STARTMAP;
+        map = new DungeonMap();
 
         agents.add(new Hero(heroStartPoint));
-        switch (GUARDPERSONALITY) {
+        switch (guardPersonality) {
             case 0:
                 agents.add(new Rookie(guardStartPoint));
                 break;
@@ -115,14 +126,12 @@ public class Configs {
         } else {
             key = new Key(keyStartPoint);
         }
-        if (map == null) {
-            map = new KeepMap();
-        } else {
-            map = map.nextMap();
-        }
+
+        map = new KeepMap();
+
         Hero newHero = new Hero(heroStartPoint, 'A', '/');
         agents.add(newHero);
-        for (int i = 0; i < NUMBEROFOGRES; i++) {
+        for (int i = 0; i < numberOfOgres; i++) {
             int rnX = ThreadLocalRandom.current().nextInt(3, 7);
             int rnY = ThreadLocalRandom.current().nextInt(1, 7);
             agents.add(new Ogre(new Point(rnX, rnY)));
