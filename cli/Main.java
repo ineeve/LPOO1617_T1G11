@@ -10,10 +10,15 @@ import static dkeep.cli.UserInput.getInt;
  * Created by João on 23/02/2017.
  */
 class Main {
+
+    /** Main Function containes de cycle of running Game
+     *
+     * @param args String[] - with a arguments from command line
+     */
+
     public static void main(String[] args) {
         Configs config = new Configs(1);
         getStartInputs(config);
-
         Game game = new Game(config);
         resetLevel(game);
         while (game.gameStatus != Game.status.DEFEAT) {
@@ -33,13 +38,29 @@ class Main {
         System.out.println("You have been captured");
     }
 
+    /** Function to reset level of specific Game
+     *
+     * @param game Object of class Game to reset level
+     */
+
     private static void resetLevel(Game game){
         game.resetLevel();
     }
 
+    /** Function to get Board of specific Game
+     *
+     * @param game Object of class Game to get the Board
+     * @return Board of game in one matrix of char
+     */
+
     private static char[][] getMap(Game game){
         return game.getMap();
     }
+
+    /** Display board on command line
+     *
+     * @param matrix Board of game in one matrix of char
+     */
 
     private static void displayBoard(char matrix[][]) {
         System.out.println("\n\n");
@@ -54,6 +75,11 @@ class Main {
         }
 
     }
+
+    /** Get the start inputs to play like: NUMBEROGOGRES & GUARDPERSONALITY
+     *
+     * @param config Configuration object to set number of ogres to play and guard personality
+     */
 
     private static void getStartInputs(Configs config){
         /*Guard personality*/

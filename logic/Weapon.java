@@ -45,6 +45,12 @@ public class Weapon {
                 break;
         }
     }
+
+    /** Function to get next weapon movement
+     *
+     * @return char with a direction of the movement
+     */
+
     public char getNextDirection(){
     	 return movement.randomMovement();
     }

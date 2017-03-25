@@ -14,16 +14,23 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 public class Configs {
+    /**Contains information of number of ogres how will play on keep level*/
     public int NUMBEROFOGRES = 1;
+    /**Contains information of that is guard personalty*/
     public int GUARDPERSONALITY = 0;
+    /**Contains information of start position of hero for every level*/
     private Point heroStartPoint;
+    /**Contains information of start position of guard for dungeon level*/
     private Point guardStartPoint;
+    /**Contains information of start position of key/lever for every level*/
     private Point keyStartPoint;
+    private Point leverStartPoint;
 
     private int level = 0;
     private ArrayList<MovingAgent> agents = new ArrayList<>();
     private GameMap map;
     private Key key;
+    private Lever lever;
 
     public Configs(int startLevel) {
         level = startLevel;
@@ -40,7 +47,9 @@ public class Configs {
     public Key getKey() {
         return key;
     }
-
+    public Lever getLever(){
+    	return lever;
+    }
     public GameMap getMap() {
         return map;
     }
@@ -54,9 +63,6 @@ public class Configs {
     }
 
     public void prepareNextLevel() {
-        heroStartPoint = new Point(1, 1);
-        guardStartPoint = new Point(3, 1);
-        keyStartPoint = new Point(1, 3);
         agents.clear();
         switch (level) {
             case 0:
@@ -72,28 +78,26 @@ public class Configs {
     }
 
     private void prepareTestLevel() {
-        if (key == null) {
-            key = new Key(keyStartPoint);
-        } else {
-            key.setCoord(keyStartPoint);
-        }
-
+    	key = null;
+    	heroStartPoint = new Point(1, 1);
+        guardStartPoint = new Point(3, 1);
+        leverStartPoint = new Point(1,3);
+        Point[] openableDoors = new Point[]{new Point(0,2),new Point(0,3)};
+        lever = new Lever(leverStartPoint,openableDoors);
         map = new Task1TestMap();
-
         agents.add(new Hero(heroStartPoint));
         agents.add(new Rookie(guardStartPoint));
-
         level = 1;
     }
 
     private void prepareLevelOne() {
+    	key = null;
+    	Point[] openableDoors = new Point[]{new Point(0,5),new Point(0,6)};
         heroStartPoint = new Point(1, 1);
         guardStartPoint = new Point(8, 1);
-        keyStartPoint = new Point(3, 1);
-
-        key = new Key(new Point(keyStartPoint));
+        leverStartPoint = new Point(7,8);
+        lever = new Lever(leverStartPoint,openableDoors);
         map = new DungeonMap();
-
         agents.add(new Hero(heroStartPoint));
         switch (GUARDPERSONALITY) {
             case 0:
@@ -106,29 +110,21 @@ public class Configs {
                 agents.add(new Suspicious(guardStartPoint));
                 break;
         }
-
         level = 2;
     }
 
     private void prepareLevelTwo() {
+    	lever = null;
         heroStartPoint = new Point(1, 7);
         keyStartPoint = new Point(7, 1);
-        if (key != null) {
-            key.setCoord(keyStartPoint);
-        } else {
-            key = new Key(keyStartPoint);
-        }
-
+        key = new Key(keyStartPoint,new Point(0,1));
         map = new KeepMap();
-
         Hero newHero = new Hero(heroStartPoint, 'A', '/');
         agents.add(newHero);
         for (int i = 0; i < NUMBEROFOGRES; i++) {
-            int rnX = ThreadLocalRandom.current().nextInt(3, 7);
-            int rnY = ThreadLocalRandom.current().nextInt(1, 7);
-            agents.add(new Ogre(new Point(rnX, rnY)));
+           Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1,map.getMap()[0].length-1),ThreadLocalRandom.current().nextInt(1, map.getMap().length-1));
+           if (ogrePoint.distance(heroStartPoint) > 3){agents.add(new Ogre(ogrePoint));}
         }
-
         level = 3;
     }
 }

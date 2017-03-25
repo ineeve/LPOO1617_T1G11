@@ -15,9 +15,10 @@ abstract class Read {
 			Image Hero = ImageIO.read(new File("src/dkeep/assets/Hero.png"));
 			imageMap.put('H', Hero);
 			imageMap.put('A', Hero);
-			if(level == 0) {
+			if(level == 1 || level == 2) {
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/lever.png")));
 				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/leverPressed.png")));
+				
 			}
 			else{
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/key.png")));

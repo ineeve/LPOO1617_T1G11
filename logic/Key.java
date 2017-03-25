@@ -7,16 +7,19 @@ import java.awt.*;
  */
 public class Key {
     private Point coord;
-
-    public Key(Point coord) {
+    private Point doorPos;
+    
+    public Key(Point coord,Point doorPos) {
         this.coord = coord;
+        this.doorPos = doorPos;
     }
 
     public Point getCoord() {
         return coord;
     }
 
-    public void setCoord(Point coord) {
-        this.coord = coord;
-    }
+	public Point getDoorPos() {
+		return doorPos;
+	}
+    
 }

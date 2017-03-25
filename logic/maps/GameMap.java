@@ -13,7 +13,7 @@ public abstract class GameMap {
 
     /**
      * @param coord Agent coordinates
-     * @return 0-Out of map; 1 - ' '; 2 - 'S',3-'I'; 4-'O';
+     * @return 0-Out of map; 1 - ' '; 2 - 'S',3-'I';
      */
     public int isFree(Point coord) {
         if (coord.y >= map.length || coord.y < 0) {
@@ -37,13 +37,9 @@ public abstract class GameMap {
         return new Task1TestMap();
     }
 
-    public void changeAllDoorsToStairs() {
-        for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++) {
-                if (map[y][x] == 'I') {
-                    map[y][x] = 'S';
-                }
-            }
+    public void changeDoorsToStairs(Point[] doors) {
+        for (int i = 0; i < doors.length;i++){
+        	map[doors[i].y][doors[i].x] = 'S';
         }
     }
 
