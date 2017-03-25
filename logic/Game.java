@@ -17,7 +17,7 @@ public class Game {
 	private boolean keyTaken;
 	public enum status {DEFEAT,PLAYING,VICTORY}
 
-	public static status gameStatus;
+	public status gameStatus;
 
 	public Game(Configs c){
 		config = c;
