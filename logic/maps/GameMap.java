@@ -6,10 +6,14 @@ import java.security.InvalidParameterException;
 
 
 public abstract class GameMap {
-    char[][] map;
+    protected char[][] map;
 
     public char[][] getMap() {
         return map;
+    }
+
+    public void setMap(char[][] newMap){
+        map = newMap;
     }
 
     /**
@@ -29,8 +33,6 @@ public abstract class GameMap {
             return 1;
         } else if ('S' == map[coord.y][coord.x]) {
             return 2;
-        } else if ('O' == map[coord.y][coord.x]) {
-            return 4;
         } else {
             return 0;
         }

@@ -31,8 +31,4 @@ class CreateMapPanel extends JPanel{
 		
 	}
 
-	public void saveMapEdited(){
-		//KeepMap.setMapEdited(editPanel.getMapEdited());
-	}
-
 }
