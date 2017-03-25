@@ -14,10 +14,15 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 public class Configs {
+    /**Contains information of number of ogres how will play on keep level*/
     public int NUMBEROFOGRES = 1;
+    /**Contains information of that is guard personalty*/
     public int GUARDPERSONALITY = 0;
+    /**Contains information of start position of hero for every level*/
     private Point heroStartPoint;
+    /**Contains information of start position of guard for dungeon level*/
     private Point guardStartPoint;
+    /**Contains information of start position of key/lever for every level*/
     private Point keyStartPoint;
     private Point leverStartPoint;
 
