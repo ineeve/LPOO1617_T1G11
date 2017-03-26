@@ -501,8 +501,6 @@ public class GameLogicTests {
 	public void testPathMovementOfRookie(){
 		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
 		Configs config = new Configs(1);
-		Point heroStartPosition = new Point(2,2);
-		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
 		config.NUMBEROFOGRES = 0;
 		config.GUARDPERSONALITY = 0;
 		Game game = new Game(config);
@@ -510,6 +508,21 @@ public class GameLogicTests {
 		for (char aPath : path) {
 			assertTrue(aPath == ((MovingAgent) game.getGuard()).getNextDirection());
 		}
+	}
+
+	@Test
+	public void testSuspiciousMovement() {
+		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+		int pathIterator = 0;
+		Configs config = new Configs(1);
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 2;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(((MovingAgent) game.getGuard()).getNextDirection() == 'a'
+				|| ((MovingAgent) game.getGuard()).getNextDirection() == 's'
+				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'd'
+				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'w');
 	}
 
 	@Test
@@ -539,5 +552,13 @@ public class GameLogicTests {
 			assertTrue(move.reverseDirection(aPath) == move.pathMovement(0));
 		}
 	}
+
+	@Test
+	public void testMovementStrategyRandom(){
+		MovementStrategy move = new MovementStrategy();
+		assertTrue(move.randomMovement() == 'a' || move.randomMovement() == 's' || move.randomMovement() == 'd' || move.randomMovement() == 'w');
+	}
+
+
 
 }
