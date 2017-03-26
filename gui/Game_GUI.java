@@ -12,7 +12,7 @@ class Game_GUI {
 	private JButton btnBackSettings = new JButton("");
 	private SettingsPanel settingsPanel = new SettingsPanel(btnBackSettings);
 	private PlayPanel playPanel = new PlayPanel();
-	private EditMapPanel editMapPanel = new EditMapPanel();
+	
 	private CardLayout cl = new CardLayout();
 	private SpecialButton btnSettings = new SpecialButton();
 	private SpecialButton btnCreateMap = new SpecialButton();
@@ -21,7 +21,8 @@ class Game_GUI {
 	private JPanel menuPanel = new InitialMenuPanel(btnSettings,btnCreateMap,btnPlay,btnExit);
 	private JButton btnBackPlay = new JButton("Back");
 	
-	private JButton btnBackEditMap = new JButton("Back");
+	private JButton btnBackEditMap = new JButton("");
+	private EditMapPanel editMapPanel = new EditMapPanel(btnBackEditMap);
 	private Game game;
 	private Configs config;
 
@@ -59,7 +60,6 @@ class Game_GUI {
 		
 		containerPanel.setLayout(cl);
 		playPanel.add(btnBackPlay, BorderLayout.PAGE_END);
-		editMapPanel.add(btnBackEditMap, BorderLayout.PAGE_END);
 		containerPanel.add(menuPanel, "1"); // "1" is the identifing string
 		containerPanel.add(settingsPanel, "2");
 		containerPanel.add(editMapPanel, "3");
@@ -121,8 +121,7 @@ class Game_GUI {
 		btnBackPlay.addActionListener(arg0 -> {
 			cl.show(containerPanel, "1");
 			config.decreaseLevel();
-			Point heroPos = editMapPanel.getHeroPos(); Point keyPos = editMapPanel.getKeyPos();
-			config.setDungeonHeroAndKey(heroPos, keyPos);
+			config.setDungeonHeroKeyWeapon(editMapPanel.getHeroPos(), editMapPanel.getKeyPos(),editMapPanel.getWeaponPos());
 		});
 	}
 
@@ -136,7 +135,7 @@ class Game_GUI {
 	private void listenerbtnBackEditMap(){
 		btnBackEditMap.addActionListener(arg0 ->{
 			cl.show(containerPanel, "1");
-			config.setDungeonHeroAndKey(editMapPanel.getHeroPos(), editMapPanel.getKeyPos());
+			config.setDungeonHeroKeyWeapon(editMapPanel.getHeroPos(), editMapPanel.getKeyPos(),editMapPanel.getWeaponPos());
 
 		});
 	}

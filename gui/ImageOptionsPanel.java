@@ -33,7 +33,7 @@ class ImageOptionsPanel extends JPanel{
 		int i = 0;
 		for (HashMap.Entry<Character, Image> entry : images.entrySet() ){
 			char key = entry.getKey();
-			if (key == 'X' ||key == 'I' ||key == ' ' ||key == 'k' || key == 'A' || key == '/'){
+			if (key == 'X' ||key == 'I' ||key == ' ' ||key == 'k' || key == 'H' || key == '/'){
 			SpecialButton j1 = new SpecialButton(null,entry.getValue(),entry.getKey());
 			j1.addActionListener(e -> {
                 if (buttonPressed == j1.getType()){
