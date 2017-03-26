@@ -5,13 +5,13 @@ import dkeep.logic.Game;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
 import dkeep.logic.maps.DungeonMap;
+import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
 import org.junit.Test;
 
 import java.awt.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class GameLogicTests {
 
@@ -330,5 +330,82 @@ public class GameLogicTests {
 		config.prepareNextLevel();
 		assertTrue(config.getMap() instanceof DungeonMap);
 	}
+
+	@Test
+	public void nextMapOfKeepLevel(){
+		Configs config = new Configs(2);
+		config.prepareNextLevel();
+		assertTrue(config.getMap().nextMap() == null);
+	}
+
+	@Test
+	public void nextMapOfTestLevel(){
+		Configs config = new Configs(0);
+		config.prepareNextLevel();
+		assertTrue(config.getMap().nextMap() instanceof DungeonMap);
+	}
+
+	@Test
+	public void nextMapOfDungeonLevel(){
+		Configs config = new Configs(1);
+		config.prepareNextLevel();
+		assertTrue(config.getMap().nextMap() instanceof KeepMap);
+	}
+
+	@Test
+	public void copyMapTest(){
+		GameMap keep = new KeepMap();
+		char[][] mapChar = keep.getMap();
+		char[][] tempMap = new char[mapChar.length][mapChar[0].length];
+		KeepMap.copyMap(tempMap);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		tempMap = new char[mapChar.length*2][mapChar[0].length];
+		KeepMap.copyMap(tempMap);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		tempMap = new char[mapChar.length][mapChar[0].length*2];
+		KeepMap.copyMap(tempMap);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		tempMap = new char[mapChar.length*2][mapChar[0].length*2];
+		KeepMap.copyMap(tempMap);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		tempMap = new char[mapChar.length/2][mapChar[0].length];
+		KeepMap.copyMap(tempMap);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		tempMap = new char[mapChar.length][mapChar[0].length/2];
+		KeepMap.copyMap(tempMap);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		tempMap = new char[mapChar.length/2][mapChar[0].length/2];
+		KeepMap.copyMap(tempMap);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+	}
+
 
 }

@@ -22,11 +22,9 @@ public abstract class GameMap {
 
     /** Function to get the next GameMap;
      *
-     * @return GameMap - correspond the next GameMap in this case the first GameMap;
+     * @return GameMap - correspond the next GameMap;
      */
-    public GameMap nextMap() {
-        return new Task1TestMap();
-    }
+    public abstract GameMap nextMap();
 
 
     /** Function that change doors to stairs;
