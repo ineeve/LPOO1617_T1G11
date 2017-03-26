@@ -16,7 +16,7 @@ import java.awt.*;
 import static org.junit.Assert.*; 
 
 
-public class KeepMapTest {
+public class GameLogicTests {
 
 	@Test
 	public void testHeroMovesToKeyCellAndChangesSymbolToK(){
@@ -237,5 +237,38 @@ public class KeepMapTest {
 		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
 	}
 	
+	@Test
+	public void decreaseLevel(){
+		Configs config = new Configs(2);
+		assertTrue(config.getLevel() == 2);
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(config.getLevel() == 3);
+		assertTrue(game.getLevel() == 3);
+		config.decreaseLevel();
+		assertTrue(config.getLevel() == 2);
+		game.resetLevel();
+		assertTrue(config.getLevel() == 3);
+		assertTrue(game.getLevel() == 3);
+	}
+	
+	@Test
+	public void testNumberOfOgres(){
+		Configs config = new Configs(2);
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getFirstOgre()==null);
+		config.decreaseLevel();
+		config.NUMBEROFOGRES = 1;
+		game.resetLevel();
+		assertTrue(game.getFirstOgre()!=null);
+	}
+	
+	@Test
+	public void testIfOgreChangeSymbolWhenTookKey(){
+		
+	}
 
 }
