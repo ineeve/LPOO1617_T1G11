@@ -1,15 +1,15 @@
 package dkeep.test;
 
-import static org.junit.Assert.*;
-
-import java.awt.Point;
-
-import org.junit.Test;
-
 import dkeep.logic.Configs;
 import dkeep.logic.Game;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
+import org.junit.Test;
+
+import java.awt.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GameLogicTests {
 
@@ -79,7 +79,7 @@ public class GameLogicTests {
 	}
 	
 
-	@Test//(timeout = 2000)
+	@Test(timeout = 2000)
 	public void testOgreRandomMovementBehaviour(){
 		boolean threeDirectionsDifferent=false,weaponRandom=false;
 		Configs config = new Configs(2);
@@ -305,8 +305,8 @@ public class GameLogicTests {
 
 	@Test
 	public void getLevelOfConfigs(){
-		Configs config = new Configs(2);
-		assertTrue(config.getLevel() == 2);
+		Configs config = new Configs(1);
+		assertTrue(config.getLevel() == 1);
 	}
 
 
