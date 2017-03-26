@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Configs {
     /**Contains information of number of ogres how will play on keep level;*/
     public int NUMBEROFOGRES = 1;
-    /**Contains information of that is guard personalty;*/
+    /**Contains information of that is guard personality;*/
     public int GUARDPERSONALITY = 0;
     /**Contains information of start position of hero for every level;*/
     private Point heroStartPoint;
@@ -23,9 +23,9 @@ public class Configs {
     private Point guardStartPoint;
     /**Contains information of start position of lever for dungeon level;*/
     private Point leverStartPoint;
-    /**Contains information of start position of key on keep level;*/
+    /**Contains information  about the Key start position on keep level;*/
     private Point keepKeyStartPoint;
-    /**Contains information of start position of Hero on keep level;*/
+    /**Contains information about the Hero start position on keep level;*/
     private Point keepHeroStartPoint;
     /**Contains information of start position of Ogre on keep level;*/
     private Point keepOgreStartPoint;
@@ -110,9 +110,10 @@ public class Configs {
      * @param heroStart Point - to set the start position of Hero;
      * @param keyStart Point - to set the start position of Key;
      */
-    public void setKeepHeroAndKey(Point heroStart,Point keyStart){
+    public void setKeepHeroKeyWeapon(Point heroStart,Point keyStart, Point weaponStart){
         keepKeyStartPoint = keyStart;
         keepHeroStartPoint = heroStart;
+        keepWeaponStartPoint = weaponStart;
     }
 
     /** Function to set start position of first Ogre in Keep level;

@@ -13,9 +13,12 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	private JButton btnLeft = new JButton("");
 	private JButton btnDown = new JButton("");
 	private JButton btnRight = new JButton("");
-	private JLabel gameStatsLlb = new JLabel("Try to Escape");
 	private BoardGraphics graphicsPanel;
-
+	ImageIcon defeatGIF = createImageIcon("../assets/defeat_banner.gif");
+	ImageIcon victoryGIF = createImageIcon("../assets/victory_banner.gif");
+	ImageIcon runGIF = createImageIcon("../assets/run_banner.gif");
+	private JLabel gameStatsLlb = new JLabel(runGIF);
+	
 	PlayPanel(){
 		init();
 	}
@@ -24,10 +27,20 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		addKeyListener(this);
 		addMouseListener(this);
 	}
+	
+	/** Returns an ImageIcon, or null if the path was invalid. */
+	protected ImageIcon createImageIcon(String path) {
+	    java.net.URL imgURL = getClass().getResource(path);
+	    if (imgURL != null) {
+	        return new ImageIcon(imgURL);
+	    } else {
+	        System.err.println("Couldn't find file: " + path);
+	        return null;
+	    }
+	}
 
-	void resetGameStatusLabel(){
-		gameStatsLlb.setText("Try To Escape");
-		gameStatsLlb.setBackground(Color.LIGHT_GRAY);
+	public void resetGameStatusLabel(){
+		gameStatsLlb.setIcon(runGIF);
 	}
 
 
@@ -82,12 +95,10 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 			removeKeyListener(this);
 			removeMouseListener(this);
 			if (val == 3){
-				gameStatsLlb.setBackground(Color.RED);
-				gameStatsLlb.setText("You have been captured, go Back to Try Again");
+				gameStatsLlb.setIcon(defeatGIF);
 			}
 			else if(val == 2){
-				gameStatsLlb.setBackground(Color.GREEN);
-				gameStatsLlb.setText("You have escaped, congrats!");
+				gameStatsLlb.setIcon(victoryGIF);
 			}
 		}
 	}

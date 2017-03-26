@@ -22,7 +22,7 @@ public class KeepMapTest {
 	public void testHeroMovesToKeyCellAndChangesSymbolToK(){
 		System.out.println("Testing Hero moves into the Keep's exit door key cell and changes its representation to 'K'");
 		Configs config = new Configs(2);
-		config.setKeepHeroAndKey(new Point(2,2), new Point(2,3));
+		config.setKeepHeroKeyWeapon(new Point(2,2), new Point(2,3), new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
         game.resetLevel();
@@ -36,7 +36,7 @@ public class KeepMapTest {
 		System.out.println("Testing Hero moves into the closed Keep's exit door, without the key, and fails to open it.");
 		Configs config = new Configs(2);
 		config.NUMBEROFOGRES = 0;
-		config.setKeepHeroAndKey(new Point(1,1), new Point());
+		config.setKeepHeroKeyWeapon(new Point(1,1), new Point(),new Point());
 		Game game = new Game(config);
         game.resetLevel();
 		char map[][] = game.getMap();
@@ -50,7 +50,7 @@ public class KeepMapTest {
 	public void HeroMovesToDoorWithKeyAndOpensIt(){
 		System.out.println("Hero moves into the closed Keep's exit door, with the key, and the door opens.");
 		Configs config = new Configs(2);
-		config.setKeepHeroAndKey(new Point(2,1), new Point(1,1));
+		config.setKeepHeroKeyWeapon(new Point(2,1), new Point(1,1),new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
         game.resetLevel();
@@ -67,7 +67,7 @@ public class KeepMapTest {
 	public void HeroMovesToOpenDoorAndWinsGame(){
 		System.out.println("Hero moves into the open Keep's exit door and the game ends with victory.");
 		Configs config = new Configs(2);
-		config.setKeepHeroAndKey(new Point(2,1), new Point(1,1));
+		config.setKeepHeroKeyWeapon(new Point(2,1), new Point(1,1),new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
 		game.resetLevel();
@@ -112,7 +112,7 @@ public class KeepMapTest {
 	@Test
 	public void testIfHeroIsCapturedByOgre(){
 		Configs config = new Configs(2);
-		config.setKeepHeroAndKey(new Point(2,2), new Point());
+		config.setKeepHeroKeyWeapon(new Point(2,2), new Point(),new Point());
 		config.setKeepOgreStartPosition(new Point(3,2));
 		Game game = new Game(config);
         game.resetLevel();
@@ -124,7 +124,7 @@ public class KeepMapTest {
 	public void testStartPositionOfHero(){
 		Configs config = new Configs(2);
 		Point heroStartPosition = new Point(2,2);
-		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
 		game.resetLevel();
@@ -136,7 +136,7 @@ public class KeepMapTest {
 		Configs config = new Configs(2);
 		Point heroStartPosition = new Point(2,2);
 		Point keyStartPosition = new Point(3,2);
-		config.setKeepHeroAndKey(heroStartPosition, keyStartPosition);
+		config.setKeepHeroKeyWeapon(heroStartPosition, keyStartPosition,new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
 		game.resetLevel();
@@ -157,7 +157,7 @@ public class KeepMapTest {
 	@Test
 	public void testIfHeroStunOgre(){
 		Configs config = new Configs(2);
-		config.setKeepHeroAndKey(new Point(2,2), new Point());
+		config.setKeepHeroKeyWeapon(new Point(2,2), new Point(),null);
 		config.setKeepOgreStartPosition(new Point(4,2));
 		Game game = new Game(config);
 		game.resetLevel();
@@ -185,7 +185,7 @@ public class KeepMapTest {
 	public void testMoveHeroToRight(){
 		Configs config = new Configs(2);
 		Point heroStartPosition = new Point(2,2);
-		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
 		game.resetLevel();
@@ -199,7 +199,7 @@ public class KeepMapTest {
 	public void testMoveHeroToLeft(){
 		Configs config = new Configs(2);
 		Point heroStartPosition = new Point(2,2);
-		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
 		game.resetLevel();
@@ -213,7 +213,7 @@ public class KeepMapTest {
 	public void testMoveHeroToUp(){
 		Configs config = new Configs(2);
 		Point heroStartPosition = new Point(2,2);
-		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
 		game.resetLevel();
@@ -227,7 +227,7 @@ public class KeepMapTest {
 	public void testMoveHeroToDown(){
 		Configs config = new Configs(2);
 		Point heroStartPosition = new Point(2,2);
-		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
 		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
 		game.resetLevel();
@@ -236,6 +236,6 @@ public class KeepMapTest {
 		heroStartPosition.y++;
 		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
 	}
-
+	
 
 }
