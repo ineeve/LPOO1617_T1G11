@@ -38,7 +38,7 @@ public class Suspicious extends Guard {
      * @return char - that contains next direction to move
      */
     @Override
-	char getNextDirection() {
+	public char getNextDirection() {
     	double random = Math.random();
         if (random < CHANGEDIRECTIONPROB) {
             if (currentDirection == FORWARD) {

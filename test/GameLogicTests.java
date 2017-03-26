@@ -497,4 +497,47 @@ public class GameLogicTests {
 		assertTrue(game.getGuard() instanceof Suspicious);
 	}
 
+	@Test
+	public void testPathMovementOfRookie(){
+		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+		Configs config = new Configs(1);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		for (char aPath : path) {
+			assertTrue(aPath == ((MovingAgent) game.getGuard()).getNextDirection());
+		}
+	}
+
+	@Test
+	public void testMovementStrategyReverse(){
+		MovementStrategy move = new MovementStrategy();
+		assertTrue(move.reverseDirection('a') == 'd');
+		assertTrue(move.reverseDirection('d') == 'a');
+		assertTrue(move.reverseDirection('w') == 's');
+		assertTrue(move.reverseDirection('s') == 'w');
+	}
+
+	@Test
+	public void testMovementStrategyPath(){
+		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+		MovementStrategy move = new MovementStrategy();
+		for (char aPath : path) {
+			assertTrue(aPath == move.pathMovement(1));
+		}
+	}
+
+	@Test
+	public void testMovementStrategyPathBackward(){
+		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+		MovementStrategy move = new MovementStrategy();
+		for (int i = path.length-1; i >= 0; i--){
+			char aPath = path[i];
+			assertTrue(move.reverseDirection(aPath) == move.pathMovement(0));
+		}
+	}
+
 }

@@ -40,7 +40,7 @@ public class Drunken extends Guard {
      * @return char - that contains next direction to move
      */
     @Override
-	char getNextDirection() { //returns '0' if should stay in same position
+	public char getNextDirection() { //returns '0' if should stay in same position
     	double random = Math.random();
         char nextChar = '0';
         if (symbol == DRUNKENSYMBOLSLEEP) {
