@@ -21,9 +21,9 @@ class ImageOptionsPanel extends JPanel{
 
 	}
 	private void prepareLayout(){
-		setBorder(new EmptyBorder(0, 2, 2, 2));
+		setBorder(new EmptyBorder(10, 2, 2, 2));
 		gbl_componentsPanel.columnWidths = new int[]{196, 0};
-		gbl_componentsPanel.rowHeights = new int[] {45, 45, 45, 45, 45,45};
+		gbl_componentsPanel.rowHeights = new int[] {130, 130, 130, 130, 130, 130};
 		gbl_componentsPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_componentsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gbl_componentsPanel);
@@ -33,7 +33,7 @@ class ImageOptionsPanel extends JPanel{
 		int i = 0;
 		for (HashMap.Entry<Character, Image> entry : images.entrySet() ){
 			char key = entry.getKey();
-			if (key == 'X' ||key == 'I' ||key == ' ' ||key == 'k' || key == 'A'){
+			if (key == 'X' ||key == 'I' ||key == ' ' ||key == 'k' || key == 'A' || key == '/'){
 			SpecialButton j1 = new SpecialButton(null,entry.getValue(),entry.getKey());
 			j1.addActionListener(e -> {
                 if (buttonPressed == j1.getType()){
@@ -49,12 +49,13 @@ class ImageOptionsPanel extends JPanel{
 	}
 	
 	private void addButtons(){
-		for (int i = 0; i < buttonsArray.length-1;i++){
+		for (int i = 0; i < buttonsArray.length;i++){
 			GridBagConstraints gbc_btn = new GridBagConstraints();
 			gbc_btn.fill = GridBagConstraints.BOTH;
 			gbc_btn.insets = new Insets(5, 20, 5, 20);
 			gbc_btn.gridx = 0;
 			gbc_btn.gridy = i;
+			gbc_btn.weighty = 1;
 			add(buttonsArray[i], gbc_btn);
 		}
 		

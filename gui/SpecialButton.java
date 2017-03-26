@@ -3,6 +3,8 @@ package dkeep.gui;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 class SpecialButton extends JButton{
 
@@ -30,7 +32,6 @@ class SpecialButton extends JButton{
 		return image;
 	}
 
-
 	Dimension getPosition(){
 		return position;
 	}
@@ -39,6 +40,8 @@ class SpecialButton extends JButton{
 		super.paint( g );
 		g.drawImage(image,  0 , 0 , getWidth() , getHeight() , null);
 	}
+	
+	
 }
 
 
