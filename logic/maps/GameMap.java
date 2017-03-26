@@ -3,17 +3,46 @@ package dkeep.logic.maps;
 
 import java.awt.*;
 
-
+/**
+ * Abstract class that have information of differents playable maps;
+ */
 public abstract class GameMap {
+    /**Contains information of the map to play*/
     char[][] map;
 
+    /* GETTERS */
+
+    /** Function to get the map;
+     *
+     * @return char[][] - that correspond to the map of each GameMap;
+     */
     public char[][] getMap() {
         return map;
     }
 
-    /**
-     * @param coord Agent coordinates
-     * @return 0-Out of map; 1 - ' '; 2 - 'S',3-'I';
+    /** Function to get the next GameMap;
+     *
+     * @return GameMap - correspond the next GameMap in this case the first GameMap;
+     */
+    public GameMap nextMap() {
+        return new Task1TestMap();
+    }
+
+
+    /** Function that change doors to stairs;
+     *
+     * @param doors - Point[] that correspond all doors that is to change to stairs
+     */
+    public void changeDoorsToStairs(Point[] doors) {
+        for (int i = 0; i < doors.length;i++){
+        	map[doors[i].y][doors[i].x] = 'S';
+        }
+    }
+
+    /** Function that verify the symbol is one specify position;
+     *
+     * @param coord - Point that correspond to the MovingAgent position;
+     * @return int - 0-Out of map; 1 - ' '; 2 - 'S'; 3 - 'I';
      */
     public int isFree(Point coord) {
         if (coord.y >= map.length || coord.y < 0) {
@@ -32,19 +61,6 @@ public abstract class GameMap {
             return 0;
         }
     }
-
-    public GameMap nextMap() {
-        return new Task1TestMap();
-    }
-
-    public void changeDoorsToStairs(Point[] doors) {
-        for (int i = 0; i < doors.length;i++){
-        	map[doors[i].y][doors[i].x] = 'S';
-        }
-    }
-
-    
-   
     
 }
 

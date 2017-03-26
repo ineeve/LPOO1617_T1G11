@@ -2,6 +2,10 @@ package dkeep.logic;
 
 import java.awt.Point;
 
+/**
+ * Class that enables Hero to open some Doors to scape;
+ * For do this the Hero needs to enable Lever;
+ */
 public class Lever {
 	/**Constant value that contains the symbol of lever not activated*/
 	private final char NOTACTIVATEDSYMBOL = 'k';

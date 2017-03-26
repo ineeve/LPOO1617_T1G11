@@ -1,5 +1,9 @@
 package dkeep.logic;
 
+/**
+ * Derived class from MovingAgent;
+ * The objective of this MovingAgent is capture the Hero;
+ */
 class Guard extends MovingAgent {
     /**Constant char that contains the symbol of Guard*/
     private final char GUARDSYMBOL = 'G';

@@ -2,6 +2,10 @@ package dkeep.logic;
 
 import java.awt.*;
 
+/**
+ * Derived class from Guard
+ * This guard moves in a different style
+ */
 class Suspicious extends Guard {
     /**Constant char that contains the symbol of Guard*/
     private final char SUSPICIOUSSYMBOL = 'G';

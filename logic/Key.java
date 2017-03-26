@@ -2,6 +2,9 @@ package dkeep.logic;
 
 import java.awt.*;
 
+/**
+ * Class that enables Hero to open some Doors to scape;
+ */
 public class Key {
     private Point coord;
     private Point doorPos;

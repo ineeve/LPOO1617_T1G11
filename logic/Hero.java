@@ -2,6 +2,10 @@ package dkeep.logic;
 
 import java.awt.*;
 
+/**
+ * Derived class from MovingAgent;
+ * The objective of this MovingAgent is scape form the Guard's;
+ */
 public class Hero extends MovingAgent {
     /**Constant char that contains the symbol of Hero*/
     private final char HEROSYMBOL = 'H';

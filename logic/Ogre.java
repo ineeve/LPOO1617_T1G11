@@ -2,6 +2,10 @@ package dkeep.logic;
 
 import java.awt.*;
 
+/**
+ * Derived class from MovingAgent;
+ * The objective of this MovingAgent is capture the Hero;
+ */
 public class Ogre extends MovingAgent {
     /**Value that contains the number of rounds that remains to the ogre to get out of stun*/
     private int roundsStunned;
