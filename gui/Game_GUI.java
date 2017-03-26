@@ -122,7 +122,7 @@ class Game_GUI {
 			cl.show(containerPanel, "1");
 			config.decreaseLevel();
 			Point heroPos = editMapPanel.getHeroPos(); Point keyPos = editMapPanel.getKeyPos();
-			config.setDungeonHeroAndKey(heroPos, keyPos);
+			config.setKeepHeroAndKey(heroPos, keyPos);
 		});
 	}
 
@@ -136,7 +136,7 @@ class Game_GUI {
 	private void listenerbtnBackEditMap(){
 		btnBackEditMap.addActionListener(arg0 ->{
 			cl.show(containerPanel, "1");
-			config.setDungeonHeroAndKey(editMapPanel.getHeroPos(), editMapPanel.getKeyPos());
+			config.setKeepHeroAndKey(editMapPanel.getHeroPos(), editMapPanel.getKeyPos());
 
 		});
 	}

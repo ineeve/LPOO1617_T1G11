@@ -7,14 +7,13 @@ package dkeep.test;
 
 import dkeep.logic.Configs;
 import dkeep.logic.Game;
-import dkeep.logic.Game.status;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
-import org.junit.Test;
+import org.junit.Test; 
 
 import java.awt.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 
 public class KeepMapTest {
@@ -23,31 +22,27 @@ public class KeepMapTest {
 	public void testHeroMovesToKeyCellAndChangesSymbolToK(){
 		System.out.println("Testing Hero moves into the Keep's exit door key cell and changes its representation to 'K'");
 		Configs config = new Configs(2);
+		config.setKeepHeroAndKey(new Point(2,2), new Point(2,3));
+		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
         game.resetLevel();
-		Hero theHero = game.getHero();
-		assertTrue(theHero.getSymbol() == 'A');
-		for (int i = 0 ; i <6;i++){
-			game.moveHero('d');
-		}
-		for (int i = 0; i < 6;i++){
-			game.moveHero('w');
-		}
-		assertTrue(theHero.getSymbol() == 'K');
-
+        assertTrue(game.getHero().getSymbol() == 'H');
+        game.moveHero('s');
+		assertTrue(game.getHero().getSymbol() == 'K');
 	}
 	
 	@Test
 	public void movesIntoExitDoorWithoutKeyAndFailsToOpenIt(){
 		System.out.println("Testing Hero moves into the closed Keep's exit door, without the key, and fails to open it.");
 		Configs config = new Configs(2);
+		config.NUMBEROFOGRES = 0;
+		config.setKeepHeroAndKey(new Point(1,1), new Point());
 		Game game = new Game(config);
         game.resetLevel();
-		for (int i = 0; i < 6; i++){
-			game.moveHero('w');
-		}
-		game.moveHero('a');
 		char map[][] = game.getMap();
+		assertTrue(map[1][0] == 'I');
+		game.moveHero('a');
+		map = game.getMap();
 		assertTrue(map[1][0] == 'I');
 	}
 
@@ -55,41 +50,40 @@ public class KeepMapTest {
 	public void HeroMovesToDoorWithKeyAndOpensIt(){
 		System.out.println("Hero moves into the closed Keep's exit door, with the key, and the door opens.");
 		Configs config = new Configs(2);
+		config.setKeepHeroAndKey(new Point(2,1), new Point(1,1));
+		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
         game.resetLevel();
-		for (int i = 0 ; i <6;i++){
-			game.moveHero('d');
-		}
-		for (int i = 0; i < 6;i++){
-			game.moveHero('w');
-		}
-		for (int i = 0; i < 7; i++){
-			game.moveHero('a');
-		}
 		char map[][] = game.getMap();
+		assertTrue(map[1][0] == 'I');
+		game.moveHero('a');
+		assertTrue(game.getHero().getSymbol() == 'K');
+		game.moveHero('a');
+		map = game.getMap();
 		assertTrue(map[1][0] == 'S');
 	}
-	
+
 	@Test
 	public void HeroMovesToOpenDoorAndWinsGame(){
 		System.out.println("Hero moves into the open Keep's exit door and the game ends with victory.");
 		Configs config = new Configs(2);
+		config.setKeepHeroAndKey(new Point(2,1), new Point(1,1));
+		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
-        game.resetLevel();
-		for (int i = 0 ; i <6;i++){
-			game.moveHero('d');
-		}
-		for (int i = 0; i < 6;i++){
-			game.moveHero('w');
-		}
-		for (int i = 0; i < 8; i++){
-			game.moveHero('a');
-		}
-		assertTrue(game.gameStatus == status.VICTORY);
+		game.resetLevel();
+		char map[][] = game.getMap();
+		assertTrue(map[1][0] == 'I');
+		game.moveHero('a');
+		assertTrue(game.getHero().getSymbol() == 'K');
+		game.moveHero('a');
+		map = game.getMap();
+		assertTrue(map[1][0] == 'S');
+		game.moveHero('a');
+		assertTrue(game.gameStatus == Game.status.VICTORY);
 	}
 	
-	
-	@Test(timeout = 1000)
+
+	@Test(timeout = 2000)
 	public void testOgreRandomMovementBehaviour(){
 		boolean threeDirectionsDifferent=false,weaponRandom=false;
 		Configs config = new Configs(2);
@@ -112,22 +106,66 @@ public class KeepMapTest {
 			if (ogreWeaponDirections[0] != ogreWeaponDirections[1] && ogreWeaponDirections[1] != ogreWeaponDirections[2] && ogreWeaponDirections[2] != ogreWeaponDirections[3]){
 				weaponRandom = true;
 			}
-			
 		}
 	}
-	
-	@Test(timeout =2000)
-	public void testHeroIsEventuallyCapturedByOgre(){
+
+	@Test
+	public void testIfHeroIsCapturedByOgre(){
 		Configs config = new Configs(2);
+		config.setKeepHeroAndKey(new Point(2,2), new Point());
+		config.setKeepOgreStartPosition(new Point(3,2));
 		Game game = new Game(config);
         game.resetLevel();
-		Hero theHero = game.getHero();
-		game.moveHero('w');
 		game.moveHero('d');
-		while(!game.isGameOver()){
-			game.moveAgent(theHero, theHero.getNextDirection());
-			game.moveBots();
-		}
+		assertTrue(game.isGameOver());
+	}
+	
+	@Test
+	public void testStartPositionOfHero(){
+		Configs config = new Configs(2);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
+	}
+	
+	@Test
+	public void testStartPositionOfKey(){
+		Configs config = new Configs(2);
+		Point heroStartPosition = new Point(2,2);
+		Point keyStartPosition = new Point(3,2);
+		config.setKeepHeroAndKey(heroStartPosition, keyStartPosition);
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.key.getCoord().equals(keyStartPosition));
+	}
+	
+	@Test
+	public void testStartPositionOfOgre(){
+		Configs config = new Configs(2);
+		Point ogreStartPosition = new Point(2,2);
+		config.setKeepOgreStartPosition(ogreStartPosition);
+		config.NUMBEROFOGRES = 1;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getFirstOgre().getAgentCoords().equals(ogreStartPosition));
+	}
+	
+	@Test
+	public void testIfHeroStunOgre(){
+		Configs config = new Configs(2);
+		config.setKeepHeroAndKey(new Point(2,2), new Point());
+		config.setKeepOgreStartPosition(new Point(4,2));
+		Game game = new Game(config);
+		game.resetLevel();
+		game.getFirstOgre().weapon.setCoords(new Point());
+		game.moveHero('d');
+		assertTrue(game.getHero().getSymbol() == 'A');
+		game.moveHero('d');
+		assertTrue(game.getFirstOgre().isStunned());
 	}
 	
 	//Test Dungeon Map
@@ -144,17 +182,60 @@ public class KeepMapTest {
 	}
 
 	@Test
-	public void testHeroIsCapturedByGuard(){
-		System.out.println("Testing if Hero Is Captured By Guard");
-		Configs config = new Configs(0);
+	public void testMoveHeroToRight(){
+		Configs config = new Configs(2);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.NUMBEROFOGRES = 0;
 		Game game = new Game(config);
-        game.resetLevel();
-		assertFalse(game.isGameOver());
+		game.resetLevel();
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
 		game.moveHero('d');
-		assertTrue(game.isGameOver());
-		assertEquals(status.DEFEAT, game.gameStatus);
+		heroStartPosition.x++;
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
 	}
 	
+	@Test
+	public void testMoveHeroToLeft(){
+		Configs config = new Configs(2);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
+		game.moveHero('a');
+		heroStartPosition.x--;
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
+	}
 	
+	@Test
+	public void testMoveHeroToUp(){
+		Configs config = new Configs(2);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
+		game.moveHero('w');
+		heroStartPosition.y--;
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
+	}
+
+	@Test
+	public void testMoveHeroToDown(){
+		Configs config = new Configs(2);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroAndKey(heroStartPosition, new Point());
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
+		game.moveHero('s');
+		heroStartPosition.y++;
+		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
+	}
+
 
 }
