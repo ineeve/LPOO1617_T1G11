@@ -30,10 +30,10 @@ public class Hero extends MovingAgent {
      * @param symbol - char to set your's symbol;
      * @param weaponSymbol - char to set weapon symbol;
      */
-    public Hero(Point coord, char symbol, char weaponSymbol){
+    public Hero(Point[] coord, char symbol, char weaponSymbol){
         this.symbol = symbol;
-        agentCoords = coord;
-        weapon = new Weapon(weaponSymbol,new Point(0,0));
+        agentCoords = coord[0];
+        weapon = new Weapon(weaponSymbol,coord[1]);
     }
 
     /* GETTERS */
