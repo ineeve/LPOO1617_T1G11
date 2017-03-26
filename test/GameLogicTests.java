@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dkeep.test;
+
+import static org.junit.Assert.*;
+
+import java.awt.Point;
+
+import org.junit.Test;
 
 import dkeep.logic.Configs;
 import dkeep.logic.Game;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
-import org.junit.Test; 
 
-import java.awt.*;
+public class GameLogicTests {
 
-import static org.junit.Assert.*; 
-
-
-public class KeepMapTest {
 
 	@Test
 	public void testHeroMovesToKeyCellAndChangesSymbolToK(){
@@ -83,7 +79,7 @@ public class KeepMapTest {
 	}
 	
 
-	@Test(timeout = 2000)
+	@Test//(timeout = 2000)
 	public void testOgreRandomMovementBehaviour(){
 		boolean threeDirectionsDifferent=false,weaponRandom=false;
 		Configs config = new Configs(2);
@@ -237,5 +233,81 @@ public class KeepMapTest {
 		assertTrue(game.getHero().getAgentCoords().equals(heroStartPosition));
 	}
 	
+	@Test
+	public void decreaseLevel(){
+		Configs config = new Configs(2);
+		assertTrue(config.getLevel() == 2);
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(config.getLevel() == 3);
+		assertTrue(game.getLevel() == 3);
+		config.decreaseLevel();
+		assertTrue(config.getLevel() == 2);
+		game.resetLevel();
+		assertTrue(config.getLevel() == 3);
+		assertTrue(game.getLevel() == 3);
+	}
+	
+	@Test
+	public void testNumberOfOgres(){
+		Configs config = new Configs(2);
+		config.NUMBEROFOGRES = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getFirstOgre()==null);
+		config.decreaseLevel();
+		config.NUMBEROFOGRES = 1;
+		game.resetLevel();
+		assertTrue(game.getFirstOgre()!=null);
+	}
+	
+	@Test
+	public void testIfOgreChangeSymbolWhenTookKey(){
+		Configs config = new Configs(2);
+		config.NUMBEROFOGRES = 1;
+		Point keyStart = new Point(3,3);
+		Point ogreStart = new Point(2,3);
+		config.setKeepHeroKeyWeapon(null, keyStart, null);
+		config.setKeepOgreStartPosition(ogreStart);
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getFirstOgre().getAgentCoords() == ogreStart);
+		assertTrue(game.key.getCoord() == keyStart);
+		char[][] map = game.getMap();
+		assertTrue(map[keyStart.y][keyStart.x] == 'k');
+		game.getFirstOgre().nextPos('d');
+		assertTrue(game.key.getCoord() == keyStart);
+		map = game.getMap();
+		assertTrue(map[keyStart.y][keyStart.x] == '$');
+	}
+
+	@Test
+	public void initializationOfLevel(){
+		Configs config = new Configs(2);
+		Game game = new Game(config);
+		assertTrue(game.getHero() == null);
+		assertTrue(game.getFirstOgre() == null);
+		assertTrue(game.getMap() == null);
+		game.resetLevel();
+		assertTrue(game.getHero() != null);
+		assertTrue(game.getFirstOgre() != null);
+		assertTrue(game.getMap() != null);
+	}
+
+	@Test
+	public void setLevelOnConfigs(){
+		Configs config = new Configs(2);
+		assertTrue(config.getLevel() == 2);
+		config.setLevel(1);
+		assertTrue(config.getLevel() == 1);
+	}
+
+	@Test
+	public void getLevelOfConfigs(){
+		Configs config = new Configs(2);
+		assertTrue(config.getLevel() == 2);
+	}
+
 
 }
