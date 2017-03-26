@@ -9,15 +9,16 @@ import java.awt.*;
 class Game_GUI {
 	private JFrame mainFrame = new JFrame("Escape Game");
 	private JPanel containerPanel = new JPanel();
-	private JPanel menuPanel = new InitialMenuPanel();
+	
 	private SettingsPanel settingsPanel = new SettingsPanel();
 	private PlayPanel playPanel = new PlayPanel();
 	private EditMapPanel editMapPanel = new EditMapPanel();
 	private CardLayout cl = new CardLayout();
-	private JButton btnSettings = new JButton("Settings");
-	private JButton btnCreateMap = new JButton("Create Map");
-	private JButton btnPlay = new JButton("Play Game");
-	private JButton btnExit = new JButton("Exit");
+	private SpecialButton btnSettings = new SpecialButton();
+	private SpecialButton btnCreateMap = new SpecialButton();
+	private SpecialButton btnPlay = new SpecialButton();
+	private SpecialButton btnExit = new SpecialButton();
+	private JPanel menuPanel = new InitialMenuPanel(btnSettings,btnCreateMap,btnPlay,btnExit);
 	private JButton btnBackPlay = new JButton("Back");
 	private JButton btnBackSettings = new JButton("Back");
 	private JButton btnBackEditMap = new JButton("Back");
@@ -57,10 +58,6 @@ class Game_GUI {
 	private void initialize() {
 
 		containerPanel.setLayout(cl);
-		menuPanel.add(btnSettings);
-		menuPanel.add(btnCreateMap);
-		menuPanel.add(btnPlay);
-		menuPanel.add(btnExit);
 		playPanel.add(btnBackPlay, BorderLayout.PAGE_END);
 		settingsPanel.add(btnBackSettings);
 		editMapPanel.add(btnBackEditMap, BorderLayout.PAGE_END);
