@@ -12,3 +12,5 @@ LPOO-FEUP-1617
 ![Alt text](/screenshots/Map_Editor.png?raw=true "Map Editor")
 ![Alt text](/screenshots/In_Game.png?raw=true "Playing")
 ![Alt text](/screenshots/Eclmma.png?raw=true "Eclmma Line Coverage")
+![Alt text](/screenshots/Pit.png?raw=true "Pit Mutation")
+
