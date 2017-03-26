@@ -157,15 +157,26 @@ public class Game {
 	}
 
 	/** Function to get first Ogre
-	 *
-	 * @return Ogre - correspond to the first Ogre of the Game, if game don't have one Ogre return null;
-	 */
-	public Ogre getFirstOgre(){
-		for (MovingAgent agent: agents)
-			if (agent instanceof Ogre)
-				return (Ogre) agent;
-		return null;
-	}
+     *
+     * @return Ogre - correspond to the first Ogre of the Game, if game don't have one Ogre return null;
+     */
+    public Ogre getFirstOgre(){
+        for (MovingAgent agent: agents)
+            if (agent instanceof Ogre)
+                return (Ogre) agent;
+        return null;
+    }
+
+    /** Function to get first Guard
+     *
+     * @return Guard - correspond to the first Guard of the Game, if game don't have one Ogre return null;
+     */
+    public Guard getGuard(){
+        for (MovingAgent agent: agents)
+            if (agent instanceof Guard)
+                return (Guard) agent;
+        return null;
+    }
 
 	/** Function that verify if game is over and update the gameStatus;
 	 * 	Game is over if the distance between Guards or weapon of Ogres is under 1;

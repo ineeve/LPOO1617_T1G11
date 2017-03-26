@@ -6,7 +6,7 @@ import java.awt.*;
  * Derived class from Guard
  * This guard moves in a different style
  */
-class Drunken extends Guard {
+public class Drunken extends Guard {
     /**Constant char that contains the symbol of Drunken awake*/
     private final char DRUNKENSYMBOLAWAKE = 'G';
     /**Constant char that contains the symbol of Drunken sleep*/

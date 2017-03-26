@@ -6,7 +6,7 @@ import java.awt.*;
  * Derived class from Guard
  * This guard moves in a different style
  */
-class Suspicious extends Guard {
+public class Suspicious extends Guard {
     /**Constant char that contains the symbol of Guard*/
     private final char SUSPICIOUSSYMBOL = 'G';
     /**Constant value that correspond if Suspicious is going forward*/
