@@ -23,7 +23,7 @@ public class Game {
 	private boolean keyTaken;
 	/**Contains information about if lever is enable of disable*/
 	private boolean leverPressed;
-	/**Cointains the game status*/
+	/**Contains the game status*/
 	public status gameStatus;
 
 	/**
@@ -75,6 +75,9 @@ public class Game {
 	 * @return char[][] - that correspond to the current map being playing.
 	 */
 	private char[][] getArrayMap(){
+		if(map == null){
+			return null;
+		}
 		return map.getMap();
 	}
 
@@ -84,6 +87,9 @@ public class Game {
 	 * @return char[][] - with all object one game;
 	 */
 	public char[][] getMap() {
+		if(map == null)
+			return null;
+
 		char[][] mapChar = getArrayMap().clone();
 
 		for (int i = 0; i < getArrayMap().length; i++)
@@ -133,6 +139,9 @@ public class Game {
 	 * @return Hero - correspond to the Hero of game, if game don't have Hero return null;
 	 */
 	public Hero getHero(){
+		if(agents.size() == 0){
+			return null;
+		}
 		if(agents.get(0) instanceof Hero)
 			return (Hero) agents.get(0);
 		else
