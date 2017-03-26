@@ -512,8 +512,6 @@ public class GameLogicTests {
 
 	@Test
 	public void testSuspiciousMovement() {
-		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
-		int pathIterator = 0;
 		Configs config = new Configs(1);
 		config.NUMBEROFOGRES = 0;
 		config.GUARDPERSONALITY = 2;
@@ -523,6 +521,32 @@ public class GameLogicTests {
 				|| ((MovingAgent) game.getGuard()).getNextDirection() == 's'
 				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'd'
 				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'w');
+	}
+
+	@Test
+	public void testDrunkenMovement() {
+		Configs config = new Configs(1);
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 1;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(((MovingAgent) game.getGuard()).getNextDirection() == 'a'
+				|| ((MovingAgent) game.getGuard()).getNextDirection() == 's'
+				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'd'
+				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'w');
+	}
+
+	@Test
+	public void testHeroMovement() {
+		Configs config = new Configs(1);
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 1;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getHero().getNextDirection() == 'a'
+				|| game.getHero().getNextDirection() == 's'
+				|| game.getHero().getNextDirection() == 'd'
+				|| game.getHero().getNextDirection() == 'w');
 	}
 
 	@Test
@@ -556,9 +580,87 @@ public class GameLogicTests {
 	@Test
 	public void testMovementStrategyRandom(){
 		MovementStrategy move = new MovementStrategy();
-		assertTrue(move.randomMovement() == 'a' || move.randomMovement() == 's' || move.randomMovement() == 'd' || move.randomMovement() == 'w');
+		assertTrue(move.randomMovement() == 'a'
+				|| move.randomMovement() == 's'
+				|| move.randomMovement() == 'd'
+				|| move.randomMovement() == 'w');
 	}
 
+	@Test
+	public void testLeverDoors(){
+		Point[] doors = new Point[] {new Point(2,2), new Point(2,3)};
+		Lever lever = new Lever(null, doors);
+		assertTrue(lever.getDoors() == doors);
+	}
 
+	@Test
+	public void testLeverSymbolNOT(){
+		Point[] doors = new Point[] {new Point(2,2), new Point(2,3)};
+		Lever lever = new Lever(null, doors);
+		assertTrue(lever.getNotActivatedSymbol() == 'k');
+	}
+
+	@Test
+	public void testLeverSymbol(){
+		Point[] doors = new Point[] {new Point(2,2), new Point(2,3)};
+		Lever lever = new Lever(null, doors);
+		assertTrue(lever.getActivatedSymbol() == 'K');
+	}
+
+	@Test
+	public void testKeySetSymbol(){
+		Point keyPoint = new Point(2,2);
+		Key key = new Key(keyPoint);
+		assertTrue(key.getCoord().equals(keyPoint));
+		keyPoint = new Point(2,3);
+		key.setCoords(keyPoint);
+		assertTrue(key.getCoord().equals(keyPoint));
+	}
+
+	@Test
+	public void ogreSetStun(){
+		Point ogrePoint = new Point(2,2);
+		Ogre ogre = new Ogre(ogrePoint);
+		ogre.setStunned();
+		assertTrue(ogre.isStunned());
+	}
+
+	@Test
+	public void ogreRecFromStun(){
+		Point ogrePoint = new Point(2,2);
+		Ogre ogre = new Ogre(ogrePoint);
+		ogre.setStunned();
+		assertTrue(ogre.isStunned());
+		ogre.recoverFromStun();
+		assertTrue(ogre.isStunned());
+		ogre.recoverFromStun();
+		assertTrue(ogre.isStunned());
+		ogre.recoverFromStun();
+		assertTrue(!ogre.isStunned());
+	}
+
+	@Test
+	public void weaponSymbol(){
+		Point weaponPoint = new Point(2,2);
+		Weapon weapon = new Weapon('/',weaponPoint);
+		assertTrue(weapon.getSymbol() == '/');
+	}
+
+	@Test
+	public void weaponSetSymbol(){
+		Point weaponPoint = new Point(2,2);
+		Weapon weapon = new Weapon('/',weaponPoint);
+		assertTrue(weapon.getSymbol() == '/');
+		weapon.setSymbol('#');
+		assertTrue(weapon.getSymbol() == '#');
+	}
+
+	@Test
+	public void weaponMove(){
+		Point weaponPoint = new Point(2,2);
+		Weapon weapon = new Weapon('/',new Point(2,2));
+		weapon.nextMove();
+		assertTrue(weapon.getCoords().getX() != weaponPoint.getX() || weapon.getCoords().getY() != weaponPoint.getY());
+	}
 
 }
