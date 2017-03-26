@@ -7,8 +7,8 @@ import java.awt.*;
  * Abstract class that have information of differents playable maps;
  */
 public abstract class GameMap {
-    /**Contains information of the map to play*/
-    char[][] map;
+	/** An array with arrays of chars representative of the map. Should only contain Walls('X') and Doors('I') */
+	protected char[][] map;
 
     /* GETTERS */
 

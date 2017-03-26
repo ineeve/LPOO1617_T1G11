@@ -25,6 +25,9 @@ public class Configs {
     private Point keyStartPoint;
     /**Contains information of start position of lever for dungeon level;*/
     private Point leverStartPoint;
+    private Point keepKeyStartPoint;
+    private Point keepHeroStartPoint;
+    
     /**Contains information about current level;*/
     private int level = 0;
     /**Contains information of all present movingAgents in current level;*/
@@ -176,16 +179,29 @@ public class Configs {
      */
     private void prepareLevelTwo() {
     	lever = null;
-        heroStartPoint = new Point(1, 7);
-        keyStartPoint = new Point(7, 1);
-        key = new Key(keyStartPoint,new Point(0,1));
+    	if (keepKeyStartPoint == null) { keepKeyStartPoint = new Point(7,1);}
+    	if (keepHeroStartPoint == null){ keepHeroStartPoint = new Point(1,7);}
+        key = new Key(keepKeyStartPoint);
+        Hero newHero = new Hero(keepHeroStartPoint, 'A', '/');
         map = new KeepMap();
-        Hero newHero = new Hero(heroStartPoint, 'A', '/');
+        
         agents.add(newHero);
         for (int i = 0; i < NUMBEROFOGRES; i++) {
            Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1,map.getMap()[0].length-1),ThreadLocalRandom.current().nextInt(1, map.getMap().length-1));
-           if (ogrePoint.distance(heroStartPoint) > 3){agents.add(new Ogre(ogrePoint));}
+           if (ogrePoint.distance(keepHeroStartPoint) > 3){agents.add(new Ogre(ogrePoint));} else i--;
         }
         level = 3;
+    }
+    public void setDungeonHeroAndKey(Point heroStart,Point keyStart){
+    	keepKeyStartPoint = keyStart;
+    	keepHeroStartPoint = heroStart;
+    }
+    public void replaceStairs(){
+    	char [][] tempMap = map.getMap();
+    	for (int y = 0 ; y < tempMap.length;y++){
+    		for (int x = 0; x < tempMap[0].length;x++){
+    			if (tempMap[y][x] == 'S'){tempMap[y][x] = 'I';}
+    		}
+    	}
     }
 }

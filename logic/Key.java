@@ -40,4 +40,8 @@ public class Key {
 		return doorPos;
 	}
 
+    public void setCoords(Point coords){
+    	coord = coords;
+    }
+    
 }

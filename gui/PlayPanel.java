@@ -19,18 +19,18 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	PlayPanel(){
 		init();
 	}
-	
+
 	void addListeners(){
 		addKeyListener(this);
 		addMouseListener(this);
 	}
-	
+
 	void resetGameStatusLabel(){
 		gameStatsLlb.setText("Try To Escape");
 		gameStatsLlb.setBackground(Color.LIGHT_GRAY);
 	}
-	
-	
+
+
 	private void init(){
 		graphicsPanel = new BoardGraphics();
 		gameStatsLlb.setOpaque(true);
@@ -93,7 +93,6 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	}
 
 	private void disableMoveButtons(){
-
 		btnUp.setEnabled(false);
 		btnLeft.setEnabled(false);
 		btnRight.setEnabled(false);
@@ -115,19 +114,14 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	public void mouseClicked(MouseEvent arg0) {
 		requestFocusInWindow();
 	}
-
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		requestFocusInWindow();
-
 	}
-
 	@Override
 	public void mouseExited(MouseEvent arg0) {}
-
 	@Override
 	public void mousePressed(MouseEvent arg0) {}
-
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 

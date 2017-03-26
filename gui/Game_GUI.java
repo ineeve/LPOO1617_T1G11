@@ -9,15 +9,16 @@ import java.awt.*;
 class Game_GUI {
 	private JFrame mainFrame = new JFrame("Escape Game");
 	private JPanel containerPanel = new JPanel();
-	private JPanel menuPanel = new InitialMenuPanel();
+	
 	private SettingsPanel settingsPanel = new SettingsPanel();
 	private PlayPanel playPanel = new PlayPanel();
-	private JPanel editMapPanel = new CreateMapPanel();
+	private EditMapPanel editMapPanel = new EditMapPanel();
 	private CardLayout cl = new CardLayout();
-	private JButton btnSettings = new JButton("Settings");
-	private JButton btnCreateMap = new JButton("Create Map");
-	private JButton btnPlay = new JButton("Play Game");
-	private JButton btnExit = new JButton("Exit");
+	private SpecialButton btnSettings = new SpecialButton();
+	private SpecialButton btnCreateMap = new SpecialButton();
+	private SpecialButton btnPlay = new SpecialButton();
+	private SpecialButton btnExit = new SpecialButton();
+	private JPanel menuPanel = new InitialMenuPanel(btnSettings,btnCreateMap,btnPlay,btnExit);
 	private JButton btnBackPlay = new JButton("Back");
 	private JButton btnBackSettings = new JButton("Back");
 	private JButton btnBackEditMap = new JButton("Back");
@@ -26,6 +27,7 @@ class Game_GUI {
 
 	/**
 	 * Launch the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -51,14 +53,11 @@ class Game_GUI {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 
 		containerPanel.setLayout(cl);
-		menuPanel.add(btnSettings);
-		menuPanel.add(btnCreateMap);
-		menuPanel.add(btnPlay);
-		menuPanel.add(btnExit);
 		playPanel.add(btnBackPlay, BorderLayout.PAGE_END);
 		settingsPanel.add(btnBackSettings);
 		editMapPanel.add(btnBackEditMap, BorderLayout.PAGE_END);
@@ -70,7 +69,7 @@ class Game_GUI {
 
 		addListenersToButtons();
 
-		mainFrame.add(containerPanel);
+		mainFrame.getContentPane().add(containerPanel);
 		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
@@ -81,22 +80,22 @@ class Game_GUI {
 		listenerbtnSettings();
 		listenerbtnCreateMap();
 		listenerbtnPlay();
-        listenerbtnExit();
-        listenerbtnBackPlay();
-        listenerbtnBackSettings();
-        listenerbtnBackEditMap();
+		listenerbtnExit();
+		listenerbtnBackPlay();
+		listenerbtnBackSettings();
+		listenerbtnBackEditMap();
 	}
 
 	private void listenerbtnSettings(){
-        btnSettings.addActionListener(argv0 ->
-                cl.show(containerPanel, "2")
-        );
+		btnSettings.addActionListener(argv0 ->
+		cl.show(containerPanel, "2")
+				);
 	}
 
 	private void listenerbtnCreateMap(){
-        btnCreateMap.addActionListener(nargv0 ->
-                cl.show(containerPanel, "3")
-        );
+		btnCreateMap.addActionListener(nargv0 ->
+		cl.show(containerPanel, "3")
+				);
 	}
 
 	private void listenerbtnPlay(){
@@ -113,30 +112,34 @@ class Game_GUI {
 	}
 
 	private void listenerbtnExit(){
-        btnExit.addActionListener(arg0 ->
-                System.exit(0)
-        );
-    }
+		btnExit.addActionListener(arg0 ->
+		System.exit(0)
+				);
+	}
 
-    private void listenerbtnBackPlay(){
-        btnBackPlay.addActionListener(arg0 -> {
-            cl.show(containerPanel, "1");
-            config.decreaseLevel();
-        });
-    }
+	private void listenerbtnBackPlay(){
+		btnBackPlay.addActionListener(arg0 -> {
+			cl.show(containerPanel, "1");
+			config.decreaseLevel();
+			Point heroPos = editMapPanel.getHeroPos(); Point keyPos = editMapPanel.getKeyPos();
+			config.setDungeonHeroAndKey(heroPos, keyPos);
+		});
+	}
 
-    private void listenerbtnBackSettings(){
-        btnBackSettings.addActionListener(arg0 -> {
-            cl.show(containerPanel, "1");
-            btnPlay.setEnabled(true);
-        });
-    }
+	private void listenerbtnBackSettings(){
+		btnBackSettings.addActionListener(arg0 -> {
+			cl.show(containerPanel, "1");
+			btnPlay.setEnabled(true);
+		});
+	}
 
-    private void listenerbtnBackEditMap(){
-        btnBackEditMap.addActionListener(arg0 ->
-				cl.show(containerPanel, "1")
-		);
-    }
+	private void listenerbtnBackEditMap(){
+		btnBackEditMap.addActionListener(arg0 ->{
+			cl.show(containerPanel, "1");
+			config.setDungeonHeroAndKey(editMapPanel.getHeroPos(), editMapPanel.getKeyPos());
+
+		});
+	}
 
 }
 

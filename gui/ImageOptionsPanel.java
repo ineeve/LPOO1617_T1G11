@@ -13,7 +13,7 @@ class ImageOptionsPanel extends JPanel{
 		setLayout(new GridLayout(0, 1));
 		for (HashMap.Entry<Character, Image> entry : images.entrySet() ){
 			char key = entry.getKey();
-			if (key == 'O' ||key == 'X' ||key == 'I' ||key == ' ' ||key == 'k' || key == 'S' || key == 'A'){
+			if (key == 'X' ||key == 'I' ||key == ' ' ||key == 'k' || key == 'A'){
 			SpecialButton j1 = new SpecialButton(null,entry.getValue(),entry.getKey());
 			j1.addActionListener(e -> {
                 if (buttonPressed == j1.getType()){

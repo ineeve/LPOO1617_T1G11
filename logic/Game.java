@@ -49,6 +49,7 @@ public class Game {
 	 */
 	public void resetLevel(){
 		config.prepareNextLevel();
+		config.replaceStairs();
 		map = config.getMap();
 		agents = config.getAgents();
 		key = config.getKey();

@@ -19,7 +19,7 @@ public class Hero extends MovingAgent {
      */
     public Hero(Point coord) {
         symbol = HEROSYMBOL;
-        agentCoords = coord;
+        agentCoords = (Point) coord.clone();
         weapon = new Weapon(' ',new Point(0,0));
     }
 

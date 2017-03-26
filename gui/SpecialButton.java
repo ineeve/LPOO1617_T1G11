@@ -18,6 +18,9 @@ class SpecialButton extends JButton{
 		//setMargin(new Insets(0, 0, 0, 0));
         image = img;
 	}
+	public SpecialButton(){
+		super();
+	}
 	
 	
 	public Character getType() {
@@ -26,7 +29,9 @@ class SpecialButton extends JButton{
 	public void setImage(Image newImage){
 		image = newImage;
 	}
-
+	public Image getImage(){
+		return image;
+	}
 
 
 	Dimension getPosition(){
