@@ -131,6 +131,9 @@ public class Game {
             if (agent instanceof Ogre && getAgentCoord(agent).distance(key.getCoord()) == 0) {
                 mapChar[agentCoordY][agentCoordX] = '$';
             }
+            else {
+                mapChar[agentCoordY][agentCoordX] = agent.getSymbol();
+            }
         }
         else {
             mapChar[agentCoordY][agentCoordX] = agent.getSymbol();

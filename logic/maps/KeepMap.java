@@ -1,7 +1,5 @@
 package dkeep.logic.maps;
 
-import java.security.InvalidParameterException;
-
 /**
  * Derived class from GameMap;
  * This GameMap have a different board;
@@ -79,19 +77,6 @@ public class KeepMap extends GameMap {
             }
         }
         mapStatic = tempMap;
-    }
-
-    /** Function to edit one specified cell of map;
-     *
-     * @param x - int that correspond to the column number of cell to change;
-     * @param y - int that correspond to the line number of cell to change;
-     * @param n - char that will save in the specified cell to change;
-     */
-    public void editPos(int x, int y, char n) {
-        if (y > map.length || y < 0 || x < 0 || x > map[0].length) {
-            throw new InvalidParameterException();
-        }
-        map[x][y] = n;
     }
 
 }
