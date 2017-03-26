@@ -8,7 +8,7 @@ public class KeepMap extends GameMap {
     /**
      * Static map that contains information of the map of KeepMap
      */
-    private static char[][] mapStatic = new char[][]{
+    public static char[][] mapStatic = new char[][]{
             {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'},
             {'I', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},
             {'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X'},

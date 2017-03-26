@@ -2,6 +2,7 @@ package dkeep.test;
 
 import dkeep.logic.*;
 import dkeep.logic.maps.DungeonMap;
+import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
 import org.junit.Test;
 
@@ -459,7 +460,7 @@ public class GameLogicTests {
 				assertTrue((mapChar[i][j]) == tempMap[i][j]);
 			}
 		}
-		mapChar = tempMap;
+		KeepMap.mapStatic = tempMap;
 	}
 
 	@Test
