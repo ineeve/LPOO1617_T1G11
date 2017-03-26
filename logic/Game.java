@@ -327,7 +327,7 @@ public class Game {
 				break;
 			case DOOR:
 				if (actualAgent instanceof Hero && keyTaken)
-					changeDoorsToStairs(new Point[]{key.getDoorPos()});
+					changeDoorsToStairs(new Point[]{actualAgent.getAgentCoords()});
 				actualAgent.setAgentCoords(lastPosition);
 				break;
 		}
