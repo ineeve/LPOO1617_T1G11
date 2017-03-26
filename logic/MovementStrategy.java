@@ -35,7 +35,7 @@ public class MovementStrategy {
             case 3:
                 return 'w';
             default:
-                return ' ';
+                return 'a';
         }
     }
 
