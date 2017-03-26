@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 class PlayPanel extends JPanel implements MouseListener, KeyListener{
-	private JPanel moveButtonsPanel = new JPanel(new BorderLayout());
+	private JPanel moveButtonsPanel = new JPanel(new GridBagLayout());
 	private JPanel northPanel = new JPanel (new FlowLayout());
 	private JButton btnUp = new JButton("");
 	private JButton btnLeft = new JButton("");
@@ -18,8 +18,10 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	ImageIcon victoryGIF = createImageIcon("../assets/victory_banner.gif");
 	ImageIcon runGIF = createImageIcon("../assets/run_banner.gif");
 	private JLabel gameStatsLlb = new JLabel(runGIF);
+	private JButton backBtn;
 	
-	PlayPanel(){
+	PlayPanel(JButton backBtn){
+		this.backBtn = backBtn;
 		init();
 	}
 
@@ -51,23 +53,25 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		setLayout(new BorderLayout());
 		setBackground(Color.BLUE);
 		add(graphicsPanel,BorderLayout.CENTER);
-
-		btnUp.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_up.png")));
-		btnLeft.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_left.png")));
-		btnRight.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_right.png")));
-		btnDown.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_down.png")));
-
+		initBackButton();
+		northPanel.add(gameStatsLlb);
+		add(northPanel,BorderLayout.NORTH);
+		initListeners();
+	}
+	private void addArrowButtonsToPanel(){
 		moveButtonsPanel.add(btnUp, BorderLayout.NORTH);
 		moveButtonsPanel.add(btnLeft, BorderLayout.WEST);
 		moveButtonsPanel.add(btnRight, BorderLayout.EAST);
 		moveButtonsPanel.add(btnDown, BorderLayout.SOUTH);
 		add(moveButtonsPanel,BorderLayout.EAST);
-
-
-		northPanel.add(gameStatsLlb);
-		add(northPanel,BorderLayout.NORTH);
-
-		initListeners();
+	}
+	
+	
+	
+	private void initBackButton() {
+		backBtn.setBackground(Color.BLACK);
+		backBtn.setIcon(new ImageIcon(SettingsPanel.class.getResource("/dkeep/assets/backBtn.png")));
+		add(backBtn,BorderLayout.SOUTH);
 	}
 
 	private void initListeners(){

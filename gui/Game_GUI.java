@@ -10,8 +10,11 @@ class Game_GUI {
 	private JFrame mainFrame = new JFrame("Escape Game");
 	private JPanel containerPanel = new JPanel();
 	private JButton btnBackSettings = new JButton("");
+	private JButton btnBackEditMap = new JButton("");
+	private JButton btnBackPlay = new JButton();
 	private SettingsPanel settingsPanel = new SettingsPanel(btnBackSettings);
-	private PlayPanel playPanel = new PlayPanel();
+	private EditMapPanel editMapPanel = new EditMapPanel(btnBackEditMap);
+	private PlayPanel playPanel = new PlayPanel(btnBackPlay);
 	
 	private CardLayout cl = new CardLayout();
 	private SpecialButton btnSettings = new SpecialButton();
@@ -19,10 +22,10 @@ class Game_GUI {
 	private SpecialButton btnPlay = new SpecialButton();
 	private SpecialButton btnExit = new SpecialButton();
 	private JPanel menuPanel = new InitialMenuPanel(btnSettings,btnCreateMap,btnPlay,btnExit);
-	private JButton btnBackPlay = new JButton("Back");
 	
-	private JButton btnBackEditMap = new JButton("");
-	private EditMapPanel editMapPanel = new EditMapPanel(btnBackEditMap);
+	
+	
+	
 	private Game game;
 	private Configs config;
 
@@ -59,7 +62,6 @@ class Game_GUI {
 	private void initialize() {
 		
 		containerPanel.setLayout(cl);
-		playPanel.add(btnBackPlay, BorderLayout.PAGE_END);
 		containerPanel.add(menuPanel, "1"); // "1" is the identifing string
 		containerPanel.add(settingsPanel, "2");
 		containerPanel.add(editMapPanel, "3");
