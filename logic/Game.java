@@ -55,7 +55,7 @@ public class Game {
 		key = config.getKey();
 		lever = config.getLever();
 		keyTaken = false;
-		leverPressed=false;
+		leverPressed = false;
 		gameStatus = status.PLAYING;
 	}
 
@@ -99,6 +99,7 @@ public class Game {
 			else
 				mapChar[lever.getCoord().y][lever.getCoord().x] = 'k';
 		}
+
 		for (MovingAgent agent : agents) {
 			int agentCoordY = agent.getAgentCoords().y;
 			int agentCoordX = agent.getAgentCoords().x;
@@ -230,7 +231,10 @@ public class Game {
 		int handlerResponse = responseHandler(actualAgent, isFreeResponse, lastPosition);/* Handler for next position of agent */
 
 		if(actualAgent.weapon.getSymbol() != ' ') {
-			moveWeapon(actualAgent);
+			if(!(actualAgent instanceof Hero))
+				moveWeapon(actualAgent);
+			else
+				weaponHeroHandler((Hero) actualAgent);
 		}
 
 		if (handlerResponse != 0){
@@ -358,14 +362,27 @@ public class Game {
 			}
 	}
 
+	/** Function to handle with the weapon of Hero;
+	 * 	Verify if Hero took the weapon;
+	 *
+	 * @param agent MovingAgent - that correspond to the Hero to handle;
+	 */
+	private void weaponHeroHandler(Hero agent){
+		if(agent.getAgentCoords().distance(agent.weapon.getCoords()) == 0) {
+			agent.weapon.setCoords(agent.getAgentCoords());
+			agent.weapon.setSymbol(' ');
+			agent.setSymbol('A');
+		}
+	}
+
 	/** Function to set Ogre stunned if is the case of it;
 	 * 	Just stun the Ogre if distance between weapon of Hero and Ogre is under of 1;
 	 *
 	 * @param actualAgent - MovingAgent that correspond to the Ogre to be set stun;
 	 */
 	private void ogreStunned(MovingAgent actualAgent){
-		if (actualAgent instanceof Ogre) /* Verify if can be stunned */
-			if (actualAgent.getAgentCoords().distance(agents.get(0).weapon.getCoords()) <= 1)
+		if (actualAgent instanceof Ogre && (agents.get(0).getSymbol() == 'A')) /* Verify if can be stunned */
+			if (actualAgent.getAgentCoords().distance(agents.get(0).getAgentCoords()) <= 1)
 				((Ogre) actualAgent).setStunned();
 	}
 

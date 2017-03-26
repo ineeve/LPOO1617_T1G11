@@ -27,6 +27,8 @@ public class Configs {
     private Point keepKeyStartPoint;
     /**Contains information of start position of Hero on keep level;*/
     private Point keepHeroStartPoint;
+    /**Contains information of start position of Hero on keep level;*/
+    private Point keepWeaponStartPoint;
     /**Contains information about current level;*/
     private int level = 0;
     /**Contains information of all present movingAgents in current level;*/
@@ -37,6 +39,7 @@ public class Configs {
     private Key key;
     /**Contains information about the lever in current level, if level doesn't have one, lever is null;*/
     private Lever lever;
+
 
     /* CONSTRUCTOR */
     /** Constructor of Class Configs;
@@ -188,10 +191,11 @@ public class Configs {
      */
     private void prepareLevelTwo() {
     	lever = null;
-    	if (keepKeyStartPoint == null) { keepKeyStartPoint = new Point(7,1);}
-    	if (keepHeroStartPoint == null){ keepHeroStartPoint = new Point(1,7);}
+    	if (keepKeyStartPoint == null) keepKeyStartPoint = new Point(7,1);
+    	if (keepHeroStartPoint == null) keepHeroStartPoint = new Point(1,7);
+        if (keepWeaponStartPoint == null) keepWeaponStartPoint = new Point(keepHeroStartPoint.x + 1,keepHeroStartPoint.y);
         key = new Key(keepKeyStartPoint);
-        Hero newHero = new Hero(keepHeroStartPoint, 'A', '/');
+        Hero newHero = new Hero(new Point[]{keepHeroStartPoint, keepWeaponStartPoint}, 'H', '/');
         map = new KeepMap();
         
         agents.add(newHero);

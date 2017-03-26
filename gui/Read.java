@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 
 abstract class Read {
@@ -14,14 +13,13 @@ abstract class Read {
 			imageMap.put('X', ImageIO.read(new File("src/dkeep/assets/wall.png")));
 			imageMap.put('I', ImageIO.read(new File("src/dkeep/assets/door.png")));
 			Image Hero = ImageIO.read(new File("src/dkeep/assets/PacMan3.png"));
-			
+			imageMap.put('H', Hero);
 			if(level == 1 || level == 2) {
-				imageMap.put('H', Hero);
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/lever.png")));
 				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/leverPressed.png")));
 			}
 			else{
-				imageMap.put('A', Hero);
+				imageMap.put('A', ImageIO.read(new File("src/dkeep/assets/PacManWithWeapon.png")));
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/key.png")));
 				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/PacManWithKey.png")));
 			}
