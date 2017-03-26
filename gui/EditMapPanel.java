@@ -16,15 +16,13 @@ import static dkeep.gui.Read.readImages;
 class EditMapPanel extends JPanel{
 	private EditMapGraphicsPanel editPanel;
 	private HashMap<Character,Image> imageMap = new HashMap<>();
-	private MapSizeSelectorPanel mapSizePanel = new MapSizeSelectorPanel();
-	final int MIN_SIZE = 5;
-	final int MAX_SIZE = 60;
-	final int INIT_SIZE = 9;
+	private MapSizeSelectorPanel mapSizePanel;
 	
-	JSlider xSizeSlider = new JSlider(JSlider.HORIZONTAL,
-			MIN_SIZE, MAX_SIZE, INIT_SIZE);
-	JSlider ySizeSlider = new JSlider(JSlider.HORIZONTAL,
-			MIN_SIZE, MAX_SIZE, INIT_SIZE);
+	JSlider xSizeSlider = new JSlider();
+	JSlider ySizeSlider = new JSlider();
+	
+	private JPanel componentsPanel;
+
 	
 	EditMapPanel(){
 		init();
@@ -42,29 +40,28 @@ class EditMapPanel extends JPanel{
 
 	private void init(){
 		loadImages();
-		editPanel = new EditMapGraphicsPanel(imageMap);
-		JPanel componentsPanel = new ImageOptionsPanel(imageMap);
-		componentsPanel.setBorder(new EmptyBorder(0, 2, 2, 2));
 		setLayout(new BorderLayout());
-		int eastPanelSize = 200;
-		componentsPanel.setPreferredSize(new Dimension(eastPanelSize, eastPanelSize));
-		add(componentsPanel,BorderLayout.EAST);
+		initEditPanel();
+		initComponentsPanel();
+		initMapSizePanel();
+	}
+	
+	public void initEditPanel(){
+		editPanel = new EditMapGraphicsPanel(imageMap);
 		editPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		add(editPanel,BorderLayout.CENTER);
-		initMapSizePanel();
-
 	}
+	
+	public void initComponentsPanel(){
+		componentsPanel = new ImageOptionsPanel(imageMap);
+		add(componentsPanel,BorderLayout.EAST);
+		
+	}
+	
 	public void initMapSizePanel(){
-		Font font = new Font("Serif", Font.ITALIC, 15);
-		mapSizePanel.initSlider(xSizeSlider,font);
-		mapSizePanel.initSlider(ySizeSlider,font);
-		xSizeSlider.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		ySizeSlider.setAlignmentX(Component.LEFT_ALIGNMENT);
+		mapSizePanel = new MapSizeSelectorPanel(xSizeSlider,ySizeSlider);
 		addXSliderListener();
 		addYSliderListener();
-		mapSizePanel.add(xSizeSlider);
-		mapSizePanel.add(ySizeSlider);
-		mapSizePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		add(mapSizePanel,BorderLayout.NORTH);
 	}
 	
@@ -73,7 +70,6 @@ class EditMapPanel extends JPanel{
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
-				System.out.println(source.getValue() + " " + ySizeSlider.getValue());
 				KeepMap.resize(source.getValue(),ySizeSlider.getValue());
 				editPanel.redraw();
 			}
@@ -84,7 +80,6 @@ class EditMapPanel extends JPanel{
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider) e.getSource();
-				System.out.println(xSizeSlider.getValue() + " " + source.getValue());
 				KeepMap.resize(xSizeSlider.getValue(),source.getValue());
 				editPanel.redraw();
 			}
