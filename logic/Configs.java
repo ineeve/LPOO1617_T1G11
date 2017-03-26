@@ -10,60 +10,122 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Created by João on 05/03/2017.
+ * Class responsible for configuration of all levels;
  */
-
 public class Configs {
-    /**Contains information of number of ogres how will play on keep level*/
+    /**Contains information of number of ogres how will play on keep level;*/
     public int NUMBEROFOGRES = 1;
-    /**Contains information about the guard personality*/
+    /**Contains information of that is guard personalty;*/
     public int GUARDPERSONALITY = 0;
-    /**Contains information of start position of hero for every level*/
+    /**Contains information of start position of hero for every level;*/
     private Point heroStartPoint;
-    /**Contains information of start position of guard for dungeon level*/
+    /**Contains information of start position of guard for dungeon level;*/
     private Point guardStartPoint;
-    /**Contains information of start position of key/lever for every level*/
-    private Point keyStartPoint;
+    /**Contains information of start position of lever for dungeon level;*/
     private Point leverStartPoint;
+    /**Contains information of start position of key on keep level;*/
     private Point keepKeyStartPoint;
+    /**Contains information of start position of Hero on keep level;*/
     private Point keepHeroStartPoint;
-    
+    /**Contains information about current level;*/
     private int level = 0;
+    /**Contains information of all present movingAgents in current level;*/
     private ArrayList<MovingAgent> agents = new ArrayList<>();
+    /**Contains the current GameMap;*/
     private GameMap map;
+    /**Contains information about the key in current level, if level doesn't have one, lever is null;*/
     private Key key;
+    /**Contains information about the lever in current level, if level doesn't have one, lever is null;*/
     private Lever lever;
 
+    /* CONSTRUCTOR */
+    /** Constructor of Class Configs;
+     *
+     * @param startLevel - int to define start level (0 - For test level; 1 - Dungeon Level; 2 - Keep Level;);
+     */
     public Configs(int startLevel) {
         level = startLevel;
     }
 
-    public void decreaseLevel() {
-        level--;
-    }
 
-    public ArrayList<MovingAgent> getAgents() {
-        return agents;
-    }
-
-    public Key getKey() {
-        return key;
-    }
-    public Lever getLever(){
-    	return lever;
-    }
-    public GameMap getMap() {
-        return map;
-    }
-
-    public void setLevel(int newLevel) {
-        level = newLevel;
-    }
-
+    /* GETTER's */
+    /** Function to get current level configured;
+     *
+     * @return Int value that correspond to the current level (0 - For test level; 1 - Dungeon Level; 2 - Keep Level;);
+     */
     public int getLevel(){
         return level;
     }
 
+    /** Function to get the MovingAgents for the current level configured;
+     *
+     * @return ArrayList that contains all MovingAgent to the current level configured;
+     */
+    public ArrayList<MovingAgent> getAgents() {
+        return agents;
+    }
+
+    /** Function to get the GameMap for rhe current level configured;
+     *
+     * @return GameMap that contains the current GameMap configured;
+     */
+    public GameMap getMap() {
+        return map;
+    }
+
+    /** Function to get the Key for the current level configured;
+     *
+     * @return Key that contains the current key configured;
+     */
+    public Key getKey() {
+        return key;
+    }
+
+    /** Function to get the Lever for the current level configured;
+     *
+     * @return Lever that contains the current lever configured;
+     */
+    public Lever getLever(){
+        return lever;
+    }
+
+
+    /* SETTERS'S */
+
+    /** Function to set level for next configuration;
+     *
+     * @param newLevel int - that correspond the next level to be configured (0 - For test level; 1 - Dungeon Level; 2 - Keep Level;);
+     */
+    public void setLevel(int newLevel) {
+        level = newLevel;
+    }
+
+    /** Function to set start position of Hero and Key in Keep level;
+     *
+     * @param heroStart Point - to set the start position of Hero;
+     * @param keyStart Point - to set the start position of Key;
+     */
+    public void setDungeonHeroAndKey(Point heroStart,Point keyStart){
+        keepKeyStartPoint = keyStart;
+        keepHeroStartPoint = heroStart;
+    }
+
+    /* OTHERS METHODS */
+
+    /** Function to decrease level;
+     *  This is necessary when the player dies and next level to be configured needs to be the same that was played previously;
+     */
+    public void decreaseLevel() {
+        level--;
+    }
+
+    /** Function to prepare next level to be played;
+     *  This function initialize all components necessarily to play the level;
+     *  Creates all MovingsAgents with your's start conditions;
+     *      For Guard depend of GUARDPERSONALITY (0 - Rookie; 1 - Drunken; 2 - Suspicious);
+     *      For Ogres depend of NUMBEROFOGRES that define how many ogres are created;
+     *  And set next level to be configured;
+     */
     public void prepareNextLevel() {
         agents.clear();
         switch (level) {
@@ -79,6 +141,9 @@ public class Configs {
         }
     }
 
+    /** Function to prepare Test Level;
+     *  This function initialize all components necessarily to play the Test Level;
+     */
     private void prepareTestLevel() {
     	key = null;
     	heroStartPoint = new Point(1, 1);
@@ -92,6 +157,9 @@ public class Configs {
         level = 1;
     }
 
+    /** Function to prepare Dungeon Level;
+     *  This function initialize all components necessarily to play the Dungeon Level;
+     */
     private void prepareLevelOne() {
     	key = null;
     	Point[] openableDoors = new Point[]{new Point(0,5),new Point(0,6)};
@@ -115,6 +183,9 @@ public class Configs {
         level = 2;
     }
 
+    /** Function to prepare Keep Level
+     *  This function initialize all components necessarily to play the Keep Level;
+     */
     private void prepareLevelTwo() {
     	lever = null;
     	if (keepKeyStartPoint == null) { keepKeyStartPoint = new Point(7,1);}
@@ -130,10 +201,10 @@ public class Configs {
         }
         level = 3;
     }
-    public void setDungeonHeroAndKey(Point heroStart,Point keyStart){
-    	keepKeyStartPoint = keyStart;
-    	keepHeroStartPoint = heroStart;
-    }
+
+    /**
+     * Function to replace all Stairs to Doors;
+     */
     public void replaceStairs(){
     	char [][] tempMap = map.getMap();
     	for (int y = 0 ; y < tempMap.length;y++){

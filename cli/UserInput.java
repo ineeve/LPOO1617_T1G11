@@ -3,7 +3,7 @@ package dkeep.cli;
 import java.util.Scanner;
 
 /**
- * Created by João on 23/02/2017.
+ * Class responsible of get user input from command line
  */
 class UserInput {
 
