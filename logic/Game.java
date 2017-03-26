@@ -101,19 +101,32 @@ public class Game {
 		}
 
 		for (MovingAgent agent : agents) {
-			int agentCoordY = agent.getAgentCoords().y;
-			int agentCoordX = agent.getAgentCoords().x;
-			char symbol = agent.getSymbol();
-			mapChar[agentCoordY][agentCoordX] = symbol;
+            writeOnMapSymbol(agent, mapChar);
 			if (agent.weapon.getSymbol() != ' ') {
 				int weaponCoordY = agent.weapon.getCoords().y;
 				int weaponCoordX = agent.weapon.getCoords().x;
-				symbol = agent.weapon.getSymbol();
-				mapChar[weaponCoordY][weaponCoordX] = symbol;
+				char symbol = agent.weapon.getSymbol();
+				if (agent.weapon.getCoords().distance(key.getCoord()) == 0)
+                    mapChar[weaponCoordY][weaponCoordX] = '$';
+                else
+                    mapChar[weaponCoordY][weaponCoordX] = symbol;
 			}
 		}
 		return mapChar;
 	}
+
+    private void writeOnMapSymbol(MovingAgent agent, char[][] mapChar){
+        int agentCoordY = agent.getAgentCoords().y;
+        int agentCoordX = agent.getAgentCoords().x;
+        if (key != null){
+            if (agent instanceof Ogre && agent.getAgentCoords().distance(key.getCoord()) == 0) {
+                mapChar[agentCoordY][agentCoordX] = '$';
+            }
+        }
+        else {
+            mapChar[agentCoordY][agentCoordX] = agent.getSymbol();
+        }
+    }
 
 	/** Function to get the Hero one the Game;
 	 *
