@@ -35,8 +35,6 @@ class Suspicious extends Guard {
      *  But because this MovingAgent is a Suspicious, he does not follow the movement of the original path;
      *  Sometimes the Suspicious may go backward to check if there is something there.
      *
-     * @Override Guard::getNextDirection();
-     *
      * @return char - that contains next direction to move
      */
     @Override

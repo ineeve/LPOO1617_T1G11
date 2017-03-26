@@ -28,8 +28,6 @@ class Guard extends MovingAgent {
     /** Function to get next direction to move;
      *  This function returns one char that correspond to next direction;
      *
-     * @Override MovingAgent::getNextDirection();
-     *
      * @return char - that contains next direction to move
      */
 	@Override

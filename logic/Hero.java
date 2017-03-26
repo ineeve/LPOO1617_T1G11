@@ -42,8 +42,6 @@ public class Hero extends MovingAgent {
      *  This function returns one char that correspond to next direction;
      *  This is only call for test, usually the Hero next direction is define by user;
      *
-     * @Override MovingAgent::getNextDirection();
-     *
      * @return char - that contains next direction to move
      */
 	@Override

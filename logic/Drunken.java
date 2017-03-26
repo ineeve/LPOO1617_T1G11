@@ -37,8 +37,6 @@ class Drunken extends Guard {
      *  But because this MovingAgent is a Drunken, he does not follow the movement of the original path;
      *  Sometimes the Drunken may fall asleep and when he wakes up, we may go in the backward direction.
      *
-     * @Override Guard::getNextDirection();
-     *
      * @return char - that contains next direction to move
      */
     @Override

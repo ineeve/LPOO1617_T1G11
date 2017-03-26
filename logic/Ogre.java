@@ -29,7 +29,6 @@ public class Ogre extends MovingAgent {
     /** Function to get next direction of movement of the Ogre;
      *
      * @return char - that correspond to the next direction of move;
-     * @Override MovingAgent::getNextDirection();
      */
     @Override
     public char getNextDirection() {

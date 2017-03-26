@@ -57,7 +57,7 @@ public class Configs {
 
     /** Function to get the MovingAgents for the current level configured;
      *
-     * @return ArrayList<MovingAgent> that contains all MovingAgent to the current level configured;
+     * @return ArrayList that contains all MovingAgent to the current level configured;
      */
     public ArrayList<MovingAgent> getAgents() {
         return agents;
