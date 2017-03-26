@@ -31,7 +31,7 @@ class Guard extends MovingAgent {
      * @return char - that contains next direction to move
      */
 	@Override
-	char getNextDirection() {
+	public char getNextDirection() {
 		return movement.pathMovement(1);
 	}
 

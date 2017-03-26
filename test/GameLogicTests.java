@@ -1,9 +1,6 @@
 package dkeep.test;
 
-import dkeep.logic.Configs;
-import dkeep.logic.Game;
-import dkeep.logic.Hero;
-import dkeep.logic.Ogre;
+import dkeep.logic.*;
 import dkeep.logic.maps.DungeonMap;
 import dkeep.logic.maps.GameMap;
 import dkeep.logic.maps.KeepMap;
@@ -11,7 +8,8 @@ import org.junit.Test;
 
 import java.awt.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GameLogicTests {
 
@@ -155,8 +153,9 @@ public class GameLogicTests {
 	@Test
 	public void testIfHeroStunOgre(){
 		Configs config = new Configs(2);
-		config.setKeepHeroKeyWeapon(new Point(2,2), new Point(),null);
+		config.setKeepHeroKeyWeapon(new Point(2,2), new Point(),new Point(3,2));
 		config.setKeepOgreStartPosition(new Point(4,2));
+		config.NUMBEROFOGRES = 1;
 		Game game = new Game(config);
 		game.resetLevel();
 		game.getFirstOgre().weapon.setCoords(new Point());
@@ -407,5 +406,138 @@ public class GameLogicTests {
 		}
 	}
 
+	@Test
+	public void resizeMapTest(){
+		GameMap keep = new KeepMap();
+		char[][] mapChar = keep.getMap();
+		char[][] tempMap = new char[mapChar.length][mapChar[0].length];
+		KeepMap.copyMap(tempMap);
+		KeepMap.resize(tempMap[1].length,tempMap.length);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		mapChar = tempMap;
+		KeepMap.resize(tempMap[1].length*2,tempMap.length);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		mapChar = tempMap;
+		KeepMap.resize(tempMap[1].length,tempMap.length*2);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		mapChar = tempMap;
+		KeepMap.resize(tempMap[1].length*2,tempMap.length*2);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		mapChar = tempMap;
+		KeepMap.resize(tempMap[1].length/2,tempMap.length);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		mapChar = tempMap;
+		KeepMap.resize(tempMap[1].length,tempMap.length/2);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		mapChar = tempMap;
+		KeepMap.resize(tempMap[1].length/2,tempMap.length/2);
+		for(int i = 0; i < tempMap.length && i < mapChar.length; i++){
+			for(int j = 0; j < tempMap[i].length && j < mapChar[i].length; j++){
+				assertTrue((mapChar[i][j]) == tempMap[i][j]);
+			}
+		}
+		KeepMap.mapStatic = tempMap;
+	}
+
+	@Test
+	public void testConstructorOfRookie(){
+		Configs config = new Configs(1);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getGuard() instanceof Rookie);
+	}
+
+	@Test
+	public void testConstructorOfDrunken(){
+		Configs config = new Configs(1);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 1;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getGuard() instanceof Drunken);
+	}
+
+	@Test
+	public void testConstructorOfSuspicious(){
+		Configs config = new Configs(1);
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 2;
+		Game game = new Game(config);
+		game.resetLevel();
+		assertTrue(game.getGuard() instanceof Suspicious);
+	}
+
+	@Test
+	public void testPathMovementOfRookie(){
+		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+		Configs config = new Configs(1);
+		Point heroStartPosition = new Point(2,2);
+		config.setKeepHeroKeyWeapon(heroStartPosition, new Point(),new Point());
+		config.NUMBEROFOGRES = 0;
+		config.GUARDPERSONALITY = 0;
+		Game game = new Game(config);
+		game.resetLevel();
+		for (char aPath : path) {
+			assertTrue(aPath == ((MovingAgent) game.getGuard()).getNextDirection());
+		}
+	}
+
+	@Test
+	public void testMovementStrategyReverse(){
+		MovementStrategy move = new MovementStrategy();
+		assertTrue(move.reverseDirection('a') == 'd');
+		assertTrue(move.reverseDirection('d') == 'a');
+		assertTrue(move.reverseDirection('w') == 's');
+		assertTrue(move.reverseDirection('s') == 'w');
+	}
+
+	@Test
+	public void testMovementStrategyPath(){
+		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+		MovementStrategy move = new MovementStrategy();
+		for (char aPath : path) {
+			assertTrue(aPath == move.pathMovement(1));
+		}
+	}
+
+	@Test
+	public void testMovementStrategyPathBackward(){
+		final char[] path = new char[]{'a', 's', 's', 's', 's', 'a', 'a', 'a', 'a', 'a', 'a', 's', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'w', 'w', 'w', 'w', 'w'};
+		MovementStrategy move = new MovementStrategy();
+		for (int i = path.length-1; i >= 0; i--){
+			char aPath = path[i];
+			assertTrue(move.reverseDirection(aPath) == move.pathMovement(0));
+		}
+	}
 
 }
