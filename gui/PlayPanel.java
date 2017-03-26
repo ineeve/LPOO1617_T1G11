@@ -7,54 +7,71 @@ import java.awt.*;
 import java.awt.event.*;
 
 class PlayPanel extends JPanel implements MouseListener, KeyListener{
-	private JPanel moveButtonsPanel = new JPanel(new BorderLayout());
-	private JPanel northPanel = new JPanel (new FlowLayout());
+	
+	private JPanel northPanel = new JPanel (new BorderLayout());
 	private JButton btnUp = new JButton("");
 	private JButton btnLeft = new JButton("");
 	private JButton btnDown = new JButton("");
 	private JButton btnRight = new JButton("");
-	private JLabel gameStatsLlb = new JLabel("Try to Escape");
+	private JPanel moveButtonsPanel = new MoveArrowsPanel(btnUp,btnLeft,btnRight,btnDown);
 	private BoardGraphics graphicsPanel;
-
-	PlayPanel(){
+	ImageIcon defeatGIF = createImageIcon("../assets/defeat_banner.gif");
+	ImageIcon victoryGIF = createImageIcon("../assets/victory_banner.gif");
+	ImageIcon runGIF = createImageIcon("../assets/run_banner.gif");
+	private JLabel gameStatsLbl = new JLabel(runGIF);
+	private JButton backBtn;
+	
+	PlayPanel(JButton backBtn){
+		this.backBtn = backBtn;
 		init();
 	}
-	
+
 	void addListeners(){
 		addKeyListener(this);
 		addMouseListener(this);
 	}
 	
-	void resetGameStatusLabel(){
-		gameStatsLlb.setText("Try To Escape");
-		gameStatsLlb.setBackground(Color.LIGHT_GRAY);
+	/** Returns an ImageIcon, or null if the path was invalid. */
+	protected ImageIcon createImageIcon(String path) {
+	    java.net.URL imgURL = getClass().getResource(path);
+	    if (imgURL != null) {
+	        return new ImageIcon(imgURL);
+	    } else {
+	        System.err.println("Couldn't find file: " + path);
+	        return null;
+	    }
 	}
-	
-	
+
+	public void resetGameStatusLabel(){
+		gameStatsLbl.setIcon(runGIF);
+	}
+
+
 	private void init(){
 		graphicsPanel = new BoardGraphics();
-		gameStatsLlb.setOpaque(true);
 		graphicsPanel.setFocusable(true);
 		setLayout(new BorderLayout());
 		setBackground(Color.BLUE);
 		add(graphicsPanel,BorderLayout.CENTER);
-
-		btnUp.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_up.png")));
-		btnLeft.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_left.png")));
-		btnRight.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_right.png")));
-		btnDown.setIcon(new ImageIcon(Button.class.getResource("/dkeep/assets/arrow_down.png")));
-
-		moveButtonsPanel.add(btnUp, BorderLayout.NORTH);
-		moveButtonsPanel.add(btnLeft, BorderLayout.WEST);
-		moveButtonsPanel.add(btnRight, BorderLayout.EAST);
-		moveButtonsPanel.add(btnDown, BorderLayout.SOUTH);
 		add(moveButtonsPanel,BorderLayout.EAST);
-
-
-		northPanel.add(gameStatsLlb);
+		initBackButton();
+		initStatsLbl();
 		add(northPanel,BorderLayout.NORTH);
-
 		initListeners();
+	}
+	
+	private void initStatsLbl(){
+		gameStatsLbl.setOpaque(true);
+		gameStatsLbl.setBackground(Color.BLACK);
+		northPanel.add(gameStatsLbl, BorderLayout.CENTER);
+		northPanel.setBackground(Color.BLACK);
+	}
+	
+
+	private void initBackButton() {
+		backBtn.setBackground(Color.BLACK);
+		backBtn.setIcon(new ImageIcon(SettingsPanel.class.getResource("/dkeep/assets/backBtn.png")));
+		add(backBtn,BorderLayout.SOUTH);
 	}
 
 	private void initListeners(){
@@ -82,18 +99,15 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 			removeKeyListener(this);
 			removeMouseListener(this);
 			if (val == 3){
-				gameStatsLlb.setBackground(Color.RED);
-				gameStatsLlb.setText("You have been captured, go Back to Try Again");
+				gameStatsLbl.setIcon(defeatGIF);
 			}
 			else if(val == 2){
-				gameStatsLlb.setBackground(Color.GREEN);
-				gameStatsLlb.setText("You have escaped, congrats!");
+				gameStatsLbl.setIcon(victoryGIF);
 			}
 		}
 	}
 
 	private void disableMoveButtons(){
-
 		btnUp.setEnabled(false);
 		btnLeft.setEnabled(false);
 		btnRight.setEnabled(false);
@@ -115,19 +129,14 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	public void mouseClicked(MouseEvent arg0) {
 		requestFocusInWindow();
 	}
-
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		requestFocusInWindow();
-
 	}
-
 	@Override
 	public void mouseExited(MouseEvent arg0) {}
-
 	@Override
 	public void mousePressed(MouseEvent arg0) {}
-
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 

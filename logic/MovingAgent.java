@@ -34,7 +34,7 @@ public abstract class MovingAgent {
      *
      * @return char - that correspond the next direction of Move;
      */
-    abstract char getNextDirection();
+    public abstract char getNextDirection();
 
     /** Function to get the symbol of MovingAgent;
      *

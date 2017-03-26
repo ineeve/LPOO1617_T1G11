@@ -16,15 +16,19 @@ public class Game {
 	/**Contains the MovingAgent of the Game*/
 	private ArrayList<MovingAgent> agents = new ArrayList<>();
 	/**Contains the Key of the Game*/
-	private Key key;
+	public Key key;
 	/**Contains the lever of the Game*/
 	private Lever lever;
 	/**Contains information if the key have be take*/
 	private boolean keyTaken;
+    /**Contains information if the key have be take*/
+    private boolean weaponTaken = false;
 	/**Contains information about if lever is enable of disable*/
 	private boolean leverPressed;
-	/**Cointains the game status*/
+	/**Contains the game status*/
 	public status gameStatus;
+    /**Contains the game level*/
+	public int level;
 
 	/**
 	 * enum to be easier define the status of game;
@@ -49,13 +53,15 @@ public class Game {
 	 */
 	public void resetLevel(){
 		config.prepareNextLevel();
+		config.replaceStairs();
 		map = config.getMap();
 		agents = config.getAgents();
 		key = config.getKey();
 		lever = config.getLever();
 		keyTaken = false;
-		leverPressed=false;
+		leverPressed = false;
 		gameStatus = status.PLAYING;
+		level = config.getLevel();
 	}
 
 
@@ -74,6 +80,9 @@ public class Game {
 	 * @return char[][] - that correspond to the current map being playing.
 	 */
 	private char[][] getArrayMap(){
+		if(map == null){
+			return null;
+		}
 		return map.getMap();
 	}
 
@@ -83,6 +92,9 @@ public class Game {
 	 * @return char[][] - with all object one game;
 	 */
 	public char[][] getMap() {
+		if(map == null)
+			return null;
+
 		char[][] mapChar = getArrayMap().clone();
 
 		for (int i = 0; i < getArrayMap().length; i++)
@@ -98,26 +110,46 @@ public class Game {
 			else
 				mapChar[lever.getCoord().y][lever.getCoord().x] = 'k';
 		}
+
 		for (MovingAgent agent : agents) {
-			int agentCoordY = agent.getAgentCoords().y;
-			int agentCoordX = agent.getAgentCoords().x;
-			char symbol = agent.getSymbol();
-			mapChar[agentCoordY][agentCoordX] = symbol;
+            writeOnMapSymbol(agent, mapChar);
 			if (agent.weapon.getSymbol() != ' ') {
 				int weaponCoordY = agent.weapon.getCoords().y;
 				int weaponCoordX = agent.weapon.getCoords().x;
-				symbol = agent.weapon.getSymbol();
-				mapChar[weaponCoordY][weaponCoordX] = symbol;
+				char symbol = agent.weapon.getSymbol();
+				if (agent.weapon.getCoords().distance(key.getCoord()) == 0)
+                    mapChar[weaponCoordY][weaponCoordX] = '$';
+                else
+                    mapChar[weaponCoordY][weaponCoordX] = symbol;
 			}
 		}
 		return mapChar;
 	}
+
+    private void writeOnMapSymbol(MovingAgent agent, char[][] mapChar){
+        int agentCoordY = getAgentCoord(agent).y;
+        int agentCoordX = getAgentCoord(agent).x;
+        if (key != null){
+            if (agent instanceof Ogre && getAgentCoord(agent).distance(key.getCoord()) == 0) {
+                mapChar[agentCoordY][agentCoordX] = '$';
+            }
+            else {
+                mapChar[agentCoordY][agentCoordX] = agent.getSymbol();
+            }
+        }
+        else {
+            mapChar[agentCoordY][agentCoordX] = agent.getSymbol();
+        }
+    }
 
 	/** Function to get the Hero one the Game;
 	 *
 	 * @return Hero - correspond to the Hero of game, if game don't have Hero return null;
 	 */
 	public Hero getHero(){
+		if(agents.size() == 0){
+			return null;
+		}
 		if(agents.get(0) instanceof Hero)
 			return (Hero) agents.get(0);
 		else
@@ -125,15 +157,26 @@ public class Game {
 	}
 
 	/** Function to get first Ogre
-	 *
-	 * @return Ogre - correspond to the first Ogre of the Game, if game don't have one Ogre return null;
-	 */
-	public Ogre getFirstOgre(){
-		for (MovingAgent agent: agents)
-			if (agent instanceof Ogre)
-				return (Ogre) agent;
-		return null;
-	}
+     *
+     * @return Ogre - correspond to the first Ogre of the Game, if game don't have one Ogre return null;
+     */
+    public Ogre getFirstOgre(){
+        for (MovingAgent agent: agents)
+            if (agent instanceof Ogre)
+                return (Ogre) agent;
+        return null;
+    }
+
+    /** Function to get first Guard
+     *
+     * @return Guard - correspond to the first Guard of the Game, if game don't have one Ogre return null;
+     */
+    public Guard getGuard(){
+        for (MovingAgent agent: agents)
+            if (agent instanceof Guard)
+                return (Guard) agent;
+        return null;
+    }
 
 	/** Function that verify if game is over and update the gameStatus;
 	 * 	Game is over if the distance between Guards or weapon of Ogres is under 1;
@@ -141,21 +184,25 @@ public class Game {
 	 * @return boolean - True if game is over, False if game is steel playing;
 	 */
 	public boolean isGameOver() {
-		for (int i = 1; i < agents.size(); i++) {
-			if (agents.get(i) instanceof Ogre){
-				if (agents.get(i).weapon.getCoords().distance(agents.get(0).getAgentCoords()) <= 1){
+		for (MovingAgent agent : agents) {
+			if (agent instanceof Ogre) {
+				if (agent.weapon.getCoords().distance(getAgentCoord(agents.get(0))) <= 1) {
 					gameStatus = status.DEFEAT;
 					return true;
 				}
-			}
-			else if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
-				if (!agents.get(i).isSleeping) {
-					gameStatus = status.DEFEAT;
-					return true;
+			} else if (!(agent instanceof Hero))
+				if (getAgentCoord(agents.get(0)).distance(getAgentCoord(agent)) <= 1) {
+					if (!agent.isSleeping) {
+						gameStatus = status.DEFEAT;
+						return true;
+					}
 				}
-			}
 		}
 		return false;
+	}
+
+	private Point getAgentCoord(MovingAgent agent){
+		return agent.getAgentCoords();
 	}
 
 
@@ -218,18 +265,21 @@ public class Game {
 	 * @return 0 - Nothing; 1 - ChangeToNextMap; 2 - Victory;
 	 */
 	public int moveAgent(MovingAgent actualAgent, char direction){
-		Point lastPosition = (Point) actualAgent.getAgentCoords().clone();
+		Point lastPosition = (Point) getAgentCoord(actualAgent).clone();
 
 		if (actualAgent instanceof Ogre){
 			if(ogreHandler(actualAgent) != 0) return 0; /* Verify if ogre is stun */
 		}
 
 		actualAgent.nextPos(direction);
-		int isFreeResponse = map.isFree(actualAgent.getAgentCoords()); /* Verify if next position is free */
+		int isFreeResponse = map.isFree(getAgentCoord(actualAgent)); /* Verify if next position is free */
 		int handlerResponse = responseHandler(actualAgent, isFreeResponse, lastPosition);/* Handler for next position of agent */
 
 		if(actualAgent.weapon.getSymbol() != ' ') {
-			moveWeapon(actualAgent);
+			if(!(actualAgent instanceof Hero))
+				moveWeapon(actualAgent);
+			else
+				weaponHeroHandler((Hero) actualAgent);
 		}
 
 		if (handlerResponse != 0){
@@ -244,10 +294,10 @@ public class Game {
 	 * @param actualAgent - MovingAgent that needs to move your's weapon
 	 */
 	private void moveWeapon(MovingAgent actualAgent){
-		actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+		actualAgent.weapon.setCoords((Point) getAgentCoord(actualAgent).clone());
 		actualAgent.weapon.nextMove();
 		while (map.isFree(actualAgent.weapon.getCoords()) != 1 && map.isFree(actualAgent.weapon.getCoords()) != 4 ){
-			actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+			actualAgent.weapon.setCoords((Point) getAgentCoord(actualAgent).clone());
 			actualAgent.weapon.nextMove();
 		}
 	}
@@ -264,10 +314,10 @@ public class Game {
 	private int ogreHandler(MovingAgent actualAgent){
 		if (((Ogre) actualAgent).isStunned()){
 			((Ogre) actualAgent).recoverFromStun();
-			actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+			actualAgent.weapon.setCoords((Point) getAgentCoord(actualAgent).clone());
 			actualAgent.weapon.nextMove();
 			while (map.isFree(actualAgent.weapon.getCoords()) != 1){
-				actualAgent.weapon.setCoords((Point) actualAgent.getAgentCoords().clone());
+				actualAgent.weapon.setCoords((Point) getAgentCoord(actualAgent).clone());
 				actualAgent.weapon.nextMove();
 			}
 			return 1;
@@ -326,7 +376,7 @@ public class Game {
 				break;
 			case DOOR:
 				if (actualAgent instanceof Hero && keyTaken)
-					changeDoorsToStairs(new Point[]{key.getDoorPos()});
+					changeDoorsToStairs(new Point[]{getAgentCoord(actualAgent)});
 				actualAgent.setAgentCoords(lastPosition);
 				break;
 		}
@@ -338,7 +388,7 @@ public class Game {
 	 * @param actualAgent - MovingAgent that needs to verify if enables the lever;
 	 */
 	private void leverHandler(MovingAgent actualAgent){
-		if (lever!=null && lever.getCoord().distance(actualAgent.getAgentCoords()) == 0)
+		if (lever!=null && lever.getCoord().distance(getAgentCoord(actualAgent)) == 0)
 			if (actualAgent instanceof Hero){
 				leverPressed = true;
 				changeDoorsToStairs(lever.getDoors());
@@ -350,11 +400,25 @@ public class Game {
 	 * @param actualAgent - MovingAgent that needs to verify if took the key;
 	 */
 	private void keyHandler(MovingAgent actualAgent) {
-		if (key != null && key.getCoord().distance(actualAgent.getAgentCoords()) == 0)
+		if (key != null && key.getCoord().distance(getAgentCoord(actualAgent)) == 0)
 			if (actualAgent instanceof Hero) {
 				keyTaken = true;
 				actualAgent.setSymbol('K');
 			}
+	}
+
+	/** Function to handle with the weapon of Hero;
+	 * 	Verify if Hero took the weapon;
+	 *
+	 * @param agent MovingAgent - that correspond to the Hero to handle;
+	 */
+	private void weaponHeroHandler(Hero agent){
+		if(getAgentCoord(agent).distance(agent.weapon.getCoords()) == 0) {
+			agent.weapon.setCoords(getAgentCoord(agent));
+			agent.weapon.setSymbol(' ');
+			agent.setSymbol('A');
+			weaponTaken = true;
+		}
 	}
 
 	/** Function to set Ogre stunned if is the case of it;
@@ -362,10 +426,20 @@ public class Game {
 	 *
 	 * @param actualAgent - MovingAgent that correspond to the Ogre to be set stun;
 	 */
-	private void ogreStunned(MovingAgent actualAgent){
-		if (actualAgent instanceof Ogre) /* Verify if can be stunned */
-			if (actualAgent.getAgentCoords().distance(agents.get(0).weapon.getCoords()) <= 1)
-				((Ogre) actualAgent).setStunned();
+	private void ogreStunned(MovingAgent actualAgent) {
+        if (actualAgent instanceof Ogre && weaponTaken){ /* Verify if can be stunned */
+            if (getAgentCoord(actualAgent).distance(getAgentCoord(agents.get(0))) <= 1){
+                ((Ogre) actualAgent).setStunned();
+            }
+        }
+        else if(actualAgent instanceof Hero && weaponTaken){
+            MovingAgent agent = null;
+            for (int i = 1; i < agents.size(); i++)
+                 agent = agents.get(i);
+                if (agent instanceof Ogre && getAgentCoord(agent).distance(getAgentCoord(actualAgent)) <= 1){
+                    ((Ogre) agent).setStunned();
+                }
+        }
 	}
 
 	/** Function that change doors to stairs;

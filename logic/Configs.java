@@ -14,17 +14,23 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Configs {
     /**Contains information of number of ogres how will play on keep level;*/
-    public int NUMBEROFOGRES = 1;
-    /**Contains information of that is guard personalty;*/
-    public int GUARDPERSONALITY = 0;
+    public int NUMBEROFOGRES;
+    /**Contains information of that is guard personality;*/
+    public int GUARDPERSONALITY;
     /**Contains information of start position of hero for every level;*/
     private Point heroStartPoint;
     /**Contains information of start position of guard for dungeon level;*/
     private Point guardStartPoint;
-    /**Contains information of start position of key for every level;*/
-    private Point keyStartPoint;
     /**Contains information of start position of lever for dungeon level;*/
     private Point leverStartPoint;
+    /**Contains information  about the Key start position on keep level;*/
+    private Point keepKeyStartPoint;
+    /**Contains information about the Hero start position on keep level;*/
+    private Point keepHeroStartPoint;
+    /**Contains information of start position of Ogre on keep level;*/
+    private Point keepOgreStartPoint;
+    /**Contains information of start position of Hero on keep level;*/
+    private Point keepWeaponStartPoint;
     /**Contains information about current level;*/
     private int level = 0;
     /**Contains information of all present movingAgents in current level;*/
@@ -36,6 +42,7 @@ public class Configs {
     /**Contains information about the lever in current level, if level doesn't have one, lever is null;*/
     private Lever lever;
 
+
     /* CONSTRUCTOR */
     /** Constructor of Class Configs;
      *
@@ -43,6 +50,8 @@ public class Configs {
      */
     public Configs(int startLevel) {
         level = startLevel;
+        NUMBEROFOGRES = 1;
+        GUARDPERSONALITY = 0;
     }
 
 
@@ -97,6 +106,26 @@ public class Configs {
     public void setLevel(int newLevel) {
         level = newLevel;
     }
+
+    /** Function to set start position of Hero and Key in Keep level;
+     *
+     * @param heroStart Point - to set the start position of Hero;
+     * @param keyStart Point - to set the start position of Key;
+     */
+    public void setKeepHeroKeyWeapon(Point heroStart,Point keyStart, Point weaponStart){
+        keepKeyStartPoint = keyStart;
+        keepHeroStartPoint = heroStart;
+        keepWeaponStartPoint = weaponStart;
+    }
+
+    /** Function to set start position of first Ogre in Keep level;
+     *
+     * @param ogreStart Point - to set the start position of Ogre;
+     */
+    public void setKeepOgreStartPosition(Point ogreStart){
+        keepOgreStartPoint = ogreStart;
+    }
+
 
     /* OTHERS METHODS */
 
@@ -176,16 +205,42 @@ public class Configs {
      */
     private void prepareLevelTwo() {
     	lever = null;
-        heroStartPoint = new Point(1, 7);
-        keyStartPoint = new Point(7, 1);
-        key = new Key(keyStartPoint,new Point(0,1));
+    	if (keepKeyStartPoint == null) keepKeyStartPoint = new Point(7,1);
+    	if (keepHeroStartPoint == null) keepHeroStartPoint = new Point(1,7);
+        if (keepOgreStartPoint == null) keepOgreStartPoint = new Point(4,2);
+        if (keepWeaponStartPoint == null) keepWeaponStartPoint = new Point(keepHeroStartPoint.x + 1,keepHeroStartPoint.y);
+        key = new Key(keepKeyStartPoint);
+        Hero newHero = new Hero(new Point[]{keepHeroStartPoint, keepWeaponStartPoint}, 'H', '/');
         map = new KeepMap();
-        Hero newHero = new Hero(heroStartPoint, 'A', '/');
+        
         agents.add(newHero);
-        for (int i = 0; i < NUMBEROFOGRES; i++) {
-           Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1,map.getMap()[0].length-1),ThreadLocalRandom.current().nextInt(1, map.getMap().length-1));
-           if (ogrePoint.distance(heroStartPoint) > 3){agents.add(new Ogre(ogrePoint));}
+        int i = 1;
+        char[][] mapChar;
+        while (i != NUMBEROFOGRES * 3 && agents.size() != NUMBEROFOGRES + 1) {
+            if(i == 1){
+                agents.add(new Ogre(keepOgreStartPoint));
+            }
+            else {
+                mapChar = map.getMap();
+                Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1, mapChar[0].length - 1), ThreadLocalRandom.current().nextInt(1, mapChar.length - 1));
+                if (ogrePoint.distance(keepHeroStartPoint) > mapChar[0].length / 3) {
+                    agents.add(new Ogre(ogrePoint));
+                }
+            }
+           i++;
         }
         level = 3;
+    }
+
+    /**
+     * Function to replace all Stairs to Doors;
+     */
+    public void replaceStairs(){
+    	char [][] tempMap = map.getMap();
+    	for (int y = 0 ; y < tempMap.length;y++){
+    		for (int x = 0; x < tempMap[0].length;x++){
+    			if (tempMap[y][x] == 'S'){tempMap[y][x] = 'I';}
+    		}
+    	}
     }
 }

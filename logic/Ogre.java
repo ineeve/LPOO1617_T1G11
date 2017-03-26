@@ -39,7 +39,7 @@ public class Ogre extends MovingAgent {
      *
      * @return boolean - True if Ogre is stunned; False if Ogre isn´t stunned;
      */
-    boolean isStunned(){
+    public boolean isStunned(){
         return roundsStunned > 0;
     }
 
@@ -48,7 +48,7 @@ public class Ogre extends MovingAgent {
     /** Function to set Ogre stunned and change the symbol of ogre;
      * roundsStunned = 3 = (2+1) because roundsStunned is decremented in the round that it is set
      */
-    void setStunned(){
+    public void setStunned(){
         roundsStunned = 3;
         symbol = '8';
     }
@@ -57,7 +57,7 @@ public class Ogre extends MovingAgent {
      *  It will decrease number of left rounds to be stunned every time that is called;
      *  Change the symbol of Ogre is he recover totally of stun;
      */
-    void recoverFromStun(){
+    public void recoverFromStun(){
         if (roundsStunned > 0){
             roundsStunned--;
             }

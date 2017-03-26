@@ -56,12 +56,12 @@ class BoardGraphics extends JPanel {
 		super.paintComponent(g); // cleans background
 		int widthScale = this.getWidth()/map[0].length;
 		int heightScale = this.getHeight()/map.length;
-		imageMap = readImages(game.getLevel());
+		imageMap = readImages(game.level);
 		if (map != null){
 			for (char[] aMap : map) {
 				for (char anAMap : aMap) {
 					Image imageToDraw = imageMap.get(anAMap);
-					g.drawImage(imageToDraw, currentX, currentY, widthScale, heightScale, null);
+					g.drawImage(imageToDraw, currentX, currentY, widthScale, heightScale, this);
 					currentX += widthScale;
 				}
 				currentX = 0;

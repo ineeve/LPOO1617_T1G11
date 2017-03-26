@@ -6,7 +6,7 @@ import java.util.Random;
  * Class responsible of movement of all MovingAgent's;
  * Except the movement of the Hero when user is playing;
  */
-class MovementStrategy {
+public class MovementStrategy {
     /**Constant value that correspond if Suspicious is going forward*/
     private final int FORWARD = 1;
     /**Constant value that correspond if Suspicious is going backward*/
@@ -35,7 +35,7 @@ class MovementStrategy {
             case 3:
                 return 'w';
             default:
-                return ' ';
+                return 'a';
         }
     }
 
@@ -74,7 +74,7 @@ class MovementStrategy {
      * @param nextChar - char thar correspond to next direction of move;
      * @return char - that correspond to the direction of move;
      */
-    private char reverseDirection(char nextChar) {
+    public char reverseDirection(char nextChar) {
         switch (nextChar) {
             case 'a':
                 nextChar = 'd';

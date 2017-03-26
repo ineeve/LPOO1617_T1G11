@@ -13,6 +13,7 @@ public class Weapon {
     /**Constant object that contains all possible movements*/
     private final MovementStrategy movement = new MovementStrategy();
 
+
     /* CONSTRUCTOR */
 
     /** Constructor of Weapon
@@ -25,6 +26,7 @@ public class Weapon {
         this.symbol = symbol;
         coords = wepCoords;
     }
+
 
     /* GETTERS */
 
@@ -53,6 +55,7 @@ public class Weapon {
         return movement.randomMovement();
     }
 
+
     /* SETTERS */
 
     /** Function to set position of Weapon;
@@ -61,6 +64,14 @@ public class Weapon {
      */
     public void setCoords(Point coords) {
         this.coords = coords;
+    }
+
+    /** Function to set the symbol of weapon
+     *
+     * @param symbol char - that correspond to the symbol to set;
+     */
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
     }
 
 

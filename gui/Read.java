@@ -12,28 +12,33 @@ abstract class Read {
 		try {
 			imageMap.put('X', ImageIO.read(new File("src/dkeep/assets/wall.png")));
 			imageMap.put('I', ImageIO.read(new File("src/dkeep/assets/door.png")));
-			Image Hero = ImageIO.read(new File("src/dkeep/assets/Hero.png"));
+			Image Hero = ImageIO.read(new File("src/dkeep/assets/PacMan3.png"));
 			imageMap.put('H', Hero);
-			imageMap.put('A', Hero);
 			if(level == 1 || level == 2) {
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/lever.png")));
 				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/leverPressed.png")));
-				
+				imageMap.put('G', ImageIO.read(new File("src/dkeep/assets/drunken.png")));
 			}
 			else{
+				imageMap.put('A', ImageIO.read(new File("src/dkeep/assets/PacManWithWeapon.png")));
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/key.png")));
-				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/HeroWithKey.png")));
+				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/PacManWithKey.png")));
+				imageMap.put('O', ImageIO.read(new File("src/dkeep/assets/Ogre_Left1.png")));
+				imageMap.put('*', ImageIO.read(new File("src/dkeep/assets/club.png")));
+				imageMap.put('8', ImageIO.read(new File("src/dkeep/assets/OgreStunned.png")));
+				imageMap.put('$', ImageIO.read(new File("src/dkeep/assets/OgreWithKey.png")));
 			}
-			imageMap.put('G', ImageIO.read(new File("src/dkeep/assets/drunken.png")));
-			imageMap.put('O', ImageIO.read(new File("src/dkeep/assets/Ogre.png")));
+			
 			imageMap.put('S', ImageIO.read(new File("src/dkeep/assets/stairs.png")));
 			imageMap.put(' ', ImageIO.read(new File("src/dkeep/assets/floor.png")));
-			imageMap.put('*', ImageIO.read(new File("src/dkeep/assets/club.png")));
-			imageMap.put('8', ImageIO.read(new File("src/dkeep/assets/OgreStunned.png")));
+			
+			
 			imageMap.put('/', ImageIO.read(new File("src/dkeep/assets/weapon.png")));
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error reading Image: " + e.getMessage() + ", " + e.getCause() + ", " + e.getClass());
 		}
+		
+		
 		return imageMap;
 	}
 }

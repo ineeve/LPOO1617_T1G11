@@ -6,7 +6,7 @@ import java.awt.*;
  * Derived class from Guard
  * This guard moves in a different style
  */
-class Drunken extends Guard {
+public class Drunken extends Guard {
     /**Constant char that contains the symbol of Drunken awake*/
     private final char DRUNKENSYMBOLAWAKE = 'G';
     /**Constant char that contains the symbol of Drunken sleep*/
@@ -40,9 +40,9 @@ class Drunken extends Guard {
      * @return char - that contains next direction to move
      */
     @Override
-	char getNextDirection() { //returns '0' if should stay in same position
+	public char getNextDirection() { //returns '0' if should stay in same position
     	double random = Math.random();
-        char nextChar = '0';
+        char nextChar = 0;
         if (symbol == DRUNKENSYMBOLSLEEP) {
             if (random < 0.2) {
                 symbol = DRUNKENSYMBOLAWAKE;
