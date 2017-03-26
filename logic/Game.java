@@ -165,19 +165,19 @@ public class Game {
 	 * @return boolean - True if game is over, False if game is steel playing;
 	 */
 	public boolean isGameOver() {
-		for (int i = 1; i < agents.size(); i++) {
-			if (agents.get(i) instanceof Ogre){
-				if (agents.get(i).weapon.getCoords().distance(agents.get(0).getAgentCoords()) <= 1){
+		for (MovingAgent agent : agents) {
+			if (agent instanceof Ogre) {
+				if (agent.weapon.getCoords().distance(agents.get(0).getAgentCoords()) <= 1) {
 					gameStatus = status.DEFEAT;
 					return true;
 				}
-			}
-			else if (agents.get(0).getAgentCoords().distance(agents.get(i).getAgentCoords()) <= 1) {
-				if (!agents.get(i).isSleeping) {
-					gameStatus = status.DEFEAT;
-					return true;
+			} else if (!(agent instanceof Hero))
+				if (agents.get(0).getAgentCoords().distance(agent.getAgentCoords()) <= 1) {
+					if (!agent.isSleeping) {
+						gameStatus = status.DEFEAT;
+						return true;
+					}
 				}
-			}
 		}
 		return false;
 	}
