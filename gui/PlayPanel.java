@@ -7,12 +7,13 @@ import java.awt.*;
 import java.awt.event.*;
 
 class PlayPanel extends JPanel implements MouseListener, KeyListener{
-	private JPanel moveButtonsPanel = new JPanel(new GridBagLayout());
+	
 	private JPanel northPanel = new JPanel (new FlowLayout());
 	private JButton btnUp = new JButton("");
 	private JButton btnLeft = new JButton("");
 	private JButton btnDown = new JButton("");
 	private JButton btnRight = new JButton("");
+	private JPanel moveButtonsPanel = new MoveArrowsPanel(btnUp,btnLeft,btnRight,btnDown);
 	private BoardGraphics graphicsPanel;
 	ImageIcon defeatGIF = createImageIcon("../assets/defeat_banner.gif");
 	ImageIcon victoryGIF = createImageIcon("../assets/victory_banner.gif");
@@ -53,21 +54,14 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		setLayout(new BorderLayout());
 		setBackground(Color.BLUE);
 		add(graphicsPanel,BorderLayout.CENTER);
+		add(moveButtonsPanel,BorderLayout.EAST);
 		initBackButton();
 		northPanel.add(gameStatsLlb);
 		add(northPanel,BorderLayout.NORTH);
 		initListeners();
 	}
-	private void addArrowButtonsToPanel(){
-		moveButtonsPanel.add(btnUp, BorderLayout.NORTH);
-		moveButtonsPanel.add(btnLeft, BorderLayout.WEST);
-		moveButtonsPanel.add(btnRight, BorderLayout.EAST);
-		moveButtonsPanel.add(btnDown, BorderLayout.SOUTH);
-		add(moveButtonsPanel,BorderLayout.EAST);
-	}
 	
-	
-	
+
 	private void initBackButton() {
 		backBtn.setBackground(Color.BLACK);
 		backBtn.setIcon(new ImageIcon(SettingsPanel.class.getResource("/dkeep/assets/backBtn.png")));
