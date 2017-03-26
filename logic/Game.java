@@ -25,6 +25,8 @@ public class Game {
 	private boolean leverPressed;
 	/**Contains the game status*/
 	public status gameStatus;
+    /**Contains the game level*/
+	public int level;
 
 	/**
 	 * enum to be easier define the status of game;
@@ -57,6 +59,7 @@ public class Game {
 		keyTaken = false;
 		leverPressed = false;
 		gameStatus = status.PLAYING;
+		level = config.getLevel();
 	}
 
 
