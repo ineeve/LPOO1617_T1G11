@@ -8,7 +8,7 @@ import java.awt.event.*;
 
 class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	
-	private JPanel northPanel = new JPanel (new FlowLayout());
+	private JPanel northPanel = new JPanel (new BorderLayout());
 	private JButton btnUp = new JButton("");
 	private JButton btnLeft = new JButton("");
 	private JButton btnDown = new JButton("");
@@ -18,7 +18,7 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	ImageIcon defeatGIF = createImageIcon("../assets/defeat_banner.gif");
 	ImageIcon victoryGIF = createImageIcon("../assets/victory_banner.gif");
 	ImageIcon runGIF = createImageIcon("../assets/run_banner.gif");
-	private JLabel gameStatsLlb = new JLabel(runGIF);
+	private JLabel gameStatsLbl = new JLabel(runGIF);
 	private JButton backBtn;
 	
 	PlayPanel(JButton backBtn){
@@ -43,22 +43,28 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	}
 
 	public void resetGameStatusLabel(){
-		gameStatsLlb.setIcon(runGIF);
+		gameStatsLbl.setIcon(runGIF);
 	}
 
 
 	private void init(){
 		graphicsPanel = new BoardGraphics();
-		gameStatsLlb.setOpaque(true);
 		graphicsPanel.setFocusable(true);
 		setLayout(new BorderLayout());
 		setBackground(Color.BLUE);
 		add(graphicsPanel,BorderLayout.CENTER);
 		add(moveButtonsPanel,BorderLayout.EAST);
 		initBackButton();
-		northPanel.add(gameStatsLlb);
+		initStatsLbl();
 		add(northPanel,BorderLayout.NORTH);
 		initListeners();
+	}
+	
+	private void initStatsLbl(){
+		gameStatsLbl.setOpaque(true);
+		gameStatsLbl.setBackground(Color.BLACK);
+		northPanel.add(gameStatsLbl, BorderLayout.CENTER);
+		northPanel.setBackground(Color.BLACK);
 	}
 	
 
@@ -93,10 +99,10 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 			removeKeyListener(this);
 			removeMouseListener(this);
 			if (val == 3){
-				gameStatsLlb.setIcon(defeatGIF);
+				gameStatsLbl.setIcon(defeatGIF);
 			}
 			else if(val == 2){
-				gameStatsLlb.setIcon(victoryGIF);
+				gameStatsLbl.setIcon(victoryGIF);
 			}
 		}
 	}
