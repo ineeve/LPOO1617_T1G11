@@ -27,6 +27,8 @@ public class Configs {
     private Point keepKeyStartPoint;
     /**Contains information of start position of Hero on keep level;*/
     private Point keepHeroStartPoint;
+    /**Contains information of start position of Ogre on keep level;*/
+    private Point keepOgreStartPoint;
     /**Contains information of start position of Hero on keep level;*/
     private Point keepWeaponStartPoint;
     /**Contains information about current level;*/
@@ -108,10 +110,19 @@ public class Configs {
      * @param heroStart Point - to set the start position of Hero;
      * @param keyStart Point - to set the start position of Key;
      */
-    public void setDungeonHeroAndKey(Point heroStart,Point keyStart){
+    public void setKeepHeroAndKey(Point heroStart,Point keyStart){
         keepKeyStartPoint = keyStart;
         keepHeroStartPoint = heroStart;
     }
+
+    /** Function to set start position of first Ogre in Keep level;
+     *
+     * @param ogreStart Point - to set the start position of Ogre;
+     */
+    public void setKeepOgreStartPosition(Point ogreStart){
+        keepOgreStartPoint = ogreStart;
+    }
+
 
     /* OTHERS METHODS */
 
@@ -193,6 +204,7 @@ public class Configs {
     	lever = null;
     	if (keepKeyStartPoint == null) keepKeyStartPoint = new Point(7,1);
     	if (keepHeroStartPoint == null) keepHeroStartPoint = new Point(1,7);
+        if (keepOgreStartPoint == null) keepOgreStartPoint = new Point(4,2);
         if (keepWeaponStartPoint == null) keepWeaponStartPoint = new Point(keepHeroStartPoint.x + 1,keepHeroStartPoint.y);
         key = new Key(keepKeyStartPoint);
         Hero newHero = new Hero(new Point[]{keepHeroStartPoint, keepWeaponStartPoint}, 'H', '/');
@@ -200,6 +212,10 @@ public class Configs {
         
         agents.add(newHero);
         for (int i = 0; i < NUMBEROFOGRES; i++) {
+            if(i == 0){
+                agents.add(new Ogre(keepOgreStartPoint));
+                break;
+            }
            Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1,map.getMap()[0].length-1),ThreadLocalRandom.current().nextInt(1, map.getMap().length-1));
            if (ogrePoint.distance(keepHeroStartPoint) > 3){agents.add(new Ogre(ogrePoint));} else i--;
         }

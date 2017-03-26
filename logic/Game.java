@@ -16,7 +16,7 @@ public class Game {
 	/**Contains the MovingAgent of the Game*/
 	private ArrayList<MovingAgent> agents = new ArrayList<>();
 	/**Contains the Key of the Game*/
-	private Key key;
+	public Key key;
 	/**Contains the lever of the Game*/
 	private Lever lever;
 	/**Contains information if the key have be take*/
@@ -380,10 +380,20 @@ public class Game {
 	 *
 	 * @param actualAgent - MovingAgent that correspond to the Ogre to be set stun;
 	 */
-	private void ogreStunned(MovingAgent actualAgent){
-		if (actualAgent instanceof Ogre && (agents.get(0).getSymbol() == 'A')) /* Verify if can be stunned */
-			if (actualAgent.getAgentCoords().distance(agents.get(0).getAgentCoords()) <= 1)
-				((Ogre) actualAgent).setStunned();
+	private void ogreStunned(MovingAgent actualAgent) {
+        if (actualAgent instanceof Ogre && (agents.get(0).getSymbol() == 'A')){ /* Verify if can be stunned */
+            if (actualAgent.getAgentCoords().distance(agents.get(0).getAgentCoords()) <= 1){
+                ((Ogre) actualAgent).setStunned();
+            }
+        }
+        else if(actualAgent instanceof Hero && actualAgent.getSymbol() == 'A'){
+            MovingAgent agent = null;
+            for (int i = 1; i < agents.size(); i++)
+                 agent = agents.get(i);
+                if (agent instanceof Ogre && agent.getAgentCoords().distance(actualAgent.getAgentCoords()) <= 1){
+                    ((Ogre) agent).setStunned();
+                }
+        }
 	}
 
 	/** Function that change doors to stairs;

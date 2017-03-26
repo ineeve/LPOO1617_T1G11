@@ -39,7 +39,7 @@ public class Ogre extends MovingAgent {
      *
      * @return boolean - True if Ogre is stunned; False if Ogre isn´t stunned;
      */
-    boolean isStunned(){
+    public boolean isStunned(){
         return roundsStunned > 0;
     }
 
