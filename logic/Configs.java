@@ -14,9 +14,9 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Configs {
     /**Contains information of number of ogres how will play on keep level;*/
-    public int NUMBEROFOGRES = 1;
+    public int NUMBEROFOGRES;
     /**Contains information of that is guard personality;*/
-    public int GUARDPERSONALITY = 0;
+    public int GUARDPERSONALITY;
     /**Contains information of start position of hero for every level;*/
     private Point heroStartPoint;
     /**Contains information of start position of guard for dungeon level;*/
@@ -50,6 +50,8 @@ public class Configs {
      */
     public Configs(int startLevel) {
         level = startLevel;
+        NUMBEROFOGRES = 1;
+        GUARDPERSONALITY = 0;
     }
 
 
@@ -212,13 +214,20 @@ public class Configs {
         map = new KeepMap();
         
         agents.add(newHero);
-        for (int i = 0; i < NUMBEROFOGRES; i++) {
-            if(i == 0){
+        int i = 1;
+        char[][] mapChar;
+        while (i != NUMBEROFOGRES * 3 && agents.size() != NUMBEROFOGRES + 1) {
+            if(i == 1){
                 agents.add(new Ogre(keepOgreStartPoint));
-                break;
             }
-           Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1,map.getMap()[0].length-1),ThreadLocalRandom.current().nextInt(1, map.getMap().length-1));
-           if (ogrePoint.distance(keepHeroStartPoint) > 3){agents.add(new Ogre(ogrePoint));} else i--;
+            else {
+                mapChar = map.getMap();
+                Point ogrePoint = new Point(ThreadLocalRandom.current().nextInt(1, mapChar[0].length - 1), ThreadLocalRandom.current().nextInt(1, mapChar.length - 1));
+                if (ogrePoint.distance(keepHeroStartPoint) > mapChar[0].length / 3) {
+                    agents.add(new Ogre(ogrePoint));
+                }
+            }
+           i++;
         }
         level = 3;
     }

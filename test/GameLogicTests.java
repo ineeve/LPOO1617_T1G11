@@ -4,6 +4,8 @@ import dkeep.logic.Configs;
 import dkeep.logic.Game;
 import dkeep.logic.Hero;
 import dkeep.logic.Ogre;
+import dkeep.logic.maps.DungeonMap;
+import dkeep.logic.maps.KeepMap;
 import org.junit.Test;
 
 import java.awt.*;
@@ -260,6 +262,12 @@ public class GameLogicTests {
 		config.NUMBEROFOGRES = 1;
 		game.resetLevel();
 		assertTrue(game.getFirstOgre()!=null);
+		config.decreaseLevel();
+		config.NUMBEROFOGRES = 5;
+		assertTrue(config.getLevel() == 2);
+		config.prepareNextLevel();
+		System.out.println(config.getAgents().size());
+		assertTrue(config.getAgents().size() == 6);
 	}
 	
 	@Test
@@ -309,5 +317,18 @@ public class GameLogicTests {
 		assertTrue(config.getLevel() == 1);
 	}
 
+	@Test
+	public void creationOfKeepMap(){
+		Configs config = new Configs(2);
+		config.prepareNextLevel();
+		assertTrue(config.getMap() instanceof KeepMap);
+}
+
+	@Test
+	public void creationOfDungeonMap(){
+		Configs config = new Configs(1);
+		config.prepareNextLevel();
+		assertTrue(config.getMap() instanceof DungeonMap);
+	}
 
 }
