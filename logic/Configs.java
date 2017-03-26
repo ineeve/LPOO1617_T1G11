@@ -21,13 +21,12 @@ public class Configs {
     private Point heroStartPoint;
     /**Contains information of start position of guard for dungeon level;*/
     private Point guardStartPoint;
-    /**Contains information of start position of key for every level;*/
-    private Point keyStartPoint;
     /**Contains information of start position of lever for dungeon level;*/
     private Point leverStartPoint;
+    /**Contains information of start position of key on keep level;*/
     private Point keepKeyStartPoint;
+    /**Contains information of start position of Hero on keep level;*/
     private Point keepHeroStartPoint;
-    
     /**Contains information about current level;*/
     private int level = 0;
     /**Contains information of all present movingAgents in current level;*/
@@ -99,6 +98,16 @@ public class Configs {
      */
     public void setLevel(int newLevel) {
         level = newLevel;
+    }
+
+    /** Function to set start position of Hero and Key in Keep level;
+     *
+     * @param heroStart Point - to set the start position of Hero;
+     * @param keyStart Point - to set the start position of Key;
+     */
+    public void setDungeonHeroAndKey(Point heroStart,Point keyStart){
+        keepKeyStartPoint = keyStart;
+        keepHeroStartPoint = heroStart;
     }
 
     /* OTHERS METHODS */
@@ -192,10 +201,10 @@ public class Configs {
         }
         level = 3;
     }
-    public void setDungeonHeroAndKey(Point heroStart,Point keyStart){
-    	keepKeyStartPoint = keyStart;
-    	keepHeroStartPoint = heroStart;
-    }
+
+    /**
+     * Function to replace all Stairs to Doors;
+     */
     public void replaceStairs(){
     	char [][] tempMap = map.getMap();
     	for (int y = 0 ; y < tempMap.length;y++){
