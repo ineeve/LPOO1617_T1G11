@@ -17,14 +17,15 @@ class EditMapPanel extends JPanel{
 	private EditMapGraphicsPanel editPanel;
 	private HashMap<Character,Image> imageMap = new HashMap<>();
 	private MapSizeSelectorPanel mapSizePanel;
-	
+	private JButton backBtn;
 	JSlider xSizeSlider = new JSlider();
 	JSlider ySizeSlider = new JSlider();
 	
 	private JPanel componentsPanel;
 
 	
-	EditMapPanel(){
+	EditMapPanel(JButton backBtn){
+		this.backBtn = backBtn;
 		init();
 	}
 
@@ -37,6 +38,9 @@ class EditMapPanel extends JPanel{
 	public Point getHeroPos(){
 		return editPanel.getHeroPos();
 	}
+	public Point getWeaponPos(){
+		return editPanel.getWeaponPos();
+	}
 
 	private void init(){
 		loadImages();
@@ -44,8 +48,16 @@ class EditMapPanel extends JPanel{
 		initEditPanel();
 		initComponentsPanel();
 		initMapSizePanel();
+		initBackButton();
 	}
 	
+	private void initBackButton() {
+		backBtn.setBackground(Color.BLACK);
+		backBtn.setIcon(new ImageIcon(SettingsPanel.class.getResource("/dkeep/assets/backBtn.png")));
+		add(backBtn,BorderLayout.SOUTH);
+		
+	}
+
 	public void initEditPanel(){
 		editPanel = new EditMapGraphicsPanel(imageMap);
 		editPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));

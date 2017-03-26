@@ -16,8 +16,10 @@ class EditMapGraphicsPanel extends JPanel{
 
 	private boolean hasKey;
 	private boolean hasHero;
+	private boolean hasWeapon;
 	private Point heroPos;
 	private Point keyPos;
+	private Point weaponPos;
 	private SpecialButton [][] buttonsArray;
 
 
@@ -35,9 +37,16 @@ class EditMapGraphicsPanel extends JPanel{
 		}
 		return null;
 	}
-
+	public Point getWeaponPos(){
+		if (weaponPos != null){
+			map[weaponPos.y][weaponPos.x] = ' ';
+			return (Point) weaponPos.clone();
+		}
+		return null;
+	}
 
 	EditMapGraphicsPanel(HashMap<Character,Image> hashImages){
+		hasWeapon = false;
 		hasKey = false;
 		hasHero = false;
 		imageMap = hashImages;
@@ -51,8 +60,6 @@ class EditMapGraphicsPanel extends JPanel{
 		addButtons();
 	}
 
-
-
 	private void addButtons(){
 		for (int i = 0; i < gl.getRows();i++){
 			for (int j = 0; j < gl.getColumns(); j++){
@@ -61,28 +68,32 @@ class EditMapGraphicsPanel extends JPanel{
 				j1.addActionListener(arg0 -> {
 					checkValidMap();
 					map[j1.getPosition().width][j1.getPosition().height] = ImageOptionsPanel.buttonPressed;
-					if (ImageOptionsPanel.buttonPressed == 'A'){heroPos = tempPoint;}
+					if (ImageOptionsPanel.buttonPressed == 'H'){heroPos = tempPoint;}
 					else if (ImageOptionsPanel.buttonPressed == 'k'){keyPos = tempPoint;}
+					else if (ImageOptionsPanel.buttonPressed == '/'){weaponPos = tempPoint;}
 					j1.setImage(imageMap.get(ImageOptionsPanel.buttonPressed));
-				});
-				add(j1);
-				buttonsArray[i][j] = j1;
+				}); add(j1); buttonsArray[i][j] = j1;
 			}
 		}
 	}
 
 	private void checkValidMap() {
-		if (ImageOptionsPanel.buttonPressed == 'A'){
+		char buttonPressed = ImageOptionsPanel.buttonPressed;
+		if (ImageOptionsPanel.buttonPressed == 'H'){
 			if (hasHero){
-				clearPreviousPosition('A');
-				clearPreviousButton('A');
-			}
-			else hasHero = true;
+				clearPreviousPosition(buttonPressed);
+				clearPreviousButton(buttonPressed);
+			}else hasHero = true;
 		}else if (ImageOptionsPanel.buttonPressed == 'k'){
 			if (hasKey){
-				clearPreviousPosition('k');
-				clearPreviousButton('k');
+				clearPreviousPosition(buttonPressed);
+				clearPreviousButton(buttonPressed);
 			}else hasKey = true;
+		}else if (ImageOptionsPanel.buttonPressed == '/'){
+			if (hasWeapon){
+				clearPreviousPosition(buttonPressed);
+				clearPreviousButton(buttonPressed);
+			}else hasWeapon = true;
 		}
 	}
 

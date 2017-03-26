@@ -22,7 +22,6 @@ class SettingsPanel extends JPanel {
 	
 	private Configs conf = null;
 	private final Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
-	private final JButton backBtn = new JButton("");
 	private String[] personalities = {"Rookie","Drunken","Suspicious"};
 	private String[] maps = {"Dungeon","Ogre Keep"};
 	GridBagLayout gridBagLayout = new GridBagLayout();
