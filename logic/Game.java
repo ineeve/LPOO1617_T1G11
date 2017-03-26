@@ -21,6 +21,8 @@ public class Game {
 	private Lever lever;
 	/**Contains information if the key have be take*/
 	private boolean keyTaken;
+    /**Contains information if the key have be take*/
+    private boolean weaponTaken = false;
 	/**Contains information about if lever is enable of disable*/
 	private boolean leverPressed;
 	/**Contains the game status*/
@@ -404,6 +406,7 @@ public class Game {
 			agent.weapon.setCoords(getAgentCoord(agent));
 			agent.weapon.setSymbol(' ');
 			agent.setSymbol('A');
+			weaponTaken = true;
 		}
 	}
 
@@ -413,12 +416,12 @@ public class Game {
 	 * @param actualAgent - MovingAgent that correspond to the Ogre to be set stun;
 	 */
 	private void ogreStunned(MovingAgent actualAgent) {
-        if (actualAgent instanceof Ogre && (agents.get(0).getSymbol() == 'A')){ /* Verify if can be stunned */
+        if (actualAgent instanceof Ogre && weaponTaken){ /* Verify if can be stunned */
             if (getAgentCoord(actualAgent).distance(getAgentCoord(agents.get(0))) <= 1){
                 ((Ogre) actualAgent).setStunned();
             }
         }
-        else if(actualAgent instanceof Hero && actualAgent.getSymbol() == 'A'){
+        else if(actualAgent instanceof Hero && weaponTaken){
             MovingAgent agent = null;
             for (int i = 1; i < agents.size(); i++)
                  agent = agents.get(i);
