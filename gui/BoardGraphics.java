@@ -61,7 +61,7 @@ class BoardGraphics extends JPanel {
 			for (char[] aMap : map) {
 				for (char anAMap : aMap) {
 					Image imageToDraw = imageMap.get(anAMap);
-					g.drawImage(imageToDraw, currentX, currentY, widthScale, heightScale, null);
+					g.drawImage(imageToDraw, currentX, currentY, widthScale, heightScale, this);
 					currentX += widthScale;
 				}
 				currentX = 0;

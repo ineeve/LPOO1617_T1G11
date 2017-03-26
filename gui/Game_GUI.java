@@ -26,6 +26,7 @@ class Game_GUI {
 
 	/**
 	 * Launch the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
@@ -51,6 +52,7 @@ class Game_GUI {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 
@@ -70,7 +72,7 @@ class Game_GUI {
 
 		addListenersToButtons();
 
-		mainFrame.add(containerPanel);
+		mainFrame.getContentPane().add(containerPanel);
 		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
