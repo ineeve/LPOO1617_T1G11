@@ -517,10 +517,12 @@ public class GameLogicTests {
 		config.GUARDPERSONALITY = 2;
 		Game game = new Game(config);
 		game.resetLevel();
-		assertTrue(((MovingAgent) game.getGuard()).getNextDirection() == 'a'
-				|| ((MovingAgent) game.getGuard()).getNextDirection() == 's'
-				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'd'
-				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'w');
+		char nextDirection = ((MovingAgent) game.getGuard()).getNextDirection();
+		
+		assertTrue(nextDirection == 'a'
+				|| nextDirection == 's'
+				|| nextDirection == 'd'
+				|| nextDirection == 'w');
 	}
 
 	@Test
@@ -530,10 +532,13 @@ public class GameLogicTests {
 		config.GUARDPERSONALITY = 1;
 		Game game = new Game(config);
 		game.resetLevel();
-		assertTrue(((MovingAgent) game.getGuard()).getNextDirection() == 'a'
-				|| ((MovingAgent) game.getGuard()).getNextDirection() == 's'
-				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'd'
-				|| ((MovingAgent) game.getGuard()).getNextDirection() == 'w');
+		char nextDirection = ((MovingAgent) game.getGuard()).getNextDirection();
+		
+		assertTrue(nextDirection == 'a'
+				|| nextDirection == 's'
+				|| nextDirection == 'd'
+				|| nextDirection == 'w'
+				|| nextDirection == 0);
 	}
 
 	@Test
@@ -543,10 +548,12 @@ public class GameLogicTests {
 		config.GUARDPERSONALITY = 1;
 		Game game = new Game(config);
 		game.resetLevel();
-		assertTrue(game.getHero().getNextDirection() == 'a'
-				|| game.getHero().getNextDirection() == 's'
-				|| game.getHero().getNextDirection() == 'd'
-				|| game.getHero().getNextDirection() == 'w');
+		char nextDirection = game.getHero().getNextDirection();
+		
+		assertTrue(nextDirection == 'a'
+				|| nextDirection == 's'
+				|| nextDirection == 'd'
+				|| nextDirection == 'w');
 	}
 
 	@Test
@@ -580,10 +587,11 @@ public class GameLogicTests {
 	@Test
 	public void testMovementStrategyRandom(){
 		MovementStrategy move = new MovementStrategy();
-		assertTrue(move.randomMovement() == 'a'
-				|| move.randomMovement() == 's'
-				|| move.randomMovement() == 'd'
-				|| move.randomMovement() == 'w');
+		char nextDirection = move.randomMovement();
+		assertTrue(nextDirection == 'a'
+				|| nextDirection == 's'
+				|| nextDirection == 'd'
+				|| nextDirection == 'w');
 	}
 
 	@Test

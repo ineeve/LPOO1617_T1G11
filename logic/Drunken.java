@@ -42,7 +42,7 @@ public class Drunken extends Guard {
     @Override
 	public char getNextDirection() { //returns '0' if should stay in same position
     	double random = Math.random();
-        char nextChar = '0';
+        char nextChar = 0;
         if (symbol == DRUNKENSYMBOLSLEEP) {
             if (random < 0.2) {
                 symbol = DRUNKENSYMBOLAWAKE;
