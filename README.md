@@ -1,7 +1,7 @@
 # LPOO1617_T1G1
 LPOO-FEUP-1617
 
-<h1>Project done by:<h1>
+<p>Project done by:</p>
 <p>João Filipe Lopes de Carvalho -up201504875 - joaocarvalho9@gmail.com</p>
 <p>Renato Alexandre Sousa Campos -up201504942 - renatoineeve@gmail.com</p>
 
