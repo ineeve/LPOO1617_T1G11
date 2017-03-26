@@ -94,6 +94,9 @@ class InitialMenuPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(background, 0, 0, this);
+		Dimension d = getSize();
+		Graphics2D g2 = (Graphics2D) g;
+		g2.fill( new Rectangle(0, 0, d.width, d.height) );
+		g.drawImage(background, 0, 0, d.width, d.height, null);
 	}
 }

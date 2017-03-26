@@ -9,8 +9,8 @@ import java.awt.*;
 class Game_GUI {
 	private JFrame mainFrame = new JFrame("Escape Game");
 	private JPanel containerPanel = new JPanel();
-	
-	private SettingsPanel settingsPanel = new SettingsPanel();
+	private JButton btnBackSettings = new JButton("");
+	private SettingsPanel settingsPanel = new SettingsPanel(btnBackSettings);
 	private PlayPanel playPanel = new PlayPanel();
 	private EditMapPanel editMapPanel = new EditMapPanel();
 	private CardLayout cl = new CardLayout();
@@ -20,7 +20,7 @@ class Game_GUI {
 	private SpecialButton btnExit = new SpecialButton();
 	private JPanel menuPanel = new InitialMenuPanel(btnSettings,btnCreateMap,btnPlay,btnExit);
 	private JButton btnBackPlay = new JButton("Back");
-	private JButton btnBackSettings = new JButton("Back");
+	
 	private JButton btnBackEditMap = new JButton("Back");
 	private Game game;
 	private Configs config;
@@ -56,10 +56,9 @@ class Game_GUI {
 	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
-
+		
 		containerPanel.setLayout(cl);
 		playPanel.add(btnBackPlay, BorderLayout.PAGE_END);
-		settingsPanel.add(btnBackSettings);
 		editMapPanel.add(btnBackEditMap, BorderLayout.PAGE_END);
 		containerPanel.add(menuPanel, "1"); // "1" is the identifing string
 		containerPanel.add(settingsPanel, "2");
@@ -68,7 +67,8 @@ class Game_GUI {
 		cl.show(containerPanel, "1"); //which panel is set initially
 
 		addListenersToButtons();
-
+		
+		mainFrame.setMinimumSize(new Dimension(1000,800));
 		mainFrame.getContentPane().add(containerPanel);
 		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainFrame.pack();
