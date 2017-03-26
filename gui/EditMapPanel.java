@@ -48,37 +48,21 @@ class EditMapPanel extends JPanel{
 	private void init(){
 		loadImages();
 		editPanel = new EditMapGraphicsPanel(imageMap);
-		componentsPanel = new ImageOptionsPanel(imageMap);
-		componentsPanel.setBorder(new EmptyBorder(0, 2, 2, 2));
 		setLayout(new BorderLayout());
-		int eastPanelSize = 200;
-		componentsPanel.setPreferredSize(new Dimension(eastPanelSize, eastPanelSize));
-		add(componentsPanel,BorderLayout.EAST);
-		GridBagLayout gbl_componentsPanel = new GridBagLayout();
-		gbl_componentsPanel.columnWidths = new int[]{196, 0};
-		gbl_componentsPanel.rowHeights = new int[] {45, 45, 45, 45, 45};
-		gbl_componentsPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_componentsPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		componentsPanel.setLayout(gbl_componentsPanel);
+		initComponentsPanel();
 		
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton_1.insets = new Insets(5, 20, 5, 20);
-		gbc_btnNewButton_1.gridx = 0;
-		gbc_btnNewButton_1.gridy = 0;
-		componentsPanel.add(btnNewButton_1, gbc_btnNewButton_1);
 		
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(5, 20, 5, 20);
-		gbc_btnNewButton.fill = GridBagConstraints.BOTH;
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 1;
-		componentsPanel.add(btnNewButton, gbc_btnNewButton);
 		editPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		add(editPanel,BorderLayout.CENTER);
 		initMapSizePanel();
-
 	}
+	
+	public void initComponentsPanel(){
+		componentsPanel = new ImageOptionsPanel(imageMap);
+		add(componentsPanel,BorderLayout.EAST);
+		
+	}
+	
 	public void initMapSizePanel(){
 		Font font = new Font("Serif", Font.ITALIC, 15);
 		addXSliderListener();
