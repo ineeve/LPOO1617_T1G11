@@ -18,6 +18,7 @@ abstract class Read {
 				imageMap.put('k', ImageIO.read(new File("src/dkeep/assets/lever.png")));
 				imageMap.put('K', ImageIO.read(new File("src/dkeep/assets/leverPressed.png")));
 				imageMap.put('G', ImageIO.read(new File("src/dkeep/assets/drunken.png")));
+				imageMap.put('g', ImageIO.read(new File("src/dkeep/assets/drunkenSleep.png")));
 			}
 			else{
 				imageMap.put('A', ImageIO.read(new File("src/dkeep/assets/PacManWithWeapon.png")));

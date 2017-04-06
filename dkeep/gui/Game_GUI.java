@@ -49,7 +49,7 @@ class Game_GUI {
 	 * Create the application.
 	 */
 	private Game_GUI() {
-		config = new Configs(0);
+		config = new Configs(1);
 		game = new Game(config);
 		settingsPanel.setConfigs(config);
 		initialize();
@@ -115,12 +115,13 @@ class Game_GUI {
 
 	private void listenerbtnExit(){
 		btnExit.addActionListener(arg0 ->
-		System.exit(0)
-				);
+		System.exit(0));
 	}
 
 	private void listenerbtnBackPlay(){
 		btnBackPlay.addActionListener(arg0 -> {
+			playPanel.disableListeners();
+			playPanel.removeKeyListener();
 			cl.show(containerPanel, "1");
 			config.decreaseLevel();
 			config.setKeepHeroKeyWeapon(editMapPanel.getHeroPos(), editMapPanel.getKeyPos(),editMapPanel.getWeaponPos());

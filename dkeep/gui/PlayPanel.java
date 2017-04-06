@@ -21,6 +21,12 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	private JLabel gameStatsLbl = new JLabel(runGIF);
 	private JButton backBtn;
 	
+	private ActionListener rightListener;
+	private ActionListener upListener;
+	private ActionListener leftListener;
+	private ActionListener downListener;
+	
+	
 	PlayPanel(JButton backBtn){
 		this.backBtn = backBtn;
 		init();
@@ -58,8 +64,16 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 		initStatsLbl();
 		add(northPanel,BorderLayout.NORTH);
 		initListeners();
+		addListenersToButtons();
 	}
 	
+	private void addListenersToButtons() {
+		btnUp.addActionListener(upListener);
+		btnRight.addActionListener(rightListener);
+		btnLeft.addActionListener(leftListener);
+		btnDown.addActionListener(downListener);
+	}
+
 	private void initStatsLbl(){
 		gameStatsLbl.setOpaque(true);
 		gameStatsLbl.setBackground(Color.BLACK);
@@ -75,22 +89,46 @@ class PlayPanel extends JPanel implements MouseListener, KeyListener{
 	}
 
 	private void initListeners(){
-		btnUp.addActionListener(arg0 -> {
-			checkGameStatus(graphicsPanel.moveAgents_GUI('w'));
-			requestFocusInWindow();
-		});
-		btnRight.addActionListener(arg0 -> {
-			checkGameStatus(graphicsPanel.moveAgents_GUI('d'));
-			requestFocusInWindow();
-		});
-		btnLeft.addActionListener(arg0 -> {
-			checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
-			requestFocusInWindow();
-		});
-		btnDown.addActionListener(arg0 -> {
-			checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
-			requestFocusInWindow();
-		});
+		rightListener = new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkGameStatus(graphicsPanel.moveAgents_GUI('d'));
+				requestFocusInWindow();
+			}
+		};
+		upListener = new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkGameStatus(graphicsPanel.moveAgents_GUI('w'));
+				requestFocusInWindow();
+			}
+		};
+		leftListener = new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkGameStatus(graphicsPanel.moveAgents_GUI('a'));
+				requestFocusInWindow();
+			}
+		};
+		downListener = new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkGameStatus(graphicsPanel.moveAgents_GUI('s'));
+				requestFocusInWindow();
+			}
+		};
+		
+	}
+	
+	public void removeKeyListener(){
+		removeKeyListener(this);
+	}
+	
+	public void disableListeners(){
+		btnUp.removeAll();
+		btnRight.removeAll();
+		btnLeft.removeAll();
+		btnDown.removeAll();
 	}
 
 	private void checkGameStatus(int val){
