@@ -540,6 +540,19 @@ public class GameLogicTests {
 				|| nextDirection == 'w'
 				|| nextDirection == 0);
 	}
+	
+	@Test (timeout = 1000)
+	public void drunkenFallsAsleep(){
+		boolean sleeping = false;
+		Drunken drunken = new Drunken(new Point(1,1));
+		while(!sleeping){
+			drunken.getNextDirection();
+			if (drunken.getSymbol() == 'g'){
+				sleeping = true;
+			}
+		}
+	}
+	
 
 	@Test
 	public void testHeroMovement() {
