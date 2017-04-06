@@ -49,7 +49,7 @@ class Game_GUI {
 	 * Create the application.
 	 */
 	private Game_GUI() {
-		config = new Configs(0);
+		config = new Configs(1);
 		game = new Game(config);
 		settingsPanel.setConfigs(config);
 		initialize();
