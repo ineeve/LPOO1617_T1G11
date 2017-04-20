@@ -6,7 +6,6 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.raiden.game.RaidenMultiplayer;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -19,6 +18,6 @@ public class AndroidLauncher extends AndroidApplication {
         DatabaseReference myRef = database.getReference("IP");
         myRef.setValue("Ola do aplicativo");
 
-		initialize(new RaidenMultiplayer(), config);
+		initialize(new PVEArena(), config);
 	}
 }

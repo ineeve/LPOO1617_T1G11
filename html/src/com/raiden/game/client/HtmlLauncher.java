@@ -3,7 +3,7 @@ package com.raiden.game.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.raiden.game.RaidenMultiplayer;
+import com.raiden.game.PVEArena;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -14,6 +14,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new RaidenMultiplayer();
+                return new PVEArena();
         }
 }
