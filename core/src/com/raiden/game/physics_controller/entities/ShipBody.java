@@ -1,7 +1,7 @@
 package com.raiden.game.physics_controller.entities;
 
 
-import com.raiden.game.model.entities.ShipModel;
+import com.raiden.game.model.entities.MovingObjectModel;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -16,7 +16,7 @@ public class ShipBody extends EntityBody {
      * @param world the physical world this space ship belongs to.
      * @param model the model representing this space ship.
      */
-    public ShipBody(World world, ShipModel model) {
+    public ShipBody(World world, MovingObjectModel model) {
         super(world, model);
 
         float density = 0.5f, friction = 0.4f, restitution = 0.5f;

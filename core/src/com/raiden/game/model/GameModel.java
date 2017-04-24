@@ -1,6 +1,7 @@
 package com.raiden.game.model;
 
-import com.raiden.game.model.entities.ShipModel;
+import com.raiden.game.model.entities.AirplaneModel;
+import com.raiden.game.model.entities.MovingObjectModel;
 
 
 /**
@@ -11,7 +12,8 @@ public class GameModel {
     /**
      * The space ship controlled by the user in this game.
      */
-    private ShipModel ship;
+    private AirplaneModel player1;
+    private AirplaneModel player2;
 
 
     /**
@@ -22,7 +24,7 @@ public class GameModel {
      */
     public GameModel(float x, float y) {
 
-        ship = new ShipModel(x, y, 0);
+        player1 = new AirplaneModel(x, y, 0);
 
     }
 
@@ -31,8 +33,8 @@ public class GameModel {
      *
      * @return the space ship.
      */
-    public ShipModel getShip() {
-        return ship;
+    public MovingObjectModel getPlayer1() {
+        return player1;
     }
 
 

@@ -3,7 +3,7 @@ package com.raiden.game.model.entities;
 /**
  * A model representing a the user space ship.
  */
-public class ShipModel extends EntityModel {
+public abstract class MovingObjectModel extends EntityModel {
     /**
      * Is this ship accelerating in this update delta
      */
@@ -16,7 +16,7 @@ public class ShipModel extends EntityModel {
      * @param y the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public ShipModel(float x, float y, int rotation) {
+    public MovingObjectModel(float x, float y, int rotation) {
         super(x, y, rotation);
     }
 
