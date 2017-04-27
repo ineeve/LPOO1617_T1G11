@@ -3,7 +3,7 @@ package com.raiden.game.screen;
 
         import com.raiden.game.PVEArena;
         import com.raiden.game.model.GameModel;
-        import com.raiden.game.physics_controller.PVEGameController;
+        import com.raiden.game.physics_controller.Physics_Controller;
         import com.raiden.game.screen.entities.ShipView;
         import com.badlogic.gdx.Gdx;
         import com.badlogic.gdx.Input;
@@ -14,9 +14,8 @@ package com.raiden.game.screen;
         import com.badlogic.gdx.math.Matrix4;
         import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-
-        import static com.raiden.game.physics_controller.PVEGameController.ARENA_HEIGHT;
-        import static com.raiden.game.physics_controller.PVEGameController.ARENA_WIDTH;
+        import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
+        import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
 /**
  * A view representing the game screen. Draws all the other views and
@@ -52,7 +51,7 @@ public class SinglePlayerScreen extends ScreenAdapter {
     /**
      * The physics controller for this game.
      */
-    private final PVEGameController controller;
+    private final Physics_Controller controller;
 
     /**
      * The camera used to show the viewport.
@@ -75,10 +74,6 @@ public class SinglePlayerScreen extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
-    private final float initialRoll;
-
-    private final float initialPitch;
-
 
     /**
      * Creates this screen.
@@ -87,7 +82,7 @@ public class SinglePlayerScreen extends ScreenAdapter {
      * @param model The model to be drawn
      * @param controller The physics controller
      */
-    public SinglePlayerScreen(PVEArena game, GameModel model, PVEGameController controller) {
+    public SinglePlayerScreen(PVEArena game, GameModel model, Physics_Controller controller) {
         this.game = game;
         this.model = model;
         this.controller = controller;
@@ -97,9 +92,6 @@ public class SinglePlayerScreen extends ScreenAdapter {
         shipView = new ShipView(game);
 
         camera = createCamera();
-
-        initialPitch = Gdx.input.getPitch();
-        initialRoll = Gdx.input.getRoll();
     }
 
     /**
@@ -170,12 +162,9 @@ public class SinglePlayerScreen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-
-
-        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
+        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
         if (gyroscopeAvail){
-
-            controller.accelerate(delta,Gdx.input.getPitch() - initialPitch,Gdx.input.getRoll() - initialRoll);
+            controller.accelerate(delta,Gdx.input.getRoll(),Gdx.input.getPitch());
         }
     }
 
