@@ -137,7 +137,7 @@ public class SinglePlayerScreen extends ScreenAdapter {
 
         controller.update(delta);
 
-        camera.position.set(model.getShip().getX() / PIXEL_TO_METER, model.getShip().getY() / PIXEL_TO_METER, 0);
+        camera.position.set(model.getPlayer1().getX() / PIXEL_TO_METER, model.getPlayer1().getY() / PIXEL_TO_METER, 0);
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -162,11 +162,10 @@ public class SinglePlayerScreen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        boolean compassAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
-        if (compassAvail){
+        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
+        if (gyroscopeAvail){
             controller.accelerate(delta,Gdx.input.getRoll(),Gdx.input.getPitch());
         }
-
     }
 
     /**
@@ -174,7 +173,7 @@ public class SinglePlayerScreen extends ScreenAdapter {
      */
     private void drawEntities() {
 
-        shipView.update(model.getShip());
+        shipView.update(model.getPlayer1());
         shipView.draw(game.getBatch());
     }
 

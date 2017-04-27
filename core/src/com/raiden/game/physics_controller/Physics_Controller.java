@@ -6,11 +6,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.model.entities.ShipModel;
+import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.entities.ShipBody;
-
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 /**
  * Controlls the physics Aspects of the PVE Game
@@ -55,7 +52,7 @@ public abstract class Physics_Controller {
     public Physics_Controller(GameModel model){
 
         world = new World(new Vector2(0,0),true);
-        shipBody = new ShipBody(world, model.getShip());
+        shipBody = new ShipBody(world, model.getPlayer1());
 
     }
 
@@ -146,7 +143,7 @@ public abstract class Physics_Controller {
 
     public void accelerate(float delta,float roll, float pitch) {
         shipBody.applyForceToCenter(roll * MAX_ACCELERATION_FORCE, pitch * MAX_ACCELERATION_FORCE, true);
-        ((ShipModel)shipBody.getUserData()).setAccelerating(true);
+        ((MovingObjectModel)shipBody.getUserData()).setAccelerating(true);
     }
 
 }

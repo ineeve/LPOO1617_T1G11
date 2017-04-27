@@ -2,7 +2,7 @@ package com.raiden.game.screen.entities;
 
 import com.raiden.game.PVEArena;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.model.entities.ShipModel;
+import com.raiden.game.model.entities.MovingObjectModel;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -104,8 +104,8 @@ public class ShipView extends EntityView {
     public void update(EntityModel model) {
         super.update(model);
 
-        accelerating = ((ShipModel)model).isAccelerating();
-        ((ShipModel)model).setAccelerating(false);
+        accelerating = ((MovingObjectModel)model).isAccelerating();
+        ((MovingObjectModel)model).setAccelerating(false);
     }
 
     /**
