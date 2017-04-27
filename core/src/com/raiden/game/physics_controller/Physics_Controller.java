@@ -32,7 +32,7 @@ public abstract class Physics_Controller {
     /**
      * The acceleration impulse in newtons.
      */
-    private static final float MAX_ACCELERATION_FORCE = 100f;
+    private static final float MAX_ACCELERATION_FORCE = 10f;
 
     /**
      * The physics world controlled by this controller.
@@ -49,7 +49,7 @@ public abstract class Physics_Controller {
      */
     private float accumulator;
 
-    public Physics_Controller(GameModel model){
+    Physics_Controller(GameModel model){
 
         world = new World(new Vector2(0,0),true);
         shipBody = new ShipBody(world, model.getPlayer1());
@@ -137,12 +137,12 @@ public abstract class Physics_Controller {
      * constant acceleration force and the delta for this simulation step.
      *
      * @param delta Duration of the rotation in seconds.
-     * @param roll Angle in degrees of the device's orientation around the y-axis. Controlls sideways movements.
-     * @param pitch Angle in degrees of the device's orientation around the x-axis. Controlls forward and backward movements.
+     * @param pitch Angle in degrees of the device's orientation around the x-axis. Controls sideways movements.
+     * @param roll Angle in degrees of the device's orientation around the y-axis. Controls forward and backward movements.
      */
 
-    public void accelerate(float delta,float roll, float pitch) {
-        shipBody.applyForceToCenter(roll * MAX_ACCELERATION_FORCE, pitch * MAX_ACCELERATION_FORCE, true);
+    public void accelerate(float delta,float pitch, float roll) {
+        shipBody.applyForceToCenter(-pitch * MAX_ACCELERATION_FORCE*delta, roll * MAX_ACCELERATION_FORCE*delta, true);
         ((MovingObjectModel)shipBody.getUserData()).setAccelerating(true);
     }
 

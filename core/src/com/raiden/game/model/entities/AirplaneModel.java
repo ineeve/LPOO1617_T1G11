@@ -1,8 +1,5 @@
 package com.raiden.game.model.entities;
 
-/**
- * Created by ineeve on 24-04-2017.
- */
 
 public class AirplaneModel extends MovingObjectModel {
 
@@ -18,7 +15,7 @@ public class AirplaneModel extends MovingObjectModel {
      * @param y        the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public AirplaneModel(float x, float y, int rotation) {
+    public AirplaneModel(float x, float y, float rotation) {
         super(x, y, rotation);
     }
 }
