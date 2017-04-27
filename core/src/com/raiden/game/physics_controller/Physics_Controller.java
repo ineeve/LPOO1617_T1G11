@@ -16,7 +16,7 @@ import static java.lang.Math.sin;
  * Controlls the physics Aspects of the PVE Game
  */
 
-public class PVEGameController {
+public abstract class Physics_Controller {
     /**
      * The arena width in meters.
      */
@@ -52,7 +52,7 @@ public class PVEGameController {
      */
     private float accumulator;
 
-    public PVEGameController(GameModel model){
+    public Physics_Controller(GameModel model){
 
         world = new World(new Vector2(0,0),true);
         shipBody = new ShipBody(world, model.getShip());
