@@ -14,6 +14,7 @@ package com.raiden.game.screen;
         import com.badlogic.gdx.math.Matrix4;
         import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
+
         import static com.raiden.game.physics_controller.PVEGameController.ARENA_HEIGHT;
         import static com.raiden.game.physics_controller.PVEGameController.ARENA_WIDTH;
 
@@ -74,6 +75,10 @@ public class SinglePlayerScreen extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
+    private final float initialRoll;
+
+    private final float initialPitch;
+
 
     /**
      * Creates this screen.
@@ -92,6 +97,9 @@ public class SinglePlayerScreen extends ScreenAdapter {
         shipView = new ShipView(game);
 
         camera = createCamera();
+
+        initialPitch = Gdx.input.getPitch();
+        initialRoll = Gdx.input.getRoll();
     }
 
     /**
@@ -162,9 +170,12 @@ public class SinglePlayerScreen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
+
+
+        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
         if (gyroscopeAvail){
-            controller.accelerate(delta,Gdx.input.getRoll(),Gdx.input.getPitch());
+
+            controller.accelerate(delta,Gdx.input.getPitch() - initialPitch,Gdx.input.getRoll() - initialRoll);
         }
     }
 
