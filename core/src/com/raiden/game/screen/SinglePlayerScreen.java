@@ -74,7 +74,9 @@ public class SinglePlayerScreen extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
+    private final float initialPitch;
 
+    private final float initialRoll;
     /**
      * Creates this screen.
      *
@@ -92,6 +94,9 @@ public class SinglePlayerScreen extends ScreenAdapter {
         shipView = new ShipView(game);
 
         camera = createCamera();
+
+        initialRoll =Gdx.input.getRoll();
+        initialPitch = Gdx.input.getPitch();
     }
 
     /**
@@ -164,7 +169,7 @@ public class SinglePlayerScreen extends ScreenAdapter {
     private void handleInputs(float delta) {
         boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
         if (gyroscopeAvail){
-            controller.accelerate(delta,Gdx.input.getRoll(),Gdx.input.getPitch());
+            controller.accelerate(delta,Gdx.input.getPitch()-initialPitch,Gdx.input.getRoll() - initialRoll);
         }
     }
 

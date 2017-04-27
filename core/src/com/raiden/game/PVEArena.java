@@ -1,5 +1,6 @@
 package com.raiden.game;
 
+import com.raiden.game.physics_controller.PVE_Controller;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.screen.SinglePlayerScreen;
@@ -32,7 +33,7 @@ public class PVEArena extends Game {
 	private void startGame() {
 		GameModel model = new GameModel(Physics_Controller.ARENA_WIDTH /2, Physics_Controller.ARENA_HEIGHT / 2);
 
-		setScreen(new SinglePlayerScreen(this, model, new Physics_Controller(model)));
+		setScreen(new SinglePlayerScreen(this, model, new PVE_Controller(model)));
 	}
 
 	/**

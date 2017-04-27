@@ -32,7 +32,7 @@ public abstract class Physics_Controller {
     /**
      * The acceleration impulse in newtons.
      */
-    private static final float MAX_ACCELERATION_FORCE = 0.1f;
+    private static final float MAX_ACCELERATION_FORCE = 10f;
 
     /**
      * The physics world controlled by this controller.
@@ -49,7 +49,7 @@ public abstract class Physics_Controller {
      */
     private float accumulator;
 
-    public Physics_Controller(GameModel model){
+    Physics_Controller(GameModel model){
 
         world = new World(new Vector2(0,0),true);
         shipBody = new ShipBody(world, model.getPlayer1());
