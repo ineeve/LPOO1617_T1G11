@@ -166,7 +166,6 @@ public class SinglePlayerScreen extends ScreenAdapter {
         if (gyroscopeAvail){
             controller.accelerate(delta,Gdx.input.getRoll(),Gdx.input.getPitch());
         }
-
     }
 
     /**
