@@ -21,6 +21,8 @@ import com.google.android.gms.common.api.Status;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.raiden.game.MainMenu.mGoogleApiClient;
+
 public class LoginMenu extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
@@ -28,7 +30,6 @@ public class LoginMenu extends AppCompatActivity implements
     private static final String TAG = "LoginMenu";
     private static final int RC_SIGN_IN = 9001;
 
-    private GoogleApiClient mGoogleApiClient;
     private TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
 
@@ -59,6 +60,7 @@ public class LoginMenu extends AppCompatActivity implements
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addOnConnectionFailedListener(this)
                 .build();
         // [END build_client]
 
@@ -173,6 +175,7 @@ public class LoginMenu extends AppCompatActivity implements
                         // [END_EXCLUDE]
                     }
                 });
+        mGoogleApiClient = null;
     }
     // [END signOut]
 
