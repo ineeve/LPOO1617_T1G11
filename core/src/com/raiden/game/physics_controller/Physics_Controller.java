@@ -32,7 +32,7 @@ public abstract class Physics_Controller {
     /**
      * The acceleration impulse in newtons.
      */
-    private static final float MAX_ACCELERATION_FORCE = 10f;
+    private static final float MAX_ACCELERATION_FORCE = 1f;
 
     /**
      * The physics world controlled by this controller.
@@ -142,7 +142,7 @@ public abstract class Physics_Controller {
      */
 
     public void accelerate(float delta,float pitch, float roll) {
-        shipBody.applyForceToCenter(-pitch * MAX_ACCELERATION_FORCE*delta, roll * MAX_ACCELERATION_FORCE*delta, true);
+        shipBody.applyForceToCenter(-pitch * MAX_ACCELERATION_FORCE, roll * MAX_ACCELERATION_FORCE, true);
         ((MovingObjectModel)shipBody.getUserData()).setAccelerating(true);
     }
 

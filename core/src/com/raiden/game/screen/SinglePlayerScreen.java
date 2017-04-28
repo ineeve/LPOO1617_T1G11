@@ -74,9 +74,9 @@ public class SinglePlayerScreen extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
-    private final float initialPitch;
+    private Float initialPitch;
 
-    private final float initialRoll;
+    private Float initialRoll;
     /**
      * Creates this screen.
      *
@@ -88,15 +88,13 @@ public class SinglePlayerScreen extends ScreenAdapter {
         this.game = game;
         this.model = model;
         this.controller = controller;
-
+        this.initialPitch = -1024f;
+        this.initialRoll = -1024f;
         loadAssets();
 
         shipView = new ShipView(game);
 
         camera = createCamera();
-
-        initialRoll =Gdx.input.getRoll();
-        initialPitch = Gdx.input.getPitch();
     }
 
     /**
@@ -167,10 +165,25 @@ public class SinglePlayerScreen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        boolean gyroscopeAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
-        if (gyroscopeAvail){
-            controller.accelerate(delta,Gdx.input.getPitch()-initialPitch,Gdx.input.getRoll() - initialRoll);
+
+        boolean compassAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
+        if (compassAvail){
+            if (initialPitch == -1024f && initialRoll == -1024f) {
+                initialPitch = Gdx.input.getPitch();
+                initialRoll = Gdx.input.getRoll();
+                Gdx.app.log("Compass", "Initial Pitch= " + initialPitch);
+                Gdx.app.log("Compass","Initial Roll= " + initialRoll);
+            }
+            Float currentPitch = Gdx.input.getPitch();
+            Float currentRoll = Gdx.input.getRoll();
+            //Gdx.app.log("Compass","yAcceleration " + (currentRoll - initialRoll));
+            //Gdx.app.log("Compass","xAcceleration " + (currentPitch - initialPitch));
+
+            Gdx.app.log("Compass","Current Roll " + currentRoll.toString());
+            Gdx.app.log("Compass","Current Pitch " + currentPitch.toString());
+            controller.accelerate(delta,currentPitch-initialPitch,currentRoll - initialRoll);
         }
+
     }
 
     /**
