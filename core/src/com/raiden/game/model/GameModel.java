@@ -24,7 +24,7 @@ public class GameModel {
      */
     public GameModel(float x, float y) {
 
-        player1 = new AirplaneModel(x, y, 3.141592f/2);
+        player1 = new AirplaneModel(x, y, 0);
 
     }
 
