@@ -7,6 +7,8 @@ import com.raiden.game.screen.SinglePlayerScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.raiden.game.model.GameModel;
+import com.raiden.game.physics_controller.Physics_Controller;
 
 /**
  * The game main class.
