@@ -30,8 +30,8 @@ allprojects {
         android_version = '25.0.1'
         android_min_sdk_version = 15
 
-        appcompat_library_version = '25.1.0'
-        support_library_version = '25.1.0'
+        appcompat_library_version = '25.2.0'
+        support_library_version = '25.2.0'
         gms_library_version = '10.0.1'
     }
 
