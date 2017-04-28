@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.badlogic.gdx.backends.android.AndroidApplication;
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -27,9 +25,7 @@ public class LoginMenu extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
-    private static AndroidApplication libgdx;
-
-    private static final String TAG = "MainMenu";
+    private static final String TAG = "LoginMenu";
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleApiClient mGoogleApiClient;
@@ -40,7 +36,7 @@ public class LoginMenu extends AppCompatActivity implements
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_menu);
 
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
@@ -189,16 +185,6 @@ public class LoginMenu extends AppCompatActivity implements
                 break;
             case R.id.sign_out_button:
                 signOut();
-                break;
-            case R.id.play_button:
-                //config libgdx
-                AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-                config.useGyroscope = false;
-                config.useAccelerometer = false;
-                config.useCompass = true;
-                config.useImmersiveMode = true;
-
-                libgdx.initialize(new PVEArena(), config);
                 break;
         }
     }
