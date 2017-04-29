@@ -48,4 +48,14 @@
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
          from https://console.developers.google.com/ -->
     <string name="server_client_id">858374538926-5c75dr7bpou01jehvq1jkbotqpvsj0o1.apps.googleusercontent.com</string>
+
+
+
+    <string name="play">Play</string>
+    <string name="history">History</string>
+    <string name="pvp_multiplayer">PVP Multiplayer</string>
+    <string name="pve_multiplayer">PVE Multiplayer</string>
+    <string name="history">History</string>
+    <string name="exit">Exit</string>
+    <string name="hangar">Hangar</string>
 </resources>
