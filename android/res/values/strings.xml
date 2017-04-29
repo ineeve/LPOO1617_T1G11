@@ -55,7 +55,6 @@
     <string name="history">History</string>
     <string name="pvp_multiplayer">PVP Multiplayer</string>
     <string name="pve_multiplayer">PVE Multiplayer</string>
-    <string name="history">History</string>
     <string name="exit">Exit</string>
     <string name="hangar">Hangar</string>
 </resources>
