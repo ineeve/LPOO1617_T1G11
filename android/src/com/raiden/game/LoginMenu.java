@@ -21,11 +21,11 @@ import com.google.android.gms.common.api.Status;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static com.raiden.game.MainMenu.mGoogleApiClient;
-
 public class LoginMenu extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
+
+    public static GoogleApiClient mGoogleApiClient;
 
     private static final String TAG = "LoginMenu";
     private static final int RC_SIGN_IN = 9001;
