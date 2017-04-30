@@ -6,4 +6,12 @@
     <dimen name="image_vertical_margin">30dp</dimen>
 
     <dimen name="g_top_margin">100dp</dimen>
+
+    <!-- nav dimensions -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+
+    <!-- topbar dimensions -->
+    <dimen name="fab_margin">16dp</dimen>
+
 </resources>

@@ -49,7 +49,9 @@
          from https://console.developers.google.com/ -->
     <string name="server_client_id">858374538926-5c75dr7bpou01jehvq1jkbotqpvsj0o1.apps.googleusercontent.com</string>
 
-
+    <!-- nav string -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="play">Play</string>
     <string name="pve_singleplayer">PVE Singleplayer</string>
