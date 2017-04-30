@@ -3,6 +3,7 @@
     <string name="title_text">Raiden-Multiplayer\nQuickstart</string>
 
     <!-- Sign-in status messages -->
+    <string name="please_sign_in">Please Sign In First to Play</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="signed_in">Signed in</string>
     <string name="signing_in">Signing in…</string>
@@ -33,7 +34,7 @@
 
     <!-- Activity Names and Descriptions -->
     <string name="name_sign_in_activity">SignInMenu</string>
-    <string name="desc_sign_in_activity">Signing in and signing out.</string>
+    <string name="desc_sign_in_activity">Manange your account.</string>
     <string name="name_play_launcher">PlayActivity</string>
     <string name="desc_play_launcher">Play the game.</string>
 
@@ -41,8 +42,24 @@
     <string name="connections_fmt">Connections: %1$s</string>
     <string name="msg_contacts_failed">Get contacts failed.</string>
 
+
+
     <!-- TODO(user): replace with your real server client ID -->
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
          from https://console.developers.google.com/ -->
-    <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
+    <string name="server_client_id">858374538926-5c75dr7bpou01jehvq1jkbotqpvsj0o1.apps.googleusercontent.com</string>
+
+    <!-- nav string -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="play">Play</string>
+    <string name="pve_singleplayer">PVE Singleplayer</string>
+    <string name="pvp_multiplayer">PVP Multiplayer</string>
+    <string name="pve_multiplayer">PVE Multiplayer</string>
+    <string name="exit">Exit</string>
+    <string name="hangar">Hangar</string>
+    <string name="see_invitations">See Invitations</string>
+    <string name="invite_friend">Invite Friend</string>
+    <string name="quick_start_game">Quick Start Game</string>
 </resources>

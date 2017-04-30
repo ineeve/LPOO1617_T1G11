@@ -1,6 +1,8 @@
 android {
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     compileSdkVersion 25
+
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -21,11 +23,13 @@ android {
         applicationId "com.raiden.game"
         minSdkVersion 15
         targetSdkVersion 23
+        multiDexEnabled true
     }
 
     dependencies {
         compile 'com.google.firebase:firebase-database:10.0.1'
 
+        compile 'com.android.support:multidex:1.0.0'
 
         compile "com.android.support:appcompat-v7:$appcompat_library_version"
         compile "com.android.support:design:$support_library_version"
@@ -139,4 +143,8 @@ idea {
             }
         }
     }
+}
+
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
