@@ -12,7 +12,7 @@ public class PlayLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		config.useCompass = true;
+        config.useCompass = true;
 		config.useImmersiveMode = true;
 
         // Write a message to the database

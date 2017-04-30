@@ -23,7 +23,6 @@ android {
         targetSdkVersion 23
     }
 
-
     dependencies {
         compile 'com.google.firebase:firebase-database:10.0.1'
 
