@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "858374538926",
+    "firebase_url": "https://lpoo-feup.firebaseio.com",
+    "project_id": "lpoo-feup",
+    "storage_bucket": "lpoo-feup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858374538926:android:514dab7a640b131d",
+        "android_client_info": {
+          "package_name": "com.raiden.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "858374538926-5c75dr7bpou01jehvq1jkbotqpvsj0o1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raiden.game",
+            "certificate_hash": "78be6ec28e93bc4cfcb037b91b3d797832dcfe2c"
+          }
+        },
+        {
+          "client_id": "858374538926-v897mdfs7pie4h3nquo4ums4nq1pu4mc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC7lN9XYcwJltGF8aoMwxlIexhsAWlDZ4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "858374538926-v897mdfs7pie4h3nquo4ums4nq1pu4mc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
