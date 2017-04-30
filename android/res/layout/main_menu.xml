@@ -13,9 +13,8 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/topbar_googleplay_settings"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
@@ -44,20 +43,20 @@
         android:id="@+id/main_content_menu"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottombar_back_buttom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topbar_googleplay_settings">
+        app:layout_constraintTop_toBottomOf="@+id/topbar_googleplay_settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp">
 
         <ImageView
             android:id="@+id/main_menu_image"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="125dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -66,10 +65,12 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/main_menu_buttons"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
+            android:layout_marginStart="50dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -79,7 +80,7 @@
             <Button
                 android:id="@+id/play_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -87,15 +88,16 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/menu_buttons"
                 android:text="@string/play"
+                app:layout_constraintBottom_toTopOf="@+id/hangar_button"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/hangar_button"/>
+                android:layout_marginBottom="8dp" />
 
             <Button
                 android:id="@+id/hangar_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -103,15 +105,17 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/menu_buttons"
                 android:text="@string/hangar"
+                app:layout_constraintBottom_toTopOf="@+id/exit_button"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/play_button"
-                app:layout_constraintBottom_toTopOf="@+id/exit_button" />
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="8dp" />
 
             <Button
                 android:id="@+id/exit_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -119,19 +123,19 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/menu_buttons"
                 android:text="@string/exit"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/hangar_button"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="8dp" />
 
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/play_menu_buttons"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -139,25 +143,27 @@
             app:layout_constraintTop_toBottomOf="@+id/main_menu_image">
 
             <Button
-                android:id="@+id/history_button"
+                android:id="@+id/pve_singleplayer_button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/menu_buttons"
-                android:text="@string/history"
+                android:text="@string/pve_singleplayer"
+                app:layout_constraintBottom_toTopOf="@+id/pve_multiplayer_button"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/pve_multitplayer_button"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/pve_multitplayer_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/pve_multiplayer_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -165,15 +171,15 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/menu_buttons"
                 android:text="@string/pve_multiplayer"
+                app:layout_constraintBottom_toTopOf="@+id/pvp_multiplayer_button"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/history_button"
-                app:layout_constraintBottom_toTopOf="@+id/pvp_multiplayer_button" />
+                app:layout_constraintTop_toBottomOf="@+id/pve_singleplayer_button" />
 
             <Button
                 android:id="@+id/pvp_multiplayer_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
@@ -181,10 +187,74 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/menu_buttons"
                 android:text="@string/pvp_multiplayer"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pve_multitplayer_button"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/pve_multiplayer_button"
+                android:layout_marginBottom="8dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/multiplayer_menu_buttons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_menu_image">
+
+            <Button
+                android:id="@+id/quickstart_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/menu_buttons"
+                android:text="@string/quick_start_game"
+                app:layout_constraintBottom_toTopOf="@+id/invite_to_play_button"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/invite_to_play_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/menu_buttons"
+                android:text="@string/invite_friend"
+                app:layout_constraintBottom_toTopOf="@+id/view_invitation_button"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/quickstart_button"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/view_invitation_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/menu_buttons"
+                android:text="@string/see_invitations"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/invite_to_play_button"
+                android:layout_marginBottom="8dp" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -192,9 +262,9 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/bottombar_back_buttom"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">

@@ -34,7 +34,7 @@
 
     <!-- Activity Names and Descriptions -->
     <string name="name_sign_in_activity">SignInMenu</string>
-    <string name="desc_sign_in_activity">Signing in and signing out.</string>
+    <string name="desc_sign_in_activity">Manange your account.</string>
     <string name="name_play_launcher">PlayActivity</string>
     <string name="desc_play_launcher">Play the game.</string>
 
@@ -52,9 +52,12 @@
 
 
     <string name="play">Play</string>
-    <string name="history">History</string>
+    <string name="pve_singleplayer">PVE Singleplayer</string>
     <string name="pvp_multiplayer">PVP Multiplayer</string>
     <string name="pve_multiplayer">PVE Multiplayer</string>
     <string name="exit">Exit</string>
     <string name="hangar">Hangar</string>
+    <string name="see_invitations">See Invitations</string>
+    <string name="invite_friend">Invite Friend</string>
+    <string name="quick_start_game">Quick Start Game</string>
 </resources>
