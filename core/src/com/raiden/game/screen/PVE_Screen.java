@@ -1,27 +1,27 @@
 package com.raiden.game.screen;
 
 
-        import com.raiden.game.PVEArena;
-        import com.raiden.game.model.GameModel;
-        import com.raiden.game.physics_controller.Physics_Controller;
-        import com.raiden.game.screen.entities.ShipView;
-        import com.badlogic.gdx.Gdx;
-        import com.badlogic.gdx.Input;
-        import com.badlogic.gdx.ScreenAdapter;
-        import com.badlogic.gdx.graphics.GL20;
-        import com.badlogic.gdx.graphics.OrthographicCamera;
-        import com.badlogic.gdx.graphics.Texture;
-        import com.badlogic.gdx.math.Matrix4;
-        import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.raiden.game.PVEArena;
+import com.raiden.game.model.GameModel;
+import com.raiden.game.physics_controller.Physics_Controller;
+import com.raiden.game.screen.entities.ShipView;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-        import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
-        import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
+import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
+import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
 /**
  * A view representing the game screen. Draws all the other views and
  * controls the camera.
  */
-public class SinglePlayerScreen extends ScreenAdapter {
+public class PVE_Screen extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -76,7 +76,7 @@ public class SinglePlayerScreen extends ScreenAdapter {
 
     private Float initialPitch;
 
-    private Float initialRoll;
+    private Float initialYaw;
     /**
      * Creates this screen.
      *
@@ -84,12 +84,12 @@ public class SinglePlayerScreen extends ScreenAdapter {
      * @param model The model to be drawn
      * @param controller The physics controller
      */
-    public SinglePlayerScreen(PVEArena game, GameModel model, Physics_Controller controller) {
+    public PVE_Screen(PVEArena game, GameModel model, Physics_Controller controller) {
         this.game = game;
         this.model = model;
         this.controller = controller;
         this.initialPitch = -1024f;
-        this.initialRoll = -1024f;
+        this.initialYaw = -1024f;
         loadAssets();
 
         shipView = new ShipView(game);
@@ -165,23 +165,36 @@ public class SinglePlayerScreen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
+    Gdx.app.log("Compass", "Handling Inputs");
+        /*boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        if (accelerometerAvail){
 
-        boolean compassAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
-        if (compassAvail){
-            if (initialPitch == -1024f && initialRoll == -1024f) {
-                initialPitch = Gdx.input.getPitch();
-                initialRoll = Gdx.input.getRoll();
-                Gdx.app.log("Compass", "Initial Pitch= " + initialPitch);
-                Gdx.app.log("Compass","Initial Roll= " + initialRoll);
+            Float currentPitch = Gdx.input.getAccelerometerZ();
+            Float currentYaw = Gdx.input.getAccelerometerX();
+
+            if (this.initialPitch == -1024f){
+                this.initialPitch = currentPitch;
+                this.initialYaw = currentYaw;
             }
-            Float currentPitch = Gdx.input.getPitch();
-            Float currentRoll = Gdx.input.getRoll();
-            //Gdx.app.log("Compass","yAcceleration " + (currentRoll - initialRoll));
-            //Gdx.app.log("Compass","xAcceleration " + (currentPitch - initialPitch));
-
-            Gdx.app.log("Compass","Current Roll " + currentRoll.toString());
-            Gdx.app.log("Compass","Current Pitch " + currentPitch.toString());
-            controller.accelerate(delta,currentPitch-initialPitch,currentRoll - initialRoll);
+            if (Math.abs(currentPitch) < 0.3f){
+                currentPitch = 0f;
+            }
+            if (Math.abs(currentYaw) < 0.3f){
+                currentYaw = 0f;
+            }
+            Gdx.app.log("Accelerometer","Current Yaw " + currentYaw.toString());
+            Gdx.app.log("Accelerometer","Current Pitch " + currentPitch.toString());
+            controller.accelerate(delta,currentYaw - this.initialYaw,currentPitch-this.initialPitch);
+        }*/
+        boolean compassAvailable = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
+        Gdx.app.log("Compass","Available =" + compassAvailable);
+        if (compassAvailable){
+            Integer pitch = (int)Gdx.input.getPitch();
+            Integer azimuth = (int)Gdx.input.getAzimuth();
+            Integer roll = (int)Gdx.input.getRoll();
+            Gdx.app.log("Compass","Current Azimuth " + azimuth.toString());
+            Gdx.app.log("Compass","Current pitch " + pitch.toString());
+            Gdx.app.log("Compass","Current roll " + roll.toString());
         }
 
     }

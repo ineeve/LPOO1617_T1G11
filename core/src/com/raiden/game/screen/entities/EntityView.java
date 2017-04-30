@@ -6,7 +6,7 @@ package com.raiden.game.screen.entities;
         import com.badlogic.gdx.graphics.g2d.Sprite;
         import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-        import static com.raiden.game.screen.SinglePlayerScreen.PIXEL_TO_METER;
+        import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 /**
  * A abstract view capable of holding a sprite with a certain

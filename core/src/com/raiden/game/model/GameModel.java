@@ -3,29 +3,35 @@ package com.raiden.game.model;
 import com.raiden.game.model.entities.AirplaneModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 
+import java.util.ArrayList;
+
 
 /**
  * A model representing a game.
  */
 
-public class GameModel {
+public abstract class GameModel {
     /**
      * The space ship controlled by the user in this game.
      */
-    private AirplaneModel player1;
-    private AirplaneModel player2;
+    protected ArrayList<AirplaneModel> players;
 
 
     /**
-     * Constructs a game with a.space ship in a certain position.
-     *
-     * @param x the x-coordinate of the space ship in meters.
-     * @param y the y-coordinate of the space ship in meters.
+     * Constructs a game level
      */
-    public GameModel(float x, float y) {
+    public GameModel() {
+        players = new ArrayList<AirplaneModel>(0);
+    }
 
-        player1 = new AirplaneModel(x, y, 0);
-
+    /**
+     *
+     * @param x The x coordinate of the player ship in the world.
+     * @param y The y coordinate of the player ship in the world.
+     * @param rotation The rotation in radians of the player ship in the world.
+     */
+    public void addPlayer(float x, float y,float rotation){
+        players.add(new AirplaneModel(x,y,rotation));
     }
 
     /**
@@ -34,7 +40,7 @@ public class GameModel {
      * @return the space ship.
      */
     public MovingObjectModel getPlayer1() {
-        return player1;
+        return players.get(0);
     }
 
 

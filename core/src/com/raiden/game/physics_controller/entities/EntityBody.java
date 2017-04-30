@@ -8,9 +8,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.entities.EntityModel;
 
-import static com.raiden.game.screen.SinglePlayerScreen.PIXEL_TO_METER;
+import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
-//import static com.aor.arena.view.SinglePlayerScreen.PIXEL_TO_METER;
+//import static com.aor.arena.view.PVE_Screen.PIXEL_TO_METER;
 
 /**
  * Wrapper class that represents an abstract physical
