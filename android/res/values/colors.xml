@@ -5,7 +5,46 @@
     <color name="blue_grey_700">#455A64</color>
     <color name="blue_grey_800">#37474F</color>
     <color name="blue_grey_900">#263238</color>
-    <color name="light_grey">#88c0c0c0</color>
-    <color name="medium_grey">#88757575</color>
-    <color name="dark_grey">#88444444</color>
+
+
+    <color name="primary">#455A64</color>
+    <color name="primaryDark">#37474F</color>
+    <color name="accent">#263238</color>
+    <color name="background">#ffffff</color>
+
+    <!-- 0% transparency -->
+    <color name="grey_light">#ff9a9a9a</color>
+    <color name="grey_medium">#ff595959</color>
+    <color name="grey_dark">#ff444444</color>
+    <color name="green_light">#ff81C784</color>
+    <color name="green_medium">#ff4CAF50</color>
+    <color name="green_dark">#ff2E7D32</color>
+    <color name="blue_light">#ff23b5ff</color>
+    <color name="blue_medium">#ff004467</color>
+    <color name="blue_dark">#ff002d44</color>
+    <color name="orange_medium">#fff36e23</color>
+
+    <!-- 33% transparency -->
+    <color name="grey_light_33">#a69a9a9a</color>
+    <color name="grey_medium_33">#a6595959</color>
+    <color name="grey_dark_33">#a6444444</color>
+    <color name="green_light_33">#a681C784</color>
+    <color name="green_medium_33">#a64CAF50</color>
+    <color name="green_dark_33">#a62E7D32</color>
+    <color name="blue_light_33">#a623b5a6</color>
+    <color name="blue_medium_33">#a6004467</color>
+    <color name="blue_dark_33">#a6002d44</color>
+    <color name="orange_medium_33">#a6f36e23</color>
+
+    <!--66% transparency -->
+    <color name="grey_light_66">#539a9a9a</color>
+    <color name="grey_medium_66">#53595959</color>
+    <color name="grey_dark_66">#53444444</color>
+    <color name="green_light_66">#5381C784</color>
+    <color name="green_medium_66">#534CAF50</color>
+    <color name="green_dark_66">#532E7D32</color>
+    <color name="blue_light_66">#5323b553</color>
+    <color name="blue_medium_66">#53004467</color>
+    <color name="blue_dark_66">#53002d44</color>
+    <color name="orange_medium_66">#53f36e23</color>
 </resources>
