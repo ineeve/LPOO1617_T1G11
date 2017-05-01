@@ -63,4 +63,8 @@
     <string name="invite_friend">Invite Friend</string>
     <string name="quick_start_game">Quick Start Game</string>
     <string name="settings">Settings</string>
+    <string name="vibration">Vibration</string>
+    <string name="response">Response</string>
+    <string name="volume">Volume</string>
+    <string name="sensibility">Sensibility</string>
 </resources>

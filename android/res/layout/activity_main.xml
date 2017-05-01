@@ -30,9 +30,19 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
-        android:choiceMode="singleChoice"
-        app:headerLayout="@layout/nav_header_settings"
-        app:menu="@menu/settings_menu" />
+        android:choiceMode="singleChoice">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/nav_header_settings" />
+
+            <include layout="@layout/settings_menu" />
+
+        </LinearLayout>
+    </android.support.design.widget.NavigationView>
 
 
 </android.support.v4.widget.DrawerLayout>
