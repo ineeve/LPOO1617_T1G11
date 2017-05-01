@@ -1,56 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view_volume"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:background="@color/background"
-        android:choiceMode="singleChoice"
-        android:fitsSystemWindows="true"
-        android:paddingBottom="8dp"
-        app:menu="@menu/volume" >
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/volume_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/settings_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/volume"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/volume_image"
+            android:layout_toEndOf="@+id/volume_image"
+            android:id="@+id/volume_text"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="24dp"/>
 
         <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
+            android:id="@+id/volune_seekbar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="56dp"
-            android:layout_gravity="bottom|center_vertical" />
-    </android.support.design.widget.NavigationView>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/volume_text"
+            android:layout_toRightOf="@+id/volume_image"
+            android:layout_toEndOf="@+id/volume_image"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view_sensibility"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:background="@color/background"
-        android:choiceMode="singleChoice"
-        android:fitsSystemWindows="true"
-        android:paddingBottom="8dp"
-        app:menu="@menu/sensibility">
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/sensibility_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/settings_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/volume"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/sensibility_image"
+            android:layout_toEndOf="@+id/sensibility_image"
+            android:id="@+id/sensibility_text"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="24dp"/>
 
         <SeekBar
-            android:id="@+id/seekBar2"
-            android:layout_width="match_parent"
+            android:id="@+id/sensibility_seekbar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="56dp"
-            android:layout_gravity="bottom|center_vertical" />
-    </android.support.design.widget.NavigationView>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/sensibility_text"
+            android:layout_toRightOf="@+id/sensibility_image"
+            android:layout_toEndOf="@+id/sensibility_image"
+            android:layout_marginLeft="16dp" />
+    </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view_vibration"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/background"
-        android:choiceMode="singleChoice"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/vibration" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/vibration_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/settings_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vibration"
+            android:layout_toRightOf="@+id/vibration_image"
+            android:id="@+id/vibration"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="24dp"
+            android:layout_toLeftOf="@+id/vibration_switch"
+            android:layout_toStartOf="@+id/vibration_switch"
+            android:layout_centerInParent="true" />
+
+        <Switch
+            android:id="@+id/vibration_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
