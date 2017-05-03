@@ -166,7 +166,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private void handleInputs(float delta) {
     Gdx.app.log("Compass", "Handling Inputs");
-        /*boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
 
             Float currentPitch = Gdx.input.getAccelerometerZ();
@@ -184,9 +184,12 @@ public class PVE_Screen extends ScreenAdapter {
             }
             Gdx.app.log("Accelerometer","Current Yaw " + currentYaw.toString());
             Gdx.app.log("Accelerometer","Current Pitch " + currentPitch.toString());
-            controller.accelerate(delta,currentYaw - this.initialYaw,currentPitch-this.initialPitch);
-        }*/
-        boolean compassAvailable = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
+            if (Math.abs(currentPitch) > 0 || Math.abs(currentYaw) > 0){
+                controller.accelerate(delta,currentYaw - this.initialYaw,currentPitch-this.initialPitch);
+            }
+
+        }
+       /* boolean compassAvailable = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
         Gdx.app.log("Compass","Available =" + compassAvailable);
         if (compassAvailable){
             Integer pitch = (int)Gdx.input.getPitch();
@@ -195,7 +198,7 @@ public class PVE_Screen extends ScreenAdapter {
             Gdx.app.log("Compass","Current Azimuth " + azimuth.toString());
             Gdx.app.log("Compass","Current pitch " + pitch.toString());
             Gdx.app.log("Compass","Current roll " + roll.toString());
-        }
+        }*/
 
     }
 

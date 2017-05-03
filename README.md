@@ -1,7 +1,7 @@
 RAIDEN MULTIPLAYER
 FEUP-LPOO
 <p>João Carvalho</p>
-<p>Renato Campos</p>
+<p>Renato Campos - 8h</p>
 
 ![Alt text](LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
