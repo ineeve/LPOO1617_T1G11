@@ -4,10 +4,10 @@ FEUP-LPOO
 <p>Renato Campos - 8h</p>
 
 <h1>Priorities:</h1>
-1. Colocar Single Player a Funcionar.
-2. Colocar Login a Funcionar.
-3. Implementar Multiplayer.
-4. Implementar Hangar.
+1. Colocar Single Player a Funcionar
+2. Colocar Login a Funcionar
+3. Implementar Multiplayer
+4. Implementar Hangar
 
 ![Alt text](LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
