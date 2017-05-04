@@ -16,7 +16,7 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
  * Wrapper class that represents an abstract physical
  * body supported by a Box2D body.
  */
-public abstract class EntityBody {
+public abstract class DynamicBody {
     /**
      * The Box2D body that supports this body.
      */
@@ -28,7 +28,7 @@ public abstract class EntityBody {
      * @param world The world this body lives on.
      * @param model The model representing the body.
      */
-    EntityBody(World world, EntityModel model) {
+    DynamicBody(World world, EntityModel model) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(model.getX(), model.getY());

@@ -1,12 +1,12 @@
 package com.raiden.game.screen.entities;
 
 
-        import com.raiden.game.PVEArena;
-        import com.raiden.game.model.entities.EntityModel;
-        import com.badlogic.gdx.graphics.g2d.Sprite;
-        import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+        import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.raiden.game.model.entities.EntityModel;
 
-        import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
+import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 /**
  * A abstract view capable of holding a sprite with a certain
@@ -21,13 +21,18 @@ abstract class EntityView {
     Sprite sprite;
 
     /**
+     * The texture representing this entity view.
+     */
+
+    Texture texture;
+
+    /**
      * Creates a view belonging to a game.
      *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
+     * @param texture to after create the sprite of object
      */
-    EntityView(PVEArena game) {
-        sprite = createSprite(game);
+    EntityView(Texture texture) {
+        this.texture = texture;
     }
 
     /**
@@ -44,11 +49,9 @@ abstract class EntityView {
      * implementation should extend this method to create their
      * own sprites.
      *
-     * @param game the game this view belongs to. Needed to access the
-     *             asset manager to get textures.
      * @return the sprite representing this view.
      */
-    public abstract Sprite createSprite(PVEArena game);
+    public abstract Sprite createSprite();
 
     /**
      * Updates this view based on a certain model.

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
             LoginMenu.class,
             PlayLauncher.class,
             //Settings.class,
-            //HangarMenu.class
+            HangarMenu.class
     };
 
     private static final int[] DESCRIPTION_IDS = new int[] {
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         findViewById(R.id.invite_to_play_button).setOnClickListener(this);
         findViewById(R.id.view_invitation_button).setOnClickListener(this);
         findViewById(R.id.back_button).setOnClickListener(this);
+
     }
 
     @Override
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity
                 findViewById(R.id.back_button).setVisibility(View.VISIBLE);
                 break;
             case R.id.hangar_button:
+                startActivity(new Intent(this, CLASSES[2]));
                 break;
             case R.id.exit_button:
                 this.finish();

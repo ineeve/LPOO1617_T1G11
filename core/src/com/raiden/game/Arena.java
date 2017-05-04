@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * The game main class.
  */
-public class PVEArena extends Game {
+public class Arena extends Game {
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 

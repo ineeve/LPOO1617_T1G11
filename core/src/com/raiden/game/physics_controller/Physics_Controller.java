@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
-import com.raiden.game.physics_controller.entities.ShipBody;
+import com.raiden.game.physics_controller.entities.AirPlane_1;
 
 /**
  * Controlls the physics Aspects of the PVE Game
@@ -42,7 +42,7 @@ public abstract class Physics_Controller {
     /**
      * The spaceship body.
      */
-    private final ShipBody shipBody;
+    private final AirPlane_1 airPlane1;
 
     /**
      * Accumulator used to calculate the simulation step.
@@ -52,7 +52,7 @@ public abstract class Physics_Controller {
     Physics_Controller(GameModel model){
 
         world = new World(new Vector2(0,0),true);
-        shipBody = new ShipBody(world, model.getPlayer1());
+        airPlane1 = new AirPlane_1(world, model.getPlayer1());
 
     }
 
@@ -115,8 +115,8 @@ public abstract class Physics_Controller {
      * @param delta Duration of the rotation in seconds.
      */
     public void rotateLeft(float delta) {
-        shipBody.setTransform(shipBody.getX(), shipBody.getY(), shipBody.getAngle() + ROTATION_SPEED * delta);
-        shipBody.setAngularVelocity(0);
+        airPlane1.setTransform(airPlane1.getX(), airPlane1.getY(), airPlane1.getAngle() + ROTATION_SPEED * delta);
+        airPlane1.setAngularVelocity(0);
     }
 
     /**
@@ -126,10 +126,10 @@ public abstract class Physics_Controller {
      * @param delta Duration of the rotation in seconds.
      */
     public void rotateRight(float delta) {
-        shipBody.getX();
+        airPlane1.getX();
 
-        shipBody.setTransform(shipBody.getX(), shipBody.getY(), shipBody.getAngle() - ROTATION_SPEED * delta);
-        shipBody.setAngularVelocity(0);
+        airPlane1.setTransform(airPlane1.getX(), airPlane1.getY(), airPlane1.getAngle() - ROTATION_SPEED * delta);
+        airPlane1.setAngularVelocity(0);
     }
 
     /**
@@ -142,8 +142,8 @@ public abstract class Physics_Controller {
      */
 
     public void accelerate(float delta,float pitch, float roll) {
-        shipBody.applyForceToCenter(-pitch * MAX_ACCELERATION_FORCE, roll * MAX_ACCELERATION_FORCE, true);
-        ((MovingObjectModel)shipBody.getUserData()).setAccelerating(true);
+        airPlane1.applyForceToCenter(-pitch * MAX_ACCELERATION_FORCE, roll * MAX_ACCELERATION_FORCE, true);
+        ((MovingObjectModel) airPlane1.getUserData()).setAccelerating(true);
     }
 
 }

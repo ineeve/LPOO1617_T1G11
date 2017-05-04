@@ -1,10 +1,6 @@
 package com.raiden.game.screen;
 
 
-import com.raiden.game.PVEArena;
-import com.raiden.game.model.GameModel;
-import com.raiden.game.physics_controller.Physics_Controller;
-import com.raiden.game.screen.entities.ShipView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -13,6 +9,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.raiden.game.Arena;
+import com.raiden.game.model.GameModel;
+import com.raiden.game.physics_controller.Physics_Controller;
+import com.raiden.game.screen.entities.ShipView;
 
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
@@ -41,7 +41,7 @@ public class PVE_Screen extends ScreenAdapter {
     /**
      * The game this screen belongs to.
      */
-    private final PVEArena game;
+    private final Arena game;
 
     /**
      * The model drawn by this screen.
@@ -84,15 +84,17 @@ public class PVE_Screen extends ScreenAdapter {
      * @param model The model to be drawn
      * @param controller The physics controller
      */
-    public PVE_Screen(PVEArena game, GameModel model, Physics_Controller controller) {
+    public PVE_Screen(Arena game, GameModel model, Physics_Controller controller) {
         this.game = game;
         this.model = model;
         this.controller = controller;
         this.initialPitch = -1024f;
         this.initialYaw = -1024f;
         loadAssets();
-
-        shipView = new ShipView(game);
+        Texture notAnimated, animated;
+        notAnimated = game.getAssetManager().get("AirPlane_1.png");
+        animated = game.getAssetManager().get("spaceship-thrust.png");
+        shipView = new ShipView(notAnimated, animated, 4);
 
         camera = createCamera();
     }
@@ -123,6 +125,7 @@ public class PVE_Screen extends ScreenAdapter {
     private void loadAssets() {
         this.game.getAssetManager().load( "spaceship-no-thrust.png" , Texture.class);
         this.game.getAssetManager().load( "spaceship-thrust.png" , Texture.class);
+        this.game.getAssetManager().load( "AirPlane_1.png" , Texture.class);
 
         this.game.getAssetManager().load( "background.png" , Texture.class);
 

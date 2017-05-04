@@ -8,7 +8,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/main_menu"
+        layout="@layout/top_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible" />
@@ -18,9 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:choiceMode="singleChoice"
         android:background="@color/background"
+        android:choiceMode="singleChoice"
+        android:fitsSystemWindows="true"
+        android:visibility="visible"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
 
@@ -29,8 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        android:choiceMode="singleChoice"
         android:fitsSystemWindows="true"
-        android:choiceMode="singleChoice">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"

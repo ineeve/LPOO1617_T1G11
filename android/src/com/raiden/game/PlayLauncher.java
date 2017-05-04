@@ -20,6 +20,6 @@ public class PlayLauncher extends AndroidApplication {
         DatabaseReference myRef = database.getReference("IP");
         myRef.setValue("Ola do aplicativo");
 
-		initialize(new PVEArena(), config);
+		initialize(new Arena(), config);
 	}
 }
