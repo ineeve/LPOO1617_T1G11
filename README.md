@@ -1,4 +1,10 @@
 # RAIDEN MULTIPLAYER
+Raiden is a game based one a aircraft that have to destroy all enemys until the end of map. The enemys can be static, and just shoot bullets, moving object with random psedo-random movement or a path movement...
+
+[![Rainde-II](https://i.ytimg.com/vi/uNyOSzVzXH4/hqdefault.jpg)](https://www.youtube.com/watch?v=uNyOSzVzXH4&t=389s "Raiden II")
+
+We, for our class will recreate this game but will be more minimalist and multiplayer with Google API integration.
+
 ## FEUP-LPOO - Working Hours
 
 * João Carvalho - 26h
