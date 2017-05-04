@@ -3,11 +3,11 @@ FEUP-LPOO
 <p>João Carvalho - 26h</p>
 <p>Renato Campos - 8h</p>
 
-Priorities:
--Colocar Single Player a Funcionar.
--Colocar Login a Funcionar.
--Implementar Multiplayer.
--Implementar Hangar.
+<h1>Priorities:</h1>
+1. Colocar Single Player a Funcionar.
+2. Colocar Login a Funcionar.
+3. Implementar Multiplayer.
+4. Implementar Hangar.
 
 ![Alt text](LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
