@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.model.entities.MovingObjectModel;
 
 /**
  * A view representing a space ship
@@ -115,9 +114,6 @@ public class ShipView extends EntityView {
     @Override
     public void update(EntityModel model) {
         super.update(model);
-
-        accelerating = ((MovingObjectModel)model).isAccelerating();
-        ((MovingObjectModel)model).setAccelerating(false);
     }
 
     /**
@@ -137,5 +133,9 @@ public class ShipView extends EntityView {
             sprite.setRegion(notAcceleratingRegion);
 
         sprite.draw(batch);
+    }
+
+    public void setAccelerating(boolean accelerating) {
+        this.accelerating = accelerating;
     }
 }

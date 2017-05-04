@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.entities.AirplaneModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.entities.AirPlane_1;
@@ -141,9 +142,8 @@ public abstract class Physics_Controller {
      * @param roll Angle in degrees of the device's orientation around the y-axis. Controls forward and backward movements.
      */
 
-    public void accelerate(float delta,float pitch, float roll) {
-        airPlane1.applyForceToCenter(-pitch * MAX_ACCELERATION_FORCE, roll * MAX_ACCELERATION_FORCE, true);
-        ((MovingObjectModel) airPlane1.getUserData()).setAccelerating(true);
+    public void setVelocityofPlayer1(float acceX, float acceY) {
+        airPlane1.setVelocity(-acceX * AirplaneModel.MAXVELOCITY, acceY);
     }
 
 }

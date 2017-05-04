@@ -171,25 +171,17 @@ public class PVE_Screen extends ScreenAdapter {
     Gdx.app.log("Compass", "Handling Inputs");
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
+            Float acceX = Gdx.input.getAccelerometerX();
 
-            Float currentPitch = Gdx.input.getAccelerometerZ();
-            Float currentYaw = Gdx.input.getAccelerometerX();
-
-            if (this.initialPitch == -1024f){
-                this.initialPitch = currentPitch;
-                this.initialYaw = currentYaw;
+            Gdx.app.log("Accelerometer","Current Yaw " + acceX.toString());
+            if (Math.abs(acceX) <= 0.2){
+                acceX = 0f;
+                shipView.setAccelerating(false);
             }
-            if (Math.abs(currentPitch) < 0.3f){
-                currentPitch = 0f;
+            else{
+                shipView.setAccelerating(true);
             }
-            if (Math.abs(currentYaw) < 0.3f){
-                currentYaw = 0f;
-            }
-            Gdx.app.log("Accelerometer","Current Yaw " + currentYaw.toString());
-            Gdx.app.log("Accelerometer","Current Pitch " + currentPitch.toString());
-            if (Math.abs(currentPitch) > 0 || Math.abs(currentYaw) > 0){
-                controller.accelerate(delta,currentYaw - this.initialYaw,currentPitch-this.initialPitch);
-            }
+            controller.setVelocityofPlayer1(acceX, 0);
 
         }
        /* boolean compassAvailable = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);

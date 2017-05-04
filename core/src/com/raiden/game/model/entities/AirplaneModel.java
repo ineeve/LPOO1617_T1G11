@@ -3,6 +3,8 @@ package com.raiden.game.model.entities;
 
 public class AirplaneModel extends MovingObjectModel {
 
+    public static final int MAXVELOCITY = 20;
+
     private int hp;
     private BulletModel bullet;
     private int weight;

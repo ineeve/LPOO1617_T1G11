@@ -142,4 +142,8 @@ public abstract class DynamicBody {
     public Object getUserData() {
         return body.getUserData();
     }
+
+    public void setVelocity(float velX, float velY){
+        body.setLinearVelocity(velX, velY);
+    }
 }
