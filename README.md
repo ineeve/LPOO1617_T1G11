@@ -1,7 +1,8 @@
-RAIDEN MULTIPLAYER
-FEUP-LPOO
-<p>João Carvalho - 26h</p>
-<p>Renato Campos - 8h</p>
+# RAIDEN MULTIPLAYER
+## FEUP-LPOO - Working Hours
+
+* João Carvalho - 26h
+* Renato Campos - 8h
 
 ## Priorities:
 1. Colocar Single Player a Funcionar
