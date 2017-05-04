@@ -62,7 +62,7 @@ public class ShipView extends EntityView {
         super(notAccelerated);
         animatedTexture = accelerated;
         this.numberOfAnimations = animationNumbers;
-        createSprite();
+        sprite = createSprite();
     }
 
     /**
@@ -74,7 +74,6 @@ public class ShipView extends EntityView {
     public Sprite createSprite() {
         notAcceleratingRegion = createNotAcceleratingRegion(texture);
         acceleratingAnimation = createAcceleratingAnimation(animatedTexture, numberOfAnimations);
-
         return new Sprite(notAcceleratingRegion);
     }
 
