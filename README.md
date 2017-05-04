@@ -1,7 +1,13 @@
 RAIDEN MULTIPLAYER
 FEUP-LPOO
-<p>Jo„o Carvalho</p>
+<p>Jo√£o Carvalho - 26h</p>
 <p>Renato Campos - 8h</p>
+
+Priorities:
+-Colocar Single Player a Funcionar.
+-Colocar Login a Funcionar.
+-Implementar Multiplayer.
+-Implementar Hangar.
 
 ![Alt text](LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
