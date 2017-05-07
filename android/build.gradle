@@ -26,23 +26,14 @@ android {
         multiDexEnabled true
     }
 
-    dependencies {
-        compile 'com.google.firebase:firebase-database:10.0.1'
-
-        compile 'com.android.support:multidex:1.0.0'
-
-        compile "com.android.support:appcompat-v7:$appcompat_library_version"
-        compile "com.android.support:design:$support_library_version"
-
-        // Dependency for Google Sign-In
-        compile "com.google.android.gms:play-services-auth:$gms_library_version"
-
-        // Dependencies for the REST API example
-        compile 'com.google.api-client:google-api-client:1.22.0'
-        compile 'com.google.api-client:google-api-client-android:1.22.0'
-        compile 'com.google.apis:google-api-services-people:v1-rev4-1.22.0'
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
     }
-    apply plugin: 'com.google.gms.google-services'
+
+
 
 }
 
@@ -146,5 +137,23 @@ idea {
 }
 
 dependencies {
+    compile 'com.google.firebase:firebase-database:10.0.1'
+
+    compile 'com.android.support:multidex:1.0.0'
+
+    compile "com.android.support:appcompat-v7:$appcompat_library_version"
+    compile "com.android.support:design:$support_library_version"
+
+    // Dependency for Google Sign-In
+    compile "com.google.android.gms:play-services-auth:$gms_library_version"
+
+    // Dependencies for the REST API example
+    compile 'com.google.api-client:google-api-client:1.22.0'
+    compile 'com.google.api-client:google-api-client-android:1.22.0'
+    compile 'com.google.apis:google-api-services-people:v1-rev4-1.22.0'
+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile project(':libraries:BaseGameUtils')
 }
+apply plugin: 'com.google.gms.google-services'
