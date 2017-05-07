@@ -25,11 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.raiden.game.LoginMenu"
-            android:label="@string/name_sign_in_activity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name="com.raiden.game.PlayLauncher"
             android:theme="@style/GdxTheme">
         </activity>

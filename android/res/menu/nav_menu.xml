@@ -2,33 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_achievements"
             android:icon="@drawable/settings_button"
-            android:title="Import" />
+            android:title="Achievements" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_stats_account"
             android:icon="@drawable/settings_button"
-            android:title="Gallery" />
+            android:title="Stats" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/settings_button"
             android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/settings_button"
-            android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Management">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/settings_button"
                 android:title="Share" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_SignOut"
                 android:icon="@drawable/settings_button"
-                android:title="Send" />
+                android:title="Sign Out"/>
         </menu>
     </item>
 

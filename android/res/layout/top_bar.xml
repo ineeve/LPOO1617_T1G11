@@ -30,7 +30,7 @@
     </RelativeLayout>
 
     <include
-        layout="@layout/main_menu"
+        layout="@layout/main_content_screens"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible" />
