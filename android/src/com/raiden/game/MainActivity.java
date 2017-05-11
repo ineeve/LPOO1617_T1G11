@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,7 +32,6 @@ import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.android.gms.games.multiplayer.realtime.RoomStatusUpdateListener;
 import com.google.android.gms.games.multiplayer.realtime.RoomUpdateListener;
-import com.google.example.games.basegameutils.BaseGameUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity
         RoomStatusUpdateListener, RoomUpdateListener, OnInvitationReceivedListener {
 
     DrawerLayout drawerLayout;
+
+    private View mHView;
 
     private static final int[] CLICKABLES = {
             R.id.login_button, R.id.settings_button,
@@ -85,6 +87,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Configure sign-in to request the user's ID, email address, and basic profile. ID and
+        // basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
         // Create the Google Api Client with access to Games
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -100,11 +108,11 @@ public class MainActivity extends AppCompatActivity
             findViewById(id).setOnClickListener(this);
         }
 
-        View hView =  navigationView.getHeaderView(0);
-        hView.findViewById(R.id.sign_in_button).setOnClickListener(this);
+        mHView =  navigationView.getHeaderView(0);
+        mHView.findViewById(R.id.sign_in_button).setOnClickListener(this);
         // [START customize_button]
         // Set the dimensions of the sign-in button.
-        SignInButton signInButton = (SignInButton) hView.findViewById(R.id.sign_in_button);
+        SignInButton signInButton = (SignInButton) mHView.findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         // [END customize_button]
 
@@ -305,6 +313,19 @@ public class MainActivity extends AppCompatActivity
                         + responseCode + ", intent=" + intent);
                 mSignInClicked = false;
                 mResolvingConnectionFailure = false;
+                /*
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(intent);
+                GoogleSignInAccount acct = result.getSignInAccount();
+                String personName = acct.getDisplayName();
+                Log.d(TAG, "PersonName: " + personName);
+                ((TextView) mHView.findViewById(R.id.account_nickname_textView)).setText(personName);
+                String personEmail = acct.getEmail();
+                Log.d(TAG, "PersonEmail: " + personEmail);
+                ((TextView) mHView.findViewById(R.id.account_email_textView)).setText(personEmail);
+                Uri personPhoto = acct.getPhotoUrl();
+                Log.d(TAG, "PersonPhoto: " + personPhoto);
+                ((ImageView) mHView.findViewById(R.id.accountImage)).setImageURI(personPhoto);
+                */
                 if (responseCode == RESULT_OK) {
                     mGoogleApiClient.connect();
                 } else {

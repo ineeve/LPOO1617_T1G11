@@ -154,6 +154,8 @@ dependencies {
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    compile project(':libraries:BaseGameUtils')
+    compile "com.google.android.gms:play-services-games:${gms_library_version}"
+    compile "com.google.android.gms:play-services-plus:${gms_library_version}"
+
 }
 apply plugin: 'com.google.gms.google-services'

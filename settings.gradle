@@ -1,1 +1,1 @@
-include ':libraries:BaseGameUtils', 'android', 'core'
+include 'android', 'core'
