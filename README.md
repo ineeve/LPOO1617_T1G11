@@ -7,8 +7,8 @@ We, for our class will recreate this game but will be more minimalist and multip
 
 ## FEUP-LPOO - Working Hours
 
-* João Carvalho - 32:30h
-* Renato Campos - 8:30h
+* João Carvalho - 33:30h
+* Renato Campos - 9:30h
 
 ## Priorities:
 1. Colocar Single Player a Funcionar
