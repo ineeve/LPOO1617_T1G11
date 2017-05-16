@@ -2,6 +2,7 @@ package com.raiden.game;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -18,13 +19,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.images.ImageManager;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesActivityResultCodes;
 import com.google.android.gms.games.GamesStatusCodes;
@@ -46,11 +44,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static android.R.drawable.sym_def_app_icon;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RealTimeMessageReceivedListener,
-        RoomStatusUpdateListener, RoomUpdateListener, OnInvitationReceivedListener {
+        RoomStatusUpdateListener, RoomUpdateListener, OnInvitationReceivedListener, ImageManager.OnImageLoadedListener {
 
     DrawerLayout drawerLayout;
 
@@ -109,20 +109,15 @@ public class MainActivity extends AppCompatActivity
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         // [END customize_button]
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestProfile()
-                .build();
-
         // Create the Google Api Client with access to Games
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .enableAutoManage(this,this)
                 .build();
 
+        mImageManager = ImageManager.create(this);
     }
 
     @Override
@@ -204,10 +199,15 @@ public class MainActivity extends AppCompatActivity
                 // user wants to sign out
                 // sign out.
                 Log.d(TAG, "Sign-out button clicked");
-                mSignInClicked = false;
-                Games.signOut(mGoogleApiClient);
-                mGoogleApiClient.disconnect();
-                findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+                if(mGoogleApiClient.isConnected()) {
+                    mSignInClicked = false;
+                    Games.signOut(mGoogleApiClient);
+                    mGoogleApiClient.disconnect();
+                    findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+                    ((TextView) mHView.findViewById(R.id.account_nickname_textView)).setText(R.string.android_studio);
+                    ((TextView) mHView.findViewById(R.id.account_title_textView)).setText(R.string.android_email);
+                    ((ImageView) mHView.findViewById(R.id.accountImage)).setImageResource(sym_def_app_icon);
+                }
             }
         }
 
@@ -266,6 +266,8 @@ public class MainActivity extends AppCompatActivity
     // Message buffer for sending messages
     byte[] mMsgBuf = new byte[2];
 
+    ImageManager mImageManager = null;
+
 
     void startQuickGame() {
         // quick-start a game with 1 randomly selected opponent
@@ -318,18 +320,6 @@ public class MainActivity extends AppCompatActivity
                         + responseCode + ", intent=" + intent);
                 mSignInClicked = false;
                 mResolvingConnectionFailure = false;
-
-                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(intent);
-                GoogleSignInAccount acct = result.getSignInAccount();
-                String personName = acct.getDisplayName();
-                Log.d(TAG, "PersonName: " + personName);
-                ((TextView) mHView.findViewById(R.id.account_nickname_textView)).setText(personName);
-                String personEmail = acct.getEmail();
-                Log.d(TAG, "PersonEmail: " + personEmail);
-                ((TextView) mHView.findViewById(R.id.account_email_textView)).setText(personEmail);
-                Uri personPhoto = acct.getPhotoUrl();
-                Log.d(TAG, "PersonPhoto: " + personPhoto);
-                ((ImageView) mHView.findViewById(R.id.accountImage)).setImageURI(personPhoto);
 
                 if (responseCode == RESULT_OK) {
                     mGoogleApiClient.connect();
@@ -520,6 +510,19 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onConnected() called. Sign in successful!");
 
         Log.d(TAG, "Sign-in succeeded.");
+
+        String personName = Games.Players.getCurrentPlayer(mGoogleApiClient).getDisplayName();
+        Log.d(TAG, "PersonName: " + personName);
+        ((TextView) mHView.findViewById(R.id.account_nickname_textView)).setText(personName);
+        String personEmail = Games.Players.getCurrentPlayer(mGoogleApiClient).getTitle();
+        Log.d(TAG, "PersonEmail: " + personEmail);
+        ((TextView) mHView.findViewById(R.id.account_title_textView)).setText(personEmail);
+        if(Games.Players.getCurrentPlayer(mGoogleApiClient).hasIconImage()) {
+            Uri personPhoto = Games.Players.getCurrentPlayer(mGoogleApiClient).getHiResImageUri();
+            Log.d(TAG, "PersonPhoto: " + personPhoto);
+            mImageManager.loadImage((ImageView) mHView.findViewById(R.id.accountImage), personPhoto);
+        }
+
 
         // register listener so we are notified if we receive an invitation to play
         // while we are in the game
@@ -809,4 +812,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {
+
+    }
 }
