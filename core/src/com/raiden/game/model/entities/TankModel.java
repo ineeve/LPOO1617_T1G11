@@ -6,7 +6,7 @@ package com.raiden.game.model.entities;
 
 public class TankModel extends MovingObjectModel {
 
-    public static final int MAXVELOCITY = 10;
+    public static final double MAXVELOCITY = Airplane_1_Model.MAXVELOCITY * 0.6;
 
     public static int WEIGHT_DEFAULT = 0;
 

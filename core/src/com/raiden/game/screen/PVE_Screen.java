@@ -30,7 +30,7 @@ public class PVE_Screen extends ScreenAdapter {
     /**
      * How much meters does a pixel represent.
      */
-    public final static float PIXEL_TO_METER = 0.01f;
+    public final static float PIXEL_TO_METER = 0.02f;
 
     /**
      * The width of the viewport in meters. The height is
@@ -126,6 +126,9 @@ public class PVE_Screen extends ScreenAdapter {
         this.game.getAssetManager().load( "spaceship-no-thrust.png" , Texture.class);
         this.game.getAssetManager().load( "spaceship-thrust.png" , Texture.class);
         this.game.getAssetManager().load( "AirPlane_1.png" , Texture.class);
+        this.game.getAssetManager().load( "AirPlane_2.png" , Texture.class);
+        this.game.getAssetManager().load( "AirPlane_3.png" , Texture.class);
+        this.game.getAssetManager().load( "Tank.png" , Texture.class);
 
         this.game.getAssetManager().load( "background.png" , Texture.class);
 
