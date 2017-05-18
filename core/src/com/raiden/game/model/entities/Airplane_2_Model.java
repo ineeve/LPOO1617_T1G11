@@ -1,9 +1,15 @@
 package com.raiden.game.model.entities;
 
 
-public class AirplaneModel extends MovingObjectModel {
+public class Airplane_1_Model extends MovingObjectModel {
 
-    public static final int MAXVELOCITY = 20;
+    public static final int MAXVELOCITY = 5;
+
+    public static int WEIGHT_DEFAULT = 0;
+
+    public static int ARMOR_DEFAUL = 0;
+
+    public static int HP_DEFAULT = 0;
 
     private int hp;
     private BulletModel bullet;
@@ -17,7 +23,10 @@ public class AirplaneModel extends MovingObjectModel {
      * @param y        the y-coordinate in meters
      * @param rotation the rotation in radians
      */
-    public AirplaneModel(float x, float y, float rotation) {
+    public Airplane_1_Model(float x, float y, float rotation) {
         super(x, y, rotation);
+        hp = HP_DEFAULT;
+        weight = WEIGHT_DEFAULT;
+        armor = ARMOR_DEFAUL;
     }
 }

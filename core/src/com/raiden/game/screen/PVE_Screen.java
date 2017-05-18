@@ -61,7 +61,7 @@ public class PVE_Screen extends ScreenAdapter {
     /**
      * A ship view used to draw ships.
      */
-    private final ShipView shipView;
+    private final ShipView airPlane_1;
 
     /**
      * A renderer used to debug the physical fixtures.
@@ -94,7 +94,7 @@ public class PVE_Screen extends ScreenAdapter {
         Texture notAnimated, animated;
         notAnimated = game.getAssetManager().get("AirPlane_1.png");
         animated = game.getAssetManager().get("spaceship-thrust.png");
-        shipView = new ShipView(notAnimated, animated, 4);
+        airPlane_1 = new ShipView(notAnimated, animated, 4);
 
         camera = createCamera();
     }
@@ -176,10 +176,10 @@ public class PVE_Screen extends ScreenAdapter {
             Gdx.app.log("Accelerometer","Current Yaw " + acceX.toString());
             if (Math.abs(acceX) <= 0.2){
                 acceX = 0f;
-                shipView.setAccelerating(false);
+                airPlane_1.setAccelerating(false);
             }
             else{
-                shipView.setAccelerating(true);
+                airPlane_1.setAccelerating(true);
             }
             controller.setVelocityofPlayer1(acceX, 0);
 
@@ -202,8 +202,8 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private void drawEntities() {
 
-        shipView.update(model.getPlayer1());
-        shipView.draw(game.getBatch());
+        airPlane_1.update(model.getPlayer1());
+        airPlane_1.draw(game.getBatch());
     }
 
     /**

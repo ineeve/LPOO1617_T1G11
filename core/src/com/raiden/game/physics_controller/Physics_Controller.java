@@ -5,9 +5,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.raiden.game.model.GameModel;
-import com.raiden.game.model.entities.AirplaneModel;
+import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.entities.AirPlane_1;
 
 /**
@@ -18,12 +17,12 @@ public abstract class Physics_Controller {
     /**
      * The arena width in meters.
      */
-    public static final int ARENA_WIDTH = 100;
+    public static final int ARENA_WIDTH = 1325;
 
     /**
      * The arena height in meters.
      */
-    public static final int ARENA_HEIGHT = 2000;
+    public static final int ARENA_HEIGHT = 3000;
 
     /**
      * The rotation speed in radians per second.
@@ -133,17 +132,18 @@ public abstract class Physics_Controller {
         airPlane1.setAngularVelocity(0);
     }
 
+    //TODO: Complete comment
+
     /**
      * Accelerates the spaceship. The acceleration takes into consideration the
      * constant acceleration force and the delta for this simulation step.
      *
-     * @param delta Duration of the rotation in seconds.
-     * @param pitch Angle in degrees of the device's orientation around the x-axis. Controls sideways movements.
-     * @param roll Angle in degrees of the device's orientation around the y-axis. Controls forward and backward movements.
+     * @param acceX
+     * @param acceY
      */
 
     public void setVelocityofPlayer1(float acceX, float acceY) {
-        airPlane1.setVelocity(-acceX * AirplaneModel.MAXVELOCITY, acceY);
+        airPlane1.setVelocity(-acceX * Airplane_1_Model.MAXVELOCITY, acceY);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.raiden.game.model;
 
-import com.raiden.game.model.entities.AirplaneModel;
-
 
 public class PVP_GameModel extends GameModel {
     /**
