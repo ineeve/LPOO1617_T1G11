@@ -25,6 +25,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.raiden.game.HangarMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
+        </activity>
+        <activity
             android:name="com.raiden.game.PlayLauncher"
             android:theme="@style/GdxTheme">
         </activity>

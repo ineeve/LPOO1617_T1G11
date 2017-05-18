@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .enableAutoManage(this,this)
                 .build();
 
         mImageManager = ImageManager.create(this);
