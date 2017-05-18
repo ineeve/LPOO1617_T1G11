@@ -33,12 +33,6 @@ public class PVE_Screen extends ScreenAdapter {
     public final static float PIXEL_TO_METER = 0.02f;
 
     /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
-     */
-    private static final float VIEWPORT_WIDTH = 20;
-
-    /**
      * The game this screen belongs to.
      */
     private final Arena game;
@@ -74,9 +68,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
-    private Float initialPitch;
-
-    private Float initialYaw;
+    private Float acceY_initial;
     /**
      * Creates this screen.
      *
@@ -88,8 +80,6 @@ public class PVE_Screen extends ScreenAdapter {
         this.game = game;
         this.model = model;
         this.controller = controller;
-        this.initialPitch = -1024f;
-        this.initialYaw = -1024f;
         loadAssets();
         Texture notAnimated, animated;
         notAnimated = game.getAssetManager().get("AirPlane_1.png");
@@ -105,7 +95,9 @@ public class PVE_Screen extends ScreenAdapter {
      * @return the camera
      */
     private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
+        float viewport_width = 20;
+        float viewport_height = viewport_width * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth());
+        OrthographicCamera camera = new OrthographicCamera(viewport_width / PIXEL_TO_METER, viewport_height / PIXEL_TO_METER);
 
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
@@ -171,12 +163,12 @@ public class PVE_Screen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-    Gdx.app.log("Compass", "Handling Inputs");
+    //Gdx.app.log("Compass", "Handling Inputs");
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
 
-            Gdx.app.log("Accelerometer","Current Yaw " + acceX.toString());
+            //Gdx.app.log("Accelerometer","Current Yaw " + acceX.toString());
             if (Math.abs(acceX) <= 0.2){
                 acceX = 0f;
                 airPlane_1.setAccelerating(false);
@@ -184,20 +176,17 @@ public class PVE_Screen extends ScreenAdapter {
             else{
                 airPlane_1.setAccelerating(true);
             }
-            controller.setVelocityofPlayer1(acceX, 0);
+            Float acceY = Gdx.input.getAccelerometerY();
+            if(acceY_initial == null){
+                acceY_initial = acceY;
+                acceY = 0f;
+            }
+            else{
+                acceY = acceY - acceY_initial;
+            }
+            controller.setVelocityofPlayer1(acceX, -acceY);
 
         }
-       /* boolean compassAvailable = Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass);
-        Gdx.app.log("Compass","Available =" + compassAvailable);
-        if (compassAvailable){
-            Integer pitch = (int)Gdx.input.getPitch();
-            Integer azimuth = (int)Gdx.input.getAzimuth();
-            Integer roll = (int)Gdx.input.getRoll();
-            Gdx.app.log("Compass","Current Azimuth " + azimuth.toString());
-            Gdx.app.log("Compass","Current pitch " + pitch.toString());
-            Gdx.app.log("Compass","Current roll " + roll.toString());
-        }*/
-
     }
 
     /**

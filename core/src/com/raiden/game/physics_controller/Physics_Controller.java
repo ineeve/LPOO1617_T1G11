@@ -17,12 +17,12 @@ public abstract class Physics_Controller {
     /**
      * The arena width in meters.
      */
-    public static final int ARENA_WIDTH = 1325;
+    public static final int ARENA_WIDTH = 52;
 
     /**
      * The arena height in meters.
      */
-    public static final int ARENA_HEIGHT = 3000;
+    public static final int ARENA_HEIGHT = 117;
 
     /**
      * The rotation speed in radians per second.
@@ -87,16 +87,16 @@ public abstract class Physics_Controller {
      */
     private void verifyBounds(Body body) {
         if (body.getPosition().x < 0)
-            body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
-
-        if (body.getPosition().y < 0)
-            body.setTransform(body.getPosition().x, ARENA_HEIGHT, body.getAngle());
-
-        if (body.getPosition().x > ARENA_WIDTH)
             body.setTransform(0, body.getPosition().y, body.getAngle());
 
-        if (body.getPosition().y > ARENA_HEIGHT)
+        if (body.getPosition().y < 0)
             body.setTransform(body.getPosition().x, 0, body.getAngle());
+
+        if (body.getPosition().x > ARENA_WIDTH)
+            body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
+
+        if (body.getPosition().y > ARENA_HEIGHT)
+            body.setTransform(body.getPosition().x, ARENA_HEIGHT, body.getAngle());
     }
 
     /**
