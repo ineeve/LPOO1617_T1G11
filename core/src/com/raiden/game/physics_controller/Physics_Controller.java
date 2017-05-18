@@ -1,5 +1,7 @@
 package com.raiden.game.physics_controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -8,6 +10,8 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.entities.AirPlane_1;
+
+import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 /**
  * Controlls the physics Aspects of the PVE Game
@@ -49,6 +53,8 @@ public abstract class Physics_Controller {
      */
     private float accumulator;
 
+    private OrthographicCamera camera;
+
     Physics_Controller(GameModel model){
 
         world = new World(new Vector2(0,0),true);
@@ -56,6 +62,9 @@ public abstract class Physics_Controller {
 
     }
 
+    public void setCamera(OrthographicCamera camera){
+        this.camera = camera;
+    }
     /**
      * Calculates the next physics step of duration delta (in seconds).
      *
@@ -86,17 +95,20 @@ public abstract class Physics_Controller {
      * @param body The body to be verified.
      */
     private void verifyBounds(Body body) {
+        float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f)* PIXEL_TO_METER;
+        float yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
+        Gdx.app.log("Y lower bound", String.valueOf(yLowerBound));
         if (body.getPosition().x < 0)
             body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
 
-        if (body.getPosition().y < 0)
-            body.setTransform(body.getPosition().x, ARENA_HEIGHT, body.getAngle());
+        if (body.getPosition().y < yLowerBound)
+            body.setTransform(body.getPosition().x, yLowerBound, body.getAngle());
 
         if (body.getPosition().x > ARENA_WIDTH)
             body.setTransform(0, body.getPosition().y, body.getAngle());
 
-        if (body.getPosition().y > ARENA_HEIGHT)
-            body.setTransform(body.getPosition().x, 0, body.getAngle());
+        if (body.getPosition().y > yUpperBound)
+            body.setTransform(body.getPosition().x, yUpperBound, body.getAngle());
     }
 
     /**

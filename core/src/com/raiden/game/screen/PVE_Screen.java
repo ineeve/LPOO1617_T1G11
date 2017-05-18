@@ -97,6 +97,7 @@ public class PVE_Screen extends ScreenAdapter {
         airPlane_1 = new ShipView(notAnimated, animated, 4);
 
         camera = createCamera();
+        controller.setCamera(camera);
     }
 
     /**
@@ -107,7 +108,7 @@ public class PVE_Screen extends ScreenAdapter {
     private OrthographicCamera createCamera() {
         OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER, VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
 
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        camera.position.set(camera.viewportWidth / 2f, model.getPlayer1().getY()/PIXEL_TO_METER, 0);
         camera.update();
 
         if (DEBUG_PHYSICS) {
@@ -146,7 +147,9 @@ public class PVE_Screen extends ScreenAdapter {
 
         controller.update(delta);
 
-        camera.position.set(model.getPlayer1().getX() / PIXEL_TO_METER, model.getPlayer1().getY() / PIXEL_TO_METER, 0);
+        camera.position.set(model.getPlayer1().getX() / PIXEL_TO_METER, camera.position.y + 20*delta, 0);
+        Gdx.app.log("Camera Position", String.valueOf(camera.position));
+        Gdx.app.log("Player Position", "X=" + String.valueOf(model.getPlayer1().getX()) + " Y=" + String.valueOf(model.getPlayer1().getY()));
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -171,12 +174,10 @@ public class PVE_Screen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-    Gdx.app.log("Compass", "Handling Inputs");
+
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
-
-            Gdx.app.log("Accelerometer","Current Yaw " + acceX.toString());
             if (Math.abs(acceX) <= 0.2){
                 acceX = 0f;
                 airPlane_1.setAccelerating(false);
