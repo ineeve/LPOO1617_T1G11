@@ -52,6 +52,9 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private final OrthographicCamera camera;
 
+    private final int CAMERA_Y_SPEED = 50;
+    private final int CAMERA_X_SPEED = 200;
+
     /**
      * A ship view used to draw ships.
      */
@@ -100,7 +103,7 @@ public class PVE_Screen extends ScreenAdapter {
         float viewport_height = viewport_width * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth());
         OrthographicCamera camera = new OrthographicCamera(viewport_width / PIXEL_TO_METER, viewport_height / PIXEL_TO_METER);
 
-        camera.position.set(camera.viewportWidth / 2f, model.getPlayer1().getY()/PIXEL_TO_METER, 0);
+        camera.position.set(model.getPlayer1().getX()/PIXEL_TO_METER, model.getPlayer1().getY()/PIXEL_TO_METER, 0);
         camera.update();
 
         if (DEBUG_PHYSICS) {
@@ -138,10 +141,11 @@ public class PVE_Screen extends ScreenAdapter {
         handleInputs(delta);
 
         controller.update(delta);
-
-        camera.position.set(model.getPlayer1().getX() / PIXEL_TO_METER, camera.position.y + 20*delta, 0);
-        Gdx.app.log("Camera Position", String.valueOf(camera.position));
-        Gdx.app.log("Player Position", "X=" + String.valueOf(model.getPlayer1().getX()) + " Y=" + String.valueOf(model.getPlayer1().getY()));
+        //camera.position.set(model.getPlayer1().getX() / PIXEL_TO_METER, camera.position.y + 20*delta, 0);
+        updateCameraPosition(delta);
+        verifyCameraBounds(delta);
+        //Gdx.app.log("Camera Position", String.valueOf(camera.position));
+        //Gdx.app.log("Player Position", "X=" + String.valueOf(model.getPlayer1().getX()) + " Y=" + String.valueOf(model.getPlayer1().getY()));
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -157,6 +161,55 @@ public class PVE_Screen extends ScreenAdapter {
             debugCamera = camera.combined.cpy();
             debugCamera.scl(1 / PIXEL_TO_METER);
             debugRenderer.render(controller.getWorld(), debugCamera);
+        }
+    }
+
+    private void updateCameraPosition(float delta) {
+        Gdx.app.log("player_X", String.valueOf(model.getPlayer1().getX()));
+        Gdx.app.log("camera_X", String.valueOf(camera.position.x));
+
+        if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
+            Gdx.app.log("1.","1.");
+            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x - CAMERA_X_SPEED * delta));
+            camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+        }
+        else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
+            Gdx.app.log("2.","2.");
+            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x - controller.getXVelocityofPlayer1() * delta));
+            camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() /PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+        }
+        if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
+            Gdx.app.log("3.","3.");
+            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x + CAMERA_X_SPEED * delta));
+            camera.position.set(camera.position.x + CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+        }
+        else if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
+            Gdx.app.log("4.","4.");
+            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x + controller.getXVelocityofPlayer1() * delta));
+            camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+        }
+        if(controller.getXVelocityofPlayer1() == 0){
+            camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+        }
+    }
+
+    private void verifyCameraBounds(float delta) {
+        float camera_Upper_Bound_X = ARENA_WIDTH / PIXEL_TO_METER - camera.viewportWidth / 2f;
+        float camera_Lower_Bound_X = camera.viewportWidth / 2f;
+        if(camera_Upper_Bound_X < camera.position.x){
+            camera.position.set(camera_Upper_Bound_X, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+        }
+        else if(camera_Lower_Bound_X > camera.position.x){
+            camera.position.set(camera_Lower_Bound_X, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+        }
+
+        float camera_Upper_Bound_Y = ARENA_HEIGHT / PIXEL_TO_METER- camera.viewportHeight / 2f;
+        float camera_Lower_Bound_Y = camera.viewportHeight / 2f;
+        if(camera_Upper_Bound_Y < camera.position.y){
+            camera.position.set(camera.position.x, camera_Upper_Bound_Y, 0);
+        }
+        else if(camera_Lower_Bound_Y > camera.position.y){
+            camera.position.set(camera.position.x, camera_Lower_Bound_Y, 0);
         }
     }
 

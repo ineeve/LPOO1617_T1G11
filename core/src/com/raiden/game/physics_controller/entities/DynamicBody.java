@@ -146,4 +146,8 @@ public abstract class DynamicBody {
     public void setVelocity(float velX, float velY){
         body.setLinearVelocity(velX, velY);
     }
+
+    public Body getBody(){
+        return body;
+    }
 }

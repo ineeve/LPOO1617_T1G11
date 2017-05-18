@@ -32,7 +32,7 @@ public class Arena extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		GameModel model = new PVE_GameModel(Physics_Controller.ARENA_WIDTH /2, Physics_Controller.ARENA_HEIGHT / 2);
+		GameModel model = new PVE_GameModel(Physics_Controller.ARENA_WIDTH /2, 5);
 
 		setScreen(new PVE_Screen(this, model, new PVE_Controller(model)));
 	}

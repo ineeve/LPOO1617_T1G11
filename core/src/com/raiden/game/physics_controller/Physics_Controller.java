@@ -158,4 +158,12 @@ public abstract class Physics_Controller {
         airPlane1.setVelocity(-acceX * Airplane_1_Model.MAXVELOCITY, acceY);
     }
 
+    public float getXVelocityofPlayer1() {
+        return airPlane1.getBody().getLinearVelocity().x;
+    }
+
+    public float getYVelocityofPlayer1() {
+        return airPlane1.getBody().getLinearVelocity().y;
+    }
+
 }
