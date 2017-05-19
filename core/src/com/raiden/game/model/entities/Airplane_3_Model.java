@@ -10,7 +10,7 @@ public class Airplane_3_Model extends ShipModel {/**
      */
     public Airplane_3_Model(float x, float y, float rotation) {
         super(x, y, rotation);
-        MAXVELOCITY = (float) (Airplane_1_Model.MAXVELOCITY * 0.8);
+        Airplane_3_Model.MAXVELOCITY = (float) (Airplane_1_Model.MAXVELOCITY * 0.8);
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;

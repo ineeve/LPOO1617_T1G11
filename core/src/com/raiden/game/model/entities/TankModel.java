@@ -13,7 +13,7 @@ public class TankModel extends ShipModel { /**
      */
     TankModel(float x, float y, float rotation) {
         super(x, y, rotation);
-        MAXVELOCITY = (float) (Airplane_1_Model.MAXVELOCITY * 0.6);
+        TankModel.MAXVELOCITY = (float) (Airplane_1_Model.MAXVELOCITY * 0.6);
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;
