@@ -10,7 +10,6 @@ import com.raiden.game.model.entities.EntityModel;
 
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
-//import static com.aor.arena.view.PVE_Screen.PIXEL_TO_METER;
 
 /**
  * Wrapper class that represents an abstract physical
@@ -75,6 +74,8 @@ public abstract class DynamicBody {
 
         polygon.dispose();
     }
+
+    //TODO: complete comments
 
     /**
      * @param density The density of the fixture. How heavy it is in relation to its area.

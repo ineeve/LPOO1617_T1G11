@@ -141,11 +141,8 @@ public class PVE_Screen extends ScreenAdapter {
         handleInputs(delta);
 
         controller.update(delta);
-        //camera.position.set(model.getPlayer1().getX() / PIXEL_TO_METER, camera.position.y + 20*delta, 0);
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
-        //Gdx.app.log("Camera Position", String.valueOf(camera.position));
-        //Gdx.app.log("Player Position", "X=" + String.valueOf(model.getPlayer1().getX()) + " Y=" + String.valueOf(model.getPlayer1().getY()));
         camera.update();
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -219,11 +216,10 @@ public class PVE_Screen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-    //Gdx.app.log("Compass", "Handling Inputs");
+    Gdx.app.log("Accelerometer", "Handling Inputs");
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
-            //Gdx.app.log("Accelerometer","Current Yaw " + acceX.toString());
             if (Math.abs(acceX) <= 0.2){
                 acceX = 0f;
                 airPlane_1.setAccelerating(false);
