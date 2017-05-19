@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_id">858374538926</string>
+    <item name="mCardHangar" type="id">mCardHangar</item>
+    <item name="mCardHangar2" type="id">mCardHangar2</item>
 </resources>
