@@ -7,17 +7,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
  * Created by João on 18/05/2017.
  */
 
-public class Tank extends DynamicBody {
-
-    private float density = 0.5f;
-
-    private float friction = 0.4f;
-
-    private float restitution = 0.5f;
-
-    private int width = 488;
-
-    private int height = 657;
+public class Tank extends ShipPhysics {
 
     /**
      * Constructs a space ship body according to
@@ -29,8 +19,11 @@ public class Tank extends DynamicBody {
     public Tank (World world, MovingObjectModel model) {
         super(world, model);
         updatePhysics();
+        width = 488;
+        height = 657;
     }
 
+    @Override
     public void updatePhysics(){
         int x_Correction = width/488;
         int y_Correction = height/657;
@@ -48,25 +41,5 @@ public class Tank extends DynamicBody {
         createFixture(body, new float[]{
                 218*x_Correction,5*y_Correction, 270*x_Correction,5*y_Correction, 270*x_Correction,408*y_Correction, 218*x_Correction,408*y_Correction
         }, width, height, density, friction, restitution);
-    }
-
-    public void setDensity(float density) {
-        this.density = density;
-    }
-
-    public void setFriction(float friction) {
-        this.friction = friction;
-    }
-
-    public void setRestitution(float restitution) {
-        this.restitution = restitution;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 }

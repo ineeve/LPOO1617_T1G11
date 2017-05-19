@@ -8,18 +8,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
  * A concrete representation of an DynamicBody
  * representing the player space ship.
  */
-public class AirPlane_3 extends DynamicBody {
-
-    private float density = 0.5f;
-
-    private float friction = 0.4f;
-
-    private float restitution = 0.5f;
-
-    private int width = 423;
-
-    private int height = 689;
-
+public class AirPlane_3 extends ShipPhysics {
     /**
      * Constructs a space ship body according to
      * a space ship model.
@@ -30,8 +19,11 @@ public class AirPlane_3 extends DynamicBody {
     public AirPlane_3(World world, MovingObjectModel model) {
         super(world, model);
         updatePhysics();
+        width = 423;
+        height = 689;
     }
 
+    @Override
     public void updatePhysics(){
         int x_Correction = width/423;
         int y_Correction = height/689;
@@ -49,25 +41,5 @@ public class AirPlane_3 extends DynamicBody {
         createFixture(body, new float[]{
                 x_Correction,266*y_Correction, x_Correction,688*y_Correction, 422*x_Correction,688*y_Correction, 422*x_Correction,266*y_Correction
         }, width, height, density, friction, restitution);
-    }
-
-    public void setDensity(float density) {
-        this.density = density;
-    }
-
-    public void setFriction(float friction) {
-        this.friction = friction;
-    }
-
-    public void setRestitution(float restitution) {
-        this.restitution = restitution;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 }
