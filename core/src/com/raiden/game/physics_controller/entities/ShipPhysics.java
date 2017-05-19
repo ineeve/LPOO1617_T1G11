@@ -29,6 +29,9 @@ public abstract class ShipPhysics extends DynamicBody {
     public ShipPhysics(World world, MovingObjectModel model) {
         super(world, model);
         updatePhysics();
+        super.setDensity(density);
+        super.setFriction(friction);
+        super.setRestitution(restitution);
     }
 
     public abstract void updatePhysics();

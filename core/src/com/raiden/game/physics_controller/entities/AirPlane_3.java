@@ -30,16 +30,16 @@ public class AirPlane_3 extends ShipPhysics {
         // Left wing
         createFixture(body, new float[]{
                 211*x_Correction,y_Correction, x_Correction,266*y_Correction, 211*x_Correction,266*y_Correction
-        }, width, height, density, friction, restitution);
+        }, width, height);
 
         // Right wing
         createFixture(body, new float[]{
                 211*x_Correction,y_Correction, 422*x_Correction,266*y_Correction, 211*x_Correction,266*y_Correction
-        }, width, height, density, friction, restitution);
+        }, width, height);
 
         // Body
         createFixture(body, new float[]{
                 x_Correction,266*y_Correction, x_Correction,688*y_Correction, 422*x_Correction,688*y_Correction, 422*x_Correction,266*y_Correction
-        }, width, height, density, friction, restitution);
+        }, width, height);
     }
 }

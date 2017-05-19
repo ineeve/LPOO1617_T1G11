@@ -22,6 +22,10 @@ public abstract class DynamicBody {
      */
     final Body body;
 
+    private float density;
+    private float friction;
+    private float restitution;
+
     /**
      * Constructs a body representing a model in a certain world.
      *
@@ -45,11 +49,8 @@ public abstract class DynamicBody {
      *                 easier to get them from a bitmap image.
      * @param width The width of the bitmap the vertexes where extracted from.
      * @param height The height of the bitmap the vertexes where extracted from.
-     * @param density The density of the fixture. How heavy it is in relation to its area.
-     * @param friction The friction of the fixture. How slippery it is.
-     * @param restitution The restitution of the fixture. How much it bounces.
      */
-    final void createFixture(Body body, float[] vertexes, int width, int height, float density, float friction, float restitution) {
+    final void createFixture(Body body, float[] vertexes, int width, int height) {
         // Transform pixels into meters, center and invert the y-coordinate
         for (int i = 0; i < vertexes.length; i++) {
             if (i % 2 == 0) vertexes[i] -= width / 2;   // center the vertex x-coordinate
@@ -74,6 +75,28 @@ public abstract class DynamicBody {
 
         polygon.dispose();
     }
+
+    /**
+     * @param density The density of the fixture. How heavy it is in relation to its area.
+     */
+    void setDensity(float density){
+        this.density = density;
+    }
+
+    /**
+     * @param friction The friction of the fixture. How slippery it is.
+     */
+    void setFriction(float friction){
+        this.friction = friction;
+    }
+
+    /**
+     * @param restitution The restitution of the fixture. How much it bounces.
+     */
+    void setRestitution(float restitution){
+        this.restitution = restitution;
+    }
+
 
     /**
      * Wraps the getX method from the Box2D body class.

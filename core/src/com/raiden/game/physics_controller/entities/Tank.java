@@ -30,16 +30,16 @@ public class Tank extends ShipPhysics {
         // Main Body
         createFixture(body, new float[]{
                 35*x_Correction,72*y_Correction, 35*x_Correction,631*y_Correction, 449*x_Correction,631*y_Correction, 449*x_Correction,72*y_Correction
-        }, width, height, density, friction, restitution);
+        }, width, height);
 
         // Top Body
         createFixture(body, new float[]{
                 4*x_Correction,414*y_Correction, 244*x_Correction,655*y_Correction, 488*x_Correction,657*y_Correction, 244*x_Correction,173*y_Correction
-        }, width, height, density, friction, restitution);
+        }, width, height);
 
         // Cannon
         createFixture(body, new float[]{
                 218*x_Correction,5*y_Correction, 270*x_Correction,5*y_Correction, 270*x_Correction,408*y_Correction, 218*x_Correction,408*y_Correction
-        }, width, height, density, friction, restitution);
+        }, width, height);
     }
 }
