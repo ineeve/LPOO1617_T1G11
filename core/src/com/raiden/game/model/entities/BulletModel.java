@@ -12,9 +12,8 @@ public class BulletModel extends MovingObjectModel {
      *
      * @param x        the x-coordinate in meters
      * @param y        the y-coordinate in meters
-     * @param rotation the rotation in radians
      */
-    public BulletModel(float x, float y, int rotation) {
-        super(x, y, rotation);
+    public BulletModel(float x, float y) {
+        super(x, y);
     }
 }

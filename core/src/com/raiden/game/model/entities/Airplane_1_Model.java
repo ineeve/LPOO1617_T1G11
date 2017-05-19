@@ -8,10 +8,9 @@ public class Airplane_1_Model extends ShipModel {
      *
      * @param x        the x-coordinate in meters
      * @param y        the y-coordinate in meters
-     * @param rotation the rotation in radians
      */
-    public Airplane_1_Model(float x, float y, float rotation) {
-        super(x, y, rotation);
+    public Airplane_1_Model(float x, float y) {
+        super(x, y);
         Airplane_1_Model.MAXVELOCITY = 5;
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;

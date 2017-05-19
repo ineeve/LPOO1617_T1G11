@@ -16,21 +16,14 @@ public abstract class EntityModel {
     private float y;
 
     /**
-     * The current rotation of this model in radians.
-     */
-    private float rotation;
-
-    /**
      * Constructs a model with a position and a rotation.
      *
      * @param x The x-coordinate of this entity in meters.
      * @param y The y-coordinate of this entity in meters.
-     * @param rotation The current rotation of this entity in radians.
      */
-    EntityModel(float x, float y, float rotation) {
+    EntityModel(float x, float y) {
         this.x = x;
         this.y = y;
-        this.rotation = rotation;
     }
 
     /**
@@ -52,15 +45,6 @@ public abstract class EntityModel {
     }
 
     /**
-     * Returns the rotation of this entity.
-     *
-     * @return The rotation of this entity in radians.
-     */
-    public float getRotation() {
-        return rotation;
-    }
-
-    /**
      * Sets the position of this entity.
      *
      * @param x The x-coordinate of this entity in meters.
@@ -69,14 +53,5 @@ public abstract class EntityModel {
     public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
-    }
-
-    /**
-     * Sets the rotation of this entity.
-     *
-     * @param rotation The current rotation of this entity in radians.
-     */
-    public void setRotation(float rotation) {
-        this.rotation = rotation;
     }
 }

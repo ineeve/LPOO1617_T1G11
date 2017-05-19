@@ -28,10 +28,9 @@ public abstract class GameModel {
      *
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
-     * @param rotation The rotation in radians of the player ship in the world.
      */
-    public void addPlayer(float x, float y,float rotation){
-        players.add(new Airplane_1_Model(x,y,rotation));
+    public void addPlayer(float x, float y){
+        players.add(new Airplane_1_Model(x,y));
     }
 
     /**

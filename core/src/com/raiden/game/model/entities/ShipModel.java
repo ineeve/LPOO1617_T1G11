@@ -23,10 +23,9 @@ public abstract class ShipModel extends MovingObjectModel{
      *
      * @param x        the x-coordinate in meters
      * @param y        the y-coordinate in meters
-     * @param rotation the rotation in radians
      */
-    ShipModel(float x, float y, float rotation) {
-        super(x, y, rotation);
+    ShipModel(float x, float y) {
+        super(x, y);
         MAXVELOCITY = 0;
         WEIGHT_DEFAULT = 0;
         ARMOR_DEFAUL = 0;

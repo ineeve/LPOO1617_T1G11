@@ -9,9 +9,9 @@ public class PVE_GameModel extends GameModel {
      */
     public PVE_GameModel(float x, float y) {
         super();
-        addPlayer(x,y,0);
+        addPlayer(x,y);
     }
     public void addPlayer2(float x,float y){
-        super.addPlayer(x,y,0);
+        super.addPlayer(x,y);
     }
 }

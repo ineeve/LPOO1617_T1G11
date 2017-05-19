@@ -10,9 +10,8 @@ public class CometModel extends MovingObjectModel {
      *
      * @param x        the x-coordinate in meters
      * @param y        the y-coordinate in meters
-     * @param rotation the rotation in radians
      */
-    public CometModel(float x, float y, int rotation) {
-        super(x, y, rotation);
+    public CometModel(float x, float y) {
+        super(x, y);
     }
 }

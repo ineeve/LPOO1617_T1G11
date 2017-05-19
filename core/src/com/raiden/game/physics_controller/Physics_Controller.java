@@ -84,7 +84,6 @@ public abstract class Physics_Controller {
         for (Body body : bodies) {
             verifyBounds(body);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
-            ((EntityModel) body.getUserData()).setRotation(body.getAngle());
         }
     }
 

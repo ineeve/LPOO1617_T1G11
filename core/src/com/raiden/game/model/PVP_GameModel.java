@@ -12,7 +12,7 @@ public class PVP_GameModel extends GameModel {
      */
     public PVP_GameModel(float x1, float y1,float x2,float y2) {
         super();
-        addPlayer(x1,y1,0);
-        addPlayer(x2,y2,(float)Math.PI);
+        addPlayer(x1,y1);
+        addPlayer(x2,y2);
     }
 }

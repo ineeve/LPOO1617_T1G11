@@ -14,10 +14,9 @@ public abstract class MovingObjectModel extends EntityModel {
      *
      * @param x the x-coordinate in meters
      * @param y the y-coordinate in meters
-     * @param rotation the rotation in radians
      */
-    MovingObjectModel(float x, float y, float rotation) {
-        super(x, y, rotation);
+    MovingObjectModel(float x, float y) {
+        super(x, y);
     }
 
     /**
