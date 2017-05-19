@@ -32,6 +32,8 @@ public class PVE_Screen extends ScreenAdapter {
      */
     public final static float PIXEL_TO_METER = 0.02f;
 
+    private final float acceY_correction = 2;
+
     /**
      * The game this screen belongs to.
      */
@@ -220,7 +222,7 @@ public class PVE_Screen extends ScreenAdapter {
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
-            if (Math.abs(acceX) <= 0.2){
+            if (Math.abs(acceX) <= 0.25){
                 acceX = 0f;
                 airPlane_1.setAccelerating(false);
             }
@@ -235,7 +237,10 @@ public class PVE_Screen extends ScreenAdapter {
             else{
                 acceY = acceY - acceY_initial;
             }
-            controller.setVelocityofPlayer1(acceX, -acceY);
+            if(-acceY>0)
+                controller.setVelocityofPlayer1(acceX, -acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER);
+            else if (-acceY<0)
+                controller.setVelocityofPlayer1(acceX, -(acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER));
 
         }
     }
