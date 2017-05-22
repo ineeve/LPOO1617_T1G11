@@ -3,4 +3,6 @@
     <string name="app_id">858374538926</string>
     <item name="mCardHangar" type="id">mCardHangar</item>
     <item name="mCardHangar2" type="id">mCardHangar2</item>
+    <item name="mCardHangar4" type="id">mCardHangar4</item>
+    <item name="mCardHangar3" type="id">mCardHangar3</item>
 </resources>

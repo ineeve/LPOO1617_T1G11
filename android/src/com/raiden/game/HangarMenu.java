@@ -34,10 +34,22 @@ public class HangarMenu extends AppCompatActivity implements View.OnClickListene
         image2.setImageResource(R.drawable.settings_button);
         image2.setId(R.id.mCardHangar2);
         mLinearLayout.addView(image2, 0);
+        mHangarCard image3 = new mHangarCard(this);
+        image3.setImageResource(R.drawable.settings_button);
+        image3.setId(R.id.mCardHangar3);
+        mLinearLayout.addView(image3, 0);
+        mHangarCard image4 = new mHangarCard(this);
+        image4.setImageResource(R.drawable.settings_button);
+        image4.setId(R.id.mCardHangar4);
+        mLinearLayout.addView(image4, 0);
         cards.add(image);
         cards.add(image2);
+        cards.add(image3);
+        cards.add(image4);
         image.setOnClickListener(this);
         image2.setOnClickListener(this);
+        image3.setOnClickListener(this);
+        image4.setOnClickListener(this);
 
     }
 
@@ -47,8 +59,7 @@ public class HangarMenu extends AppCompatActivity implements View.OnClickListene
                 card.setFocusable(false);
                 int width = (int) (card.getWidth() / 1.2);
                 int height = (int) (card.getHeight() / 1.2);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-                card.setLayoutParams(layoutParams);
+                card.resize(width, height);
             }
         }
     }
@@ -57,16 +68,14 @@ public class HangarMenu extends AppCompatActivity implements View.OnClickListene
         v.setFocusable(true);
         int width = (int) (v.getWidth() * 1.2);
         int height = (int) (v.getHeight() * 1.2);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-        v.setLayoutParams(layoutParams);
+        ((mHangarCard) v).resize(width, height);
     }
 
     void setOneCardUnFocused(View v){
         v.setFocusable(false);
         int width = (int) (v.getWidth() / 1.2);
         int height = (int) (v.getHeight() / 1.2);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-        v.setLayoutParams(layoutParams);
+        ((mHangarCard) v).resize(width, height);
     }
 
     @Override

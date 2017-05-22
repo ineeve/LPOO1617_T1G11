@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        /*
+    /*
      * API INTEGRATION SECTION. This section contains the code that integrates
      * the game with the Google Play game services API.
      */
