@@ -19,9 +19,9 @@ public class AirPlane_1 extends ShipPhysics {
      */
     public AirPlane_1(World world, MovingObjectModel model) {
         super(world, model);
-        updatePhysics();
         width = 508;
         height = 531;
+        updatePhysics();
     }
 
     public void updatePhysics(){

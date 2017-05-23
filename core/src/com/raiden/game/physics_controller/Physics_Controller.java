@@ -119,30 +119,6 @@ public abstract class Physics_Controller {
         return world;
     }
 
-    /**
-     * Rotates the spaceship left. The rotation takes into consideration the
-     * constant rotation speed and the delta for this simulation step.
-     *
-     * @param delta Duration of the rotation in seconds.
-     */
-    public void rotateLeft(float delta) {
-        airPlane1.setTransform(airPlane1.getX(), airPlane1.getY(), airPlane1.getAngle() + ROTATION_SPEED * delta);
-        airPlane1.setAngularVelocity(0);
-    }
-
-    /**
-     * Rotates the spaceship right. The rotation takes into consideration the
-     * constant rotation speed and the delta for this simulation step.
-     *
-     * @param delta Duration of the rotation in seconds.
-     */
-    public void rotateRight(float delta) {
-        airPlane1.getX();
-
-        airPlane1.setTransform(airPlane1.getX(), airPlane1.getY(), airPlane1.getAngle() - ROTATION_SPEED * delta);
-        airPlane1.setAngularVelocity(0);
-    }
-
     //TODO: Complete comment
 
     /**

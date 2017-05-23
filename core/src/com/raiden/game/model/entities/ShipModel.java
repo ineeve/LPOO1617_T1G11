@@ -1,5 +1,7 @@
 package com.raiden.game.model.entities;
 
+import java.awt.Point;
+
 /**
  * Created by João on 19/05/2017.
  */
@@ -30,5 +32,6 @@ public abstract class ShipModel extends MovingObjectModel{
         WEIGHT_DEFAULT = 0;
         ARMOR_DEFAUL = 0;
         HP_DEFAULT = 0;
+        bullet = new BulletModel(x,y);
     }
 }
