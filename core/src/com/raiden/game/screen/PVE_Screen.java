@@ -157,28 +157,19 @@ public class PVE_Screen extends ScreenAdapter {
         }
     }
 
-    private void updateCameraPosition(float delta) {
-        Gdx.app.log("player_X", String.valueOf(model.getPlayer1().getX()));
-        Gdx.app.log("camera_X", String.valueOf(camera.position.x));
 
+    //TODO: add comments inside the code
+    private void updateCameraPosition(float delta) {
         if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
-            Gdx.app.log("1.","1.");
-            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x - CAMERA_X_SPEED * delta));
             camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
         }
         else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
-            Gdx.app.log("2.","2.");
-            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x - controller.getXVelocityofPlayer1() * delta));
             camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() /PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
         }
         if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
-            Gdx.app.log("3.","3.");
-            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x + CAMERA_X_SPEED * delta));
             camera.position.set(camera.position.x + CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
         }
         else if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
-            Gdx.app.log("4.","4.");
-            Gdx.app.log("New x camera: ", String.valueOf(camera.position.x + controller.getXVelocityofPlayer1() * delta));
             camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
         }
         if(controller.getXVelocityofPlayer1() == 0){
@@ -186,6 +177,8 @@ public class PVE_Screen extends ScreenAdapter {
         }
     }
 
+
+    //TODO: add comments inside the code
     private void verifyCameraBounds(float delta) {
         float camera_Upper_Bound_X = ARENA_WIDTH / PIXEL_TO_METER - camera.viewportWidth / 2f;
         float camera_Lower_Bound_X = camera.viewportWidth / 2f;
@@ -232,7 +225,6 @@ public class PVE_Screen extends ScreenAdapter {
                 controller.setVelocityofPlayer1(acceX, -acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER);
             else if (-acceY<0)
                 controller.setVelocityofPlayer1(acceX, -(acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER));
-
         }
     }
 

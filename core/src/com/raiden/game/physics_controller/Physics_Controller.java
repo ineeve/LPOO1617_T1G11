@@ -10,6 +10,10 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.entities.AirPlane_1;
+import com.raiden.game.physics_controller.entities.ControllerFactory;
+import com.raiden.game.physics_controller.entities.DynamicBody;
+
+import java.util.ArrayList;
 
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
@@ -43,6 +47,8 @@ public abstract class Physics_Controller {
      */
     private final World world;
 
+    private ArrayList<DynamicBody> dynamicBodies;
+
     /**
      * The spaceship body.
      */
@@ -56,9 +62,14 @@ public abstract class Physics_Controller {
     private OrthographicCamera camera;
 
     Physics_Controller(GameModel model){
-
+        dynamicBodies = new ArrayList<DynamicBody>();
         world = new World(new Vector2(0,0),true);
-        airPlane1 = new AirPlane_1(world, model.getPlayer1());
+
+        for(EntityModel modelEntity : model.getEntityModels()){
+            dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
+        }
+
+        airPlane1 = (AirPlane_1) dynamicBodies.get(0);
 
     }
 
