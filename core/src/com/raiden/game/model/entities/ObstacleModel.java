@@ -15,4 +15,9 @@ public class ObstacleModel extends EntityModel{
     ObstacleModel(float x, float y) {
         super(x, y);
     }
+
+    @Override
+    public ModelType getType() {
+        return ModelType.OBSTACLE;
+    }
 }

@@ -1,9 +1,10 @@
 package com.raiden.game.screen.entities;
 
 
-        import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.raiden.game.Arena;
 import com.raiden.game.model.entities.EntityModel;
 
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
@@ -14,25 +15,20 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
  *
  * This view is able to update its data based on a entity model.
  */
-abstract class EntityView {
+public abstract class EntityView {
     /**
      * The sprite representing this entity view.
      */
     Sprite sprite;
 
-    /**
-     * The texture representing this entity view.
-     */
-
-    Texture texture;
-
+    //TODO: complete
     /**
      * Creates a view belonging to a game.
      *
-     * @param texture to after create the sprite of object
+     * @param
      */
-    EntityView(Texture texture) {
-        this.texture = texture;
+    EntityView(Arena arena) {
+        this.sprite = createSprite(arena);
     }
 
     /**
@@ -51,7 +47,7 @@ abstract class EntityView {
      *
      * @return the sprite representing this view.
      */
-    public abstract Sprite createSprite();
+    public abstract Sprite createSprite(Arena arena);
 
     /**
      * Updates this view based on a certain model.
@@ -59,6 +55,8 @@ abstract class EntityView {
      * @param model the model used to update this view
      */
     public void update(EntityModel model) {
+        Gdx.app.log("modelX: ", String.valueOf(model.getX() / PIXEL_TO_METER));
+        Gdx.app.log("modelY: ", String.valueOf(model.getY() / PIXEL_TO_METER));
         sprite.setCenter(model.getX() / PIXEL_TO_METER, model.getY() / PIXEL_TO_METER);
     }
 }

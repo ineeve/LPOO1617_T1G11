@@ -1,6 +1,10 @@
 package com.raiden.game.model;
 
+import com.raiden.game.model.entities.ShipModel;
+
 public class PVE_GameModel extends GameModel {
+
+
     /**
      * Constructs a game with a.space ship in a certain position.
      *
@@ -10,8 +14,14 @@ public class PVE_GameModel extends GameModel {
     public PVE_GameModel(float x, float y) {
         super();
         addPlayer(x,y);
+        //addEnemy(new Airplane_2_Model(10,10));
     }
+
     public void addPlayer2(float x,float y){
         super.addPlayer(x,y);
+    }
+
+    public void addEnemy(ShipModel newEnemy){
+        entityModels.add(newEnemy);
     }
 }

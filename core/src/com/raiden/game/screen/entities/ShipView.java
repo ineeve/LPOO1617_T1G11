@@ -1,31 +1,17 @@
 package com.raiden.game.screen.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.raiden.game.Arena;
 import com.raiden.game.model.entities.EntityModel;
 
 /**
  * A view representing a space ship
  */
-public class ShipView extends EntityView {
-    /**
-     * The time between the animation frames
-     */
-    private static final float FRAME_TIME = 0.05f;
-
-    /**
-     * The number of animations
-     */
-    private int numberOfAnimations;
-
-    /**
-     * The texture used when the ship is accelerating
-     */
-    private Texture animatedTexture;
+public abstract class ShipView extends EntityView {
 
     /**
      * The animation used when the ship is accelerating
@@ -48,20 +34,13 @@ public class ShipView extends EntityView {
      */
     private boolean accelerating;
 
+
+    //TODO: fix comment
     /**
      * Constructs a space ship model.
-     *
-     * @param notAccelerated
-     *
-     * @param accelerated
-     *
-     * @param animationNumbers
      */
-    public ShipView(Texture notAccelerated, Texture accelerated, int animationNumbers) {
-        super(notAccelerated);
-        animatedTexture = accelerated;
-        this.numberOfAnimations = animationNumbers;
-        sprite = createSprite();
+    public ShipView(Arena arena) {
+        super(arena);
     }
 
     /**
@@ -70,40 +49,29 @@ public class ShipView extends EntityView {
      * @return the sprite representing this space ship
      */
     @Override
-    public Sprite createSprite() {
-        notAcceleratingRegion = createNotAcceleratingRegion(texture);
-        acceleratingAnimation = createAcceleratingAnimation(animatedTexture, numberOfAnimations);
+    public Sprite createSprite(Arena arena) {
+        notAcceleratingRegion = createNotAcceleratingRegion(arena);
+        acceleratingAnimation = createAcceleratingAnimation(arena);
         return new Sprite(notAcceleratingRegion);
     }
 
+
+    //TODO: fix comment
     /**
      * Creates the texture used when the ship is not accelerating
      *
-     * @param noThrustTexture
-     *
      * @return the texture used when the ship is not accelerating
      */
-    private TextureRegion createNotAcceleratingRegion(Texture noThrustTexture) {
-        return new TextureRegion(noThrustTexture, noThrustTexture.getWidth(), noThrustTexture.getHeight());
-    }
+    protected abstract TextureRegion createNotAcceleratingRegion(Arena arena);
 
+
+    //TODO: fix comment
     /**
      * Creates the animation used when the ship is accelerating
      *
-     * @param thrustTexture
-     *
-     * @param numberOfAnimations
-     *
      * @return the animation used when the ship is accelerating
      */
-    private Animation<TextureRegion> createAcceleratingAnimation(Texture thrustTexture, int numberOfAnimations) {
-        TextureRegion[][] thrustRegion = TextureRegion.split(thrustTexture, thrustTexture.getWidth() / numberOfAnimations, thrustTexture.getHeight());
-
-        TextureRegion[] frames = new TextureRegion[4];
-        System.arraycopy(thrustRegion[0], 0, frames, 0, 4);
-
-        return new Animation<TextureRegion>(FRAME_TIME, frames);
-    }
+    protected abstract Animation<TextureRegion> createAcceleratingAnimation(Arena arena);
 
     /**
      * Updates this ship model. Also save and resets

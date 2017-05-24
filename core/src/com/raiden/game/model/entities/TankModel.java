@@ -17,4 +17,9 @@ public class TankModel extends ShipModel { /**
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;
     }
+
+    @Override
+    public ModelType getType() {
+        return ModelType.TANK;
+    }
 }

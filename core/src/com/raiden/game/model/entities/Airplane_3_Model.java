@@ -14,4 +14,9 @@ public class Airplane_3_Model extends ShipModel {/**
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;
     }
+
+    @Override
+    public ModelType getType() {
+        return ModelType.AIRPLANE_3;
+    }
 }

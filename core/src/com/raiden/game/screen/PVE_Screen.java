@@ -11,8 +11,10 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.Physics_Controller;
-import com.raiden.game.screen.entities.ShipView;
+import com.raiden.game.screen.entities.EntityView;
+import com.raiden.game.screen.entities.ViewFactory;
 
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
@@ -58,11 +60,6 @@ public class PVE_Screen extends ScreenAdapter {
     private final int CAMERA_X_SPEED = 200;
 
     /**
-     * A ship view used to draw ships.
-     */
-    private final ShipView airPlane_1;
-
-    /**
      * A renderer used to debug the physical fixtures.
      */
     private Box2DDebugRenderer debugRenderer;
@@ -86,10 +83,6 @@ public class PVE_Screen extends ScreenAdapter {
         this.model = model;
         this.controller = controller;
         loadAssets();
-        Texture notAnimated, animated;
-        notAnimated = game.getAssetManager().get("AirPlane_1.png");
-        animated = game.getAssetManager().get("spaceship-thrust.png");
-        airPlane_1 = new ShipView(notAnimated, animated, 4);
 
         camera = createCamera();
         controller.setCamera(camera);
@@ -127,6 +120,7 @@ public class PVE_Screen extends ScreenAdapter {
         this.game.getAssetManager().load( "AirPlane_2.png" , Texture.class);
         this.game.getAssetManager().load( "AirPlane_3.png" , Texture.class);
         this.game.getAssetManager().load( "Tank.png" , Texture.class);
+        this.game.getAssetManager().load( "Bullet.png" , Texture.class);
 
         this.game.getAssetManager().load( "background.png" , Texture.class);
 
@@ -224,10 +218,7 @@ public class PVE_Screen extends ScreenAdapter {
             Float acceX = Gdx.input.getAccelerometerX();
             if (Math.abs(acceX) <= 0.25){
                 acceX = 0f;
-                airPlane_1.setAccelerating(false);
-            }
-            else{
-                airPlane_1.setAccelerating(true);
+                //TODO: change something where to set acceleration to view
             }
             Float acceY = Gdx.input.getAccelerometerY();
             if(acceY_initial == null){
@@ -250,8 +241,12 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private void drawEntities() {
 
-        airPlane_1.update(model.getPlayer1());
-        airPlane_1.draw(game.getBatch());
+        for (EntityModel modelEntity : model.getEntityModels()) {
+            EntityView view = ViewFactory.makeView(game, modelEntity);
+            view.update(modelEntity);
+            view.draw(game.getBatch());
+        }
+
     }
 
     /**
