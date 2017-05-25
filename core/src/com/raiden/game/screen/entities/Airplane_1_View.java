@@ -30,14 +30,14 @@ public class Airplane_1_View extends ShipView {
 
     @Override
     protected TextureRegion createNotAcceleratingRegion(Arena arena) {
-        Texture notAnimated = arena.getAssetManager().get("AirPlane_1.png");
+        Texture notAnimated = getAsset(arena, "AirPlane_1.png");
         return new TextureRegion(notAnimated, notAnimated.getWidth(), notAnimated.getHeight());
     }
 
     @Override
     protected Animation<TextureRegion> createAcceleratingAnimation(Arena arena) {
         //TODO: change this animated image
-        Texture animated = arena.getAssetManager().get("spaceship-thrust.png");
+        Texture animated = getAsset(arena, "spaceship-thrust.png");
 
         TextureRegion[][] thrustRegion = TextureRegion.split(animated, animated.getWidth() / numberOfAnimations, animated.getHeight());
 

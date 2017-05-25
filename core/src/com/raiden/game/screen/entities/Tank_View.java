@@ -30,7 +30,7 @@ public class Tank_View extends ShipView {
 
     @Override
     protected TextureRegion createNotAcceleratingRegion(Arena arena) {
-        Texture notAnimated = arena.getAssetManager().get("Tank.png");
+        Texture notAnimated = getAsset(arena, "Tank.png");
         return new TextureRegion(notAnimated, notAnimated.getWidth(), notAnimated.getHeight());
     }
 

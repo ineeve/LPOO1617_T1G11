@@ -110,19 +110,22 @@ public class PVE_Screen extends ScreenAdapter {
         return camera;
     }
 
+    private void loadOneAsset(String asset){
+        this.game.getAssetManager().load( asset , Texture.class);
+    }
+
     /**
      * Loads the assets needed by this screen.
      */
     private void loadAssets() {
-        this.game.getAssetManager().load( "spaceship-no-thrust.png" , Texture.class);
-        this.game.getAssetManager().load( "spaceship-thrust.png" , Texture.class);
-        this.game.getAssetManager().load( "AirPlane_1.png" , Texture.class);
-        this.game.getAssetManager().load( "AirPlane_2.png" , Texture.class);
-        this.game.getAssetManager().load( "AirPlane_3.png" , Texture.class);
-        this.game.getAssetManager().load( "Tank.png" , Texture.class);
-        this.game.getAssetManager().load( "Bullet.png" , Texture.class);
-
-        this.game.getAssetManager().load( "background.png" , Texture.class);
+        loadOneAsset( "spaceship-no-thrust.png");
+        loadOneAsset( "spaceship-thrust.png");
+        loadOneAsset( "AirPlane_1.png");
+        loadOneAsset( "AirPlane_2.png");
+        loadOneAsset( "AirPlane_3.png");
+        loadOneAsset( "Tank.png");
+        loadOneAsset( "Bullet.png");
+        loadOneAsset( "background.png");
 
         this.game.getAssetManager().finishLoading();
     }

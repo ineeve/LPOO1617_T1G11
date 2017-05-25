@@ -1,6 +1,7 @@
 package com.raiden.game.screen.entities;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.raiden.game.Arena;
@@ -55,5 +56,9 @@ public abstract class EntityView {
      */
     public void update(EntityModel model) {
         sprite.setCenter(model.getX() / PIXEL_TO_METER, model.getY() / PIXEL_TO_METER);
+    }
+
+    protected Texture getAsset(Arena arena, String asset){
+        return arena.getAssetManager().get(asset);
     }
 }
