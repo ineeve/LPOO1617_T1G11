@@ -1,7 +1,11 @@
 package com.raiden.game.model.entities;
 
 
-public class Airplane_3_Model extends ShipModel {/**
+public class Airplane_3_Model extends ShipModel {
+
+    private static float MAXVELOCITY_Default = (float) (Airplane_1_Model.MAXVELOCITY_Default * 0.8);
+
+    /**
      * Creates a new ship model in a certain position and having a certain rotation.
      *
      * @param x        the x-coordinate in meters
@@ -9,7 +13,7 @@ public class Airplane_3_Model extends ShipModel {/**
      */
     public Airplane_3_Model(float x, float y) {
         super(x, y);
-        Airplane_3_Model.MAXVELOCITY = (float) (Airplane_1_Model.MAXVELOCITY * 0.8);
+        MAXVELOCITY = MAXVELOCITY_Default;
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;

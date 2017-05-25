@@ -18,27 +18,27 @@ public class Tank extends ShipPhysics {
      */
     public Tank (World world, MovingObjectModel model) {
         super(world, model);
+        width = 75;
+        height = 101;
         updatePhysics();
-        width = 488;
-        height = 657;
     }
 
     @Override
     public void updatePhysics(){
-        int x_Correction = width/488;
-        int y_Correction = height/657;
+        float x_Correction = width / 488f;
+        float y_Correction = height / 657f;
         // Main Body
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 35*x_Correction,72*y_Correction, 35*x_Correction,631*y_Correction, 449*x_Correction,631*y_Correction, 449*x_Correction,72*y_Correction
         }, width, height);
 
         // Top Body
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 4*x_Correction,414*y_Correction, 244*x_Correction,655*y_Correction, 488*x_Correction,657*y_Correction, 244*x_Correction,173*y_Correction
         }, width, height);
 
         // Cannon
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 218*x_Correction,5*y_Correction, 270*x_Correction,5*y_Correction, 270*x_Correction,408*y_Correction, 218*x_Correction,408*y_Correction
         }, width, height);
     }

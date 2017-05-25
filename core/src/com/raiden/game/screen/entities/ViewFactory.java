@@ -49,4 +49,8 @@ public abstract class ViewFactory {
     private static EntityModel.ModelType getTypeOfModel(EntityModel model){
         return model.getType();
     }
+
+    public static void dispose() {
+        modelToViewHash.clear();
+    }
 }

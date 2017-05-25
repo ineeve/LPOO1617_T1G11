@@ -9,9 +9,9 @@ import com.badlogic.gdx.utils.Array;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.physics_controller.entities.AirPlane_1;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
+import com.raiden.game.physics_controller.entities.ShipPhysics;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public abstract class Physics_Controller {
     /**
      * The spaceship body.
      */
-    private final AirPlane_1 airPlane1;
+    private final ShipPhysics airPlane1;
 
     /**
      * Accumulator used to calculate the simulation step.
@@ -69,7 +69,7 @@ public abstract class Physics_Controller {
             dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
         }
 
-        airPlane1 = (AirPlane_1) dynamicBodies.get(0);
+        airPlane1 = (ShipPhysics) dynamicBodies.get(0);
 
     }
 
@@ -105,7 +105,7 @@ public abstract class Physics_Controller {
      * @param body The body to be verified.
      */
     private void verifyBounds(Body body) {
-        float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f)* PIXEL_TO_METER;
+        float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
         float yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
         Gdx.app.log("Y lower bound", String.valueOf(yLowerBound));
         if (body.getPosition().x < 0)

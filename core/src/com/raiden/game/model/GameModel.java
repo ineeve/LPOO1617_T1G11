@@ -3,6 +3,7 @@ package com.raiden.game.model;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.model.entities.ShipModel;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,9 @@ public abstract class GameModel {
      */
     protected ArrayList<EntityModel> entityModels;
 
+    private ShipModel airplane11;
+    private ShipModel airplane12;
+
 
     /**
      * Constructs a game level
@@ -30,8 +34,9 @@ public abstract class GameModel {
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
      */
-    public void addPlayer(float x, float y){
-        entityModels.add(new Airplane_1_Model(x,y));
+    public void addPlayer1(float x, float y){
+        airplane11 = new Airplane_1_Model(x,y);
+        entityModels.add(airplane11);
     }
 
     /**
@@ -40,11 +45,21 @@ public abstract class GameModel {
      * @return the space ship.
      */
     public MovingObjectModel getPlayer1() {
-        return (MovingObjectModel) entityModels.get(0);
+        return (MovingObjectModel) airplane11;
     }
 
     public ArrayList<EntityModel> getEntityModels(){
         return entityModels;
+    }
+
+
+    public void addEnemy(ShipModel newEnemy){
+        entityModels.add(newEnemy);
+    }
+
+    public void addPlayer2(float x,float y){
+        airplane12 = new Airplane_1_Model(x,y);
+        entityModels.add(airplane12);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.raiden.game.physics_controller.entities;
 
 
-import com.raiden.game.model.entities.MovingObjectModel;
 import com.badlogic.gdx.physics.box2d.World;
+import com.raiden.game.model.entities.MovingObjectModel;
 
 /**
  * A concrete representation of an DynamicBody
@@ -19,26 +19,27 @@ public class AirPlane_1 extends ShipPhysics {
      */
     public AirPlane_1(World world, MovingObjectModel model) {
         super(world, model);
-        width = 508;
-        height = 531;
+        width = 98;
+        height = 102;
+        body.setFixedRotation(true);
         updatePhysics();
     }
 
     public void updatePhysics(){
-        int x_Correction = width/508;
-        int y_Correction = height/531;
+        float x_Correction = width / 508f;
+        float y_Correction = height / 531f;
         // Left wing
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 253*x_Correction,y_Correction, x_Correction,502*y_Correction, 203*x_Correction,466*y_Correction
         }, width, height);
 
         // Right wing
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 253*x_Correction,y_Correction, 303*x_Correction,466*y_Correction, 505*x_Correction,502*y_Correction
         }, width, height);
 
         // Body
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 253*x_Correction,y_Correction, 203*x_Correction,466*y_Correction, 253*x_Correction,530*y_Correction, 303*x_Correction,466*y_Correction
         }, width, height);
     }

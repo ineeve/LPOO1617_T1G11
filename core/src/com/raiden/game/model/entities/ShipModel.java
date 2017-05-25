@@ -1,7 +1,5 @@
 package com.raiden.game.model.entities;
 
-import java.awt.Point;
-
 /**
  * Created by João on 19/05/2017.
  */

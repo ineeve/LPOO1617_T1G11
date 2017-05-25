@@ -1,7 +1,6 @@
 package com.raiden.game.screen.entities;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.raiden.game.Arena;
@@ -55,8 +54,6 @@ public abstract class EntityView {
      * @param model the model used to update this view
      */
     public void update(EntityModel model) {
-        Gdx.app.log("modelX: ", String.valueOf(model.getX() / PIXEL_TO_METER));
-        Gdx.app.log("modelY: ", String.valueOf(model.getY() / PIXEL_TO_METER));
         sprite.setCenter(model.getX() / PIXEL_TO_METER, model.getY() / PIXEL_TO_METER);
     }
 }

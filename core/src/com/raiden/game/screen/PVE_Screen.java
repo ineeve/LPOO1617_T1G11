@@ -27,7 +27,7 @@ public class PVE_Screen extends ScreenAdapter {
     /**
      * Used to debug the position of the physics fixtures
      */
-    private static final boolean DEBUG_PHYSICS = false;
+    private static final boolean DEBUG_PHYSICS = true;
 
     /**
      * How much meters does a pixel represent.
@@ -205,7 +205,7 @@ public class PVE_Screen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-    Gdx.app.log("Accelerometer", "Handling Inputs");
+        Gdx.app.log("Accelerometer", "Handling Inputs");
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
@@ -217,14 +217,18 @@ public class PVE_Screen extends ScreenAdapter {
             if(acceY_initial == null){
                 acceY_initial = acceY;
                 acceY = 0f;
-            }
-            else{
+            } else
                 acceY = acceY - acceY_initial;
+
+            float velY;
+            if(-acceY>=0) {
+                velY = -acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER;
+                controller.setVelocityofPlayer1(acceX, velY);
             }
-            if(-acceY>0)
-                controller.setVelocityofPlayer1(acceX, -acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER);
-            else if (-acceY<0)
-                controller.setVelocityofPlayer1(acceX, -(acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER));
+            else if (-acceY<0) {
+                velY = -(acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER);
+                controller.setVelocityofPlayer1(acceX, velY);
+            }
         }
     }
 

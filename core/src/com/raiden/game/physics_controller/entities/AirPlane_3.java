@@ -18,27 +18,28 @@ public class AirPlane_3 extends ShipPhysics {
      */
     public AirPlane_3(World world, MovingObjectModel model) {
         super(world, model);
+        width = 75;
+        height = 122;
+        body.setFixedRotation(true);
         updatePhysics();
-        width = 423;
-        height = 689;
     }
 
     @Override
     public void updatePhysics(){
-        int x_Correction = width/423;
-        int y_Correction = height/689;
+        float x_Correction = width / 423f;
+        float y_Correction = height / 689f;
         // Left wing
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 211*x_Correction,y_Correction, x_Correction,266*y_Correction, 211*x_Correction,266*y_Correction
         }, width, height);
 
         // Right wing
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 211*x_Correction,y_Correction, 422*x_Correction,266*y_Correction, 211*x_Correction,266*y_Correction
         }, width, height);
 
         // Body
-        createFixture(body, new float[]{
+        createFixture(new float[]{
                 x_Correction,266*y_Correction, x_Correction,688*y_Correction, 422*x_Correction,688*y_Correction, 422*x_Correction,266*y_Correction
         }, width, height);
     }

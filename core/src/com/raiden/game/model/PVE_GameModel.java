@@ -1,6 +1,6 @@
 package com.raiden.game.model;
 
-import com.raiden.game.model.entities.ShipModel;
+import com.raiden.game.model.entities.Airplane_2_Model;
 
 public class PVE_GameModel extends GameModel {
 
@@ -13,15 +13,8 @@ public class PVE_GameModel extends GameModel {
      */
     public PVE_GameModel(float x, float y) {
         super();
-        addPlayer(x,y);
-        //addEnemy(new Airplane_2_Model(10,10));
+        addPlayer1(x,y);
+        addEnemy(new Airplane_2_Model(x,15));
     }
 
-    public void addPlayer2(float x,float y){
-        super.addPlayer(x,y);
-    }
-
-    public void addEnemy(ShipModel newEnemy){
-        entityModels.add(newEnemy);
-    }
 }
