@@ -40,9 +40,9 @@ public abstract class ViewFactory {
                     //TODO: change this to the real view class
                     modelToViewHash.put(getTypeOfModel(model), new Airplane_1_View(arena));
                     break;
-
             }
         }
+        modelToViewHash.get(getTypeOfModel(model)).sprite.setRotation((float) ((model.getRotation() * 180) / Math.PI));
         return modelToViewHash.get(getTypeOfModel(model));
     }
 

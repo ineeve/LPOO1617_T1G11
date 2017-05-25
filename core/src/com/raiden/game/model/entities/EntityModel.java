@@ -17,6 +17,9 @@ public abstract class EntityModel {
      */
     private float y;
 
+
+    private float rotation;
+
     /**
      * Constructs a model with a position and a rotation.
      *
@@ -58,4 +61,13 @@ public abstract class EntityModel {
     }
 
     public abstract ModelType getType();
+
+
+    public void setRotation(float rot){
+        this.rotation = rot;
+    }
+
+    public float getRotation(){
+        return rotation;
+    }
 }

@@ -7,11 +7,11 @@ package com.raiden.game.model.entities;
 public abstract class ShipModel extends MovingObjectModel{
     public static float MAXVELOCITY;
 
-    public int WEIGHT_DEFAULT;
+    int WEIGHT_DEFAULT;
 
-    public int ARMOR_DEFAUL;
+    int ARMOR_DEFAUL;
 
-    public int HP_DEFAULT;
+    int HP_DEFAULT;
 
     protected int hp;
     protected BulletModel bullet;
@@ -32,4 +32,5 @@ public abstract class ShipModel extends MovingObjectModel{
         HP_DEFAULT = 0;
         bullet = new BulletModel(x,y);
     }
+
 }

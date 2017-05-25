@@ -54,6 +54,7 @@ public abstract class GameModel {
 
 
     public void addEnemy(ShipModel newEnemy){
+        newEnemy.setRotation((float) Math.PI);
         entityModels.add(newEnemy);
     }
 
