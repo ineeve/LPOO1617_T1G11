@@ -138,7 +138,6 @@ public class PVE_Screen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         handleInputs(delta);
-
         controller.update(delta);
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
