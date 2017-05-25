@@ -37,7 +37,7 @@ public class Tank_View extends ShipView {
     @Override
     protected Animation<TextureRegion> createAcceleratingAnimation(Arena arena) {
         //TODO: change this animated image
-        Texture animated = arena.getAssetManager().get("spaceship-thrust.png");
+        Texture animated = getAsset(arena, "spaceship-thrust.png");
 
         TextureRegion[][] thrustRegion = TextureRegion.split(animated, animated.getWidth() / numberOfAnimations, animated.getHeight());
 
