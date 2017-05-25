@@ -141,7 +141,7 @@ public abstract class Physics_Controller {
      */
 
     public void setVelocityofPlayer1(float acceX, float acceY) {
-        airPlane1.setVelocity(-acceX * Airplane_1_Model.MAXVELOCITY, acceY);
+        airPlane1.setVelocity(-acceX * Airplane_1_Model.MAXVELOCITY_Default, acceY);
     }
 
     public float getXVelocityofPlayer1() {

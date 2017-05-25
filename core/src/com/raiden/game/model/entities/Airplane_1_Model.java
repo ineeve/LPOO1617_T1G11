@@ -2,7 +2,7 @@ package com.raiden.game.model.entities;
 
 
 public class Airplane_1_Model extends ShipModel {
-    static float MAXVELOCITY_Default = 5;
+    public static float MAXVELOCITY_Default = 5;
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
      *
