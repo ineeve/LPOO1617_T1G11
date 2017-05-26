@@ -5,7 +5,20 @@ package com.raiden.game.model.entities;
  * An abstract model representing an entity belonging to a game model.
  */
 public abstract class EntityModel {
-    public enum ModelType {AIRPLANE_1, AIRPLANE_2, AIRPLANE_3, TANK, BULLET, COMET, OBSTACLE};
+    public enum ModelType {
+        AIRPLANE_1,
+        AIRPLANE_2,
+        AIRPLANE_3,
+        TANK,
+        BULLET,
+        COMET,
+        OBSTACLE,
+        ANY;
+
+        public static ModelType getRandom() {
+            return values()[(int) (Math.random() * values().length)];
+        }
+    }
 
     /**
      * The x-coordinate of this model in meters.

@@ -69,11 +69,16 @@ abstract class EnemyWavePool {
     }
 
     public EntityModel obtain(EntityModel.ModelType type){
-        return allPools.get(type).obtain();
+        if(allPools.containsKey(type))
+            return allPools.get(type).obtain();
+        else
+            return allPools.get(EntityModel.ModelType.getRandom()).obtain();
     }
 
     public Array<EntityModel> obtain(EntityModel.ModelType type, int numberOfObjects){
         Array<EntityModel> arrayToReturn = new Array<EntityModel>(numberOfObjects);
+        if(!allPools.containsKey(type))
+            type = EntityModel.ModelType.getRandom();
         for(int i = 0; i < numberOfObjects; i++){
             arrayToReturn.add(allPools.get(type).obtain());
         }
@@ -81,7 +86,8 @@ abstract class EnemyWavePool {
     }
 
     public void free(EntityModel entity){
-        allPools.get(entity.getType()).free(entity);
+        if(allPools.containsKey(entity.getType()))
+            allPools.get(entity.getType()).free(entity);
     }
 
     public void freeAll(ArrayList<EntityModel> entities){
