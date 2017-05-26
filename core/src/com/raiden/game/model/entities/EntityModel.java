@@ -76,8 +76,8 @@ public abstract class EntityModel {
     public abstract ModelType getType();
 
 
-    public void setRotation(float rot){
-        this.rotation = rot;
+    public void setRotation(float rad){
+        this.rotation = rad;
     }
 
     public float getRotation(){

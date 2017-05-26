@@ -130,6 +130,7 @@ public class PVE_Screen extends ScreenAdapter {
         this.game.getAssetManager().finishLoading();
     }
 
+    private boolean first = true;
     /**
      * Renders this screen.
      *
@@ -264,5 +265,17 @@ public class PVE_Screen extends ScreenAdapter {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
+    }
+
+    public GameModel getModel() {
+        return model;
+    }
+
+    public Physics_Controller getController() {
+        return controller;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 }

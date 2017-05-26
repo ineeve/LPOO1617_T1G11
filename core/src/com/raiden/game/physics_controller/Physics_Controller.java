@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.EntityModel;
+import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipPhysics;
@@ -71,6 +72,28 @@ public abstract class Physics_Controller {
 
         airPlane1 = (ShipPhysics) dynamicBodies.get(0);
 
+    }
+
+    public void addDynamicBody(MovingObjectModel entityModel){
+        dynamicBodies.add(ControllerFactory.makeController(world, entityModel));
+    }
+
+    public void addDynamicBodies(ArrayList<MovingObjectModel> entityModels){
+        for(EntityModel modelEntity : entityModels){
+            dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
+        }
+    }
+
+    public void destroyDynamicBody(DynamicBody body){
+        dynamicBodies.remove(body);
+        world.destroyBody(body.getBody());
+    }
+
+    public void destroyDynamicBodies(ArrayList<DynamicBody> bodies){
+        for(DynamicBody body : bodies){
+            dynamicBodies.remove(body);
+            world.destroyBody(body.getBody());
+        }
     }
 
     public void setCamera(OrthographicCamera camera){
