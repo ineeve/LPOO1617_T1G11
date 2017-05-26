@@ -130,6 +130,7 @@ public class PVE_Screen extends ScreenAdapter {
         this.game.getAssetManager().finishLoading();
     }
 
+    private boolean first = true;
     /**
      * Renders this screen.
      *
@@ -138,7 +139,6 @@ public class PVE_Screen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         handleInputs(delta);
-
         controller.update(delta);
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
@@ -163,20 +163,30 @@ public class PVE_Screen extends ScreenAdapter {
 
     //TODO: add comments inside the code
     private void updateCameraPosition(float delta) {
-        if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
-            camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
-            camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() /PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
-            camera.position.set(camera.position.x + CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        else if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
-            camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        if(controller.getXVelocityofPlayer1() == 0){
+
+        if (controller.getXVelocityofPlayer1() == 0) {
             camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            return;
+        }
+
+        if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
+            if (controller.getXVelocityofPlayer1() < 0) {
+                camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            } else {
+                camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            }
+        } else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
+            if (controller.getXVelocityofPlayer1() < 0) {
+                camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            } else {
+                camera.position.set(camera.position.x + CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            }
+        } else {
+            if (controller.getXVelocityofPlayer1() > 0) {
+                camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            } else {
+                camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            }
         }
     }
 
@@ -255,5 +265,17 @@ public class PVE_Screen extends ScreenAdapter {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
+    }
+
+    public GameModel getModel() {
+        return model;
+    }
+
+    public Physics_Controller getController() {
+        return controller;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 }

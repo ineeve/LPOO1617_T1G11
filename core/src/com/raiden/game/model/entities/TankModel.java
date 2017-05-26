@@ -14,7 +14,7 @@ public class TankModel extends ShipModel {
      * @param x        the x-coordinate in meters
      * @param y        the y-coordinate in meters
      */
-    TankModel(float x, float y) {
+    public TankModel(float x, float y) {
         super(x, y);
         MAXVELOCITY = MAXVELOCITY_Default;
         hp = HP_DEFAULT;
