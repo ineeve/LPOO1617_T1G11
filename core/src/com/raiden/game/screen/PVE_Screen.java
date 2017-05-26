@@ -162,20 +162,30 @@ public class PVE_Screen extends ScreenAdapter {
 
     //TODO: add comments inside the code
     private void updateCameraPosition(float delta) {
-        if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
-            camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() < 0) {
-            camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() /PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
-            camera.position.set(camera.position.x + CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        else if (model.getPlayer1().getX() / PIXEL_TO_METER > camera.position.x + camera.viewportWidth / 4f && controller.getXVelocityofPlayer1() > 0) {
-            camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
-        }
-        if(controller.getXVelocityofPlayer1() == 0){
+
+        if (controller.getXVelocityofPlayer1() == 0) {
             camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            return;
+        }
+
+        if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
+            if (controller.getXVelocityofPlayer1() < 0) {
+                camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            } else {
+                camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            }
+        } else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
+            if (controller.getXVelocityofPlayer1() < 0) {
+                camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            } else {
+                camera.position.set(camera.position.x + CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            }
+        } else {
+            if (controller.getXVelocityofPlayer1() > 0) {
+                camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            } else {
+                camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            }
         }
     }
 
