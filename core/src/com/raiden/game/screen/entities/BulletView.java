@@ -20,29 +20,8 @@ public class BulletView extends EntityView {
     @Override
     public Sprite createSprite(Arena arena) {
         Texture bullet = getAsset(arena, "Bullet.png");
-        TextureRegion notAnimated = new TextureRegion(bullet, bullet.getWidth(), bullet.getHeight());
-        return new Sprite(notAnimated);
+        return new Sprite(bullet,bullet.getWidth(),bullet.getHeight());
     }
 
-    /**
-     * Updates this bullet model
-     *
-     * @param model the model used to update this view
-     */
-    @Override
-    public void update(EntityModel model) {
-        super.update(model);
-    }
-
-
-    /**
-     * Draws the sprite from this view using a sprite batch.
-     *
-     * @param batch The sprite batch to be used for drawing.
-     */
-    @Override
-    public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
-    }
 
 }

@@ -15,9 +15,7 @@ public abstract class ShipPhysics extends DynamicBody {
 
     protected float restitution = 0.5f;
 
-    protected int width;
 
-    protected int height;
 
     /**
      * Constructs a space ship body according to

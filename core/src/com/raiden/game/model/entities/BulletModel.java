@@ -7,6 +7,7 @@ package com.raiden.game.model.entities;
 public class BulletModel extends MovingObjectModel {
 
     private int damage;
+    private float timeToLive;
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
      *
@@ -15,6 +16,25 @@ public class BulletModel extends MovingObjectModel {
      */
     public BulletModel(float x, float y) {
         super(x, y);
+    }
+
+    /**
+     * Decreases this bullet's time to leave by delta seconds
+     *
+     * @param delta
+     * @return
+     */
+    public boolean decreaseTimeToLive(float delta) {
+        timeToLive -= delta;
+        return  timeToLive < 0;
+    }
+
+    /**
+     * Sets this bullet's time to live in seconds
+     * @param timeToLive
+     */
+    public void setTimeToLive(float timeToLive) {
+        this.timeToLive = timeToLive;
     }
 
     @Override

@@ -1,11 +1,14 @@
 package com.raiden.game.model;
 
+import com.badlogic.gdx.utils.Pool;
 import com.raiden.game.model.entities.Airplane_1_Model;
+import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.ShipModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,6 +23,21 @@ public abstract class GameModel {
 
     private ShipModel airplane11;
     private ShipModel airplane12;
+
+    /**
+     * The bullets currently flying through space.
+     */
+    private List<BulletModel> bullets;
+
+    /**
+     * A pool of bullets
+     */
+    Pool<BulletModel> bulletPool = new Pool<BulletModel>() {
+        @Override
+        protected BulletModel newObject() {
+            return new BulletModel(0, 0);
+        }
+    };
 
 
     /**

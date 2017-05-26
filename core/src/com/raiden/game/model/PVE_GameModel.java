@@ -14,7 +14,9 @@ public class PVE_GameModel extends GameModel {
     public PVE_GameModel(float x, float y) {
         super();
         addPlayer1(x,y);
-        addEnemy(new Airplane_2_Model(x,15));
+        addEnemy(new Airplane_2_Model(x-5,15));
+        addEnemy(new Airplane_2_Model(x+5,15));
+        addEnemy(new Airplane_2_Model(x,20));
     }
 
 }

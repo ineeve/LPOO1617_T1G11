@@ -24,6 +24,8 @@ public abstract class DynamicBody {
     private float density;
     private float friction;
     private float restitution;
+    protected int width;
+    protected int height;
 
     /**
      * Constructs a body representing a model in a certain world.
