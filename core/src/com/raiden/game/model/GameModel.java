@@ -6,6 +6,7 @@ import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.ShipModel;
+import com.raiden.game.screen.EnemiesFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,16 +87,16 @@ public abstract class GameModel {
     }
 
     public void deleteEntityModel(EntityModel model){
-        if(model != null)
+        if(model != null) {
             entityModels.remove(model);
+            EnemiesFactory.getEnemyPool().free(model);
+        }
     }
 
     public void deleteEntitiesModel(ArrayList<EntityModel> models){
         for(EntityModel model : models) {
-            if (model != null) {
+            if (model != null)
                 entityModels.remove(model);
-                //EnemiesFactory.getEnemyPool().free(model);
-            }
         }
     }
 
