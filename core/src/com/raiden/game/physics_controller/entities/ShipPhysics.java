@@ -2,6 +2,7 @@ package com.raiden.game.physics_controller.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.physics_controller.movement.MoveBody;
 
 /**
  * Created by João on 19/05/2017.
@@ -9,13 +10,11 @@ import com.raiden.game.model.entities.MovingObjectModel;
 
 public abstract class ShipPhysics extends DynamicBody {
 
-    protected float density = 0.5f;
+    private float density = 0.5f;
 
-    protected float friction = 0.4f;
+    private float friction = 0.4f;
 
-    protected float restitution = 0.5f;
-
-
+    private float restitution = 0.5f;
 
     /**
      * Constructs a space ship body according to
@@ -29,6 +28,7 @@ public abstract class ShipPhysics extends DynamicBody {
         super.setDensity(density);
         super.setFriction(friction);
         super.setRestitution(restitution);
+        movementType = model.getMovementType();
     }
 
     public abstract void updatePhysics();

@@ -1,5 +1,7 @@
 package com.raiden.game.model.entities;
 
+import com.raiden.game.physics_controller.movement.MoveBody;
+
 /**
  * A model representing a the user space ship.
  */
@@ -8,6 +10,8 @@ public abstract class MovingObjectModel extends EntityModel {
      * Is this ship accelerating in this update delta
      */
     private boolean accelerating = true;
+
+    protected MoveBody.MovementType  movementType;
 
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
@@ -35,5 +39,13 @@ public abstract class MovingObjectModel extends EntityModel {
      */
     public boolean isAccelerating() {
         return accelerating;
+    }
+
+    public MoveBody.MovementType getMovementType() {
+        return movementType;
+    }
+
+    public void setMovementType(MoveBody.MovementType movementType) {
+        this.movementType = movementType;
     }
 }

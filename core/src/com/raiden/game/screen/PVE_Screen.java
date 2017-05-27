@@ -16,6 +16,7 @@ import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
+import static com.raiden.game.model.entities.EntityModel.ModelType.AIRPLANE_2;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -56,8 +57,8 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private final OrthographicCamera camera;
 
-    private final int CAMERA_Y_SPEED = 50;
-    private final int CAMERA_X_SPEED = 200;
+    public static final int CAMERA_Y_SPEED = 50;
+    private static final int CAMERA_X_SPEED = 200;
 
     /**
      * A renderer used to debug the physical fixtures.
@@ -86,6 +87,8 @@ public class PVE_Screen extends ScreenAdapter {
 
         camera = createCamera();
         controller.setCamera(camera);
+
+        EnemiesFactory.makeEnemy(this, AIRPLANE_2);
     }
 
     /**
@@ -130,7 +133,6 @@ public class PVE_Screen extends ScreenAdapter {
         this.game.getAssetManager().finishLoading();
     }
 
-    private boolean first = true;
     /**
      * Renders this screen.
      *

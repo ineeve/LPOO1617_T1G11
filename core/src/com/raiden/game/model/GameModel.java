@@ -70,7 +70,6 @@ public abstract class GameModel {
         return entityModels;
     }
 
-
     public void addEnemy(MovingObjectModel newEnemy){
         newEnemy.setRotation((float) Math.PI);
         entityModels.add(newEnemy);

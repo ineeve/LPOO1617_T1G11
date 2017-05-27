@@ -19,6 +19,7 @@ public class BulletBody extends DynamicBody {
         setDensity(0.5f);
         setRestitution(0.5f);
         setDensity(0.5f);
+        body.setBullet(true);
         width = 10;
         height = 10;
         setFixtureVertices();

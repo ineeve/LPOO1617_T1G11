@@ -13,6 +13,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipPhysics;
+import com.raiden.game.physics_controller.movement.MoveBody;
 
 import java.util.ArrayList;
 
@@ -105,6 +106,10 @@ public abstract class Physics_Controller {
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
+        for(DynamicBody body : dynamicBodies){
+            MoveBody.moveBody(body, delta);
+        }
+
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
         while (accumulator >= 1/60f) {
@@ -112,11 +117,11 @@ public abstract class Physics_Controller {
             accumulator -= 1/60f;
         }
 
+        verifyBounds(airPlane1.getBody());
+
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
-
         for (Body body : bodies) {
-            verifyBounds(body);
             ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
         }
     }

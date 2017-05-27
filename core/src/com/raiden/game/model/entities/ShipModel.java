@@ -13,10 +13,10 @@ public abstract class ShipModel extends MovingObjectModel{
 
     int HP_DEFAULT;
 
-    protected int hp;
-    protected BulletModel bullet;
-    protected int weight;
-    protected int armor;
+    int hp;
+    private BulletModel bullet;
+    int weight;
+    int armor;
 
     /**
      * Creates a new ship model in a certain position and having a certain rotation.

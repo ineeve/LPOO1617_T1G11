@@ -8,6 +8,7 @@ import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 
+import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.CIRCULAR;
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 
@@ -20,6 +21,7 @@ abstract class EnemiesFactory {
         float x = camera.position.x * PIXEL_TO_METER;
         float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
         MovingObjectModel newEnemyModel = enemyPool.obtain(typeOfEnemy, x, y);
+        newEnemyModel.setMovementType(CIRCULAR);
         GameModel model = screen.getModel();
         model.addEnemy(newEnemyModel);
         Physics_Controller controller = screen.getController();
