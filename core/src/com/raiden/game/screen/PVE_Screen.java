@@ -16,7 +16,6 @@ import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
-import static com.raiden.game.model.entities.EntityModel.ModelType.AIRPLANE_2;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -72,6 +71,8 @@ public class PVE_Screen extends ScreenAdapter {
     private Matrix4 debugCamera;
 
     private Float acceY_initial;
+
+    private LevelManager levelManager;
     /**
      * Creates this screen.
      *
@@ -88,7 +89,7 @@ public class PVE_Screen extends ScreenAdapter {
         camera = createCamera();
         controller.setCamera(camera);
 
-        EnemiesFactory.makeEnemy(this, AIRPLANE_2);
+        levelManager = new LevelManager(this);
     }
 
     /**
@@ -148,6 +149,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
+        levelManager.updateLevel(this);
         updateScene(delta);
 
         game.getBatch().setProjectionMatrix(camera.combined);
@@ -223,7 +225,7 @@ public class PVE_Screen extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        Gdx.app.log("Accelerometer", "Handling Inputs");
+        //Gdx.app.log("Accelerometer", "Handling Inputs");
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();

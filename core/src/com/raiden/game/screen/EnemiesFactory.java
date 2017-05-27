@@ -7,6 +7,9 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.Physics_Controller;
+import com.raiden.game.physics_controller.movement.MoveBody;
+
+import java.util.ArrayList;
 
 import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.CIRCULAR;
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
@@ -14,6 +17,8 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 public abstract class EnemiesFactory {
     private static EnemyPool enemyPool = new EnemyPool();
+
+    private static MoveBody.MovementType nextMoveType;
 
     public static EnemyPool getEnemyPool() {
         return enemyPool;
@@ -32,7 +37,46 @@ public abstract class EnemiesFactory {
         controller.addDynamicBody(newEnemyModel);
     }
 
-    static void makeEnemy_Group_1(PVE_Screen screen){
 
+    static void makeEnemy_Group_Horizontal(PVE_Screen screen, EntityModel.ModelType typeOfEnemy, int numberOfEnemies){
+        ArrayList<MovingObjectModel> enemies =
+                createLinearHorizontalEnemies(typeOfEnemy, screen.getCamera(), numberOfEnemies);
+        if(nextMoveType == null)
+            nextMoveType = CIRCULAR;
+        setMovement(enemies);
+        nextMoveType = null;
+        screen.getModel().addEnemies(enemies);
+        screen.getController().addDynamicBodies(enemies);
+    }
+
+    private static ArrayList<MovingObjectModel> createLinearHorizontalEnemies(EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies){
+        ArrayList<MovingObjectModel> enemies = new ArrayList<MovingObjectModel>();
+        float x = camera.position.x * PIXEL_TO_METER -(numberOfEnemies - 1) / 2f * 5f;
+        float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
+        for(int i = 0; i < numberOfEnemies; i++){
+            enemies.add(enemyPool.obtain(typeOfEnemy, x, y));
+            x += 5f;
+        }
+        return enemies;
+    }
+
+    private static ArrayList<MovingObjectModel> createLinearVerticalEnemies(EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies){
+        ArrayList<MovingObjectModel> enemies = new ArrayList<MovingObjectModel>();
+        float x = camera.position.x * PIXEL_TO_METER;
+        float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER - (numberOfEnemies - 1) / 2f * 5f;
+        for(int i = 0; i < numberOfEnemies; i++){
+            y += 5f;
+            enemies.add(enemyPool.obtain(typeOfEnemy, x, y));
+        }
+        return enemies;
+    }
+
+    private static void setMovement(ArrayList<MovingObjectModel> models){
+        for(MovingObjectModel model : models)
+            model.setMovementType(nextMoveType);
+    }
+
+    private static void setMovementType(MoveBody.MovementType moveType){
+        nextMoveType = moveType;
     }
 }
