@@ -12,10 +12,14 @@ import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 
-abstract class EnemiesFactory {
+public abstract class EnemiesFactory {
     private static EnemyPool enemyPool = new EnemyPool();
 
-    public static void makeEnemy(PVE_Screen screen, EntityModel.ModelType typeOfEnemy){
+    public static EnemyPool getEnemyPool() {
+        return enemyPool;
+    }
+
+    static void makeEnemy(PVE_Screen screen, EntityModel.ModelType typeOfEnemy){
         Gdx.app.log("EnemiesFactory", "makeEnemy() -> creating new enemy");
         OrthographicCamera camera = screen.getCamera();
         float x = camera.position.x * PIXEL_TO_METER;
@@ -26,5 +30,9 @@ abstract class EnemiesFactory {
         model.addEnemy(newEnemyModel);
         Physics_Controller controller = screen.getController();
         controller.addDynamicBody(newEnemyModel);
+    }
+
+    static void makeEnemy_Group_1(PVE_Screen screen){
+
     }
 }

@@ -1,5 +1,6 @@
 package com.raiden.game.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.raiden.game.model.entities.Airplane_1_Model;
@@ -94,13 +95,16 @@ public class EnemyPool {
     }
 
     public void free(MovingObjectModel entity){
-        if(allPools.containsKey(entity.getType()))
-            allPools.get(entity.getType()).free(entity);
+        if(entity != null)
+            if(allPools.containsKey(entity.getType())) {
+                Gdx.app.log("EnemyPool.free()", "ready to free");
+                allPools.get(entity.getType()).free(entity);
+            }
     }
 
     public void freeAll(ArrayList<MovingObjectModel> entities){
         for (MovingObjectModel entity : entities ){
-            this.free(entity);
+            free(entity);
         }
     }
 }

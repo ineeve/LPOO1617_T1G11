@@ -80,4 +80,17 @@ public abstract class GameModel {
         entityModels.add(airplane12);
     }
 
+    public void deleteEntityModel(EntityModel model){
+        if(model != null)
+            entityModels.remove(model);
+    }
+
+    public void deleteEntitiesModel(ArrayList<EntityModel> models){
+        for(EntityModel model : models) {
+            if (model != null)
+                entityModels.remove(model);
+        }
+    }
+
+
 }

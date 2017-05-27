@@ -133,6 +133,14 @@ public class PVE_Screen extends ScreenAdapter {
         this.game.getAssetManager().finishLoading();
     }
 
+    private void updateScene(float delta){
+        handleInputs(delta);
+        controller.update(delta);
+        updateCameraPosition(delta);
+        verifyCameraBounds(delta);
+        camera.update();
+    }
+
     /**
      * Renders this screen.
      *
@@ -140,16 +148,11 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        handleInputs(delta);
-        controller.update(delta);
-        updateCameraPosition(delta);
-        verifyCameraBounds(delta);
-        camera.update();
-        game.getBatch().setProjectionMatrix(camera.combined);
+        updateScene(delta);
 
+        game.getBatch().setProjectionMatrix(camera.combined);
         Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-
         game.getBatch().begin();
         drawBackground();
         drawEntities();

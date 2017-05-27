@@ -19,6 +19,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawerLayout;
 
     private View mHView;
+
+    private AdView mAdView;
 
     private static final int[] CLICKABLES = {
             R.id.login_button, R.id.settings_button,
@@ -117,6 +121,12 @@ public class MainActivity extends AppCompatActivity
                 .build();
 
         mImageManager = ImageManager.create(this);
+
+
+        //AdMob
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
