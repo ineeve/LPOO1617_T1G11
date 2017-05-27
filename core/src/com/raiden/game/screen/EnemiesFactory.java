@@ -29,7 +29,7 @@ public abstract class EnemiesFactory {
         OrthographicCamera camera = screen.getCamera();
         float x = camera.position.x * PIXEL_TO_METER;
         float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
-        MovingObjectModel newEnemyModel = enemyPool.obtain(typeOfEnemy, x, y);
+        MovingObjectModel newEnemyModel = (MovingObjectModel) enemyPool.obtain(typeOfEnemy, x, y);
         newEnemyModel.setMovementType(CIRCULAR);
         GameModel model = screen.getModel();
         model.addEnemy(newEnemyModel);
@@ -54,7 +54,7 @@ public abstract class EnemiesFactory {
         float x = camera.position.x * PIXEL_TO_METER -(numberOfEnemies - 1) / 2f * 5f;
         float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
         for(int i = 0; i < numberOfEnemies; i++){
-            enemies.add(enemyPool.obtain(typeOfEnemy, x, y));
+            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, x, y));
             x += 5f;
         }
         return enemies;
@@ -66,7 +66,7 @@ public abstract class EnemiesFactory {
         float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER - (numberOfEnemies - 1) / 2f * 5f;
         for(int i = 0; i < numberOfEnemies; i++){
             y += 5f;
-            enemies.add(enemyPool.obtain(typeOfEnemy, x, y));
+            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, x, y));
         }
         return enemies;
     }

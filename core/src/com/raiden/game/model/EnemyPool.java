@@ -8,7 +8,6 @@ import com.raiden.game.model.entities.Airplane_2_Model;
 import com.raiden.game.model.entities.Airplane_3_Model;
 import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.TankModel;
 
 import java.util.ArrayList;
@@ -16,42 +15,42 @@ import java.util.Hashtable;
 
 
 public class EnemyPool {
-    private Pool<MovingObjectModel> airplane_1_modelPool = new Pool<MovingObjectModel>() {
+    private Pool<EntityModel> airplane_1_modelPool = new Pool<EntityModel>() {
         @Override
         protected Airplane_1_Model newObject() {
             return new Airplane_1_Model(0,0);
         }
     };
 
-    private Pool<MovingObjectModel> airplane_2_modelPool = new Pool<MovingObjectModel>() {
+    private Pool<EntityModel> airplane_2_modelPool = new Pool<EntityModel>() {
         @Override
         protected Airplane_2_Model newObject() {
             return new Airplane_2_Model(0,0);
         }
     };
 
-    private Pool<MovingObjectModel> airplane_3_modelPool = new Pool<MovingObjectModel>() {
+    private Pool<EntityModel> airplane_3_modelPool = new Pool<EntityModel>() {
         @Override
         protected Airplane_3_Model newObject() {
             return new Airplane_3_Model(0,0);
         }
     };
 
-    private Pool<MovingObjectModel> cometModelPool = new Pool<MovingObjectModel>() {
+    private Pool<EntityModel> cometModelPool = new Pool<EntityModel>() {
         @Override
         protected CometModel newObject() {
             return new CometModel(0,0);
         }
     };
 
-    private Pool<MovingObjectModel> tankPool = new Pool<MovingObjectModel>() {
+    private Pool<EntityModel> tankPool = new Pool<EntityModel>() {
         @Override
         protected TankModel newObject() {
             return new TankModel(0,0);
         }
     };
 
-    private Hashtable<EntityModel.ModelType, Pool<MovingObjectModel>> allPools = new Hashtable<EntityModel.ModelType, Pool<MovingObjectModel>>() {
+    private Hashtable<EntityModel.ModelType, Pool<EntityModel>> allPools = new Hashtable<EntityModel.ModelType, Pool<EntityModel>>() {
         {
             put(EntityModel.ModelType.AIRPLANE_1, airplane_1_modelPool);
             put(EntityModel.ModelType.AIRPLANE_2, airplane_2_modelPool);
@@ -62,13 +61,13 @@ public class EnemyPool {
     };
 
     public void clear(){
-        for (Pool<MovingObjectModel> pool : allPools.values()){
+        for (Pool<EntityModel> pool : allPools.values()){
             pool.clear();
         }
     }
 
-    public MovingObjectModel obtain(EntityModel.ModelType type, float x, float y){
-        MovingObjectModel entityToReturn;
+    public EntityModel obtain(EntityModel.ModelType type, float x, float y){
+        EntityModel entityToReturn;
         if(allPools.containsKey(type))
             entityToReturn = allPools.get(type).obtain();
         else
@@ -77,15 +76,15 @@ public class EnemyPool {
         return entityToReturn;
     }
 
-    public MovingObjectModel obtain(EntityModel.ModelType type){
+    public EntityModel obtain(EntityModel.ModelType type){
         if(allPools.containsKey(type))
             return allPools.get(type).obtain();
         else
             return allPools.get(EntityModel.ModelType.getRandom()).obtain();
     }
 
-    public Array<MovingObjectModel> obtain(EntityModel.ModelType type, int numberOfObjects){
-        Array<MovingObjectModel> arrayToReturn = new Array<MovingObjectModel>(numberOfObjects);
+    public Array<EntityModel> obtain(EntityModel.ModelType type, int numberOfObjects){
+        Array<EntityModel> arrayToReturn = new Array<EntityModel>(numberOfObjects);
         if(!allPools.containsKey(type))
             type = EntityModel.ModelType.getRandom();
         for(int i = 0; i < numberOfObjects; i++){
@@ -94,7 +93,7 @@ public class EnemyPool {
         return arrayToReturn;
     }
 
-    public void free(MovingObjectModel entity){
+    public void free(EntityModel entity){
         if(entity != null)
             if(allPools.containsKey(entity.getType())) {
                 Gdx.app.log("EnemyPool.free()", "ready to free");
@@ -102,8 +101,8 @@ public class EnemyPool {
             }
     }
 
-    public void freeAll(ArrayList<MovingObjectModel> entities){
-        for (MovingObjectModel entity : entities ){
+    public void freeAll(ArrayList<EntityModel> entities){
+        for (EntityModel entity : entities ){
             free(entity);
         }
     }

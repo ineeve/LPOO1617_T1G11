@@ -63,7 +63,7 @@ public abstract class GameModel {
      * @return the space ship.
      */
     public MovingObjectModel getPlayer1() {
-        return (MovingObjectModel) airplane11;
+        return airplane11;
     }
 
     public ArrayList<EntityModel> getEntityModels(){
@@ -92,8 +92,10 @@ public abstract class GameModel {
 
     public void deleteEntitiesModel(ArrayList<EntityModel> models){
         for(EntityModel model : models) {
-            if (model != null)
+            if (model != null) {
                 entityModels.remove(model);
+                //EnemiesFactory.getEnemyPool().free(model);
+            }
         }
     }
 

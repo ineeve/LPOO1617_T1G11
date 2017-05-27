@@ -2,10 +2,7 @@ package com.raiden.game.screen.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.raiden.game.Arena;
-import com.raiden.game.model.entities.EntityModel;
 
 /**
  * Created by ineeve on 23-05-2017.

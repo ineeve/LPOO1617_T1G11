@@ -1,6 +1,5 @@
 package com.raiden.game.physics_controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -13,7 +12,6 @@ import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipPhysics;
 import com.raiden.game.physics_controller.movement.MoveBody;
-import com.raiden.game.screen.EnemiesFactory;
 
 import java.util.ArrayList;
 
@@ -63,9 +61,12 @@ public abstract class Physics_Controller {
 
     private OrthographicCamera camera;
 
+    private GameModel model;
+
     Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
         world = new World(new Vector2(0,0),true);
+        this.model = model;
 
         for(EntityModel modelEntity : model.getEntityModels()){
             dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
@@ -117,18 +118,18 @@ public abstract class Physics_Controller {
             accumulator -= 1/60f;
         }
 
-        verifyPositionOfBodies();
+       verifyPositionOfBodies();
     }
 
     private void verifyPositionOfBodies(){
         verifyBounds(airPlane1.getBody(), false);
-        //Array<Body> bodies = new Array<Body>();
-        //world.getBodies(bodies);
-        for (DynamicBody dynamicBody : dynamicBodies) {
+        for (int i = 0; i < dynamicBodies.size(); i++) {
+            DynamicBody dynamicBody = dynamicBodies.get(i);
             Body body = dynamicBody.getBody();
             if(verifyBounds(body, true)) {
+                model.deleteEntityModel((EntityModel) body.getUserData());
                 destroyDynamicBody(dynamicBody);
-                EnemiesFactory.getEnemyPool().free((MovingObjectModel) body.getUserData());
+                i--;
             }
             else
                 ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
@@ -144,7 +145,6 @@ public abstract class Physics_Controller {
     private boolean verifyBounds(Body body, boolean delete) {
         float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
         float yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
-        Gdx.app.log("Y lower bound", String.valueOf(yLowerBound));
         if (body.getPosition().x < 0 && !delete)
             body.setTransform(0, body.getPosition().y, body.getAngle());
 

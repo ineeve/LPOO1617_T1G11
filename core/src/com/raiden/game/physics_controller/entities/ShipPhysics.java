@@ -2,7 +2,6 @@ package com.raiden.game.physics_controller.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.entities.MovingObjectModel;
-import com.raiden.game.physics_controller.movement.MoveBody;
 
 /**
  * Created by João on 19/05/2017.

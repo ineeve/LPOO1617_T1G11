@@ -38,7 +38,7 @@ public abstract class ControllerFactory {
                     bodyToReturn = new AirPlane_1(world,(MovingObjectModel) model);
                     break;
             }
-        bodyToReturn.setTransform(bodyToReturn.getX(),bodyToReturn.getY(),model.getRotation());
+        bodyToReturn.setTransform(bodyToReturn != null ? bodyToReturn.getX() : 0,bodyToReturn.getY(),model.getRotation());
         return bodyToReturn;
     }
 

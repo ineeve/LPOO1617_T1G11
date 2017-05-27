@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
-        android:textSize="48dp"
+        android:textSize="48sp"
         android:text="Hangar"/>
 
     <HorizontalScrollView
@@ -43,7 +43,7 @@
             android:id="@+id/hangar_life"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:text="Life"
             android:layout_marginLeft="24dp"
             android:layout_centerVertical="true"
@@ -77,7 +77,7 @@
             android:id="@+id/hangar_armor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:text="Armor"
             android:layout_marginLeft="24dp"
             android:layout_centerVertical="true"
@@ -111,7 +111,7 @@
             android:id="@+id/hangar_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:text="Speed"
             android:layout_marginLeft="24dp"
             android:layout_centerVertical="true"
