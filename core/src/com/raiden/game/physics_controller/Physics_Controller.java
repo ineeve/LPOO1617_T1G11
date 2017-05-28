@@ -1,13 +1,17 @@
 package com.raiden.game.physics_controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.Airplane_1_Model;
+import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.physics_controller.entities.BulletBody;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipPhysics;
@@ -32,15 +36,6 @@ public abstract class Physics_Controller {
      */
     public static final int ARENA_HEIGHT = 117;
 
-    /**
-     * The rotation speed in radians per second.
-     */
-    private static final float ROTATION_SPEED = 5f;
-
-    /**
-     * The acceleration impulse in newtons.
-     */
-    private static final float MAX_ACCELERATION_FORCE = 1f;
 
     /**
      * The physics world controlled by this controller.
@@ -62,6 +57,18 @@ public abstract class Physics_Controller {
     private OrthographicCamera camera;
 
     private GameModel model;
+
+    /**
+     * The bullet speed
+     */
+    private static final float BULLET_SPEED = 100f;
+
+    /**
+     * Minimum time between consecutive shots in seconds
+     */
+    private final float TIME_BETWEEN_SHOTS = .2f;
+
+    private float timeToNextShoot;
 
     Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
@@ -111,6 +118,11 @@ public abstract class Physics_Controller {
             MoveBody.moveBody(body, delta);
         }
 
+        PVE_GameModel.getInstance().update(delta);
+
+        timeToNextShoot -= delta;
+
+
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
         while (accumulator >= 1/60f) {
@@ -119,6 +131,8 @@ public abstract class Physics_Controller {
         }
 
        verifyPositionOfBodies();
+
+        Gdx.app.log("Controller Update","Time to Next Shot=" + timeToNextShoot);
     }
 
     private void verifyPositionOfBodies(){
@@ -191,6 +205,20 @@ public abstract class Physics_Controller {
 
     public float getYVelocityofPlayer1() {
         return airPlane1.getBody().getLinearVelocity().y;
+    }
+
+    /**
+     * Shoots a bullet from the spaceship at 10m/s
+     */
+    public void shoot() {
+        Gdx.app.log("Controller","Time to Next Shot=" + timeToNextShoot);
+        if (timeToNextShoot < 0) {
+            Gdx.app.log("Controller","Creating Bullet");
+            BulletModel bullet = PVE_GameModel.getInstance().createBullet(PVE_GameModel.getInstance().getPlayer1());
+            BulletBody body = new BulletBody(world, bullet);
+            body.setVelocity(0,BULLET_SPEED);
+            timeToNextShoot = TIME_BETWEEN_SHOTS;
+        }
     }
 
 }

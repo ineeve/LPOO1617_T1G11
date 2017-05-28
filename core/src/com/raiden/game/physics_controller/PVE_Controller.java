@@ -8,7 +8,17 @@ import com.raiden.game.model.GameModel;
 
 public class PVE_Controller extends Physics_Controller {
 
+
+    private static PVE_Controller instance;
+
     public PVE_Controller(GameModel model) {
         super(model);
+    }
+
+
+    public static PVE_Controller getInstance(GameModel model) {
+        if (instance == null)
+            instance = new PVE_Controller(model);
+        return instance;
     }
 }

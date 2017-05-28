@@ -20,7 +20,7 @@ public abstract class GameModel {
     /**
      * The space ship controlled by the user in this game.
      */
-    protected ArrayList<EntityModel> entityModels;
+    protected ArrayList<EntityModel> entityModels = new ArrayList<EntityModel>(0);
 
     private ShipModel airplane11;
     private ShipModel airplane12;
@@ -28,7 +28,7 @@ public abstract class GameModel {
     /**
      * The bullets currently flying through space.
      */
-    private List<BulletModel> bullets;
+    private List<BulletModel> bullets = new ArrayList<BulletModel>();
 
     /**
      * A pool of bullets
@@ -40,13 +40,6 @@ public abstract class GameModel {
         }
     };
 
-
-    /**
-     * Constructs a game level
-     */
-    public GameModel() {
-        entityModels = new ArrayList<EntityModel>(0);
-    }
 
     /**
      *
@@ -63,9 +56,27 @@ public abstract class GameModel {
      *
      * @return the space ship.
      */
-    public MovingObjectModel getPlayer1() {
+    public ShipModel getPlayer1() {
         return airplane11;
     }
+
+
+
+    public BulletModel createBullet(ShipModel ship) {
+        BulletModel bullet = bulletPool.obtain();
+
+        bullet.setFlaggedForRemoval(false);
+        bullet.setPosition(ship.getX(), ship.getY()+5);
+        bullet.setTimeToLive(.5f);
+
+        bullets.add(bullet);
+
+        return bullet;
+    }
+
+
+
+
 
     public ArrayList<EntityModel> getEntityModels(){
         return entityModels;
@@ -100,5 +111,16 @@ public abstract class GameModel {
         }
     }
 
+    public void update(float delta) {
+        for (BulletModel bullet : bullets)
+            if (bullet.decreaseTimeToLive(delta))
+                bullet.setFlaggedForRemoval(true);
+    }
 
+    /*
+    * Returns a list of all bullets in the scene
+     */
+    public List<BulletModel> getBullets() {
+        return bullets;
+    }
 }

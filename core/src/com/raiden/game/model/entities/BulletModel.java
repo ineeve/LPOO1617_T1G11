@@ -8,6 +8,13 @@ public class BulletModel extends MovingObjectModel {
 
     private int damage;
     private float timeToLive;
+
+    /**
+     * Has this model been flagged for removal?
+     */
+    private boolean flaggedForRemoval = false;
+
+    
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
      *
@@ -40,5 +47,9 @@ public class BulletModel extends MovingObjectModel {
     @Override
     public ModelType getType() {
         return ModelType.BULLET;
+    }
+
+    public void setFlaggedForRemoval(boolean flaggedForRemoval) {
+        this.flaggedForRemoval = flaggedForRemoval;
     }
 }

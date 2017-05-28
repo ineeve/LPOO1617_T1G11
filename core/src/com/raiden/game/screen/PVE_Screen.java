@@ -11,10 +11,15 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.PVE_GameModel;
+import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
+import com.raiden.game.physics_controller.PVE_Controller;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
+
+import java.util.List;
 
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
@@ -250,6 +255,10 @@ public class PVE_Screen extends ScreenAdapter {
                 controller.setVelocityofPlayer1(acceX, velY);
             }
         }
+        if (Gdx.input.isTouched()) {
+            Gdx.app.log("Input","Screen touched");
+            PVE_Controller.getInstance(model).shoot();
+        }
     }
 
     /**
@@ -260,6 +269,13 @@ public class PVE_Screen extends ScreenAdapter {
         for (EntityModel modelEntity : model.getEntityModels()) {
             EntityView view = ViewFactory.makeView(game, modelEntity);
             view.update(modelEntity);
+            view.draw(game.getBatch());
+        }
+
+        List<BulletModel> bullets = PVE_GameModel.getInstance().getBullets();
+        for (BulletModel bullet : bullets) {
+            EntityView view = ViewFactory.makeView(game, bullet);
+            view.update(bullet);
             view.draw(game.getBatch());
         }
 

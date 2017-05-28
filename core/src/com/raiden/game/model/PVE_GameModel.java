@@ -1,17 +1,32 @@
 package com.raiden.game.model;
 
+import com.raiden.game.model.entities.BulletModel;
+import com.raiden.game.physics_controller.Physics_Controller;
+
+import java.util.List;
+
 public class PVE_GameModel extends GameModel {
 
 
+    private static PVE_GameModel instance;
+
     /**
      * Constructs a game with a.space ship in a certain position.
-     *
-     * @param x the x-coordinate of the Player1 ship in meters.
-     * @param y the y-coordinate of the Player1 ship in meters.
      */
-    public PVE_GameModel(float x, float y) {
-        super();
-        addPlayer1(x,y);
+    public PVE_GameModel() {
+        addPlayer1(Physics_Controller.ARENA_WIDTH/2.0f,5);
     }
+
+    /**
+     * Returns a singleton instance of the game model
+     *
+     * @return the singleton instance
+     */
+    public static PVE_GameModel getInstance() {
+        if (instance == null)
+            instance = new PVE_GameModel();
+        return instance;
+    }
+
 
 }
