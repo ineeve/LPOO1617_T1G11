@@ -66,26 +66,27 @@ public class EnemyPool {
         }
     }
 
+    //TODO: change way of return element when dont have the type od model
     public EntityModel obtain(EntityModel.ModelType type, float x, float y){
         EntityModel entityToReturn;
-        if(allPools.containsKey(type))
-            entityToReturn = allPools.get(type).obtain();
-        else
-            entityToReturn = allPools.get(EntityModel.ModelType.getRandom()).obtain();
+        while (!allPools.containsKey(type))
+            type = EntityModel.ModelType.getRandom();
+        entityToReturn = allPools.get(type).obtain();
         entityToReturn.setPosition(x,y);
         return entityToReturn;
     }
 
+    //TODO: change way of return element when dont have the type od model
     public EntityModel obtain(EntityModel.ModelType type){
-        if(allPools.containsKey(type))
-            return allPools.get(type).obtain();
-        else
-            return allPools.get(EntityModel.ModelType.getRandom()).obtain();
+        while (!allPools.containsKey(type))
+            type = EntityModel.ModelType.getRandom();
+        return allPools.get(type).obtain();
     }
 
+    //TODO: change way of return element when dont have the type od model
     public Array<EntityModel> obtain(EntityModel.ModelType type, int numberOfObjects){
         Array<EntityModel> arrayToReturn = new Array<EntityModel>(numberOfObjects);
-        if(!allPools.containsKey(type))
+        while (!allPools.containsKey(type))
             type = EntityModel.ModelType.getRandom();
         for(int i = 0; i < numberOfObjects; i++){
             arrayToReturn.add(allPools.get(type).obtain());

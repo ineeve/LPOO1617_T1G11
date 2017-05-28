@@ -17,6 +17,8 @@ public class Airplane_3_Model extends ShipModel {
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;
+        width = 75;
+        height = 122;
     }
 
     @Override

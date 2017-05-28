@@ -14,6 +14,8 @@ public class ObstacleModel extends EntityModel{
      */
     ObstacleModel(float x, float y) {
         super(x, y);
+        width = 50;
+        height = 50;
     }
 
     @Override

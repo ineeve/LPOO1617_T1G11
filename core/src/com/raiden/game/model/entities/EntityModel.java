@@ -30,6 +30,9 @@ public abstract class EntityModel {
      */
     private float y;
 
+    protected int width;
+
+    protected int height;
 
     private float rotation;
 
@@ -82,5 +85,21 @@ public abstract class EntityModel {
 
     public float getRotation(){
         return rotation;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

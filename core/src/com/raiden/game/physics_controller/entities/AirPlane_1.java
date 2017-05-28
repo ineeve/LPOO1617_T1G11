@@ -10,6 +10,8 @@ import com.raiden.game.model.entities.MovingObjectModel;
  */
 public class AirPlane_1 extends ShipPhysics {
 
+    private final float density = 0.5f;
+
     /**
      * Constructs a space ship body according to
      * a space ship model.
@@ -19,8 +21,9 @@ public class AirPlane_1 extends ShipPhysics {
      */
     public AirPlane_1(World world, MovingObjectModel model) {
         super(world, model);
-        width = 98;
-        height = 102;
+        super.setDensity(density);
+        width = model.getWidth();
+        height = model.getHeight();
         body.setFixedRotation(true);
         updatePhysics();
     }
