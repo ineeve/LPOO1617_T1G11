@@ -31,8 +31,14 @@ public abstract class ShipModel extends MovingObjectModel{
         this.hp = hp;
     }
 
+    public int getHp(){return hp;}
+
     public void setBullet(BulletModel bullet) {
         this.bullet = bullet;
+    }
+
+    public void decreaseHP(int amountToDecrease){
+        hp -= amountToDecrease;
     }
 
     public void setArmor(int armor) {

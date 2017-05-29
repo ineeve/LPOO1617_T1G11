@@ -4,11 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.entities.BulletBody;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
@@ -23,7 +28,7 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
  * Controlls the physics Aspects of the PVE Game
  */
 
-public abstract class Physics_Controller {
+public abstract class Physics_Controller implements ContactListener{
     /**
      * The arena width in meters.
      */
@@ -127,8 +132,17 @@ public abstract class Physics_Controller {
             world.step(1/60f, 6, 2);
             accumulator -= 1/60f;
         }
-
+        removeFlaggedForRemoval();
         verifyPositionOfBodies();
+    }
+
+    public void removeFlaggedForRemoval(){
+        for(DynamicBody body : dynamicBodies){
+            EntityModel currentModel = (EntityModel)body.getUserData();
+            if (currentModel.isFlaggedForRemoval()){
+                destroyDynamicBody(body);
+            }
+        }
     }
 
     private void verifyPositionOfBodies(){
@@ -221,6 +235,51 @@ public abstract class Physics_Controller {
             dynamicBodies.add(body);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
+    }
+
+     /*
+     * A contact between two objects was detected
+     *
+     * @param contact the detected contact
+     */
+    @Override
+    public void beginContact(Contact contact) {
+        Gdx.app.log("Contact","Contact detected");
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
+
+        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof MovingObjectModel)
+            bulletCollision(bodyA, bodyB);
+        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof MovingObjectModel)
+            bulletCollision(bodyB, bodyA);
+
+    }
+
+    private void  bulletCollision(Body bulletBody,Body bodyB){
+        Gdx.app.log("Collision","Bullet collosion detected");
+        ShipModel bModel = (ShipModel) bodyB.getUserData();
+        BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
+        int bulletDamage = bulletModel.getDamage();
+        bModel.decreaseHP(bulletDamage);
+        if (bModel.getHp() < 0){
+            bModel.setFlaggedForRemoval();
+        }
+        bulletModel.setFlaggedForRemoval();
+
+    }
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
     }
 
 }

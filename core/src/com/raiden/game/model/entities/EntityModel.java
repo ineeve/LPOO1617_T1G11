@@ -36,6 +36,8 @@ public abstract class EntityModel {
 
     private float rotation;
 
+    private boolean flaggedForRemoval;
+
     /**
      * Constructs a model with a position and a rotation.
      *
@@ -45,6 +47,7 @@ public abstract class EntityModel {
     EntityModel(float x, float y) {
         this.x = x;
         this.y = y;
+        flaggedForRemoval =false;
     }
 
     /**
@@ -101,5 +104,12 @@ public abstract class EntityModel {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public void setFlaggedForRemoval(){
+        flaggedForRemoval = true;
+    }
+    public boolean isFlaggedForRemoval(){
+        return flaggedForRemoval;
     }
 }

@@ -28,4 +28,8 @@ public class BulletModel extends MovingObjectModel {
     public ModelType getType() {
         return ModelType.BULLET;
     }
+
+    public int getDamage(){
+        return damage;
+    }
 }
