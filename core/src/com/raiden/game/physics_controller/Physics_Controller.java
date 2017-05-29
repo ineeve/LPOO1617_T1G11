@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
@@ -79,6 +80,9 @@ public abstract class Physics_Controller {
         for(EntityModel modelEntity : model.getEntityModels()){
             dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
         }
+        for (EntityModel bulletModel : model.getBullets()){
+            dynamicBodies.add(ControllerFactory.makeController(world,bulletModel));
+        }
 
         airPlane1 = (ShipPhysics) dynamicBodies.get(0);
 
@@ -115,6 +119,8 @@ public abstract class Physics_Controller {
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
+        PVE_GameModel.getInstance().update(delta);
+
         for(DynamicBody body : dynamicBodies){
             MoveBody.moveBody(body, delta);
         }

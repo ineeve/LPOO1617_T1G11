@@ -90,6 +90,9 @@ public abstract class GameModel {
             if(model instanceof BulletModel){
                 Gdx.app.log("deleteEntityModel", "free bullet");
                 bulletPool.free((BulletModel)model);
+            }else {
+
+                EnemiesFactory.getEnemyPool().free(model);
             }
             else
                 EnemiesFactory.getEnemyPool().free(model);
