@@ -12,7 +12,7 @@ public abstract class MovingObjectModel extends EntityModel {
     private boolean accelerating = true;
 
     protected MoveBody.MovementType  movementType;
-
+    protected int hp;
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
      *
@@ -48,4 +48,9 @@ public abstract class MovingObjectModel extends EntityModel {
     public void setMovementType(MoveBody.MovementType movementType) {
         this.movementType = movementType;
     }
+    public void decreaseHP(int amountToDecrease){
+        hp -= amountToDecrease;
+    }
+
+    public int getHp(){return hp;}
 }

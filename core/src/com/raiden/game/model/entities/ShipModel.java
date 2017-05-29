@@ -9,10 +9,11 @@ public abstract class ShipModel extends MovingObjectModel{
 
     int ARMOR_DEFAUL;
 
-    int HP_DEFAULT;
+    int HP_DEFAULT = 50;
 
-    int hp;
+
     private BulletModel bullet;
+
     int weight;
     int armor;
 
@@ -31,15 +32,12 @@ public abstract class ShipModel extends MovingObjectModel{
         this.hp = hp;
     }
 
-    public int getHp(){return hp;}
+
 
     public void setBullet(BulletModel bullet) {
         this.bullet = bullet;
     }
 
-    public void decreaseHP(int amountToDecrease){
-        hp -= amountToDecrease;
-    }
 
     public void setArmor(int armor) {
         this.armor = armor;

@@ -21,6 +21,7 @@ public class BulletModel extends MovingObjectModel {
         Gdx.app.log("BulletModel()", "Creating new.");
         width = 20;
         height = 20;
+        damage = 25;
     }
 
 

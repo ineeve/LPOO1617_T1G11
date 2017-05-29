@@ -22,6 +22,7 @@ public class PVE_Controller extends Physics_Controller implements ContactListene
 
     private PVE_Controller(GameModel model) {
         super(model);
+        world.setContactListener(this);
     }
 
 
@@ -44,17 +45,18 @@ public class PVE_Controller extends Physics_Controller implements ContactListene
 
         if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof MovingObjectModel)
             bulletCollision(bodyA, bodyB);
-        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof MovingObjectModel)
+        else if (bodyA.getUserData() instanceof MovingObjectModel && bodyB.getUserData() instanceof BulletModel)
             bulletCollision(bodyB, bodyA);
 
     }
 
     private void  bulletCollision(Body bulletBody,Body bodyB){
         Gdx.app.log("Collision","Bullet collosion detected");
-        ShipModel bModel = (ShipModel) bodyB.getUserData();
+        MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
         BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
         int bulletDamage = bulletModel.getDamage();
         bModel.decreaseHP(bulletDamage);
+        Gdx.app.log("Collision","Moving Object HP =" + bModel.getHp());
         if (bModel.getHp() < 0){
             bModel.setFlaggedForRemoval();
         }
@@ -63,7 +65,7 @@ public class PVE_Controller extends Physics_Controller implements ContactListene
     }
     @Override
     public void endContact(Contact contact) {
-
+        removeFlaggedForRemoval();
     }
 
     @Override

@@ -43,7 +43,7 @@ public abstract class Physics_Controller{
     /**
      * The physics world controlled by this controller.
      */
-    private final World world;
+    protected final World world;
 
     private ArrayList<DynamicBody> dynamicBodies;
 
@@ -129,7 +129,6 @@ public abstract class Physics_Controller{
             world.step(1/60f, 6, 2);
             accumulator -= 1/60f;
         }
-        removeFlaggedForRemoval();
         verifyPositionOfBodies();
     }
 
@@ -137,7 +136,9 @@ public abstract class Physics_Controller{
         for(DynamicBody body : dynamicBodies){
             EntityModel currentModel = (EntityModel)body.getUserData();
             if (currentModel.isFlaggedForRemoval()){
+                Gdx.app.log("Destroying","Dynamic Body");
                 destroyDynamicBody(body);
+                model.deleteEntityModel(currentModel);
             }
         }
     }
