@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
-import com.raiden.game.model.PVE_GameModel;
-import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
@@ -29,7 +27,7 @@ public abstract class Physics_Controller {
     /**
      * The arena width in meters.
      */
-    public static final int ARENA_WIDTH = 52;
+    public static final int ARENA_WIDTH = 30; //52
 
     /**
      * The arena height in meters.
@@ -43,6 +41,9 @@ public abstract class Physics_Controller {
     private final World world;
 
     private ArrayList<DynamicBody> dynamicBodies;
+
+    private ArrayList<BulletBody> bullets = new ArrayList<BulletBody>();
+
 
     /**
      * The spaceship body.
@@ -72,7 +73,7 @@ public abstract class Physics_Controller {
 
     Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
-        world = new World(new Vector2(0,0),true);
+        world = new World(new Vector2(0,-2),true);
         this.model = model;
 
         for(EntityModel modelEntity : model.getEntityModels()){
@@ -118,8 +119,6 @@ public abstract class Physics_Controller {
             MoveBody.moveBody(body, delta);
         }
 
-        PVE_GameModel.getInstance().update(delta);
-
         timeToNextShoot -= delta;
 
         float frameTime = Math.min(delta, 0.25f);
@@ -129,7 +128,7 @@ public abstract class Physics_Controller {
             accumulator -= 1/60f;
         }
 
-       verifyPositionOfBodies();
+        verifyPositionOfBodies();
     }
 
     private void verifyPositionOfBodies(){
@@ -142,8 +141,9 @@ public abstract class Physics_Controller {
                 destroyDynamicBody(dynamicBody);
                 i--;
             }
-            else
+            else {
                 ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
+            }
         }
     }
 
@@ -168,8 +168,12 @@ public abstract class Physics_Controller {
         if (body.getPosition().x > ARENA_WIDTH && !delete)
             body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
 
-        if (body.getPosition().y > yUpperBound && !delete)
-            body.setTransform(body.getPosition().x, yUpperBound, body.getAngle());
+        if (body.getPosition().y > yUpperBound) {
+            if (!delete)
+                body.setTransform(body.getPosition().x, yUpperBound, body.getAngle());
+            else
+                return true;
+        }
         return false;
     }
 
@@ -193,7 +197,8 @@ public abstract class Physics_Controller {
      */
 
     public void setVelocityofPlayer1(float acceX, float acceY) {
-        airPlane1.setVelocity(-acceX * Airplane_1_Model.MAXVELOCITY_Default, acceY);
+        float vel_Correction = 5.5f;
+        airPlane1.setVelocity(-acceX * vel_Correction, acceY);
     }
 
     public float getXVelocityofPlayer1() {
@@ -210,9 +215,10 @@ public abstract class Physics_Controller {
     public void shoot() {
         if (timeToNextShoot < 0) {
             Gdx.app.log("Controller","Creating Bullet");
-            BulletModel bullet = PVE_GameModel.getInstance().createBullet(PVE_GameModel.getInstance().getPlayer1());
+            BulletModel bullet = model.createBullet(model.getPlayer1());
             BulletBody body = new BulletBody(world, bullet);
             body.setVelocity(0,BULLET_SPEED);
+            dynamicBodies.add(body);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
     }

@@ -11,15 +11,11 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
-import com.raiden.game.model.PVE_GameModel;
-import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.PVE_Controller;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
-
-import java.util.List;
 
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
@@ -38,8 +34,6 @@ public class PVE_Screen extends ScreenAdapter {
      * How much meters does a pixel represent.
      */
     public final static float PIXEL_TO_METER = 0.02f;
-
-    private final float acceY_correction = 2;
 
     /**
      * The game this screen belongs to.
@@ -246,9 +240,10 @@ public class PVE_Screen extends ScreenAdapter {
             } else
                 acceY = acceY - acceY_initial;
 
-            float velY;
+            float velY = 0;
+            float acceY_correction = 2;
             if(-acceY>=0) {
-                velY = -acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER;
+                velY = -acceY * acceY_correction + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
                 controller.setVelocityofPlayer1(acceX, velY);
             }
             else if (-acceY<0) {

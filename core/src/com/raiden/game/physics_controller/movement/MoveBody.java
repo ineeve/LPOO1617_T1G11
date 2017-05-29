@@ -32,6 +32,9 @@ public abstract class MoveBody implements Movement{
             return;
         if(allMoves.containsKey(getType(ship))){
             allMoves.get(getType(ship)).move(ship, deltaTime);
+            if(ship.getBody().getLinearVelocity().y > ship.getMaxVelocity()){
+                ship.getBody().setLinearVelocity(ship.getBody().getLinearVelocity().x, ship.getMaxVelocity());
+            }
         }
     }
 

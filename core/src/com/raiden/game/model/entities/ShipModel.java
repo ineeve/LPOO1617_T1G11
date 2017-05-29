@@ -5,8 +5,6 @@ package com.raiden.game.model.entities;
  */
 
 public abstract class ShipModel extends MovingObjectModel{
-    public float MAXVELOCITY;
-
     int WEIGHT_DEFAULT;
 
     int ARMOR_DEFAUL;

@@ -1,5 +1,7 @@
 package com.raiden.game.model.entities;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Created by ineeve on 24-04-2017.
  */
@@ -13,6 +15,7 @@ public class CometModel extends MovingObjectModel {
      */
     public CometModel(float x, float y) {
         super(x, y);
+        Gdx.app.log("CometModel()", "Creating new.");
         width = 50;
         height = 50;
     }

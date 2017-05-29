@@ -9,6 +9,8 @@ import com.raiden.game.model.entities.MovingObjectModel;
 
 public class Tank extends ShipPhysics {
 
+    private static float MAXVELOCITY_Default = (float) (AirPlane_1.MAXVELOCITY_Default * 0.6);
+
     private final float density = 2f;
 
     /**
@@ -20,9 +22,10 @@ public class Tank extends ShipPhysics {
      */
     public Tank (World world, MovingObjectModel model) {
         super(world, model);
+        super.setDensity(density);
+        maxVelocity = MAXVELOCITY_Default;
         width = model.getWidth();
         height =model.getHeight();
-        super.setDensity(density);
         updatePhysics();
     }
 

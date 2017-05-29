@@ -1,12 +1,13 @@
 package com.raiden.game.model.entities;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Created by João on 18/05/2017.
  */
 
 public class TankModel extends ShipModel {
 
-    private static float MAXVELOCITY_Default = (float) (Airplane_1_Model.MAXVELOCITY_Default * 0.6);
 
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
@@ -16,7 +17,7 @@ public class TankModel extends ShipModel {
      */
     public TankModel(float x, float y) {
         super(x, y);
-        MAXVELOCITY = MAXVELOCITY_Default;
+        Gdx.app.log("TankModel()", "Creating new.");
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;

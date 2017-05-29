@@ -1,10 +1,6 @@
 package com.raiden.game.model;
 
-import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.physics_controller.Physics_Controller;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PVE_GameModel extends GameModel {
 
@@ -16,7 +12,6 @@ public class PVE_GameModel extends GameModel {
      */
     private PVE_GameModel() {
         addPlayer1(Physics_Controller.ARENA_WIDTH/2.0f,5);
-
     }
 
     /**
@@ -24,7 +19,7 @@ public class PVE_GameModel extends GameModel {
      *
      * @return the singleton instance
      */
-    public static PVE_GameModel getInstance() {
+    public static PVE_GameModel getInstanceOf() {
         if (instance == null)
             instance = new PVE_GameModel();
         return instance;

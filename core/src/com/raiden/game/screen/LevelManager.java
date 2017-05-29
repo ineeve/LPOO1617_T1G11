@@ -41,6 +41,7 @@ class LevelManager {
                 t += delta;
             if(t > 80){
                 t = 0;
+                lastSpawn = 0;
                 dificulty++;
             }
             //} else {

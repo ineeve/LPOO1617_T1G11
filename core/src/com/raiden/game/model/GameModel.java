@@ -1,5 +1,6 @@
 package com.raiden.game.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.BulletModel;
@@ -9,7 +10,6 @@ import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.screen.EnemiesFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -26,20 +26,14 @@ public abstract class GameModel {
     private ShipModel airplane12;
 
     /**
-     * The bullets currently flying through space.
-     */
-    private List<BulletModel> bullets = new ArrayList<BulletModel>();
-
-    /**
      * A pool of bullets
      */
-    Pool<BulletModel> bulletPool = new Pool<BulletModel>() {
+    private Pool<BulletModel> bulletPool = new Pool<BulletModel>() {
         @Override
         protected BulletModel newObject() {
             return new BulletModel(0, 0);
         }
     };
-
 
     /**
      *
@@ -64,19 +58,12 @@ public abstract class GameModel {
 
     public BulletModel createBullet(ShipModel ship) {
         BulletModel bullet = bulletPool.obtain();
-
-        bullet.setFlaggedForRemoval(false);
-        bullet.setPosition(ship.getX(), ship.getY()+5);
-        bullet.setTimeToLive(.5f);
+        bullet.setPosition(
+                ship.getX() + (float) Math.sin(ship.getRotation()) * 2f,
+                ship.getY() + (float) Math.cos(ship.getRotation()) * 2f);
         entityModels.add(bullet);
-        bullets.add(bullet);
-
         return bullet;
     }
-
-
-
-
 
     public ArrayList<EntityModel> getEntityModels(){
         return entityModels;
@@ -100,11 +87,12 @@ public abstract class GameModel {
     public void deleteEntityModel(EntityModel model){
         if(model != null) {
             entityModels.remove(model);
-            EnemiesFactory.getEnemyPool().free(model);
             if(model instanceof BulletModel){
-                bullets.remove(model);
+                Gdx.app.log("deleteEntityModel", "free bullet");
                 bulletPool.free((BulletModel)model);
             }
+            else
+                EnemiesFactory.getEnemyPool().free(model);
         }
     }
 
@@ -113,18 +101,5 @@ public abstract class GameModel {
             if (model != null)
                 entityModels.remove(model);
         }
-    }
-
-    public void update(float delta) {
-        for (BulletModel bullet : bullets)
-            if (bullet.decreaseTimeToLive(delta))
-                bullet.setFlaggedForRemoval(true);
-    }
-
-    /*
-    * Returns a list of all bullets in the scene
-     */
-    public List<BulletModel> getBullets() {
-        return bullets;
     }
 }

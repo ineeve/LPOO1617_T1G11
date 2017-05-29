@@ -10,6 +10,8 @@ import com.raiden.game.model.entities.MovingObjectModel;
  */
 public class AirPlane_2 extends ShipPhysics {
 
+    private static float MAXVELOCITY_Default = (float) (AirPlane_1.MAXVELOCITY_Default * 1.3);
+
     private final float density = 0.3f;
 
     /**
@@ -21,6 +23,8 @@ public class AirPlane_2 extends ShipPhysics {
      */
     public AirPlane_2(World world, MovingObjectModel model) {
         super(world, model);
+        super.setDensity(density);
+        maxVelocity = MAXVELOCITY_Default;
         width = model.getWidth();
         height = model.getHeight();
         body.setFixedRotation(true);

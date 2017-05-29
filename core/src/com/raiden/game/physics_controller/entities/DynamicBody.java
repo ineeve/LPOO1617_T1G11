@@ -27,6 +27,7 @@ public abstract class DynamicBody {
     private float restitution;
     protected int width;
     protected int height;
+    protected float maxVelocity;
 
     private float t = 0;
     MoveBody.MovementType movementType = null;
@@ -201,5 +202,13 @@ public abstract class DynamicBody {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public float getMaxVelocity() {
+        return maxVelocity;
+    }
+
+    public void setMaxVelocity(float maxVelocity) {
+        this.maxVelocity = maxVelocity;
     }
 }

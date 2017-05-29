@@ -16,9 +16,7 @@ public class BulletBody extends DynamicBody {
      */
     public BulletBody(World world, EntityModel model) {
         super(world, model);
-        setDensity(0.5f);
         setRestitution(0.5f);
-        setDensity(0.5f);
         setDensity(3f);
         body.setBullet(true);
         width = model.getWidth();
@@ -26,10 +24,8 @@ public class BulletBody extends DynamicBody {
         setFixtureVertices();
     }
     private void setFixtureVertices(){
-        float x_Correction = width / 256f;
-        float y_Correction = height / 256f;
         createFixture(new float[]{
-                0,0, x_Correction,0, x_Correction,y_Correction,0,y_Correction
+                0,0, width,0, width,height,0,height
         }, width, height);
     }
 }

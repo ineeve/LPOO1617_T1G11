@@ -1,9 +1,10 @@
 package com.raiden.game.model.entities;
 
 
+import com.badlogic.gdx.Gdx;
+
 public class Airplane_3_Model extends ShipModel {
 
-    private static float MAXVELOCITY_Default = (float) (Airplane_1_Model.MAXVELOCITY_Default * 0.8);
 
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
@@ -13,7 +14,7 @@ public class Airplane_3_Model extends ShipModel {
      */
     public Airplane_3_Model(float x, float y) {
         super(x, y);
-        MAXVELOCITY = MAXVELOCITY_Default;
+        Gdx.app.log("Airplane_3_Model()", "Creating new.");
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;
