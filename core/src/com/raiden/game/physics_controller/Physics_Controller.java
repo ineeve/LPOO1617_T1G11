@@ -28,7 +28,7 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
  * Controlls the physics Aspects of the PVE Game
  */
 
-public abstract class Physics_Controller implements ContactListener{
+public abstract class Physics_Controller{
     /**
      * The arena width in meters.
      */
@@ -234,49 +234,5 @@ public abstract class Physics_Controller implements ContactListener{
         }
     }
 
-     /*
-     * A contact between two objects was detected
-     *
-     * @param contact the detected contact
-     */
-    @Override
-    public void beginContact(Contact contact) {
-        Gdx.app.log("Contact","Contact detected");
-        Body bodyA = contact.getFixtureA().getBody();
-        Body bodyB = contact.getFixtureB().getBody();
-
-        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof MovingObjectModel)
-            bulletCollision(bodyA, bodyB);
-        if (bodyA.getUserData() instanceof BulletModel && bodyB.getUserData() instanceof MovingObjectModel)
-            bulletCollision(bodyB, bodyA);
-
-    }
-
-    private void  bulletCollision(Body bulletBody,Body bodyB){
-        Gdx.app.log("Collision","Bullet collosion detected");
-        ShipModel bModel = (ShipModel) bodyB.getUserData();
-        BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
-        int bulletDamage = bulletModel.getDamage();
-        bModel.decreaseHP(bulletDamage);
-        if (bModel.getHp() < 0){
-            bModel.setFlaggedForRemoval();
-        }
-        bulletModel.setFlaggedForRemoval();
-
-    }
-    @Override
-    public void endContact(Contact contact) {
-
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
-    }
 
 }

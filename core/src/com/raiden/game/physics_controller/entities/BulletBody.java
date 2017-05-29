@@ -16,7 +16,7 @@ public class BulletBody extends DynamicBody {
      */
     public BulletBody(World world, EntityModel model) {
         super(world, model);
-        setRestitution(0.5f);
+        setRestitution(0.1f);
         setDensity(3f);
         body.setBullet(true);
         width = model.getWidth();
