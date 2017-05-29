@@ -9,8 +9,6 @@ import com.raiden.game.model.entities.MovingObjectModel;
 
 public abstract class ShipPhysics extends DynamicBody {
 
-    private float density = 0.5f;
-
     private float friction = 0.4f;
 
     private float restitution = 0.5f;
@@ -24,17 +22,12 @@ public abstract class ShipPhysics extends DynamicBody {
      */
     public ShipPhysics(World world, MovingObjectModel model) {
         super(world, model);
-        super.setDensity(density);
         super.setFriction(friction);
         super.setRestitution(restitution);
         movementType = model.getMovementType();
     }
 
     public abstract void updatePhysics();
-
-    public void setDensity(float density) {
-        this.density = density;
-    }
 
     public void setFriction(float friction) {
         this.friction = friction;
@@ -44,11 +37,4 @@ public abstract class ShipPhysics extends DynamicBody {
         this.restitution = restitution;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
 }

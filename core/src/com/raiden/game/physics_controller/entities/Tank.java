@@ -9,6 +9,8 @@ import com.raiden.game.model.entities.MovingObjectModel;
 
 public class Tank extends ShipPhysics {
 
+    private final float density = 2f;
+
     /**
      * Constructs a space ship body according to
      * a space ship model.
@@ -18,8 +20,9 @@ public class Tank extends ShipPhysics {
      */
     public Tank (World world, MovingObjectModel model) {
         super(world, model);
-        width = 75;
-        height = 101;
+        width = model.getWidth();
+        height =model.getHeight();
+        super.setDensity(density);
         updatePhysics();
     }
 

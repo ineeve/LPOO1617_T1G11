@@ -23,6 +23,8 @@ public class BulletModel extends MovingObjectModel {
      */
     public BulletModel(float x, float y) {
         super(x, y);
+        width = 10;
+        height = 10;
     }
 
     /**

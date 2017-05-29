@@ -7,6 +7,7 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.physics_controller.PVE_Controller;
 import com.raiden.game.physics_controller.Physics_Controller;
+import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
 
@@ -45,6 +46,7 @@ public class Arena extends Game {
 	public void dispose () {
 		batch.dispose();
 		ViewFactory.dispose();
+		EnemiesFactory.dispose();
 		assetManager.dispose();
 	}
 

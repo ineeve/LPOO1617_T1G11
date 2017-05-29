@@ -6,12 +6,14 @@ import com.raiden.game.model.EnemyPool;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.physics_controller.movement.MoveBody;
 
 import java.util.ArrayList;
 
 import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.CIRCULAR;
+import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.HORIZONTAL;
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 
@@ -22,6 +24,23 @@ public abstract class EnemiesFactory {
 
     public static EnemyPool getEnemyPool() {
         return enemyPool;
+    }
+
+
+    static void makeBoss(PVE_Screen screen) {
+        OrthographicCamera camera = screen.getCamera();
+        float x = camera.position.x * PIXEL_TO_METER;
+        float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
+        ShipModel boss = (ShipModel) enemyPool.obtain(EntityModel.ModelType.AIRPLANE_3, x, y);
+        boss.setMovementType(HORIZONTAL);
+        boss.setHp(boss.getHP_DEFAULT() * 5);
+        boss.setArmor(boss.getARMOR_DEFAUL() * 5);
+        boss.setWidth(boss.getWidth() * 5);
+        boss.setHeight(boss.getHeight() * 5);
+        GameModel model = screen.getModel();
+        model.addEnemy(boss);
+        Physics_Controller controller = screen.getController();
+        controller.addDynamicBody(boss);
     }
 
     static void makeEnemy(PVE_Screen screen, EntityModel.ModelType typeOfEnemy){
@@ -42,7 +61,7 @@ public abstract class EnemiesFactory {
         ArrayList<MovingObjectModel> enemies =
                 createLinearHorizontalEnemies(typeOfEnemy, screen.getCamera(), numberOfEnemies);
         if(nextMoveType == null)
-            nextMoveType = CIRCULAR;
+            nextMoveType = HORIZONTAL;
         setMovement(enemies);
         nextMoveType = null;
         screen.getModel().addEnemies(enemies);
@@ -79,4 +98,9 @@ public abstract class EnemiesFactory {
     private static void setMovementType(MoveBody.MovementType moveType){
         nextMoveType = moveType;
     }
+
+    public static void dispose(){
+        enemyPool.clear();
+    }
+
 }

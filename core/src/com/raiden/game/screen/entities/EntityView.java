@@ -55,6 +55,7 @@ public abstract class EntityView {
      * @param model the model used to update this view
      */
     public void update(EntityModel model) {
+        sprite.setSize(model.getWidth(), model.getHeight());
         sprite.setCenter(model.getX() / PIXEL_TO_METER, model.getY() / PIXEL_TO_METER);
     }
 

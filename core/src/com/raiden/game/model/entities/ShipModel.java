@@ -29,4 +29,23 @@ public abstract class ShipModel extends MovingObjectModel{
         bullet = new BulletModel(x,y);
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setBullet(BulletModel bullet) {
+        this.bullet = bullet;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
+
+    public int getARMOR_DEFAUL() {
+        return ARMOR_DEFAUL;
+    }
+
+    public int getHP_DEFAULT() {
+        return HP_DEFAULT;
+    }
 }

@@ -20,6 +20,8 @@ public class TankModel extends ShipModel {
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAUL;
+        width = 75;
+        height = 101;
     }
 
     @Override

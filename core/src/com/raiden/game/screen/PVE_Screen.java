@@ -154,7 +154,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        levelManager.updateLevel(this);
+        levelManager.updateLevel(this, delta);
         updateScene(delta);
 
         game.getBatch().setProjectionMatrix(camera.combined);
@@ -218,6 +218,7 @@ public class PVE_Screen extends ScreenAdapter {
         float camera_Lower_Bound_Y = camera.viewportHeight / 2f;
         if(camera_Upper_Bound_Y < camera.position.y){
             camera.position.set(camera.position.x, camera_Upper_Bound_Y, 0);
+            levelManager.setFinnishOfLevel(true);
         }
         else if(camera_Lower_Bound_Y > camera.position.y){
             camera.position.set(camera.position.x, camera_Lower_Bound_Y, 0);
