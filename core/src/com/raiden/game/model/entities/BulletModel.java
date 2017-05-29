@@ -16,19 +16,19 @@ public class BulletModel extends MovingObjectModel {
 
     
     /**
-     * Creates a new ship model in a certain position and having a certain rotation.
+     * Creates a new ship model in a certain position;
      *
      * @param x        the x-coordinate in meters
      * @param y        the y-coordinate in meters
      */
     public BulletModel(float x, float y) {
         super(x, y);
-        width = 10;
-        height = 10;
+        width = 50;
+        height = 50;
     }
 
     /**
-     * Decreases this bullet's time to leave by delta seconds
+     * Decreases this bullet's time to live by delta seconds
      *
      * @param delta
      * @return

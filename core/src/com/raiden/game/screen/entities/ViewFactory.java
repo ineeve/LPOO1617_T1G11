@@ -29,7 +29,7 @@ public abstract class ViewFactory {
                     modelToViewHash.put(getTypeOfModel(model), new Tank_View(arena));
                     break;
                 case BULLET:
-                    modelToViewHash.put(getTypeOfModel(model), new Airplane_1_View(arena));
+                    modelToViewHash.put(getTypeOfModel(model), new BulletView(arena));
                     break;
                 case COMET:
                     //TODO: change this to the real view class

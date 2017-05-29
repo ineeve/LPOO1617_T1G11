@@ -68,7 +68,6 @@ public abstract class GameModel {
         bullet.setFlaggedForRemoval(false);
         bullet.setPosition(ship.getX(), ship.getY()+5);
         bullet.setTimeToLive(.5f);
-        entityModels.add(bullet);
         bullets.add(bullet);
 
         return bullet;
@@ -100,10 +99,12 @@ public abstract class GameModel {
     public void deleteEntityModel(EntityModel model){
         if(model != null) {
             entityModels.remove(model);
-            EnemiesFactory.getEnemyPool().free(model);
             if(model instanceof BulletModel){
                 bullets.remove(model);
                 bulletPool.free((BulletModel)model);
+            }else {
+
+                EnemiesFactory.getEnemyPool().free(model);
             }
         }
     }

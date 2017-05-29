@@ -16,10 +16,13 @@ import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.PVE_Controller;
 import com.raiden.game.physics_controller.Physics_Controller;
+import com.raiden.game.screen.entities.BulletView;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
 import java.util.List;
+
+import javax.swing.text.View;
 
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
@@ -270,6 +273,12 @@ public class PVE_Screen extends ScreenAdapter {
         for (EntityModel modelEntity : model.getEntityModels()) {
             EntityView view = ViewFactory.makeView(game, modelEntity);
             view.update(modelEntity);
+            view.draw(game.getBatch());
+        }
+        List<BulletModel> bullets = model.getBullets();
+        for (BulletModel bulletModel : bullets){
+            EntityView view = ViewFactory.makeView(game,bulletModel);
+            view.update(bulletModel);
             view.draw(game.getBatch());
         }
 
