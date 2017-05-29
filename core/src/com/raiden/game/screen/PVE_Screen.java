@@ -14,7 +14,6 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.PVE_Controller;
 import com.raiden.game.physics_controller.Physics_Controller;
-import com.raiden.game.screen.entities.BulletView;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
@@ -268,13 +267,6 @@ public class PVE_Screen extends ScreenAdapter {
             view.update(modelEntity);
             view.draw(game.getBatch());
         }
-        List<BulletModel> bullets = model.getBullets();
-        for (BulletModel bulletModel : bullets){
-            EntityView view = ViewFactory.makeView(game,bulletModel);
-            view.update(bulletModel);
-            view.draw(game.getBatch());
-        }
-
     }
 
     /**

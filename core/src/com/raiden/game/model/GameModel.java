@@ -94,8 +94,6 @@ public abstract class GameModel {
 
                 EnemiesFactory.getEnemyPool().free(model);
             }
-            else
-                EnemiesFactory.getEnemyPool().free(model);
         }
     }
 
