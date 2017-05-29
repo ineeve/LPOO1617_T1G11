@@ -42,9 +42,6 @@ public abstract class Physics_Controller {
 
     private ArrayList<DynamicBody> dynamicBodies;
 
-    private ArrayList<BulletBody> bullets = new ArrayList<BulletBody>();
-
-
     /**
      * The spaceship body.
      */
