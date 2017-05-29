@@ -47,9 +47,6 @@ public abstract class Physics_Controller implements ContactListener{
 
     private ArrayList<DynamicBody> dynamicBodies;
 
-    private ArrayList<BulletBody> bullets = new ArrayList<BulletBody>();
-
-
     /**
      * The spaceship body.
      */

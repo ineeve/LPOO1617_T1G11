@@ -13,7 +13,7 @@ import com.raiden.game.screen.entities.ViewFactory;
 /**
  * The game main class.
  */
-public class Arena extends Game {
+public class Arena extends Game{
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 
