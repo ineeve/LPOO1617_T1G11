@@ -34,9 +34,9 @@ public class Arena extends Game {
 	 * Starts the game.
 	 */
 	private void startGame() {
-		GameModel model = new PVE_GameModel();
+		GameModel model = PVE_GameModel.getInstance();
 
-		setScreen(new PVE_Screen(this, model, new PVE_Controller(model)));
+		setScreen(new PVE_Screen(this, model, PVE_Controller.getInstance(model)));
 	}
 
 	/**

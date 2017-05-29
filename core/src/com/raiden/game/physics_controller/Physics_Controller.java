@@ -61,7 +61,7 @@ public abstract class Physics_Controller {
     /**
      * The bullet speed
      */
-    private static final float BULLET_SPEED = 100f;
+    private static final float BULLET_SPEED = 20f;
 
     /**
      * Minimum time between consecutive shots in seconds
@@ -122,7 +122,6 @@ public abstract class Physics_Controller {
 
         timeToNextShoot -= delta;
 
-
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
         while (accumulator >= 1/60f) {
@@ -131,8 +130,6 @@ public abstract class Physics_Controller {
         }
 
        verifyPositionOfBodies();
-
-        Gdx.app.log("Controller Update","Time to Next Shot=" + timeToNextShoot);
     }
 
     private void verifyPositionOfBodies(){
@@ -211,7 +208,6 @@ public abstract class Physics_Controller {
      * Shoots a bullet from the spaceship at 10m/s
      */
     public void shoot() {
-        Gdx.app.log("Controller","Time to Next Shot=" + timeToNextShoot);
         if (timeToNextShoot < 0) {
             Gdx.app.log("Controller","Creating Bullet");
             BulletModel bullet = PVE_GameModel.getInstance().createBullet(PVE_GameModel.getInstance().getPlayer1());

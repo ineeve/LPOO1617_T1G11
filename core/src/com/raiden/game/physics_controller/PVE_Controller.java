@@ -11,7 +11,7 @@ public class PVE_Controller extends Physics_Controller {
 
     private static PVE_Controller instance;
 
-    public PVE_Controller(GameModel model) {
+    private PVE_Controller(GameModel model) {
         super(model);
     }
 

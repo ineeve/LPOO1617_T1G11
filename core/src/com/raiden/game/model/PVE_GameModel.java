@@ -3,6 +3,7 @@ package com.raiden.game.model;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PVE_GameModel extends GameModel {
@@ -13,8 +14,9 @@ public class PVE_GameModel extends GameModel {
     /**
      * Constructs a game with a.space ship in a certain position.
      */
-    public PVE_GameModel() {
+    private PVE_GameModel() {
         addPlayer1(Physics_Controller.ARENA_WIDTH/2.0f,5);
+
     }
 
     /**
