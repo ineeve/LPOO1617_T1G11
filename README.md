@@ -10,8 +10,6 @@ We, for our class will recreate this game but will be more minimalist and multip
 * Joao Carvalho - 67:00h
 * Renato Campos - 14:30h
 
->>>>>>> aac6755518e06ae0c21229a8988e2765ca7165ff
-
 ## Priorities:
 1. Colocar Single Player a Funcionar
 2. Colocar Login a Funcionar
