@@ -272,12 +272,6 @@ public class PVE_Screen extends ScreenAdapter {
             view.update(modelEntity);
             view.draw(game.getBatch());
         }
-        //Draw Bullets
-        for (BulletModel bullet : model.getBullets()) {
-            EntityView view = ViewFactory.makeView(game, bullet);
-            view.update(bullet);
-            view.draw(game.getBatch());
-        }
 
     }
 
