@@ -54,18 +54,20 @@ public class PVE_Controller extends Physics_Controller implements ContactListene
         Gdx.app.log("Collision","Bullet collosion detected");
         MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
         BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
-        int bulletDamage = bulletModel.getDamage();
-        bModel.decreaseHP(bulletDamage);
-        Gdx.app.log("Collision","Moving Object HP =" + bModel.getHp());
-        if (bModel.getHp() < 0){
-            bModel.setFlaggedForRemoval();
+        if (bModel != null && bulletModel != null) {
+            int bulletDamage = bulletModel.getDamage();
+            bModel.decreaseHP(bulletDamage);
+            Gdx.app.log("Collision", "Moving Object HP =" + bModel.getHp());
+            if (bModel.getHp() < 0) {
+                bModel.setFlaggedForRemoval(true);
+            }
+            bulletModel.setFlaggedForRemoval(true);
         }
-        bulletModel.setFlaggedForRemoval();
 
     }
     @Override
     public void endContact(Contact contact) {
-        removeFlaggedForRemoval();
+
     }
 
     @Override

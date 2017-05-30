@@ -1,6 +1,8 @@
 package com.raiden.game.model.entities;
 
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * An abstract model representing an entity belonging to a game model.
  */
@@ -106,8 +108,9 @@ public abstract class EntityModel {
         this.height = height;
     }
 
-    public void setFlaggedForRemoval(){
-        flaggedForRemoval = true;
+    public void setFlaggedForRemoval(boolean flaggedOrNot){
+        Gdx.app.log("Destroy","Set Flagged for Removel has been called");
+        flaggedForRemoval = flaggedOrNot;
     }
     public boolean isFlaggedForRemoval(){
         return flaggedForRemoval;

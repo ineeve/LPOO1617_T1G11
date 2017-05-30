@@ -148,6 +148,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
+        controller.removeFlaggedForRemoval();
         levelManager.updateLevel(this, delta);
         updateScene(delta);
 

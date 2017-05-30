@@ -97,8 +97,10 @@ public abstract class Physics_Controller{
     }
 
     public void destroyDynamicBody(DynamicBody body){
-        dynamicBodies.remove(body);
-        world.destroyBody(body.getBody());
+        if (dynamicBodies.contains(body)){
+            dynamicBodies.remove(body);
+            world.destroyBody(body.getBody());
+        }
     }
 
     public void destroyDynamicBodies(ArrayList<DynamicBody> bodies){
@@ -129,16 +131,22 @@ public abstract class Physics_Controller{
             world.step(1/60f, 6, 2);
             accumulator -= 1/60f;
         }
+
         verifyPositionOfBodies();
+
     }
 
     public void removeFlaggedForRemoval(){
-        for(DynamicBody body : dynamicBodies){
+        for(int i = 0; i < dynamicBodies.size(); i++){
+            DynamicBody body = dynamicBodies.get(i);
             EntityModel currentModel = (EntityModel)body.getUserData();
             if (currentModel.isFlaggedForRemoval()){
                 Gdx.app.log("Destroying","Dynamic Body");
                 destroyDynamicBody(body);
+                Gdx.app.log("Destroy","Removed Body");
                 model.deleteEntityModel(currentModel);
+                Gdx.app.log("Destroy","Removed Model");
+                i--;
             }
         }
     }
@@ -228,6 +236,7 @@ public abstract class Physics_Controller{
         if (timeToNextShoot < 0) {
             Gdx.app.log("Controller","Creating Bullet");
             BulletModel bullet = model.createBullet(model.getPlayer1());
+            bullet.setFlaggedForRemoval(false);
             BulletBody body = new BulletBody(world, bullet);
             body.setVelocity(0,BULLET_SPEED);
             dynamicBodies.add(body);
