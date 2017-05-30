@@ -34,7 +34,7 @@ public abstract class EnemiesFactory {
         ShipModel boss = (ShipModel) enemyPool.obtain(EntityModel.ModelType.AIRPLANE_3, x, y);
         boss.setMovementType(HORIZONTAL);
         boss.setHp(boss.getHP_DEFAULT() * 5);
-        boss.setArmor(boss.getARMOR_DEFAUL() * 5);
+        boss.setArmor(boss.getARMOR_DEFAULT() * 5);
         boss.setWidth(boss.getWidth() * 5);
         boss.setHeight(boss.getHeight() * 5);
         GameModel model = screen.getModel();

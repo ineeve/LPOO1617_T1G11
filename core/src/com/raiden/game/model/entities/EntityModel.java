@@ -109,7 +109,6 @@ public abstract class EntityModel {
     }
 
     public void setFlaggedForRemoval(boolean flaggedOrNot){
-        Gdx.app.log("Destroy","Set Flagged for Removel has been called");
         flaggedForRemoval = flaggedOrNot;
     }
     public boolean isFlaggedForRemoval(){

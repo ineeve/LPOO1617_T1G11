@@ -149,6 +149,7 @@ public abstract class Physics_Controller{
                 i--;
             }
         }
+
     }
 
     private void verifyPositionOfBodies(){

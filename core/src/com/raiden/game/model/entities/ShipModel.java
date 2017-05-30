@@ -5,17 +5,17 @@ package com.raiden.game.model.entities;
  */
 
 public abstract class ShipModel extends MovingObjectModel{
-    int WEIGHT_DEFAULT;
+    protected static final int WEIGHT_DEFAULT = 10;
 
-    int ARMOR_DEFAUL;
+    protected static final int ARMOR_DEFAULT = 10;
 
-    int HP_DEFAULT = 50;
+    protected static final int HP_DEFAULT = 50;
 
+    protected int weight;
+
+    protected int armor;
 
     private BulletModel bullet;
-
-    int weight;
-    int armor;
 
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
@@ -43,8 +43,11 @@ public abstract class ShipModel extends MovingObjectModel{
         this.armor = armor;
     }
 
-    public int getARMOR_DEFAUL() {
-        return ARMOR_DEFAUL;
+    public int getArmor() {return armor;
+    }
+
+    public int getARMOR_DEFAULT() {
+        return ARMOR_DEFAULT;
     }
 
     public int getHP_DEFAULT() {

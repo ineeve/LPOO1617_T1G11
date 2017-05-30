@@ -14,9 +14,9 @@ public class Airplane_2_Model extends ShipModel {
     public Airplane_2_Model(float x, float y) {
         super(x, y);
         Gdx.app.log("Airplane_2_Model()", "Creating new.");
-        hp = HP_DEFAULT;
+        hp = HP_DEFAULT*2;
         weight = WEIGHT_DEFAULT;
-        armor = ARMOR_DEFAUL;
+        armor = ARMOR_DEFAULT;
         width = 80;
         height = 123;
     }

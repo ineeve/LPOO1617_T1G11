@@ -39,7 +39,6 @@ public class PVE_Controller extends Physics_Controller implements ContactListene
   */
     @Override
     public void beginContact(Contact contact) {
-        Gdx.app.log("Contact","Contact detected");
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
@@ -51,12 +50,13 @@ public class PVE_Controller extends Physics_Controller implements ContactListene
     }
 
     private void  bulletCollision(Body bulletBody,Body bodyB){
-        Gdx.app.log("Collision","Bullet collosion detected");
-        MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
+        ShipModel bModel = (ShipModel) bodyB.getUserData();
         BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
         if (bModel != null && bulletModel != null) {
             int bulletDamage = bulletModel.getDamage();
-            bModel.decreaseHP(bulletDamage);
+            double damagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
+            bModel.decreaseHP((int) (bulletDamage*damagePercentage));
+            Gdx.app.log("Damage","Percentage =" + damagePercentage);
             Gdx.app.log("Collision", "Moving Object HP =" + bModel.getHp());
             if (bModel.getHp() < 0) {
                 bModel.setFlaggedForRemoval(true);

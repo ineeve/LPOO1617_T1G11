@@ -18,9 +18,9 @@ public class TankModel extends ShipModel {
     public TankModel(float x, float y) {
         super(x, y);
         Gdx.app.log("TankModel()", "Creating new.");
-        hp = HP_DEFAULT;
-        weight = WEIGHT_DEFAULT;
-        armor = ARMOR_DEFAUL;
+        hp = HP_DEFAULT*2;
+        weight = WEIGHT_DEFAULT*3;
+        armor = ARMOR_DEFAULT*3;
         width = 75;
         height = 101;
     }
