@@ -26,12 +26,13 @@ public abstract class EnemiesFactory {
         return enemyPool;
     }
 
+    private static float xOfNextSpawn;
+    private static float yOfNextSpawn;
 
     static void makeBoss(PVE_Screen screen) {
         OrthographicCamera camera = screen.getCamera();
-        float x = camera.position.x * PIXEL_TO_METER;
-        float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
-        ShipModel boss = (ShipModel) enemyPool.obtain(EntityModel.ModelType.AIRPLANE_3, x, y);
+        updateCoodsOfNextSpawn(camera);
+        ShipModel boss = (ShipModel) enemyPool.obtain(EntityModel.ModelType.AIRPLANE_3, xOfNextSpawn, yOfNextSpawn);
         boss.setMovementType(HORIZONTAL);
         boss.setHp(boss.getHP_DEFAULT() * 5);
         boss.setArmor(boss.getARMOR_DEFAULT() * 5);
@@ -46,9 +47,8 @@ public abstract class EnemiesFactory {
     static void makeEnemy(PVE_Screen screen, EntityModel.ModelType typeOfEnemy){
         Gdx.app.log("EnemiesFactory", "makeEnemy() -> creating new enemy");
         OrthographicCamera camera = screen.getCamera();
-        float x = camera.position.x * PIXEL_TO_METER;
-        float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
-        MovingObjectModel newEnemyModel = (MovingObjectModel) enemyPool.obtain(typeOfEnemy, x, y);
+        updateCoodsOfNextSpawn(camera);
+        MovingObjectModel newEnemyModel = (MovingObjectModel) enemyPool.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn);
         newEnemyModel.setMovementType(CIRCULAR);
         GameModel model = screen.getModel();
         model.addEnemy(newEnemyModel);
@@ -57,7 +57,9 @@ public abstract class EnemiesFactory {
     }
 
 
-    static void makeEnemy_Group_Horizontal(PVE_Screen screen, EntityModel.ModelType typeOfEnemy, int numberOfEnemies){
+    static void makeEnemy_Group_Horizontal(
+            PVE_Screen screen, EntityModel.ModelType typeOfEnemy, int numberOfEnemies)
+    {
         ArrayList<MovingObjectModel> enemies =
                 createLinearHorizontalEnemies(typeOfEnemy, screen.getCamera(), numberOfEnemies);
         if(nextMoveType == null)
@@ -68,24 +70,28 @@ public abstract class EnemiesFactory {
         screen.getController().addDynamicBodies(enemies);
     }
 
-    private static ArrayList<MovingObjectModel> createLinearHorizontalEnemies(EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies){
+    private static ArrayList<MovingObjectModel> createLinearHorizontalEnemies(
+            EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies)
+    {
         ArrayList<MovingObjectModel> enemies = new ArrayList<MovingObjectModel>();
-        float x = camera.position.x * PIXEL_TO_METER -(numberOfEnemies - 1) / 2f * 5f;
-        float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
+        updateCoodsOfNextSpawn(camera);
+        xOfNextSpawn -= (numberOfEnemies - 1) * 2.5f;
         for(int i = 0; i < numberOfEnemies; i++){
-            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, x, y));
-            x += 5f;
+            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn));
+            xOfNextSpawn += 5f;
         }
         return enemies;
     }
 
-    private static ArrayList<MovingObjectModel> createLinearVerticalEnemies(EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies){
+    private static ArrayList<MovingObjectModel> createLinearVerticalEnemies(
+            EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies)
+    {
         ArrayList<MovingObjectModel> enemies = new ArrayList<MovingObjectModel>();
-        float x = camera.position.x * PIXEL_TO_METER;
-        float y = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER - (numberOfEnemies - 1) / 2f * 5f;
+        updateCoodsOfNextSpawn(camera);
+        yOfNextSpawn -= (numberOfEnemies - 1) / 2f * 5f;
         for(int i = 0; i < numberOfEnemies; i++){
-            y += 5f;
-            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, x, y));
+            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn));
+            yOfNextSpawn += 5f;
         }
         return enemies;
     }
@@ -101,6 +107,14 @@ public abstract class EnemiesFactory {
 
     public static void dispose(){
         enemyPool.clear();
+    }
+
+    private static void updateCoodsOfNextSpawn(OrthographicCamera camera){
+        float randomValue = (float) Math.random();
+        if(randomValue < 0.5)
+            randomValue *= -1;
+        xOfNextSpawn = (camera.position.x + randomValue * camera.viewportWidth) * PIXEL_TO_METER;
+        yOfNextSpawn = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
     }
 
 }

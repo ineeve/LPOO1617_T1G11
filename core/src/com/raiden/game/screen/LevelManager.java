@@ -34,7 +34,7 @@ class LevelManager {
                 if (t >= lastSpawn + timeOfSpawn) {
                     lastSpawn = t;
                     Gdx.app.log("LevelManager:updateLevel", "t & spawn" + String.valueOf(t % timeOfSpawn));
-                    int numberOfEnemies = ((int) (Math.random() * dificulty + 0.5f) % 11);
+                    int numberOfEnemies = ((int) Math.round(Math.random() * dificulty + 0.5f) % 11);
                     Gdx.app.log("Spawn Enemies", "Number of enemies -> " + String.valueOf(numberOfEnemies));
                     EnemiesFactory.makeEnemy_Group_Horizontal(screen, EntityModel.ModelType.getRandom(), numberOfEnemies);
                 }

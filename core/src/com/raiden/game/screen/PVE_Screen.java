@@ -148,7 +148,6 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        controller.removeFlaggedForRemoval();
         levelManager.updateLevel(this, delta);
         updateScene(delta);
 
@@ -220,6 +219,22 @@ public class PVE_Screen extends ScreenAdapter {
         }
     }
 
+    private float getVelocity_X(float acceY){
+        float acceY_correction = 2;
+        if(acceY_initial == null){
+            acceY_initial = acceY;
+            acceY = 0f;
+        } else
+            acceY = acceY - acceY_initial;
+
+        if(-acceY>=0) {
+            return  -acceY * acceY_correction + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
+        }
+        else {
+            return  -(acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER);
+        }
+    }
+
     /**
      * Handles any inputs and passes them to the controller.
      *
@@ -230,27 +245,14 @@ public class PVE_Screen extends ScreenAdapter {
         boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
-            if (Math.abs(acceX) <= 0.25){
+            if (Math.abs(acceX) <= 0.15){
                 acceX = 0f;
                 //TODO: change something where to set acceleration to view
             }
             Float acceY = Gdx.input.getAccelerometerY();
-            if(acceY_initial == null){
-                acceY_initial = acceY;
-                acceY = 0f;
-            } else
-                acceY = acceY - acceY_initial;
+            float velY = getVelocity_X(acceY);
 
-            float velY = 0;
-            float acceY_correction = 2;
-            if(-acceY>=0) {
-                velY = -acceY * acceY_correction + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
-                controller.setVelocityofPlayer1(acceX, velY);
-            }
-            else if (-acceY<0) {
-                velY = -(acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER);
-                controller.setVelocityofPlayer1(acceX, velY);
-            }
+            controller.setVelocityofPlayer1(acceX, velY);
         }
         if (Gdx.input.isTouched()) {
             Gdx.app.log("Input","Screen touched");
