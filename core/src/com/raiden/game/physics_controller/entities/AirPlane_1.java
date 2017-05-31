@@ -9,7 +9,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
  * representing the player space ship.
  */
 public class AirPlane_1 extends ShipPhysics {
-    public static float MAXVELOCITY_Default = 0.5f;
+    public static float MAXVELOCITY_Default = 5f;
 
     private final float density = 0.5f;
 

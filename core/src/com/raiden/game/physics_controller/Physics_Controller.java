@@ -31,7 +31,7 @@ public class Physics_Controller implements ContactListener{
     /**
      * The arena width in meters.
      */
-    public static final int ARENA_WIDTH = 30; //52
+    public static final int ARENA_WIDTH = 27; //52
 
     /**
      * The arena height in meters.
@@ -61,11 +61,6 @@ public class Physics_Controller implements ContactListener{
     private GameModel model;
 
     /**
-     * The bullet speed
-     */
-    private static final float BULLET_SPEED = 20f;
-
-    /**
      * Minimum time between consecutive shots in seconds
      */
     private final float TIME_BETWEEN_SHOTS = .2f;
@@ -76,7 +71,7 @@ public class Physics_Controller implements ContactListener{
 
     private Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
-        world = new World(new Vector2(0,-2),true);
+        world = new World(new Vector2(0,-10),true);
         world.setContactListener(this);
         this.model = model;
         for(EntityModel modelEntity : model.getEntityModels()){
@@ -183,7 +178,7 @@ public class Physics_Controller implements ContactListener{
     private boolean verifyBounds(Body body, boolean delete) {
         float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
         float yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
-        if (body.getPosition().x < 0 && !delete)
+        if (body.getPosition().x < 0)
             body.setTransform(0, body.getPosition().y, body.getAngle());
 
         if (body.getPosition().y < yLowerBound) {
@@ -192,7 +187,7 @@ public class Physics_Controller implements ContactListener{
             else
                 return true;
         }
-        if (body.getPosition().x > ARENA_WIDTH && !delete)
+        if (body.getPosition().x > ARENA_WIDTH)
             body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
 
         if (body.getPosition().y > yUpperBound) {
@@ -242,8 +237,8 @@ public class Physics_Controller implements ContactListener{
         if (timeToNextShoot < 0) {
             BulletModel bullet = model.createBullet(model.getPlayer1());
             bullet.setFlaggedForRemoval(false);
-            BulletBody body = new BulletBody(world, bullet);
-            body.setVelocity(0,BULLET_SPEED);
+            DynamicBody body = new BulletBody(world, bullet);
+            body.setVelocity(0,body.getMaxVelocity());
             dynamicBodies.add(body);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
@@ -269,7 +264,7 @@ public class Physics_Controller implements ContactListener{
             int aDamage = aModel.getDamage();
             double aDamagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
             bModel.decreaseHP((int) (aDamage * aDamagePercentage));
-            if (bModel.getHp() <= 0) {
+            if (bModel.getHp() <= 0 || bModel.getType() == EntityModel.ModelType.BULLET) {
                 bModel.setFlaggedForRemoval(true);
             }
         }

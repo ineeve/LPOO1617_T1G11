@@ -13,6 +13,7 @@ import com.raiden.game.physics_controller.movement.MoveBody;
 import java.util.ArrayList;
 
 import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.CIRCULAR;
+import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.DOWNWARD;
 import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.HORIZONTAL;
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
@@ -62,12 +63,20 @@ public abstract class EnemiesFactory {
     {
         ArrayList<MovingObjectModel> enemies =
                 createLinearHorizontalEnemies(typeOfEnemy, screen.getCamera(), numberOfEnemies);
-        if(nextMoveType == null)
-            nextMoveType = HORIZONTAL;
+        updateNextMovementType(typeOfEnemy);
         setMovement(enemies);
         nextMoveType = null;
         screen.getModel().addEnemies(enemies);
         screen.getController().addDynamicBodies(enemies);
+    }
+
+    private static void updateNextMovementType(EntityModel.ModelType typeOfEnemy) {
+        if(nextMoveType == null) {
+            if (typeOfEnemy == EntityModel.ModelType.COMET)
+                nextMoveType = DOWNWARD;
+            else
+                nextMoveType = HORIZONTAL;
+        }
     }
 
     private static ArrayList<MovingObjectModel> createLinearHorizontalEnemies(

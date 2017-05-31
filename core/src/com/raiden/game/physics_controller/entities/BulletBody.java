@@ -8,6 +8,12 @@ import com.raiden.game.model.entities.EntityModel;
  */
 
 public class BulletBody extends DynamicBody {
+
+    /**
+     * The bullet speed
+     */
+    private static final float BULLET_SPEED = 35f;
+
     /**
      * Constructs a body representing a model in a certain world.
      *
@@ -17,7 +23,8 @@ public class BulletBody extends DynamicBody {
     public BulletBody(World world, EntityModel model) {
         super(world, model);
         setRestitution(0f);
-        setDensity(10f);
+        setDensity(1f);
+        maxVelocity = BULLET_SPEED;
         body.setBullet(true);
         width = model.getWidth();
         height = model.getHeight();
