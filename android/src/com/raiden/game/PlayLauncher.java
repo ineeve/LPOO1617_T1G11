@@ -1,6 +1,5 @@
 package com.raiden.game;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,10 +7,7 @@ import android.util.Log;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.games.GamesActivityResultCodes;
 import com.google.android.gms.games.GamesStatusCodes;
-import com.google.android.gms.games.multiplayer.Invitation;
-import com.google.android.gms.games.multiplayer.Multiplayer;
 import com.google.android.gms.games.multiplayer.Participant;
 import com.google.android.gms.games.multiplayer.realtime.RealTimeMessage;
 import com.google.android.gms.games.multiplayer.realtime.RealTimeMessageReceivedListener;
@@ -29,8 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.raiden.game.MainActivity.RC_INVITATION_INBOX;
-import static com.raiden.game.MainActivity.RC_SELECT_PLAYERS;
 import static com.raiden.game.MainActivity.RC_WAITING_ROOM;
 import static com.raiden.game.MainActivity.TAG;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
@@ -38,6 +32,8 @@ import static com.raiden.game.MainActivity.mGoogleApiClient;
 public class PlayLauncher extends AndroidApplication implements RealTimeMessageReceivedListener, RoomStatusUpdateListener, RoomUpdateListener {
 
 	private Arena arena;
+
+	private Room mRoom;
 
 	// Room ID where the currently active game is taking place; null if we're
 	// not playing.
@@ -74,41 +70,6 @@ public class PlayLauncher extends AndroidApplication implements RealTimeMessageR
 		arena = new Arena();
 
 		initialize(arena, config);
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int responseCode,
-								 Intent intent) {
-		super.onActivityResult(requestCode, responseCode, intent);
-
-		switch (requestCode) {
-			case RC_SELECT_PLAYERS:
-				// we got the result from the "select players" UI -- ready to create the room
-				handleSelectPlayersResult(responseCode, intent);
-				break;
-			case RC_INVITATION_INBOX:
-				// we got the result from the "select invitation" UI (invitation inbox). We're
-				// ready to accept the selected invitation:
-				handleInvitationInboxResult(responseCode, intent);
-				break;
-			case RC_WAITING_ROOM:
-				// we got the result from the "waiting room" UI.
-				if (responseCode == Activity.RESULT_OK) {
-					// ready to start playing
-					Log.d(TAG, "Starting game (waiting room returned OK).");
-					startGame();
-				} else if (responseCode == GamesActivityResultCodes.RESULT_LEFT_ROOM) {
-					// player indicated that they want to leave the room
-					leaveRoom();
-				} else if (responseCode == Activity.RESULT_CANCELED) {
-					// Dialog was cancelled (user pressed back key, for instance). In our game,
-					// this means leaving the room too. In more elaborate games, this could mean
-					// something else (like minimizing the waiting room UI).
-					leaveRoom();
-				}
-				break;
-		}
-		super.onActivityResult(requestCode, responseCode, intent);
 	}
 
 	// Activity is going to the background. We have to leave the current room.
@@ -219,76 +180,6 @@ public class PlayLauncher extends AndroidApplication implements RealTimeMessageR
 		//switchToScreen(R.id.screen_wait);
 		//resetGameVars();
 		Games.RealTimeMultiplayer.create(mGoogleApiClient, rtmConfigBuilder.build());
-	}
-
-	// Handle the result of the invitation inbox UI, where the player can pick an invitation
-	// to accept. We react by accepting the selected invitation, if any.
-	private void handleInvitationInboxResult(int response, Intent data) {
-		if (response != Activity.RESULT_OK) {
-			Log.w(TAG, "*** invitation inbox UI cancelled, " + response);
-			//switchToMainScreen();
-			return;
-		}
-
-		Log.d(TAG, "Invitation inbox UI succeeded.");
-		Invitation inv = data.getExtras().getParcelable(Multiplayer.EXTRA_INVITATION);
-
-		// accept invitation
-		acceptInviteToRoom(inv.getInvitationId());
-	}
-
-	// Handle the result of the "Select players UI" we launched when the user clicked the
-	// "Invite friends" button. We react by creating a room with those players.
-	void handleSelectPlayersResult(int response, Intent data) {
-		if (response != Activity.RESULT_OK) {
-			Log.w(TAG, "*** select players UI cancelled, " + response);
-			//switchToMainScreen();
-			return;
-		}
-
-		Log.d(TAG, "Select players UI succeeded.");
-
-		// get the invitee list
-		final ArrayList<String> invitees = data.getStringArrayListExtra(Games.EXTRA_PLAYER_IDS);
-		Log.d(TAG, "Invitee count: " + invitees.size());
-
-		// get the automatch criteria
-		Bundle autoMatchCriteria = null;
-		int minAutoMatchPlayers = data.getIntExtra(Multiplayer.EXTRA_MIN_AUTOMATCH_PLAYERS, 0);
-		int maxAutoMatchPlayers = data.getIntExtra(Multiplayer.EXTRA_MAX_AUTOMATCH_PLAYERS, 0);
-		if (minAutoMatchPlayers > 0 || maxAutoMatchPlayers > 0) {
-			autoMatchCriteria = RoomConfig.createAutoMatchCriteria(
-					minAutoMatchPlayers, maxAutoMatchPlayers, 0);
-			Log.d(TAG, "Automatch criteria: " + autoMatchCriteria);
-		}
-
-		// create the room
-		Log.d(TAG, "Creating room...");
-		RoomConfig.Builder rtmConfigBuilder = RoomConfig.builder(this);
-		rtmConfigBuilder.addPlayersToInvite(invitees);
-		rtmConfigBuilder.setMessageReceivedListener(this);
-		rtmConfigBuilder.setRoomStatusUpdateListener(this);
-		if (autoMatchCriteria != null) {
-			rtmConfigBuilder.setAutoMatchCriteria(autoMatchCriteria);
-		}
-		//switchToScreen(R.id.screen_wait);
-		//resetGameVars();
-		Games.RealTimeMultiplayer.create(mGoogleApiClient, rtmConfigBuilder.build());
-		Log.d(TAG, "Room created, waiting for it to be ready...");
-	}
-
-
-	// Accept the given invitation.
-	void acceptInviteToRoom(String invId) {
-		// accept the invitation
-		Log.d(TAG, "Accepting invitation: " + invId);
-		RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(this);
-		roomConfigBuilder.setInvitationIdToAccept(invId)
-				.setMessageReceivedListener(this)
-				.setRoomStatusUpdateListener(this);
-		//switchToScreen(R.id.screen_wait);
-		//resetGameVars();
-		Games.RealTimeMultiplayer.join(mGoogleApiClient, roomConfigBuilder.build());
 	}
 
 	// Leave the room.
