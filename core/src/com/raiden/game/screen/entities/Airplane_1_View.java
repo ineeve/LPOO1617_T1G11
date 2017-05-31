@@ -41,8 +41,8 @@ public class Airplane_1_View extends ShipView {
 
         TextureRegion[][] thrustRegion = TextureRegion.split(animated, animated.getWidth() / numberOfAnimations, animated.getHeight());
 
-        TextureRegion[] frames = new TextureRegion[4];
-        System.arraycopy(thrustRegion[0], 0, frames, 0, 4);
+        TextureRegion[] frames = new TextureRegion[numberOfAnimations];
+        System.arraycopy(thrustRegion[0], 0, frames, 0, numberOfAnimations);
 
         return new Animation<TextureRegion>(FRAME_TIME, frames);
     }

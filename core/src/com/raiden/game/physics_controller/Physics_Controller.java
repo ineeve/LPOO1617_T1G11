@@ -153,6 +153,7 @@ public class Physics_Controller implements ContactListener{
                 Gdx.app.log("Destroying","Dynamic Body");
                 destroyDynamicBody(body);
                 Gdx.app.log("Destroy","Removed Body");
+                currentModel.setFlaggedForRemoval(false);
                 model.deleteEntityModel(currentModel);
                 Gdx.app.log("Destroy","Removed Model");
                 i--;

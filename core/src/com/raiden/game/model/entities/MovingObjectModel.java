@@ -14,7 +14,7 @@ public abstract class MovingObjectModel extends EntityModel {
     protected MoveBody.MovementType  movementType;
     protected int hp;
     /**
-     * Creates a new ship model in a certain position and having a certain rotation.
+     * Creates a new ship model in a certain position
      *
      * @param x the x-coordinate in meters
      * @param y the y-coordinate in meters

@@ -32,8 +32,7 @@ public abstract class ControllerFactory {
                     bodyToReturn = new BulletBody(world,(BulletModel) model);
                     break;
                 case COMET:
-                    //TODO: change this to the real view class
-                    bodyToReturn = new AirPlane_1(world,(MovingObjectModel) model);
+                    bodyToReturn = new CometBody(world,(MovingObjectModel) model);
                     break;
                 case OBSTACLE:
                     //TODO: change this to the real view class

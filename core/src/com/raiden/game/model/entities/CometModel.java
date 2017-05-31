@@ -15,9 +15,8 @@ public class CometModel extends MovingObjectModel {
      */
     public CometModel(float x, float y) {
         super(x, y);
-        Gdx.app.log("CometModel()", "Creating new.");
-        width = 50;
-        height = 50;
+        width = 234;
+        height = 400;
     }
 
     @Override

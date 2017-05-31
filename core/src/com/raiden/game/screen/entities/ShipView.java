@@ -74,17 +74,6 @@ public abstract class ShipView extends EntityView {
     protected abstract Animation<TextureRegion> createAcceleratingAnimation(Arena arena);
 
     /**
-     * Updates this ship model. Also save and resets
-     * the accelerating flag from the model.
-     *
-     * @param model the model used to update this view
-     */
-    @Override
-    public void update(EntityModel model) {
-        super.update(model);
-    }
-
-    /**
      * Draws the sprite from this view using a sprite batch.
      * Chooses the correct texture or animation to be used
      * depending on the accelerating flag.

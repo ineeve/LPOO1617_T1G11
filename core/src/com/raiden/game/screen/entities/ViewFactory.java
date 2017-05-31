@@ -1,5 +1,6 @@
 package com.raiden.game.screen.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.raiden.game.Arena;
 import com.raiden.game.model.entities.EntityModel;
 
@@ -32,8 +33,7 @@ public abstract class ViewFactory {
                     modelToViewHash.put(getTypeOfModel(model), new BulletView(arena));
                     break;
                 case COMET:
-                    //TODO: change this to the real view class
-                    modelToViewHash.put(getTypeOfModel(model), new Airplane_1_View(arena));
+                    modelToViewHash.put(getTypeOfModel(model), new CometView(arena));
                     break;
                 case OBSTACLE:
                     //TODO: change this to the real view class
