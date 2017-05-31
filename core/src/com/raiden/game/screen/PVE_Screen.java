@@ -134,7 +134,8 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     private void updateScene(float delta){
-        handleInputs(delta);
+        if(!LevelManager.isEndOfGame())
+            handleInputs(delta);
         controller.update(delta);
         updateCameraPosition(delta);
         verifyCameraBounds(delta);

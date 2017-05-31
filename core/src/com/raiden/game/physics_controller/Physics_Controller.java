@@ -18,6 +18,7 @@ import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipPhysics;
 import com.raiden.game.physics_controller.movement.MoveBody;
+import com.raiden.game.screen.LevelManager;
 
 import java.util.ArrayList;
 
@@ -121,7 +122,8 @@ public class Physics_Controller implements ContactListener{
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
-        shoot();
+        if(!LevelManager.isEndOfGame())
+            shoot();
         for(DynamicBody body : dynamicBodies){
             MoveBody.moveBody(body, delta);
         }
@@ -255,6 +257,14 @@ public class Physics_Controller implements ContactListener{
         Body bodyB = contact.getFixtureB().getBody();
         collisionHandler(bodyA,bodyB);
         collisionHandler(bodyB,bodyA);
+        if(!LevelManager.isEndOfGame())
+            checkIfGameEnd();
+    }
+
+    private void checkIfGameEnd() {
+        if(((MovingObjectModel) airPlane1.getUserData()).isFlaggedForRemoval()){
+            LevelManager.setEndOfGame(true);
+        }
     }
 
     private void collisionHandler(Body bodyA, Body bodyB){
