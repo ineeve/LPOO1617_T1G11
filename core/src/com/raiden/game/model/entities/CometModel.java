@@ -17,6 +17,9 @@ public class CometModel extends MovingObjectModel {
         super(x, y);
         width = 234;
         height = 400;
+        Gdx.app.log("CometModel()", "Creating new.");
+        damage = Integer.MAX_VALUE;
+        hp = Integer.MAX_VALUE;
     }
 
     @Override

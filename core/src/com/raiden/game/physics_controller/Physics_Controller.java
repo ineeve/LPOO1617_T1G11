@@ -11,10 +11,8 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.BulletModel;
-import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
-import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.entities.BulletBody;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
@@ -128,6 +126,7 @@ public class Physics_Controller implements ContactListener{
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
+        shoot();
         for(DynamicBody body : dynamicBodies){
             MoveBody.moveBody(body, delta);
         }
@@ -141,6 +140,7 @@ public class Physics_Controller implements ContactListener{
             accumulator -= 1/60f;
         }
 
+        removeFlaggedForRemoval();
         verifyPositionOfBodies();
 
     }
@@ -150,16 +150,12 @@ public class Physics_Controller implements ContactListener{
             DynamicBody body = dynamicBodies.get(i);
             EntityModel currentModel = (EntityModel)body.getUserData();
             if (currentModel.isFlaggedForRemoval()){
-                Gdx.app.log("Destroying","Dynamic Body");
+                Gdx.app.log("Physics_COntroller.removeFlaggedForRemoval()","Destroying Dynamic Body");
                 destroyDynamicBody(body);
-                Gdx.app.log("Destroy","Removed Body");
-                currentModel.setFlaggedForRemoval(false);
                 model.deleteEntityModel(currentModel);
-                Gdx.app.log("Destroy","Removed Model");
                 i--;
             }
         }
-
     }
 
     private void verifyPositionOfBodies(){
@@ -242,7 +238,7 @@ public class Physics_Controller implements ContactListener{
     /**
      * Shoots a bullet from the spaceship at 10m/s
      */
-    public void shoot() {
+    private void shoot() {
         if (timeToNextShoot < 0) {
             Gdx.app.log("Controller","Creating Bullet");
             BulletModel bullet = model.createBullet(model.getPlayer1());
@@ -263,45 +259,24 @@ public class Physics_Controller implements ContactListener{
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
-        Object modelA = bodyA.getUserData();
-        Object modelB = bodyB.getUserData();
-        if (modelA instanceof BulletModel && modelB instanceof ShipModel)
-            bulletCollision(bodyA, bodyB);
-        else if (modelA instanceof ShipModel && modelB instanceof BulletModel)
-            bulletCollision(bodyB, bodyA);
-        else if (modelA instanceof MovingObjectModel && modelB instanceof ShipModel){
-            playerColision(bodyA,bodyB);
-        }
-        else if (modelB instanceof MovingObjectModel && modelA instanceof ShipModel){
-            playerColision(bodyB,bodyA);
-        }
-
+        collisionHandler(bodyA,bodyB);
+        collisionHandler(bodyB,bodyA);
     }
 
-    private void playerColision(Body killerBody,Body shipBody){
-        endGame();
-    }
-
-    private void endGame(){
-        Gdx.app.log("Game Over","Game Over");
-    }
-
-    private void  bulletCollision(Body bulletBody,Body bodyB){
-        ShipModel bModel = (ShipModel) bodyB.getUserData();
-        BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
-        if (bModel != null && bulletModel != null) {
-            int bulletDamage = bulletModel.getDamage();
-            double damagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
-            bModel.decreaseHP((int) (bulletDamage*damagePercentage));
-            Gdx.app.log("Damage","Percentage =" + damagePercentage);
-            Gdx.app.log("Collision", "Moving Object HP =" + bModel.getHp());
+    private void collisionHandler(Body bodyA, Body bodyB){
+        MovingObjectModel aModel = (MovingObjectModel) bodyA.getUserData();
+        MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
+        if (bModel != null && aModel != null) {
+            int aDamage = aModel.getDamage();
+            double aDamagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
+            bModel.decreaseHP((int) (aDamage * aDamagePercentage));
             if (bModel.getHp() < 0) {
                 bModel.setFlaggedForRemoval(true);
             }
-            bulletModel.setFlaggedForRemoval(true);
         }
 
     }
+
     @Override
     public void endContact(Contact contact) {
 

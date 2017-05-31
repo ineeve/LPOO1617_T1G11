@@ -23,6 +23,8 @@ class LevelManager {
 
     private boolean makeMore = true;
 
+    private boolean endOfGame;
+
     public LevelManager(PVE_Screen screen){
         EnemiesFactory.makeEnemy_Group_Horizontal(screen, AIRPLANE_2, 3);
     }
@@ -54,5 +56,13 @@ class LevelManager {
     public void setFinnishOfLevel(boolean finnishOfLevel) {
         this.finnishOfLevel = finnishOfLevel;
         makeMore = false;
+    }
+
+    public boolean isEndOfGame() {
+        return endOfGame;
+    }
+
+    public void setEndOfGame(boolean endOfGame) {
+        this.endOfGame = endOfGame;
     }
 }

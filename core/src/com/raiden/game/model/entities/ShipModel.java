@@ -13,8 +13,6 @@ public abstract class ShipModel extends MovingObjectModel{
 
     protected int weight;
 
-    protected int armor;
-
     private BulletModel bullet;
 
     /**
@@ -36,14 +34,6 @@ public abstract class ShipModel extends MovingObjectModel{
 
     public void setBullet(BulletModel bullet) {
         this.bullet = bullet;
-    }
-
-
-    public void setArmor(int armor) {
-        this.armor = armor;
-    }
-
-    public int getArmor() {return armor;
     }
 
     public int getARMOR_DEFAULT() {

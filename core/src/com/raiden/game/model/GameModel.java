@@ -91,6 +91,7 @@ public abstract class GameModel {
                 Gdx.app.log("deleteEntityModel", "free bullet");
                 bulletPool.free((BulletModel)model);
             }else {
+                model.setFlaggedForRemoval(false);
                 EnemiesFactory.getEnemyPool().free(model);
             }
         }

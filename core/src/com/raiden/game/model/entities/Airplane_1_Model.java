@@ -25,5 +25,4 @@ public class Airplane_1_Model extends ShipModel {
         return ModelType.AIRPLANE_1;
     }
 
-
 }
