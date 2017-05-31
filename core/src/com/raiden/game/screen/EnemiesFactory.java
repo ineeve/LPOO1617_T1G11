@@ -113,7 +113,8 @@ public abstract class EnemiesFactory {
         float randomValue = (float) Math.random();
         if(randomValue < 0.5)
             randomValue *= -1;
-        xOfNextSpawn = (camera.position.x + randomValue * camera.viewportWidth) * PIXEL_TO_METER;
+        xOfNextSpawn = (camera.position.x + randomValue * (camera.viewportWidth / 2f)) * PIXEL_TO_METER;
+        Gdx.app.log("EnemyFactory:updateCoodsOfNextSpawn", String.valueOf(xOfNextSpawn));
         yOfNextSpawn = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
     }
 

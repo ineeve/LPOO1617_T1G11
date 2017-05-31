@@ -240,7 +240,6 @@ public class Physics_Controller implements ContactListener{
      */
     private void shoot() {
         if (timeToNextShoot < 0) {
-            Gdx.app.log("Controller","Creating Bullet");
             BulletModel bullet = model.createBullet(model.getPlayer1());
             bullet.setFlaggedForRemoval(false);
             BulletBody body = new BulletBody(world, bullet);
@@ -270,7 +269,7 @@ public class Physics_Controller implements ContactListener{
             int aDamage = aModel.getDamage();
             double aDamagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
             bModel.decreaseHP((int) (aDamage * aDamagePercentage));
-            if (bModel.getHp() < 0) {
+            if (bModel.getHp() <= 0) {
                 bModel.setFlaggedForRemoval(true);
             }
         }

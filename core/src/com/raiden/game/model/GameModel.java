@@ -1,6 +1,5 @@
 package com.raiden.game.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.BulletModel;
@@ -88,7 +87,6 @@ public abstract class GameModel {
         if(model != null) {
             entityModels.remove(model);
             if(model instanceof BulletModel){
-                Gdx.app.log("deleteEntityModel", "free bullet");
                 bulletPool.free((BulletModel)model);
             }else {
                 model.setFlaggedForRemoval(false);

@@ -97,7 +97,7 @@ public class EnemyPool {
     public void free(EntityModel entity){
         if(entity != null)
             if(allPools.containsKey(entity.getType())) {
-                Gdx.app.log("EnemyPool.free()", "ready to free");
+                Gdx.app.log("EnemyPool.free()", "free model");
                 allPools.get(entity.getType()).free(entity);
             }
     }
