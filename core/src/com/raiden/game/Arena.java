@@ -5,7 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.PVE_GameModel;
-import com.raiden.game.physics_controller.PVE_Controller;
+import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
@@ -35,7 +35,7 @@ public class Arena extends Game{
 	private void startGame() {
 		GameModel model = PVE_GameModel.getInstanceOf();
 
-		setScreen(new PVE_Screen(this, model, PVE_Controller.getInstance(model)));
+		setScreen(new PVE_Screen(this, model,Physics_Controller.getInstance(model)));
 	}
 
 	/**

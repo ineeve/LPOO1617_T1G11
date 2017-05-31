@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.physics_controller.PVE_Controller;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
@@ -254,7 +253,7 @@ public class PVE_Screen extends ScreenAdapter {
         }
         if (Gdx.input.isTouched()) {
             Gdx.app.log("Input","Screen touched");
-            PVE_Controller.getInstance(model).shoot();
+            controller.shoot();
         }
     }
 

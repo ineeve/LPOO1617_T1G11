@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.BulletModel;
+import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.ShipModel;
@@ -28,7 +29,7 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
  * Controlls the physics Aspects of the PVE Game
  */
 
-public abstract class Physics_Controller{
+public class Physics_Controller implements ContactListener{
     /**
      * The arena width in meters.
      */
@@ -73,17 +74,25 @@ public abstract class Physics_Controller{
 
     private float timeToNextShoot;
 
-    Physics_Controller(GameModel model){
+    private static Physics_Controller instance;
+
+    private Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
         world = new World(new Vector2(0,-2),true);
+        world.setContactListener(this);
         this.model = model;
-
         for(EntityModel modelEntity : model.getEntityModels()){
             dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
         }
 
         airPlane1 = (ShipPhysics) dynamicBodies.get(0);
 
+    }
+
+    public static Physics_Controller getInstance(GameModel model) {
+        if (instance == null)
+            instance = new Physics_Controller(model);
+        return instance;
     }
 
     public void addDynamicBody(MovingObjectModel entityModel){
@@ -210,16 +219,15 @@ public abstract class Physics_Controller{
     //TODO: Complete comment
 
     /**
-     * Accelerates the spaceship. The acceleration takes into consideration the
-     * constant acceleration force and the delta for this simulation step.
+     * Sets the player 1 spaceship velocity.
      *
-     * @param acceX
-     * @param acceY
+     * @param velX The velocity in the X-Axis, which will be multiplied by a correction constant;
+     * @param velY The velocity in the Y-Axis
      */
 
-    public void setVelocityofPlayer1(float acceX, float acceY) {
+    public void setVelocityofPlayer1(float velX, float velY) {
         float vel_Correction = 5.5f;
-        airPlane1.setVelocity(-acceX * vel_Correction, acceY);
+        airPlane1.setVelocity(-velX * vel_Correction, velY);
     }
 
     public float getXVelocityofPlayer1() {
@@ -243,6 +251,69 @@ public abstract class Physics_Controller{
             dynamicBodies.add(body);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
+    }
+
+    /*
+ * A contact between two objects was detected
+ *
+ * @param contact the detected contact
+ */
+    @Override
+    public void beginContact(Contact contact) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
+        Object modelA = bodyA.getUserData();
+        Object modelB = bodyB.getUserData();
+        if (modelA instanceof BulletModel && modelB instanceof ShipModel)
+            bulletCollision(bodyA, bodyB);
+        else if (modelA instanceof ShipModel && modelB instanceof BulletModel)
+            bulletCollision(bodyB, bodyA);
+        else if (modelA instanceof MovingObjectModel && modelB instanceof ShipModel){
+            playerColision(bodyA,bodyB);
+        }
+        else if (modelB instanceof MovingObjectModel && modelA instanceof ShipModel){
+            playerColision(bodyB,bodyA);
+        }
+
+    }
+
+    private void playerColision(Body killerBody,Body shipBody){
+        endGame();
+    }
+
+    private void endGame(){
+        Gdx.app.log("Game Over","Game Over");
+    }
+
+    private void  bulletCollision(Body bulletBody,Body bodyB){
+        ShipModel bModel = (ShipModel) bodyB.getUserData();
+        BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
+        if (bModel != null && bulletModel != null) {
+            int bulletDamage = bulletModel.getDamage();
+            double damagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
+            bModel.decreaseHP((int) (bulletDamage*damagePercentage));
+            Gdx.app.log("Damage","Percentage =" + damagePercentage);
+            Gdx.app.log("Collision", "Moving Object HP =" + bModel.getHp());
+            if (bModel.getHp() < 0) {
+                bModel.setFlaggedForRemoval(true);
+            }
+            bulletModel.setFlaggedForRemoval(true);
+        }
+
+    }
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
     }
 
 
