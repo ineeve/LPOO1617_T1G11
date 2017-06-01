@@ -255,8 +255,11 @@ public class Physics_Controller implements ContactListener{
             double aDamagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
             bModel.decreaseHP((int) (aDamage * aDamagePercentage));
             if (bModel.getHp() <= 0) {
+                if (!bModel.isFlaggedForRemoval()){
+                    setScores(bodyA,bodyB);
+                }
                 bModel.setFlaggedForRemoval(true);
-                setScores(bodyA,bodyB);
+
             }
             if (bModel.getType() == EntityModel.ModelType.BULLET){
                 bModel.setFlaggedForRemoval(true);
