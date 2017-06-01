@@ -44,7 +44,7 @@ public abstract class GameModel {
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
      */
-    void addPlayer(float x, float y){
+    public void addPlayer(float x, float y){
         entityModels.add(new Airplane_1_Model(x,y));
     }
 
@@ -91,11 +91,6 @@ public abstract class GameModel {
     public void addEnemies(ArrayList <MovingObjectModel> newEnemies){
         for (MovingObjectModel newEnemy : newEnemies)
             this.addEnemy(newEnemy);
-    }
-
-    public void addPlayer2(float x,float y){
-        airplane12 = new Airplane_1_Model(x,y);
-        entityModels.add(airplane12);
     }
 
     public void deleteEntityModel(EntityModel model){
