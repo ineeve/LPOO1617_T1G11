@@ -46,8 +46,7 @@ public class EnemiesFactory {
         boss.setArmor(boss.getARMOR_DEFAULT() * 5);
         boss.setWidth(boss.getWidth() * 5);
         boss.setHeight(boss.getHeight() * 5);
-        GameModel model = screen.getModel();
-        model.addEnemy(boss);
+        GameModel.getInstance().addEnemy(boss);
         Physics_Controller controller = screen.getController();
         controller.addDynamicBody(boss);
     }
@@ -58,8 +57,7 @@ public class EnemiesFactory {
         updateCoodsOfNextSpawn(camera);
         MovingObjectModel newEnemyModel = (MovingObjectModel) enemyPool.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn);
         newEnemyModel.setMovementType(CIRCULAR);
-        GameModel model = screen.getModel();
-        model.addEnemy(newEnemyModel);
+        GameModel.getInstance().addEnemy(newEnemyModel);
         Physics_Controller controller = screen.getController();
         controller.addDynamicBody(newEnemyModel);
     }
@@ -73,7 +71,7 @@ public class EnemiesFactory {
         updateNextMovementType(typeOfEnemy);
         setMovement(enemies);
         nextMoveType = null;
-        screen.getModel().addEnemies(enemies);
+        GameModel.getInstance().addEnemies(enemies);
         screen.getController().addDynamicBodies(enemies);
     }
 

@@ -12,13 +12,12 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
-import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
-import static com.raiden.game.Arena.*;
+import static com.raiden.game.Arena.isMultiplayer;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -47,11 +46,6 @@ public class PVE_Screen extends ScreenAdapter {
      * The game this screen belongs to.
      */
     private final Arena game;
-
-    /**
-     * The model drawn by this screen.
-     */
-    private final GameModel model;
 
     /**
      * The physics controller for this game.
@@ -85,12 +79,10 @@ public class PVE_Screen extends ScreenAdapter {
      * Creates this screen.
      *
      * @param game The game this screen belongs to
-     * @param model The model to be drawn
      * @param controller The physics controller
      */
-    private PVE_Screen(Arena game, GameModel model, Physics_Controller controller) {
+    private PVE_Screen(Arena game, Physics_Controller controller) {
         this.game = game;
-        this.model = model;
         this.controller = controller;
         loadAssets();
 
@@ -115,7 +107,8 @@ public class PVE_Screen extends ScreenAdapter {
         float viewport_height = viewport_width * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth());
         OrthographicCamera camera = new OrthographicCamera(viewport_width / PIXEL_TO_METER, viewport_height / PIXEL_TO_METER);
 
-        camera.position.set(model.getPlayer1().getX()/PIXEL_TO_METER, model.getPlayer1().getY()/PIXEL_TO_METER, 0);
+        camera.position.set(GameModel.getInstance().getMyPlayer().getX()/PIXEL_TO_METER,
+                GameModel.getInstance().getMyPlayer().getY()/PIXEL_TO_METER, 0);
         camera.update();
 
         if (DEBUG_PHYSICS) {
@@ -153,9 +146,9 @@ public class PVE_Screen extends ScreenAdapter {
             handleInputs(delta);
         if (Arena.isHost() && isMultiplayer() || !isMultiplayer()){
             controller.update(delta);
-            game.getBroadcast().sendMessage_from_Host(model);
+            game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Client(model.getPlayer1());
+            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer());
         }
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
@@ -204,13 +197,13 @@ public class PVE_Screen extends ScreenAdapter {
             return;
         }
 
-        if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
+        if (GameModel.getInstance().getMyPlayer().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x + xVelocity_player / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
                 camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             }
-        } else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
+        } else if (GameModel.getInstance().getMyPlayer().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
@@ -290,7 +283,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private void drawEntities() {
 
-        for (EntityModel modelEntity : model.getEntityModels()) {
+        for (EntityModel modelEntity : GameModel.getInstance().getEntityModels()) {
             EntityView view = ViewFactory.getInstance().makeView(game, modelEntity);
             view.update(modelEntity);
             view.draw(game.getBatch());
@@ -306,9 +299,6 @@ public class PVE_Screen extends ScreenAdapter {
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
     }
 
-    public GameModel getModel() {
-        return model;
-    }
 
     public Physics_Controller getController() {
         return controller;
@@ -320,7 +310,7 @@ public class PVE_Screen extends ScreenAdapter {
 
     public static PVE_Screen getInstance(){
         if(instance == null){
-            instance = new PVE_Screen(Arena.getInstance(), PVE_GameModel.getInstance(),Physics_Controller.getInstance());
+            instance = new PVE_Screen(Arena.getInstance(),Physics_Controller.getInstance());
         }
         return instance;
     }

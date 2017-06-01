@@ -1,7 +1,7 @@
 package com.raiden.game.physics_controller.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.raiden.game.model.PVE_GameModel;
+import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.ShipModel;
@@ -49,7 +49,7 @@ public abstract class ShipBody extends DynamicBody implements Shoot {
     @Override
     public void shoot(float deltaTime){
         if (timeToNextShoot < 0) {
-            BulletModel bullet = PVE_GameModel.getInstance().createBullet((ShipModel)this.getUserData());
+            BulletModel bullet = GameModel.getInstance().createBullet((ShipModel)this.getUserData());
             bullet.setFlaggedForRemoval(false);
             DynamicBody body = Physics_Controller.getInstance().addDynamicBody(bullet);
             body.setVelocity(0,body.getMaxVelocity());

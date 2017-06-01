@@ -2,8 +2,6 @@ package com.raiden.game;
 
 import com.raiden.game.model.entities.ShipModel;
 
-import net.dermetfan.gdx.physics.box2d.PositionController;
-
 /**
  * Created by ineeve on 01-06-2017.
  */
@@ -33,5 +31,9 @@ public class Player {
 
     public void increaseScore() {
         this.score += 1;
+    }
+
+    public String getID() {
+        return ID;
     }
 }

@@ -10,10 +10,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
-import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
-import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipBody;
@@ -59,8 +57,6 @@ public class Physics_Controller implements ContactListener{
 
     private OrthographicCamera camera;
 
-    private GameModel model;
-
     /**
      * Minimum time between consecutive shots in seconds
      */
@@ -76,7 +72,6 @@ public class Physics_Controller implements ContactListener{
         dynamicBodies = new ArrayList<DynamicBody>();
         world = new World(new Vector2(0,-10),true);
         world.setContactListener(this);
-        this.model = model;
         for(EntityModel modelEntity : model.getEntityModels()){
             dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
         }
@@ -87,7 +82,7 @@ public class Physics_Controller implements ContactListener{
 
     public static Physics_Controller getInstance() {
         if (instance == null)
-            instance = new Physics_Controller(PVE_GameModel.getInstance());
+            instance = new Physics_Controller(GameModel.getInstance());
         return instance;
     }
 
@@ -155,7 +150,7 @@ public class Physics_Controller implements ContactListener{
             if (currentModel.isFlaggedForRemoval()){
                 Gdx.app.log("Physics_COntroller.removeFlaggedForRemoval()","Destroying Dynamic Body");
                 destroyDynamicBody(body);
-                model.deleteEntityModel(currentModel);
+                GameModel.getInstance().deleteEntityModel(currentModel);
                 i--;
             }
         }
@@ -167,7 +162,7 @@ public class Physics_Controller implements ContactListener{
             DynamicBody dynamicBody = dynamicBodies.get(i);
             Body body = dynamicBody.getBody();
             if(verifyBounds(body, true)) {
-                model.deleteEntityModel((EntityModel) body.getUserData());
+                GameModel.getInstance().deleteEntityModel((EntityModel) body.getUserData());
                 destroyDynamicBody(dynamicBody);
                 i--;
             }
@@ -273,7 +268,6 @@ public class Physics_Controller implements ContactListener{
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
-
 
     public void setAirPlane1(ShipBody airPlane1) {
         this.airPlane1 = airPlane1;

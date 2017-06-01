@@ -1,6 +1,7 @@
 package com.raiden.game.model;
 
 import com.badlogic.gdx.utils.Pool;
+import com.raiden.game.Arena;
 import com.raiden.game.Player;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.BulletModel;
@@ -17,15 +18,29 @@ import java.util.ArrayList;
  * A model representing a game.
  */
 
-public abstract class GameModel {
+public class GameModel {
+
+    private static GameModel instance;
+
+    /**
+     * Returns a singleton instance of the game model
+     *
+     * @return the singleton instance
+     */
+    public static GameModel getInstance() {
+        if (instance == null)
+            instance = new GameModel();
+        return instance;
+    }
+
+    public static void setInstance(GameModel instance) {
+        GameModel.instance = instance;
+    }
 
     /**
      * The space ship controlled by the user in this game.
      */
     protected ArrayList<EntityModel> entityModels = new ArrayList<EntityModel>(0);
-
-    private ShipModel airplane11;
-    private ShipModel airplane12;
 
     private ArrayList<Player> players;
 
@@ -63,8 +78,13 @@ public abstract class GameModel {
      *
      * @return the space ship.
      */
-    public ShipModel getPlayer1() {
-        return airplane11;
+    public ShipModel getMyPlayer() {
+        for(Player player : players){
+            if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) == 0){
+                return player.getMyShip();
+            }
+        }
+        return null;
     }
 
 
@@ -93,11 +113,6 @@ public abstract class GameModel {
             this.addEnemy(newEnemy);
     }
 
-    public void addPlayer2(float x,float y){
-        airplane12 = new Airplane_1_Model(x,y);
-        entityModels.add(airplane12);
-    }
-
     public void deleteEntityModel(EntityModel model){
         if(model != null) {
             entityModels.remove(model);
@@ -117,4 +132,11 @@ public abstract class GameModel {
         }
     }
 
+    public void updatePlayerCoords(ShipModel playerUpdated, String senderParticipantId) {
+        for (Player player : players){
+            if(player.getID().compareTo(senderParticipantId)==0){
+                player.getMyShip().setPosition(playerUpdated.getX(),playerUpdated.getY());
+            }
+        }
+    }
 }

@@ -2,13 +2,10 @@ package com.raiden.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
-
-import java.util.ArrayList;
 
 /**
  * The game main class.
@@ -23,12 +20,13 @@ public class Arena extends Game{
 
     private static boolean host = false;
 
+    private String mPlayerID;
+
 	private Broadcast broadcast;
 
-
-	Arena(Broadcast broadcast){
-		this.broadcast = broadcast;
-	}
+    public void setBroadcast(Broadcast broadcast) {
+        this.broadcast = broadcast;
+    }
 
 	/**
 	 * Creates the game. Initializes the sprite batch and asset manager.
@@ -83,10 +81,10 @@ public class Arena extends Game{
 	}
 
 	public static Arena getInstance(){
-		if(instance != null){
-			return instance;
+		if(instance == null){
+			instance = new Arena();
 		}
-		return null;
+		return instance;
 	}
 
 	public static boolean isMultiplayer() {
@@ -103,5 +101,13 @@ public class Arena extends Game{
 
     public static void setHost(boolean host) {
         Arena.host = host;
+    }
+
+    public String getmPlayerID() {
+        return mPlayerID;
+    }
+
+    public void setmPlayerID(String mPlayerID) {
+        this.mPlayerID = mPlayerID;
     }
 }
