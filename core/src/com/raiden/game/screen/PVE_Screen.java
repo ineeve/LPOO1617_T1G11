@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
@@ -28,6 +29,8 @@ public class PVE_Screen extends ScreenAdapter {
      * Used to debug the position of the physics fixtures
      */
     private static final boolean DEBUG_PHYSICS = true;
+
+    private static PVE_Screen instance;
 
     /**
      * How much meters does a pixel represent.
@@ -78,7 +81,7 @@ public class PVE_Screen extends ScreenAdapter {
      * @param model The model to be drawn
      * @param controller The physics controller
      */
-    public PVE_Screen(Arena game, GameModel model, Physics_Controller controller) {
+    private PVE_Screen(Arena game, GameModel model, Physics_Controller controller) {
         this.game = game;
         this.model = model;
         this.controller = controller;
@@ -88,6 +91,8 @@ public class PVE_Screen extends ScreenAdapter {
         controller.setCamera(camera);
 
         levelManager = new LevelManager(this);
+
+        instance = this;
     }
 
     /**
@@ -290,4 +295,12 @@ public class PVE_Screen extends ScreenAdapter {
     public OrthographicCamera getCamera() {
         return camera;
     }
+
+    public static PVE_Screen getInstance(){
+        if(instance == null){
+            instance = new PVE_Screen(Arena.getInstance(), PVE_GameModel.getInstance(),Physics_Controller.getInstance());
+        }
+        return instance;
+    }
+
 }

@@ -3,9 +3,6 @@ package com.raiden.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.raiden.game.model.GameModel;
-import com.raiden.game.model.PVE_GameModel;
-import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
@@ -17,12 +14,15 @@ public class Arena extends Game{
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 
+	private static Arena instance;
+
 	/**
 	 * Creates the game. Initializes the sprite batch and asset manager.
 	 * Also starts the game until we have a main menu.
 	 */
 	@Override
 	public void create () {
+		instance = this;
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 
@@ -33,9 +33,7 @@ public class Arena extends Game{
 	 * Starts the game.
 	 */
 	private void startGame() {
-		GameModel model = PVE_GameModel.getInstanceOf();
-
-		setScreen(new PVE_Screen(this, model,Physics_Controller.getInstance(model)));
+		setScreen(PVE_Screen.getInstance());
 	}
 
 	/**
@@ -65,5 +63,12 @@ public class Arena extends Game{
 	 */
 	public SpriteBatch getBatch() {
 		return batch;
+	}
+
+	public static Arena getInstance(){
+		if(instance == null){
+			instance = new Arena();
+		}
+		return instance;
 	}
 }

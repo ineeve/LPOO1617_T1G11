@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
@@ -83,9 +84,9 @@ public class Physics_Controller implements ContactListener{
 
     }
 
-    public static Physics_Controller getInstance(GameModel model) {
+    public static Physics_Controller getInstance() {
         if (instance == null)
-            instance = new Physics_Controller(model);
+            instance = new Physics_Controller(PVE_GameModel.getInstance());
         return instance;
     }
 

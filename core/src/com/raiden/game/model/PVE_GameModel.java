@@ -19,7 +19,7 @@ public class PVE_GameModel extends GameModel {
      *
      * @return the singleton instance
      */
-    public static PVE_GameModel getInstanceOf() {
+    public static PVE_GameModel getInstance() {
         if (instance == null)
             instance = new PVE_GameModel();
         return instance;
