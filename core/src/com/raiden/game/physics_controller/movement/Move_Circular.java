@@ -6,7 +6,7 @@ import com.raiden.game.physics_controller.entities.DynamicBody;
  * Created by João on 26/05/2017.
  */
 
-class Move_Circular extends MoveBody{
+class Move_Circular extends MoveManager {
     @Override
     public void move(DynamicBody ship, float deltaTime) {
         float t = ship.getT();

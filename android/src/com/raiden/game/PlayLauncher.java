@@ -11,6 +11,12 @@ public class PlayLauncher extends AndroidApplication {
 
 	private Arena arena;
 
+	private static GoogleServices mGoogleServices;
+
+	PlayLauncher(GoogleServices mGoogleServices){
+		PlayLauncher.mGoogleServices = mGoogleServices;
+	}
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,7 +33,7 @@ public class PlayLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useCompass = true;
 		config.useImmersiveMode = true;
-		arena = new Arena();
+		arena = new Arena(mGoogleServices);
 
 		initialize(arena, config);
 	}

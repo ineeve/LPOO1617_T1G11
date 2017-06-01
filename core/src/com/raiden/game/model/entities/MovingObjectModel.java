@@ -1,6 +1,6 @@
 package com.raiden.game.model.entities;
 
-import com.raiden.game.physics_controller.movement.MoveBody;
+import com.raiden.game.physics_controller.movement.MoveManager;
 
 /**
  * A model representing a the user space ship.
@@ -11,7 +11,7 @@ public abstract class MovingObjectModel extends EntityModel implements DamageObj
      */
     private boolean accelerating = true;
 
-    private MoveBody.MovementType  movementType;
+    private MoveManager.MovementType  movementType;
 
     int hp = 0;
 
@@ -47,11 +47,11 @@ public abstract class MovingObjectModel extends EntityModel implements DamageObj
         return accelerating;
     }
 
-    public MoveBody.MovementType getMovementType() {
+    public MoveManager.MovementType getMovementType() {
         return movementType;
     }
 
-    public void setMovementType(MoveBody.MovementType movementType) {
+    public void setMovementType(MoveManager.MovementType movementType) {
         this.movementType = movementType;
     }
     public void decreaseHP(int amountToDecrease){

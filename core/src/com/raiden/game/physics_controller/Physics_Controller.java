@@ -16,7 +16,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipBody;
-import com.raiden.game.physics_controller.movement.MoveBody;
+import com.raiden.game.physics_controller.movement.MoveManager;
 import com.raiden.game.screen.LevelManager;
 
 import java.util.ArrayList;
@@ -69,13 +69,15 @@ public class Physics_Controller implements ContactListener{
 
     private static Physics_Controller instance;
 
+    private ControllerFactory controllerFactory = ControllerFactory.getInstance();
+
     private Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
         world = new World(new Vector2(0,-10),true);
         world.setContactListener(this);
         this.model = model;
         for(EntityModel modelEntity : model.getEntityModels()){
-            dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
+            dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
         }
 
         airPlane1 = (ShipBody) dynamicBodies.get(0);
@@ -90,7 +92,7 @@ public class Physics_Controller implements ContactListener{
 
     public DynamicBody addDynamicBody(MovingObjectModel entityModel){
 
-        DynamicBody body = ControllerFactory.makeController(world, entityModel);
+        DynamicBody body = controllerFactory.makeController(world, entityModel);
         dynamicBodies.add(body);
         return body;
 
@@ -98,7 +100,7 @@ public class Physics_Controller implements ContactListener{
 
     public void addDynamicBodies(ArrayList<MovingObjectModel> entityModels){
         for(EntityModel modelEntity : entityModels){
-            dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
+            dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
         }
     }
 
@@ -130,7 +132,7 @@ public class Physics_Controller implements ContactListener{
         if(!LevelManager.isEndOfGame())
            airPlane1.shoot(delta);
         for(DynamicBody body : dynamicBodies){
-            MoveBody.moveBody(body, delta);
+            MoveManager.getInstance().moveBody(body, delta);
         }
 
         float frameTime = Math.min(delta, 0.25f);

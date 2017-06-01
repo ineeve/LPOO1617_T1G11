@@ -11,9 +11,11 @@ import com.raiden.game.model.entities.TankModel;
  * Created by João on 24/05/2017.
  */
 
-public abstract class ControllerFactory {
+public class ControllerFactory {
 
-    public static DynamicBody makeController(World world, EntityModel model){
+    private static ControllerFactory instance;
+
+    public DynamicBody makeController(World world, EntityModel model){
         DynamicBody bodyToReturn = null;
             switch (getTypeOfModel(model)){
                 case AIRPLANE_1:
@@ -43,7 +45,14 @@ public abstract class ControllerFactory {
         return bodyToReturn;
     }
 
-    private static EntityModel.ModelType getTypeOfModel(EntityModel model){
+    private EntityModel.ModelType getTypeOfModel(EntityModel model){
         return model.getType();
+    }
+
+    public static ControllerFactory getInstance(){
+        if(instance == null){
+            instance = new ControllerFactory();
+        }
+        return instance;
     }
 }

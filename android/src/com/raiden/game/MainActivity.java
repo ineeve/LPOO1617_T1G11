@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPlayLauncherIntent = new Intent(this, PlayLauncher.class);
+        mPlayLauncherIntent = new Intent(this, new PlayLauncher(mGoogleServices).getClass());
 
         //LADO ESQUERDO
 
@@ -151,13 +151,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.pve_multiplayer_button:
                 findViewById(R.id.play_menu_buttons).setVisibility(View.GONE);
                 findViewById(R.id.multiplayer_menu_buttons).setVisibility(View.VISIBLE);
-                //TODO: define variabel to know is a multiplayer game
+                Arena.setMultiplayer(true);
                 startQuickGame();
                 break;
             case R.id.pvp_multiplayer_button:
                 findViewById(R.id.play_menu_buttons).setVisibility(View.GONE);
                 findViewById(R.id.multiplayer_menu_buttons).setVisibility(View.VISIBLE);
-                //TODO: define variabel to know is a multiplayer game
+                Arena.setMultiplayer(true);
                 break;
             case R.id.sign_in_button:
                 // user wants to sign in
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity
      * the game with the Google Play game services API.
      */
 
-    GoogleServices mGoogleServies = new GoogleServices(this);
+    GoogleServices mGoogleServices = new GoogleServices(this);
 
     final static String TAG = "Raiden-Multiplayer";
 
@@ -257,9 +257,9 @@ public class MainActivity extends AppCompatActivity
         final int MIN_OPPONENTS = 1, MAX_OPPONENTS = 1;
         Bundle autoMatchCriteria = RoomConfig.createAutoMatchCriteria(MIN_OPPONENTS,
                 MAX_OPPONENTS, 0);
-        RoomConfig.Builder rtmConfigBuilder = RoomConfig.builder(mGoogleServies.roomUpdateListener);
-        rtmConfigBuilder.setMessageReceivedListener(mGoogleServies.realTimeMessageReceivedListener);
-        rtmConfigBuilder.setRoomStatusUpdateListener(mGoogleServies.roomStatusUpdateListener);
+        RoomConfig.Builder rtmConfigBuilder = RoomConfig.builder(mGoogleServices.roomUpdateListener);
+        rtmConfigBuilder.setMessageReceivedListener(mGoogleServices.realTimeMessageReceivedListener);
+        rtmConfigBuilder.setRoomStatusUpdateListener(mGoogleServices.roomStatusUpdateListener);
         rtmConfigBuilder.setAutoMatchCriteria(autoMatchCriteria);
         //switchToScreen(R.id.screen_wait);
         keepScreenOn();
@@ -341,10 +341,10 @@ public class MainActivity extends AppCompatActivity
 
         // create the room
         Log.d(TAG, "Creating room...");
-        RoomConfig.Builder rtmConfigBuilder = RoomConfig.builder(mGoogleServies.roomUpdateListener);
+        RoomConfig.Builder rtmConfigBuilder = RoomConfig.builder(mGoogleServices.roomUpdateListener);
         rtmConfigBuilder.addPlayersToInvite(invitees);
-        rtmConfigBuilder.setMessageReceivedListener(mGoogleServies.realTimeMessageReceivedListener);
-        rtmConfigBuilder.setRoomStatusUpdateListener(mGoogleServies.roomStatusUpdateListener);
+        rtmConfigBuilder.setMessageReceivedListener(mGoogleServices.realTimeMessageReceivedListener);
+        rtmConfigBuilder.setRoomStatusUpdateListener(mGoogleServices.roomStatusUpdateListener);
         if (autoMatchCriteria != null) {
             rtmConfigBuilder.setAutoMatchCriteria(autoMatchCriteria);
         }
@@ -375,10 +375,10 @@ public class MainActivity extends AppCompatActivity
     void acceptInviteToRoom(String invId) {
         // accept the invitation
         Log.d(TAG, "Accepting invitation: " + invId);
-        RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(mGoogleServies.roomUpdateListener);
+        RoomConfig.Builder roomConfigBuilder = RoomConfig.builder(mGoogleServices.roomUpdateListener);
         roomConfigBuilder.setInvitationIdToAccept(invId)
-                .setMessageReceivedListener(mGoogleServies.realTimeMessageReceivedListener)
-                .setRoomStatusUpdateListener(mGoogleServies.roomStatusUpdateListener);
+                .setMessageReceivedListener(mGoogleServices.realTimeMessageReceivedListener)
+                .setRoomStatusUpdateListener(mGoogleServices.roomStatusUpdateListener);
         //switchToScreen(R.id.screen_wait);
         keepScreenOn();
         //resetGameVars();
@@ -438,9 +438,9 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "Leaving room.");
         //mSecondsLeft = 0;
         stopKeepingScreenOn();
-        if (mGoogleServies.mRoomId != null) {
-            Games.RealTimeMultiplayer.leave(mGoogleApiClient, mGoogleServies.roomUpdateListener, mGoogleServies.mRoomId);
-            mGoogleServies.mRoomId = null;
+        if (mGoogleServices.mRoomId != null) {
+            Games.RealTimeMultiplayer.leave(mGoogleApiClient, mGoogleServices.roomUpdateListener, mGoogleServices.mRoomId);
+            mGoogleServices.mRoomId = null;
             //switchToScreen(R.id.screen_wait);
         } else {
             //switchToMainScreen();

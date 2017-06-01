@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.physics_controller.movement.MoveBody;
+import com.raiden.game.physics_controller.movement.MoveManager;
 
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
@@ -30,7 +30,7 @@ public abstract class DynamicBody {
     protected float maxVelocity;
 
     private float t = 0;
-    MoveBody.MovementType movementType = null;
+    MoveManager.MovementType movementType = null;
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -188,11 +188,11 @@ public abstract class DynamicBody {
         this.t = t;
     }
 
-    public void setMovementType(MoveBody.MovementType movementType) {
+    public void setMovementType(MoveManager.MovementType movementType) {
         this.movementType = movementType;
     }
 
-    public MoveBody.MovementType getMovementType() {
+    public MoveManager.MovementType getMovementType() {
         return movementType;
     }
 

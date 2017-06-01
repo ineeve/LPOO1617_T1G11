@@ -1,5 +1,6 @@
 package com.raiden.game.model;
 
+import com.raiden.game.Arena;
 import com.raiden.game.physics_controller.Physics_Controller;
 
 public class PVE_GameModel extends GameModel {
@@ -11,7 +12,11 @@ public class PVE_GameModel extends GameModel {
      * Constructs a game with a.space ship in a certain position.
      */
     private PVE_GameModel() {
-        addPlayer1(Physics_Controller.ARENA_WIDTH/2.0f,5);
+        if(!Arena.isMultiplayer())
+            addPlayer1(Physics_Controller.ARENA_WIDTH/2.0f,5);
+        else{
+            addPlayer1(Physics_Controller.ARENA_WIDTH/2.0f,5);
+        }
     }
 
     /**

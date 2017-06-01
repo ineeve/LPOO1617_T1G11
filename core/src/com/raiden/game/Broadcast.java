@@ -8,7 +8,7 @@ import com.raiden.game.model.entities.EntityModel;
  */
 
 public interface Broadcast {
-    void sendMessage_from_Host(GameModel model);
+    boolean sendMessage_from_Host(GameModel model);
 
-    void sendMessage_from_Client(EntityModel ship);
+    boolean sendMessage_from_Client(EntityModel ship);
 }

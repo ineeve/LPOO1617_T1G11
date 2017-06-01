@@ -1,6 +1,5 @@
 package com.raiden.game.screen.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.raiden.game.Arena;
 import com.raiden.game.model.entities.EntityModel;
 
@@ -10,11 +9,14 @@ import java.util.Hashtable;
  * Created by João on 24/05/2017.
  */
 
-public abstract class ViewFactory {
-    private static Hashtable<EntityModel.ModelType, EntityView> modelToViewHash
+public class ViewFactory {
+
+    private static ViewFactory instance;
+
+    private Hashtable<EntityModel.ModelType, EntityView> modelToViewHash
             = new Hashtable<EntityModel.ModelType, EntityView>();
 
-    public static EntityView makeView(Arena arena, EntityModel model){
+    public EntityView makeView(Arena arena, EntityModel model){
         if (!modelToViewHash.containsKey(getTypeOfModel(model))) {
             switch (getTypeOfModel(model)){
                 case AIRPLANE_1:
@@ -45,11 +47,17 @@ public abstract class ViewFactory {
         return modelToViewHash.get(getTypeOfModel(model));
     }
 
-    private static EntityModel.ModelType getTypeOfModel(EntityModel model){
+    private EntityModel.ModelType getTypeOfModel(EntityModel model){
         return model.getType();
     }
 
-    public static void dispose() {
+    public void dispose() {
         modelToViewHash.clear();
+    }
+
+    public static ViewFactory getInstance(){
+        if(instance == null)
+            instance = new ViewFactory();
+        return instance;
     }
 }

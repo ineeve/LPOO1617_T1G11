@@ -16,12 +16,21 @@ public class Arena extends Game{
 
 	private static Arena instance;
 
+	private static boolean multiplayer = false;
+
+	private Broadcast broadcast;
+
+	Arena(Broadcast broadcast){
+		this.broadcast = broadcast;
+	}
+
 	/**
 	 * Creates the game. Initializes the sprite batch and asset manager.
 	 * Also starts the game until we have a main menu.
 	 */
 	@Override
 	public void create () {
+
 		instance = this;
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
@@ -42,8 +51,8 @@ public class Arena extends Game{
 	@Override
 	public void dispose () {
 		batch.dispose();
-		ViewFactory.dispose();
-		EnemiesFactory.dispose();
+		ViewFactory.getInstance().dispose();
+		EnemiesFactory.getInstance().dispose();
 		assetManager.dispose();
 	}
 
@@ -65,10 +74,22 @@ public class Arena extends Game{
 		return batch;
 	}
 
+	public Broadcast getBroadcast() {
+		return broadcast;
+	}
+
 	public static Arena getInstance(){
-		if(instance == null){
-			instance = new Arena();
+		if(instance != null){
+			return instance;
 		}
-		return instance;
+		return null;
+	}
+
+	public static boolean isMultiplayer() {
+		return multiplayer;
+	}
+
+	public static void setMultiplayer(boolean multiplayer) {
+		Arena.multiplayer = multiplayer;
 	}
 }

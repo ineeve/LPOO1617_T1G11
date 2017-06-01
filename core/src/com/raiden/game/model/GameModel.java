@@ -90,7 +90,7 @@ public abstract class GameModel {
                 bulletPool.free((BulletModel)model);
             }else {
                 model.setFlaggedForRemoval(false);
-                EnemiesFactory.getEnemyPool().free(model);
+                EnemiesFactory.getInstance().getEnemyPool().free(model);
             }
         }
     }

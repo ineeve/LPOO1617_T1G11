@@ -16,6 +16,10 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.screen.PVE_Screen;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +44,6 @@ public class GoogleServices implements Broadcast{
 
     // My participant ID in the currently active game
     String mMyId = null;
-
-    // Message buffer for sending messages
-    byte[] mMsgBuf = new byte[2];
 
     RealTimeMessageReceivedListener realTimeMessageReceivedListener = new RealTimeMessageReceivedListener() {
 
@@ -217,12 +218,61 @@ public class GoogleServices implements Broadcast{
     }
 
     @Override
-    public void sendMessage_from_Host(GameModel model) {
+    public boolean sendMessage_from_Host(GameModel model) {
+        if (!Arena.isMultiplayer())
+            return false; // playing single-player mode
 
+        byte[] mMsgBuf = null;
+        if(!msgToArrayByte(model, mMsgBuf))
+            return false;
+        sendMessage(mMsgBuf);
+        return true;
     }
 
     @Override
-    public void sendMessage_from_Client(EntityModel ship) {
+    public boolean sendMessage_from_Client(EntityModel ship) {
+        if (!Arena.isMultiplayer())
+            return false; // playing single-player mode
 
+        byte[] mMsgBuf = null;
+        if(!msgToArrayByte(ship, mMsgBuf))
+            return false;
+        sendMessage(mMsgBuf);
+        return true;
+    }
+
+    private boolean msgToArrayByte(Object o, byte[] mMsgBuf){
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = null;
+        try {
+            out = new ObjectOutputStream(bos);
+            out.writeObject(o);
+            out.flush();
+            mMsgBuf = bos.toByteArray();
+            bos.close();
+        }
+        catch (IOException ex) {
+            return false;
+        }
+        return true;
+    }
+
+    private void sendMessage(byte[] mMsgBuf){
+        // Send to every other participant.
+        for (Participant p : mParticipants) {
+            if (p.getParticipantId().equals(mMyId))
+                continue;
+            if (p.getStatus() != Participant.STATUS_JOINED)
+                continue;
+            if (false) {
+                // final score notification must be sent via reliable message
+                Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
+                        mRoomId, p.getParticipantId());
+            } else {
+                // it's an interim score notification, so we can use unreliable
+                Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
+                        p.getParticipantId());
+            }
+        }
     }
 }

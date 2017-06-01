@@ -23,10 +23,13 @@ public class LevelManager {
 
     private boolean makeMore = true;
 
+    private EnemiesFactory enemiesFactory;
+
     private static boolean endOfGame;
 
     public LevelManager(PVE_Screen screen){
-        EnemiesFactory.makeEnemy_Group_Horizontal(screen, AIRPLANE_2, 3);
+        enemiesFactory = new EnemiesFactory();
+        enemiesFactory.makeEnemy_Group_Horizontal(screen, AIRPLANE_2, 3);
     }
 
     void updateLevel(PVE_Screen screen, float delta){
@@ -38,7 +41,7 @@ public class LevelManager {
                     Gdx.app.log("LevelManager:updateLevel", "t & spawn" + String.valueOf(t % timeOfSpawn));
                     int numberOfEnemies = ((int) Math.round(Math.random() * dificulty + 0.5f) % 11);
                     Gdx.app.log("Spawn Enemies", "Number of enemies -> " + String.valueOf(numberOfEnemies));
-                    EnemiesFactory.makeEnemy_Group_Horizontal(screen, EntityModel.ModelType.getRandom(), numberOfEnemies);
+                    enemiesFactory.makeEnemy_Group_Horizontal(screen, EntityModel.ModelType.getRandom(), numberOfEnemies);
                 }
                 t += delta;
             if(t > 20 * dificulty){

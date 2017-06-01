@@ -8,7 +8,9 @@ import java.util.Hashtable;
  * Created by João on 26/05/2017.
  */
 
-public abstract class MoveBody implements Movement{
+public class MoveManager implements Movement{
+    private static MoveManager instance;
+
     public enum MovementType {
         VERTICAL,
         HORIZONTAL,
@@ -20,7 +22,7 @@ public abstract class MoveBody implements Movement{
         }
     }
 
-    private static Hashtable<MovementType,MoveBody> allMoves = new Hashtable<MovementType, MoveBody>(){
+    private Hashtable<MovementType,MoveManager> allMoves = new Hashtable<MovementType, MoveManager>(){
         {
             put(MovementType.VERTICAL, new Move_Vertical());
             put(MovementType.HORIZONTAL, new Move_Horizontal());
@@ -29,7 +31,7 @@ public abstract class MoveBody implements Movement{
         }
     };
 
-    public static void moveBody(DynamicBody ship, float deltaTime) {
+    public void moveBody(DynamicBody ship, float deltaTime) {
         if (getType(ship) == null)
             return;
         if(allMoves.containsKey(getType(ship))){
@@ -43,7 +45,18 @@ public abstract class MoveBody implements Movement{
         }
     }
 
-    private static MovementType getType(DynamicBody ship){
+    private MovementType getType(DynamicBody ship){
         return ship.getMovementType();
+    }
+
+    @Override
+    public void move(DynamicBody ship, float deltaTime) {
+
+    }
+
+    public static MoveManager getInstance(){
+        if(instance == null)
+            instance = new MoveManager();
+        return instance;
     }
 }

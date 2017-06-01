@@ -17,6 +17,7 @@ import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
+import static com.raiden.game.Arena.*;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -147,13 +148,12 @@ public class PVE_Screen extends ScreenAdapter {
     private void updateScene(float delta){
         if(!LevelManager.isEndOfGame())
             handleInputs(delta);
-        if (host && multiplayer || !multiplayer){
+        if (host && isMultiplayer() || !isMultiplayer()){
             controller.update(delta);
-            //send model to the client
-        }else if (multiplayer){
-            //send airplane model to the host
+            game.getBroadcast().sendMessage_from_Host(model);
+        }else if (isMultiplayer()){
+            game.getBroadcast().sendMessage_from_Client(model.getPlayer1());
         }
-
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
         camera.update();
@@ -166,7 +166,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        if (host && multiplayer || !multiplayer){
+        if (host && isMultiplayer() || !isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);
@@ -282,7 +282,7 @@ public class PVE_Screen extends ScreenAdapter {
     private void drawEntities() {
 
         for (EntityModel modelEntity : model.getEntityModels()) {
-            EntityView view = ViewFactory.makeView(game, modelEntity);
+            EntityView view = ViewFactory.getInstance().makeView(game, modelEntity);
             view.update(modelEntity);
             view.draw(game.getBatch());
         }

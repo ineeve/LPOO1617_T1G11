@@ -8,29 +8,36 @@ import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.Physics_Controller;
-import com.raiden.game.physics_controller.movement.MoveBody;
+import com.raiden.game.physics_controller.movement.MoveManager;
 
 import java.util.ArrayList;
 
-import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.CIRCULAR;
-import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.DOWNWARD;
-import static com.raiden.game.physics_controller.movement.MoveBody.MovementType.HORIZONTAL;
+import static com.raiden.game.physics_controller.movement.MoveManager.MovementType.CIRCULAR;
+import static com.raiden.game.physics_controller.movement.MoveManager.MovementType.DOWNWARD;
+import static com.raiden.game.physics_controller.movement.MoveManager.MovementType.HORIZONTAL;
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 
-public abstract class EnemiesFactory {
-    private static EnemyPool enemyPool = new EnemyPool();
+public class EnemiesFactory {
+    private static EnemiesFactory instance;
+    private EnemyPool enemyPool = new EnemyPool();
 
-    private static MoveBody.MovementType nextMoveType;
+    private MoveManager.MovementType nextMoveType;
 
-    public static EnemyPool getEnemyPool() {
+    public EnemyPool getEnemyPool() {
         return enemyPool;
     }
 
-    private static float xOfNextSpawn;
-    private static float yOfNextSpawn;
+    private float xOfNextSpawn;
+    private float yOfNextSpawn;
 
-    static void makeBoss(PVE_Screen screen) {
+    public static EnemiesFactory getInstance(){
+        if(instance == null)
+            instance = new EnemiesFactory();
+        return instance;
+    }
+
+    void makeBoss(PVE_Screen screen) {
         OrthographicCamera camera = screen.getCamera();
         updateCoodsOfNextSpawn(camera);
         ShipModel boss = (ShipModel) enemyPool.obtain(EntityModel.ModelType.AIRPLANE_3, xOfNextSpawn, yOfNextSpawn);
@@ -45,7 +52,7 @@ public abstract class EnemiesFactory {
         controller.addDynamicBody(boss);
     }
 
-    static void makeEnemy(PVE_Screen screen, EntityModel.ModelType typeOfEnemy){
+    void makeEnemy(PVE_Screen screen, EntityModel.ModelType typeOfEnemy){
         Gdx.app.log("EnemiesFactory", "makeEnemy() -> creating new enemy");
         OrthographicCamera camera = screen.getCamera();
         updateCoodsOfNextSpawn(camera);
@@ -58,7 +65,7 @@ public abstract class EnemiesFactory {
     }
 
 
-    static void makeEnemy_Group_Horizontal(
+    void makeEnemy_Group_Horizontal(
             PVE_Screen screen, EntityModel.ModelType typeOfEnemy, int numberOfEnemies)
     {
         ArrayList<MovingObjectModel> enemies =
@@ -70,7 +77,7 @@ public abstract class EnemiesFactory {
         screen.getController().addDynamicBodies(enemies);
     }
 
-    private static void updateNextMovementType(EntityModel.ModelType typeOfEnemy) {
+    private void updateNextMovementType(EntityModel.ModelType typeOfEnemy) {
         if(nextMoveType == null) {
             if (typeOfEnemy == EntityModel.ModelType.COMET)
                 nextMoveType = DOWNWARD;
@@ -79,7 +86,7 @@ public abstract class EnemiesFactory {
         }
     }
 
-    private static ArrayList<MovingObjectModel> createLinearHorizontalEnemies(
+    private ArrayList<MovingObjectModel> createLinearHorizontalEnemies(
             EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies)
     {
         ArrayList<MovingObjectModel> enemies = new ArrayList<MovingObjectModel>();
@@ -92,7 +99,7 @@ public abstract class EnemiesFactory {
         return enemies;
     }
 
-    private static ArrayList<MovingObjectModel> createLinearVerticalEnemies(
+    private ArrayList<MovingObjectModel> createLinearVerticalEnemies(
             EntityModel.ModelType typeOfEnemy, OrthographicCamera camera, int numberOfEnemies)
     {
         ArrayList<MovingObjectModel> enemies = new ArrayList<MovingObjectModel>();
@@ -105,20 +112,20 @@ public abstract class EnemiesFactory {
         return enemies;
     }
 
-    private static void setMovement(ArrayList<MovingObjectModel> models){
+    private void setMovement(ArrayList<MovingObjectModel> models){
         for(MovingObjectModel model : models)
             model.setMovementType(nextMoveType);
     }
 
-    private static void setMovementType(MoveBody.MovementType moveType){
+    private void setMovementType(MoveManager.MovementType moveType){
         nextMoveType = moveType;
     }
 
-    public static void dispose(){
+    public void dispose(){
         enemyPool.clear();
     }
 
-    private static void updateCoodsOfNextSpawn(OrthographicCamera camera){
+    private void updateCoodsOfNextSpawn(OrthographicCamera camera){
         float randomValue = (float) Math.random();
         if(randomValue < 0.5)
             randomValue *= -1;
@@ -126,5 +133,4 @@ public abstract class EnemiesFactory {
         Gdx.app.log("EnemyFactory:updateCoodsOfNextSpawn", String.valueOf(xOfNextSpawn));
         yOfNextSpawn = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
     }
-
 }
