@@ -155,13 +155,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.pve_multiplayer_button:
                 findViewById(R.id.play_menu_buttons).setVisibility(View.GONE);
                 findViewById(R.id.multiplayer_menu_buttons).setVisibility(View.VISIBLE);
-                Arena.setMultiplayer(true);
+                Arena.getInstance().setMultiplayer(true);
                 startQuickGame();
                 break;
             case R.id.pvp_multiplayer_button:
                 findViewById(R.id.play_menu_buttons).setVisibility(View.GONE);
                 findViewById(R.id.multiplayer_menu_buttons).setVisibility(View.VISIBLE);
-                Arena.setMultiplayer(true);
+                Arena.getInstance().setMultiplayer(true);
                 break;
             case R.id.sign_in_button:
                 // user wants to sign in

@@ -19,7 +19,6 @@ import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
-import static com.raiden.game.Arena.isMultiplayer;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -147,11 +146,11 @@ public class PVE_Screen extends ScreenAdapter {
     private void updateScene(float delta){
         if(!LevelManager.isEndOfGame())
             handleInputs(delta);
-        if (Arena.isHost() && isMultiplayer() || !isMultiplayer()){
+        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer() || !Arena.getInstance().isMultiplayer()){
             controller.update(delta);
             game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
-        }else if (isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
+        }else if (Arena.getInstance().isMultiplayer()){
+            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer());
         }
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
@@ -165,7 +164,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        if (Arena.isHost() && isMultiplayer() || !isMultiplayer()){
+        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer() || !Arena.getInstance().isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);

@@ -64,7 +64,6 @@ public class CometView extends EntityView {
      */
     @Override
     public void draw(SpriteBatch batch) {
-        Gdx.app.log("Commet","Draw called");
         stateTime += Gdx.graphics.getDeltaTime();
         sprite.setRegion(animation.getKeyFrame(stateTime, true));
         sprite.draw(batch);

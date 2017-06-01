@@ -16,9 +16,9 @@ public class Arena extends Game{
 
     private static Arena instance;
 
-	private static boolean multiplayer = false;
+	private boolean multiplayer = false;
 
-    private static boolean host = false;
+    private boolean host = false;
 
     private String mPlayerID = "I_AM_THE_REAL_MVP";
 
@@ -87,20 +87,20 @@ public class Arena extends Game{
 		return instance;
 	}
 
-	public static boolean isMultiplayer() {
+	public boolean isMultiplayer() {
 		return multiplayer;
 	}
 
-	public static void setMultiplayer(boolean multiplayer) {
-		Arena.multiplayer = multiplayer;
+	public void setMultiplayer(boolean multiplayer) {
+		this.multiplayer = multiplayer;
 	}
 
-    public static boolean isHost() {
+    public boolean isHost() {
         return host;
     }
 
-    public static void setHost(boolean host) {
-        Arena.host = host;
+    public void setHost(boolean host) {
+        this.host = host;
     }
 
     public String getmPlayerID() {

@@ -54,7 +54,7 @@ public class GoogleServices implements Broadcast{
             byte[] buf = realTimeMessage.getMessageData();
             String sender = realTimeMessage.getSenderParticipantId();
             Log.d(TAG, "Message received from: " + sender);
-            if(Arena.isHost()){
+            if(Arena.getInstance().isHost()){
                 ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
                 if(player2 == null)
                     return;
@@ -70,7 +70,8 @@ public class GoogleServices implements Broadcast{
 
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
-        if (!Arena.isMultiplayer())
+        Log.d("","");
+        if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
 
         byte[] mMsgBuf = msgToArrayByte(model);
@@ -82,7 +83,7 @@ public class GoogleServices implements Broadcast{
 
     @Override
     public boolean sendMessage_from_Client(EntityModel ship) {
-        if (!Arena.isMultiplayer())
+        if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
 
         byte[] mMsgBuf = msgToArrayByte(ship);
@@ -237,14 +238,14 @@ public class GoogleServices implements Broadcast{
     };
 
     private void setHost() {
-        String maxID = "0";
+        String maxID = mParticipants.get(0).getParticipantId();
         for (Participant p : mParticipants){
-            if(p.getParticipantId().compareTo(maxID) < 0 )
+            if(p.getParticipantId().compareTo(maxID) > 0 )
                 maxID = p.getParticipantId();
         }
-        if(maxID == mMyId){
+        if(maxID.compareTo(mMyId) == 0){
             Log.d(TAG, "Set as Host");
-            Arena.setHost(true);
+            Arena.getInstance().setHost(true);
         }
     }
 
