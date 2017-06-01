@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.google.android.gms.games.Games;
 import com.google.android.gms.games.GamesStatusCodes;
-import com.google.android.gms.games.multiplayer.Invitation;
-import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
 import com.google.android.gms.games.multiplayer.Participant;
 import com.google.android.gms.games.multiplayer.realtime.RealTimeMessage;
 import com.google.android.gms.games.multiplayer.realtime.RealTimeMessageReceivedListener;
@@ -13,11 +11,15 @@ import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomStatusUpdateListener;
 import com.google.android.gms.games.multiplayer.realtime.RoomUpdateListener;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.EntityModel;
-import com.raiden.game.screen.PVE_Screen;
+import com.raiden.game.model.entities.ShipModel;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -47,13 +49,100 @@ public class GoogleServices implements Broadcast{
 
     RealTimeMessageReceivedListener realTimeMessageReceivedListener = new RealTimeMessageReceivedListener() {
 
-        PVE_Screen screen;
-
         @Override
         public void onRealTimeMessageReceived(RealTimeMessage realTimeMessage) {
-            screen = PVE_Screen.getInstance();
+            PVE_GameModel model = PVE_GameModel.getInstance();
+            byte[] buf = realTimeMessage.getMessageData();
+            String sender = realTimeMessage.getSenderParticipantId();
+            Log.d(TAG, "Message received: " + (char) buf[0] + "/" + (int) buf[1]);
+            if(Arena.isHost()){
+                ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
+                if(player2 == null)
+                    return;
+
+            }
+            else {
+                GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
+                if(modelReceived == null)
+                    return;
+            }
         }
     };
+
+    @Override
+    public boolean sendMessage_from_Host(GameModel model) {
+        if (!Arena.isMultiplayer())
+            return false; // playing single-player mode
+
+        byte[] mMsgBuf = msgToArrayByte(model);
+        if(mMsgBuf == null)
+            return false;
+        sendMessage(mMsgBuf);
+        return true;
+    }
+
+    @Override
+    public boolean sendMessage_from_Client(EntityModel ship) {
+        if (!Arena.isMultiplayer())
+            return false; // playing single-player mode
+
+        byte[] mMsgBuf = msgToArrayByte(ship);
+        if(mMsgBuf == null)
+            return false;
+        sendMessage(mMsgBuf);
+        return true;
+    }
+
+    private byte[] msgToArrayByte(Object o){
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutput out = null;
+        byte[] mMsgBuf;
+        try {
+            out = new ObjectOutputStream(bos);
+            out.writeObject(o);
+            out.flush();
+            mMsgBuf = bos.toByteArray();
+            bos.close();
+        }
+        catch (IOException ex) {
+            return null;
+        }
+        return mMsgBuf;
+    }
+
+    private Object arrayByteToMsg(byte[] buf){
+        ByteArrayInputStream bis = new ByteArrayInputStream(buf);
+        ObjectInput in = null;
+        Object o;
+        try {
+            in = new ObjectInputStream(bis);
+            o = in.readObject();
+            in.close();
+        }
+        catch (IOException | ClassNotFoundException ex) {
+                return null;
+        }
+        return o;
+    }
+
+    private void sendMessage(byte[] mMsgBuf){
+        // Send to every other participant.
+        for (Participant p : mParticipants) {
+            if (p.getParticipantId().equals(mMyId))
+                continue;
+            if (p.getStatus() != Participant.STATUS_JOINED)
+                continue;
+            if (false) {
+                // final score notification must be sent via reliable message
+                Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
+                        mRoomId, p.getParticipantId());
+            } else {
+                // it's an interim score notification, so we can use unreliable
+                Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
+                        p.getParticipantId());
+            }
+        }
+    }
 
 
     RoomStatusUpdateListener roomStatusUpdateListener = new RoomStatusUpdateListener() {
@@ -66,6 +155,7 @@ public class GoogleServices implements Broadcast{
             //get participants and my ID:
             mParticipants = room.getParticipants();
             mMyId = room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
+            setHost();
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.
             if(mRoomId==null)
@@ -134,6 +224,17 @@ public class GoogleServices implements Broadcast{
 
     };
 
+    private void setHost() {
+        String maxID = "0";
+        for (Participant p : mParticipants){
+            if(p.getParticipantId().compareTo(maxID) < 0 )
+                maxID = p.getParticipantId();
+        }
+        if(maxID == mMyId){
+            Arena.setHost(true);
+        }
+    }
+
 
     RoomUpdateListener roomUpdateListener = new RoomUpdateListener() {
         // Called when room has been created
@@ -189,18 +290,6 @@ public class GoogleServices implements Broadcast{
         }
     };
 
-    OnInvitationReceivedListener onInvitationReceivedListener = new OnInvitationReceivedListener() {
-        @Override
-        public void onInvitationReceived(Invitation invitation) {
-
-        }
-
-        @Override
-        public void onInvitationRemoved(String s) {
-
-        }
-    };
-
 
     // We treat most of the room update callbacks in the same way: we update our list of
     // participants and update the display. In a real game we would also have to check if that
@@ -217,62 +306,4 @@ public class GoogleServices implements Broadcast{
         }
     }
 
-    @Override
-    public boolean sendMessage_from_Host(GameModel model) {
-        if (!Arena.isMultiplayer())
-            return false; // playing single-player mode
-
-        byte[] mMsgBuf = null;
-        if(!msgToArrayByte(model, mMsgBuf))
-            return false;
-        sendMessage(mMsgBuf);
-        return true;
-    }
-
-    @Override
-    public boolean sendMessage_from_Client(EntityModel ship) {
-        if (!Arena.isMultiplayer())
-            return false; // playing single-player mode
-
-        byte[] mMsgBuf = null;
-        if(!msgToArrayByte(ship, mMsgBuf))
-            return false;
-        sendMessage(mMsgBuf);
-        return true;
-    }
-
-    private boolean msgToArrayByte(Object o, byte[] mMsgBuf){
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutput out = null;
-        try {
-            out = new ObjectOutputStream(bos);
-            out.writeObject(o);
-            out.flush();
-            mMsgBuf = bos.toByteArray();
-            bos.close();
-        }
-        catch (IOException ex) {
-            return false;
-        }
-        return true;
-    }
-
-    private void sendMessage(byte[] mMsgBuf){
-        // Send to every other participant.
-        for (Participant p : mParticipants) {
-            if (p.getParticipantId().equals(mMyId))
-                continue;
-            if (p.getStatus() != Participant.STATUS_JOINED)
-                continue;
-            if (false) {
-                // final score notification must be sent via reliable message
-                Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
-                        mRoomId, p.getParticipantId());
-            } else {
-                // it's an interim score notification, so we can use unreliable
-                Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
-                        p.getParticipantId());
-            }
-        }
-    }
 }

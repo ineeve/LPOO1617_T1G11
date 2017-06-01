@@ -76,7 +76,6 @@ public class PVE_Screen extends ScreenAdapter {
 
     private LevelManager levelManager;
 
-    private boolean host = false;
     /**
      * Creates this screen.
      *
@@ -96,10 +95,6 @@ public class PVE_Screen extends ScreenAdapter {
         levelManager = new LevelManager(this);
 
         instance = this;
-    }
-
-    public void setHost(){
-        host = true;
     }
 
     /**
@@ -148,7 +143,7 @@ public class PVE_Screen extends ScreenAdapter {
     private void updateScene(float delta){
         if(!LevelManager.isEndOfGame())
             handleInputs(delta);
-        if (host && isMultiplayer() || !isMultiplayer()){
+        if (Arena.isHost() && isMultiplayer() || !isMultiplayer()){
             controller.update(delta);
             game.getBroadcast().sendMessage_from_Host(model);
         }else if (isMultiplayer()){
@@ -166,7 +161,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        if (host && isMultiplayer() || !isMultiplayer()){
+        if (Arena.isHost() && isMultiplayer() || !isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);
@@ -271,7 +266,7 @@ public class PVE_Screen extends ScreenAdapter {
             }
             Float acceY = Gdx.input.getAccelerometerY();
             float velY = getVelocity_X(acceY);
-            float velX_Correction = 5.5f;
+            float velX_Correction = -5.5f;
             controller.getAirPlane1().setVelocity(acceX * velX_Correction , velY);
         }
     }
