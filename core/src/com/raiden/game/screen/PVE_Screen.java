@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
+import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
@@ -104,9 +105,8 @@ public class PVE_Screen extends ScreenAdapter {
         float viewport_width = 20;
         float viewport_height = viewport_width * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth());
         OrthographicCamera camera = new OrthographicCamera(viewport_width / PIXEL_TO_METER, viewport_height / PIXEL_TO_METER);
-
-        camera.position.set(GameModel.getInstance().getMyPlayer().getX()/PIXEL_TO_METER,
-                GameModel.getInstance().getMyPlayer().getY()/PIXEL_TO_METER, 0);
+        ShipModel myShip = GameModel.getInstance().getMyPlayer().getMyShip();
+        camera.position.set(myShip.getX()/PIXEL_TO_METER, myShip.getY()/PIXEL_TO_METER, 0);
         camera.update();
 
         if (DEBUG_PHYSICS) {
@@ -146,7 +146,7 @@ public class PVE_Screen extends ScreenAdapter {
             controller.update(delta);
             game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer());
+            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
         }
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
@@ -182,6 +182,7 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     private void drawScore() {
+        scoreText = "score: " + controller.getActualPlayer().getScore();
         scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         scoreBitmap.draw(game.getBatch(), scoreText, camera.position.x - 450, camera.position.y + 800);
     }
@@ -195,13 +196,13 @@ public class PVE_Screen extends ScreenAdapter {
             return;
         }
 
-        if (GameModel.getInstance().getMyPlayer().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
+        if (GameModel.getInstance().getMyPlayer().getMyShip().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x + xVelocity_player / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
                 camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             }
-        } else if (GameModel.getInstance().getMyPlayer().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
+        } else if (GameModel.getInstance().getMyPlayer().getMyShip().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {

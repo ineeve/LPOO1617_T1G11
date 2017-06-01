@@ -1,6 +1,7 @@
 package com.raiden.game.model.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.raiden.game.Player;
 
 /**
  * Created by ineeve on 24-04-2017.
@@ -8,7 +9,7 @@ import com.badlogic.gdx.Gdx;
 
 public class BulletModel extends MovingObjectModel {
 
-    private ShipModel owner;
+    private Player owner;
 
     /**
      * Creates a new ship model in a certain position;
@@ -34,11 +35,11 @@ public class BulletModel extends MovingObjectModel {
         return damage;
     }
 
-    public ShipModel getOwner() {
+    public Player getOwner() {
         return owner;
     }
 
-    public void setOwner(ShipModel owner) {
+    public void setOwner(Player owner) {
         this.owner = owner;
     }
 }

@@ -13,5 +13,5 @@ public interface Shoot {
     /**
      * Shoots a bullet from the spaceship at 10m/s
      */
-    void shoot(float deltaTime);
+    BulletModel shoot(float deltaTime);
 }

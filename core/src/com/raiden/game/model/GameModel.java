@@ -78,10 +78,10 @@ public class GameModel {
      *
      * @return the space ship.
      */
-    public ShipModel getMyPlayer() {
+    public Player getMyPlayer() {
         for(Player player : players){
             if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) == 0){
-                return player.getMyShip();
+                return player;
             }
         }return null;
     }
@@ -93,7 +93,6 @@ public class GameModel {
         bullet.setPosition(
                 ship.getX() + (float) Math.sin(ship.getRotation()) * 2f,
                 ship.getY() + (float) Math.cos(ship.getRotation()) * 2f);
-        bullet.setOwner(ship);
         entityModels.add(bullet);
         return bullet;
     }

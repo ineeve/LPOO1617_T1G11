@@ -9,9 +9,12 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.raiden.game.Player;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipBody;
@@ -50,6 +53,13 @@ public class Physics_Controller implements ContactListener{
      */
     private ShipBody airPlane1;
 
+
+    /**
+     * The player
+     */
+
+    private Player actualPlayer;
+
     /**
      * Accumulator used to calculate the simulation step.
      */
@@ -77,6 +87,7 @@ public class Physics_Controller implements ContactListener{
         }
 
         airPlane1 = (ShipBody) dynamicBodies.get(0);
+        actualPlayer = model.getMyPlayer();
 
     }
 
@@ -125,8 +136,12 @@ public class Physics_Controller implements ContactListener{
     public void update(float delta) {
         removeFlaggedForRemoval();
 
-        if(!LevelManager.isEndOfGame())
-           airPlane1.shoot(delta);
+        if(!LevelManager.isEndOfGame()){
+            BulletModel bullet = airPlane1.shoot(delta);
+            if (bullet != null){
+                bullet.setOwner(actualPlayer);
+            }
+        }
         for(DynamicBody body : dynamicBodies){
             MoveManager.moveBody(body, delta);
         }
@@ -240,7 +255,11 @@ public class Physics_Controller implements ContactListener{
             int aDamage = aModel.getDamage();
             double aDamagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
             bModel.decreaseHP((int) (aDamage * aDamagePercentage));
-            if (bModel.getHp() <= 0 || bModel.getType() == EntityModel.ModelType.BULLET) {
+            if (bModel.getHp() <= 0) {
+                bModel.setFlaggedForRemoval(true);
+                setScores(bodyA,bodyB);
+            }
+            if (bModel.getType() == EntityModel.ModelType.BULLET){
                 bModel.setFlaggedForRemoval(true);
             }
         }
@@ -248,11 +267,24 @@ public class Physics_Controller implements ContactListener{
     }
 
     private void setScores(Body bodyA, Body bodyB){
+        //B is dead
+        MovingObjectModel aModel = (MovingObjectModel) bodyA.getUserData();
         MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
-        if (airPlane1.getBody() == bodyA){
-
+        if (aModel instanceof BulletModel){
+            BulletModel bulletModel = (BulletModel) aModel;
+            if (bulletModel.getOwner() != null){
+                actualPlayer.increaseScore();
+            }
+        }
+        else if (bodyA == airPlane1.getBody() && bModel instanceof ShipModel){
+            actualPlayer.increaseScore();
         }
     }
+
+    public Player getActualPlayer() {
+        return actualPlayer;
+    }
+
 
     @Override
     public void endContact(Contact contact) {
@@ -267,10 +299,6 @@ public class Physics_Controller implements ContactListener{
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
-    }
-
-    public void setAirPlane1(ShipBody airPlane1) {
-        this.airPlane1 = airPlane1;
     }
 
     public ShipBody getAirPlane1() {
