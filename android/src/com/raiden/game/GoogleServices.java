@@ -24,7 +24,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.android.gms.internal.zzt.TAG;
+import static com.raiden.game.MainActivity.*;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 
@@ -53,7 +53,7 @@ public class GoogleServices implements Broadcast{
             GameModel model = GameModel.getInstance();
             byte[] buf = realTimeMessage.getMessageData();
             String sender = realTimeMessage.getSenderParticipantId();
-            Log.d(TAG, "Message received: " + (char) buf[0] + "/" + (int) buf[1]);
+            Log.d(TAG, "Message received from: " + sender);
             if(Arena.isHost()){
                 ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
                 if(player2 == null)
@@ -132,15 +132,25 @@ public class GoogleServices implements Broadcast{
             if (p.getStatus() != Participant.STATUS_JOINED)
                 continue;
             if (false) {
+                Log.d(TAG, "Sending Message from: " + mMyId);
                 // final score notification must be sent via reliable message
                 Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
                         mRoomId, p.getParticipantId());
             } else {
+                Log.d(TAG, "Sending Message from: " + mMyId);
                 // it's an interim score notification, so we can use unreliable
                 Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
                         p.getParticipantId());
             }
         }
+    }
+
+    private void createPlayer(){
+        ArrayList<Player> players = new ArrayList<>();
+        for (Participant p : mParticipants) {
+            players.add(new Player(p.getParticipantId()));
+        }
+        GameModel.getInstance().addPlayers(players);
     }
 
 
@@ -156,6 +166,8 @@ public class GoogleServices implements Broadcast{
             mMyId = room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
             Arena.getInstance().setmPlayerID(mMyId);
             setHost();
+            //if(Arena.isHost())
+                createPlayer();
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.
             if(mRoomId==null)
@@ -231,6 +243,7 @@ public class GoogleServices implements Broadcast{
                 maxID = p.getParticipantId();
         }
         if(maxID == mMyId){
+            Log.d(TAG, "Set as Host");
             Arena.setHost(true);
         }
     }
