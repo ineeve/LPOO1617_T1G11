@@ -2,11 +2,13 @@ package com.raiden.game;
 
 import com.raiden.game.model.entities.ShipModel;
 
+import java.io.Serializable;
+
 /**
  * Created by ineeve on 01-06-2017.
  */
 
-public class Player {
+public class Player implements Serializable {
 
     private ShipModel myShip;
     private String ID;

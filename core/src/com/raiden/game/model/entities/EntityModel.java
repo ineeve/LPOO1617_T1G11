@@ -1,10 +1,12 @@
 package com.raiden.game.model.entities;
 
 
+import java.io.Serializable;
+
 /**
  * An abstract model representing an entity belonging to a game model.
  */
-public abstract class EntityModel {
+public abstract class EntityModel implements Serializable {
     public enum ModelType {
         AIRPLANE_1,
         AIRPLANE_2,

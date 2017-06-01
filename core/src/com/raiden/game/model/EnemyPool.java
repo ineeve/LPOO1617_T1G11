@@ -66,7 +66,6 @@ public class EnemyPool {
         }
     }
 
-    //TODO: change way of return element when dont have the type od model
     public EntityModel obtain(EntityModel.ModelType type, float x, float y){
         EntityModel entityToReturn;
         while (!allPools.containsKey(type))
@@ -76,14 +75,12 @@ public class EnemyPool {
         return entityToReturn;
     }
 
-    //TODO: change way of return element when dont have the type od model
     public EntityModel obtain(EntityModel.ModelType type){
         while (!allPools.containsKey(type))
             type = EntityModel.ModelType.getRandom();
         return allPools.get(type).obtain();
     }
 
-    //TODO: change way of return element when dont have the type od model
     public Array<EntityModel> obtain(EntityModel.ModelType type, int numberOfObjects){
         Array<EntityModel> arrayToReturn = new Array<EntityModel>(numberOfObjects);
         while (!allPools.containsKey(type))

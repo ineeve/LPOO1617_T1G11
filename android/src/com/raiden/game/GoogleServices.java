@@ -24,7 +24,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.raiden.game.MainActivity.*;
+import static com.raiden.game.MainActivity.TAG;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 

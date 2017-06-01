@@ -11,6 +11,7 @@ import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  * A model representing a game.
  */
 
-public class GameModel {
+public class GameModel implements Serializable {
 
     private static GameModel instance;
 
