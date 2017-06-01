@@ -74,6 +74,8 @@ public class PVE_Screen extends ScreenAdapter {
     private Float acceY_initial;
 
     private LevelManager levelManager;
+
+    private boolean host = false;
     /**
      * Creates this screen.
      *
@@ -93,6 +95,10 @@ public class PVE_Screen extends ScreenAdapter {
         levelManager = new LevelManager(this);
 
         instance = this;
+    }
+
+    public void setHost(){
+        host = true;
     }
 
     /**
@@ -141,7 +147,13 @@ public class PVE_Screen extends ScreenAdapter {
     private void updateScene(float delta){
         if(!LevelManager.isEndOfGame())
             handleInputs(delta);
-        controller.update(delta);
+        if (host && multiplayer || !multiplayer){
+            controller.update(delta);
+            //send model to the client
+        }else if (multiplayer){
+            //send airplane model to the host
+        }
+
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
         camera.update();
@@ -154,8 +166,10 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        controller.removeFlaggedForRemoval();
-        levelManager.updateLevel(this, delta);
+        if (host && multiplayer || !multiplayer){
+            controller.removeFlaggedForRemoval();
+            levelManager.updateLevel(this, delta);
+        }
         updateScene(delta);
 
         game.getBatch().setProjectionMatrix(camera.combined);

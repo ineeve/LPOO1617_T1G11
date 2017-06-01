@@ -20,7 +20,7 @@ import static com.google.android.gms.internal.zzt.TAG;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 
-class GoogleServices{
+public class GoogleServices{
 
     MainActivity mMainActivity;
 
