@@ -7,7 +7,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
  * Created by João on 18/05/2017.
  */
 
-public class Tank extends ShipPhysics {
+public class Tank extends ShipBody {
 
     private static float MAXVELOCITY_Default = AirPlane_1.MAXVELOCITY_Default * 0.6f;
 

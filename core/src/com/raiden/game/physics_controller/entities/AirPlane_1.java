@@ -8,7 +8,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
  * A concrete representation of an DynamicBody
  * representing the player space ship.
  */
-public class AirPlane_1 extends ShipPhysics {
+public class AirPlane_1 extends ShipBody {
     public static float MAXVELOCITY_Default = 5f;
 
     private final float density = 0.5f;

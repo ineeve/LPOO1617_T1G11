@@ -11,14 +11,11 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.PVE_GameModel;
-import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
-import com.raiden.game.model.entities.ShipModel;
-import com.raiden.game.physics_controller.entities.BulletBody;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
-import com.raiden.game.physics_controller.entities.ShipPhysics;
+import com.raiden.game.physics_controller.entities.ShipBody;
 import com.raiden.game.physics_controller.movement.MoveBody;
 import com.raiden.game.screen.LevelManager;
 
@@ -52,7 +49,7 @@ public class Physics_Controller implements ContactListener{
     /**
      * The spaceship body.
      */
-    private ShipPhysics airPlane1;
+    private ShipBody airPlane1;
 
     /**
      * Accumulator used to calculate the simulation step.
@@ -81,7 +78,7 @@ public class Physics_Controller implements ContactListener{
             dynamicBodies.add(ControllerFactory.makeController(world, modelEntity));
         }
 
-        airPlane1 = (ShipPhysics) dynamicBodies.get(0);
+        airPlane1 = (ShipBody) dynamicBodies.get(0);
 
     }
 
@@ -91,8 +88,12 @@ public class Physics_Controller implements ContactListener{
         return instance;
     }
 
-    public void addDynamicBody(MovingObjectModel entityModel){
-        dynamicBodies.add(ControllerFactory.makeController(world, entityModel));
+    public DynamicBody addDynamicBody(MovingObjectModel entityModel){
+
+        DynamicBody body = ControllerFactory.makeController(world, entityModel);
+        dynamicBodies.add(body);
+        return body;
+
     }
 
     public void addDynamicBodies(ArrayList<MovingObjectModel> entityModels){
@@ -124,13 +125,13 @@ public class Physics_Controller implements ContactListener{
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
+        removeFlaggedForRemoval();
+
         if(!LevelManager.isEndOfGame())
-            shoot(model.getPlayer1());
+           airPlane1.shoot(delta);
         for(DynamicBody body : dynamicBodies){
             MoveBody.moveBody(body, delta);
         }
-
-        timeToNextShoot -= delta;
 
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
@@ -139,7 +140,7 @@ public class Physics_Controller implements ContactListener{
             accumulator -= 1/60f;
         }
 
-        removeFlaggedForRemoval();
+
         verifyPositionOfBodies();
 
     }
@@ -264,11 +265,11 @@ public class Physics_Controller implements ContactListener{
     }
 
 
-    public void setAirPlane1(ShipPhysics airPlane1) {
+    public void setAirPlane1(ShipBody airPlane1) {
         this.airPlane1 = airPlane1;
     }
 
-    public ShipPhysics getAirPlane1() {
+    public ShipBody getAirPlane1() {
         return airPlane1;
     }
 }

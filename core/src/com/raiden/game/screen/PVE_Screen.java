@@ -167,7 +167,6 @@ public class PVE_Screen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         if (host && multiplayer || !multiplayer){
-            controller.removeFlaggedForRemoval();
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);

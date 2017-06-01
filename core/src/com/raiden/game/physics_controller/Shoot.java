@@ -13,14 +13,5 @@ public interface Shoot {
     /**
      * Shoots a bullet from the spaceship at 10m/s
      */
-    void shoot(ShipModel ship) {
-        if (timeToNextShoot < 0) {
-            BulletModel bullet = model.createBullet(ship);
-            bullet.setFlaggedForRemoval(false);
-            DynamicBody body = new BulletBody(world, bullet);
-            body.setVelocity(0,body.getMaxVelocity());
-            dynamicBodies.add(body);
-            timeToNextShoot = TIME_BETWEEN_SHOTS;
-        }
-    }
+    void shoot(float deltaTime);
 }
