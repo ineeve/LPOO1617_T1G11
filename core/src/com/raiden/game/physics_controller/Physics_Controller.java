@@ -13,6 +13,7 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipBody;
@@ -249,6 +250,13 @@ public class Physics_Controller implements ContactListener{
             }
         }
 
+    }
+
+    private void setScores(Body bodyA, Body bodyB){
+        MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
+        if (airPlane1.getBody() == bodyA){
+
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.raiden.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
@@ -14,7 +15,7 @@ public class Arena extends Game{
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 
-	private static Arena instance;
+    private static Arena instance;
 
 	private static boolean multiplayer = false;
 
@@ -33,7 +34,6 @@ public class Arena extends Game{
 		instance = this;
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
-
 		startGame();
 	}
 

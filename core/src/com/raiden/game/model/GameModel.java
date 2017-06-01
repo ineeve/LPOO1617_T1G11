@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 
 public abstract class GameModel {
+
     /**
      * The space ship controlled by the user in this game.
      */
@@ -23,6 +24,8 @@ public abstract class GameModel {
 
     private ShipModel airplane11;
     private ShipModel airplane12;
+
+    private ArrayList<ShipModel> players;
 
     /**
      * A pool of bullets
@@ -60,6 +63,7 @@ public abstract class GameModel {
         bullet.setPosition(
                 ship.getX() + (float) Math.sin(ship.getRotation()) * 2f,
                 ship.getY() + (float) Math.cos(ship.getRotation()) * 2f);
+        bullet.setOwner(ship);
         entityModels.add(bullet);
         return bullet;
     }

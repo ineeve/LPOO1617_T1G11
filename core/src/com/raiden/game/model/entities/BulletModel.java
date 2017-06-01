@@ -8,6 +8,8 @@ import com.badlogic.gdx.Gdx;
 
 public class BulletModel extends MovingObjectModel {
 
+    private ShipModel owner;
+
     /**
      * Creates a new ship model in a certain position;
      *
@@ -30,5 +32,13 @@ public class BulletModel extends MovingObjectModel {
 
     public int getDamage(){
         return damage;
+    }
+
+    public ShipModel getOwner() {
+        return owner;
+    }
+
+    public void setOwner(ShipModel owner) {
+        this.owner = owner;
     }
 }

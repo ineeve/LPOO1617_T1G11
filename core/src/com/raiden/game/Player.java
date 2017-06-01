@@ -1,0 +1,36 @@
+package com.raiden.game;
+
+import com.raiden.game.model.entities.ShipModel;
+
+import net.dermetfan.gdx.physics.box2d.PositionController;
+
+/**
+ * Created by ineeve on 01-06-2017.
+ */
+
+public class Player {
+
+    private ShipModel myShip;
+    private String ID;
+    private int score;
+
+    public Player(String ID){
+        this.ID = ID;
+    }
+
+    public ShipModel getMyShip() {
+        return myShip;
+    }
+
+    public void setMyShip(ShipModel myShip) {
+        this.myShip = myShip;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void increaseScore() {
+        this.score += 1;
+    }
+}
