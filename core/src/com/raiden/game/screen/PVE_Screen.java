@@ -91,9 +91,14 @@ public class PVE_Screen extends ScreenAdapter {
         controller.setCamera(camera);
         levelManager = new LevelManager(this);
         instance = this;
+        initializeBitmapFont();
+    }
+
+    private void initializeBitmapFont() {
         scoreText = "score: 0";
         scoreBitmap = new BitmapFont();
         scoreBitmap.getData().setScale(5);
+        scoreBitmap.setColor(0, 0, 0, 1.0f);
     }
 
     /**
@@ -183,7 +188,6 @@ public class PVE_Screen extends ScreenAdapter {
 
     private void drawScore() {
         scoreText = "score: " + controller.getActualPlayer().getScore();
-        scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         scoreBitmap.draw(game.getBatch(), scoreText, camera.position.x - 450, camera.position.y + 800);
     }
 
