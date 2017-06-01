@@ -59,7 +59,7 @@ public class GameModel {
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
      */
-    void addPlayer(float x, float y){
+    public void addPlayer(float x, float y){
         entityModels.add(new Airplane_1_Model(x,y));
     }
 
