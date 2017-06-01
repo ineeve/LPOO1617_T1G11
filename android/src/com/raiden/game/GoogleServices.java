@@ -11,7 +11,6 @@ import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomStatusUpdateListener;
 import com.google.android.gms.games.multiplayer.realtime.RoomUpdateListener;
 import com.raiden.game.model.GameModel;
-import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.ShipModel;
 
@@ -51,7 +50,7 @@ public class GoogleServices implements Broadcast{
 
         @Override
         public void onRealTimeMessageReceived(RealTimeMessage realTimeMessage) {
-            PVE_GameModel model = PVE_GameModel.getInstance();
+            GameModel model = GameModel.getInstance();
             byte[] buf = realTimeMessage.getMessageData();
             String sender = realTimeMessage.getSenderParticipantId();
             Log.d(TAG, "Message received: " + (char) buf[0] + "/" + (int) buf[1]);
@@ -59,10 +58,10 @@ public class GoogleServices implements Broadcast{
                 ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
                 if(player2 == null)
                     return;
-
+                model.updatePlayerCoords(player2, realTimeMessage.getSenderParticipantId());
             }
             else {
-                GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
+                ArrayList<EntityModel> modelReceived = (ArrayList<EntityModel>) arrayByteToMsg(buf);
                 if(modelReceived == null)
                     return;
             }
@@ -155,6 +154,7 @@ public class GoogleServices implements Broadcast{
             //get participants and my ID:
             mParticipants = room.getParticipants();
             mMyId = room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
+            Arena.getInstance().setmPlayerID(mMyId);
             setHost();
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.

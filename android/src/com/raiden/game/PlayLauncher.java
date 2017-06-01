@@ -9,8 +9,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class PlayLauncher extends AndroidApplication {
 
-	private Arena arena;
-
 	private static GoogleServices mGoogleServices;
 
 	public PlayLauncher(){}
@@ -35,8 +33,8 @@ public class PlayLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useCompass = true;
 		config.useImmersiveMode = true;
-		arena = new Arena(mGoogleServices);
-
+		Arena arena = Arena.getInstance();
+		arena.setBroadcast(mGoogleServices);
 		initialize(arena, config);
 	}
 }
