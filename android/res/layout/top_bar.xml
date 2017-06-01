@@ -30,6 +30,7 @@
     </RelativeLayout>
 
     <include
+        android:id="@+id/currentContent"
         layout="@layout/main_content_screens"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
