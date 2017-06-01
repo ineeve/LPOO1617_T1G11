@@ -1,6 +1,6 @@
 package com.raiden.game.model.entities;
 
-import com.badlogic.gdx.Gdx;
+
 import com.raiden.game.Player;
 
 /**
@@ -19,7 +19,6 @@ public class BulletModel extends MovingObjectModel {
      */
     public BulletModel(float x, float y) {
         super(x, y);
-        Gdx.app.log("BulletModel()", "Creating new.");
         width = 20;
         height = 20;
         damage = 25;

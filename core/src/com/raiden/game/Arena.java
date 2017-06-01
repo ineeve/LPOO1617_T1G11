@@ -20,7 +20,7 @@ public class Arena extends Game{
 
     private static boolean host = false;
 
-    private String mPlayerID;
+    private String mPlayerID = "I_AM_THE_REAL_MVP";
 
 	private Broadcast broadcast;
 

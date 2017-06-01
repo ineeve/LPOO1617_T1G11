@@ -42,7 +42,7 @@ public class GameModel {
      */
     protected ArrayList<EntityModel> entityModels = new ArrayList<EntityModel>(0);
 
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<Player>();
 
     /**
      * A pool of bullets
@@ -59,15 +59,16 @@ public class GameModel {
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
      */
-    public void addPlayer(float x, float y){
-        entityModels.add(new Airplane_1_Model(x,y));
+    private void addPlayer(Player player,float x, float y){
+        player.setMyShip(new Airplane_1_Model(x,y));
+        entityModels.add(player.getMyShip());
     }
 
 
-    void addPlayers(ArrayList<Player> players){
+    public void addPlayers(ArrayList<Player> players){
         float xStart = (Physics_Controller.ARENA_WIDTH - (players.size() - 1) * 5f) / 2f;
         for(Player player : players){
-            addPlayer(xStart, 5);
+            addPlayer(player, xStart, 5);
             this.players.add(player);
             xStart += 5;
         }

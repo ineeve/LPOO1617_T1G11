@@ -88,7 +88,6 @@ public class Physics_Controller implements ContactListener{
 
         airPlane1 = (ShipBody) dynamicBodies.get(0);
         actualPlayer = model.getMyPlayer();
-
     }
 
     public static Physics_Controller getInstance() {
