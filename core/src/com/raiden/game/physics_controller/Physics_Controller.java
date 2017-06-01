@@ -11,15 +11,14 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.BulletModel;
-import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
-import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.entities.BulletBody;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
 import com.raiden.game.physics_controller.entities.ShipPhysics;
 import com.raiden.game.physics_controller.movement.MoveBody;
+import com.raiden.game.screen.LevelManager;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class Physics_Controller implements ContactListener{
     /**
      * The arena width in meters.
      */
-    public static final int ARENA_WIDTH = 30; //52
+    public static final int ARENA_WIDTH = 27; //52
 
     /**
      * The arena height in meters.
@@ -63,11 +62,6 @@ public class Physics_Controller implements ContactListener{
     private GameModel model;
 
     /**
-     * The bullet speed
-     */
-    private static final float BULLET_SPEED = 20f;
-
-    /**
      * Minimum time between consecutive shots in seconds
      */
     private final float TIME_BETWEEN_SHOTS = .2f;
@@ -78,7 +72,7 @@ public class Physics_Controller implements ContactListener{
 
     private Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
-        world = new World(new Vector2(0,-2),true);
+        world = new World(new Vector2(0,-10),true);
         world.setContactListener(this);
         this.model = model;
         for(EntityModel modelEntity : model.getEntityModels()){
@@ -128,6 +122,8 @@ public class Physics_Controller implements ContactListener{
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
+        if(!LevelManager.isEndOfGame())
+            shoot();
         for(DynamicBody body : dynamicBodies){
             MoveBody.moveBody(body, delta);
         }
@@ -141,6 +137,7 @@ public class Physics_Controller implements ContactListener{
             accumulator -= 1/60f;
         }
 
+        removeFlaggedForRemoval();
         verifyPositionOfBodies();
 
     }
@@ -150,16 +147,12 @@ public class Physics_Controller implements ContactListener{
             DynamicBody body = dynamicBodies.get(i);
             EntityModel currentModel = (EntityModel)body.getUserData();
             if (currentModel.isFlaggedForRemoval()){
-                Gdx.app.log("Destroying","Dynamic Body");
+                Gdx.app.log("Physics_COntroller.removeFlaggedForRemoval()","Destroying Dynamic Body");
                 destroyDynamicBody(body);
-                Gdx.app.log("Destroy","Removed Body");
-                currentModel.setFlaggedForRemoval(false);
                 model.deleteEntityModel(currentModel);
-                Gdx.app.log("Destroy","Removed Model");
                 i--;
             }
         }
-
     }
 
     private void verifyPositionOfBodies(){
@@ -187,7 +180,7 @@ public class Physics_Controller implements ContactListener{
     private boolean verifyBounds(Body body, boolean delete) {
         float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
         float yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
-        if (body.getPosition().x < 0 && !delete)
+        if (body.getPosition().x < 0)
             body.setTransform(0, body.getPosition().y, body.getAngle());
 
         if (body.getPosition().y < yLowerBound) {
@@ -196,7 +189,7 @@ public class Physics_Controller implements ContactListener{
             else
                 return true;
         }
-        if (body.getPosition().x > ARENA_WIDTH && !delete)
+        if (body.getPosition().x > ARENA_WIDTH)
             body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
 
         if (body.getPosition().y > yUpperBound) {
@@ -242,13 +235,12 @@ public class Physics_Controller implements ContactListener{
     /**
      * Shoots a bullet from the spaceship at 10m/s
      */
-    public void shoot() {
+    private void shoot() {
         if (timeToNextShoot < 0) {
-            Gdx.app.log("Controller","Creating Bullet");
             BulletModel bullet = model.createBullet(model.getPlayer1());
             bullet.setFlaggedForRemoval(false);
-            BulletBody body = new BulletBody(world, bullet);
-            body.setVelocity(0,BULLET_SPEED);
+            DynamicBody body = new BulletBody(world, bullet);
+            body.setVelocity(0,body.getMaxVelocity());
             dynamicBodies.add(body);
             timeToNextShoot = TIME_BETWEEN_SHOTS;
         }
@@ -263,45 +255,32 @@ public class Physics_Controller implements ContactListener{
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
-        Object modelA = bodyA.getUserData();
-        Object modelB = bodyB.getUserData();
-        if (modelA instanceof BulletModel && modelB instanceof ShipModel)
-            bulletCollision(bodyA, bodyB);
-        else if (modelA instanceof ShipModel && modelB instanceof BulletModel)
-            bulletCollision(bodyB, bodyA);
-        else if (modelA instanceof MovingObjectModel && modelB instanceof ShipModel){
-            playerColision(bodyA,bodyB);
+        collisionHandler(bodyA,bodyB);
+        collisionHandler(bodyB,bodyA);
+        if(!LevelManager.isEndOfGame())
+            checkIfGameEnd();
+    }
+
+    private void checkIfGameEnd() {
+        if(((MovingObjectModel) airPlane1.getUserData()).isFlaggedForRemoval()){
+            LevelManager.setEndOfGame(true);
         }
-        else if (modelB instanceof MovingObjectModel && modelA instanceof ShipModel){
-            playerColision(bodyB,bodyA);
-        }
-
     }
 
-    private void playerColision(Body killerBody,Body shipBody){
-        endGame();
-    }
-
-    private void endGame(){
-        Gdx.app.log("Game Over","Game Over");
-    }
-
-    private void  bulletCollision(Body bulletBody,Body bodyB){
-        ShipModel bModel = (ShipModel) bodyB.getUserData();
-        BulletModel bulletModel = (BulletModel) bulletBody.getUserData();
-        if (bModel != null && bulletModel != null) {
-            int bulletDamage = bulletModel.getDamage();
-            double damagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
-            bModel.decreaseHP((int) (bulletDamage*damagePercentage));
-            Gdx.app.log("Damage","Percentage =" + damagePercentage);
-            Gdx.app.log("Collision", "Moving Object HP =" + bModel.getHp());
-            if (bModel.getHp() < 0) {
+    private void collisionHandler(Body bodyA, Body bodyB){
+        MovingObjectModel aModel = (MovingObjectModel) bodyA.getUserData();
+        MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
+        if (bModel != null && aModel != null) {
+            int aDamage = aModel.getDamage();
+            double aDamagePercentage= (float) (30+ 70*Math.exp(-0.027*bModel.getArmor()))/100;
+            bModel.decreaseHP((int) (aDamage * aDamagePercentage));
+            if (bModel.getHp() <= 0 || bModel.getType() == EntityModel.ModelType.BULLET) {
                 bModel.setFlaggedForRemoval(true);
             }
-            bulletModel.setFlaggedForRemoval(true);
         }
 
     }
+
     @Override
     public void endContact(Contact contact) {
 

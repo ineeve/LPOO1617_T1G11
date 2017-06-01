@@ -10,7 +10,7 @@ import com.raiden.game.model.entities.MovingObjectModel;
  */
 public class AirPlane_2 extends ShipPhysics {
 
-    private static float MAXVELOCITY_Default = (float) (AirPlane_1.MAXVELOCITY_Default * 1.3);
+    private static float MAXVELOCITY_Default = AirPlane_1.MAXVELOCITY_Default * 1.3f;
 
     private final float density = 0.3f;
 

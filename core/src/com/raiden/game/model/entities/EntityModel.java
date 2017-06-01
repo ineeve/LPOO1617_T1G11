@@ -1,8 +1,6 @@
 package com.raiden.game.model.entities;
 
 
-import com.badlogic.gdx.Gdx;
-
 /**
  * An abstract model representing an entity belonging to a game model.
  */
@@ -111,6 +109,7 @@ public abstract class EntityModel {
     public void setFlaggedForRemoval(boolean flaggedOrNot){
         flaggedForRemoval = flaggedOrNot;
     }
+
     public boolean isFlaggedForRemoval(){
         return flaggedForRemoval;
     }

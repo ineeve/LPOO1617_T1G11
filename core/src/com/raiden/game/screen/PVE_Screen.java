@@ -134,7 +134,8 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     private void updateScene(float delta){
-        handleInputs(delta);
+        if(!LevelManager.isEndOfGame())
+            handleInputs(delta);
         controller.update(delta);
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
@@ -254,10 +255,6 @@ public class PVE_Screen extends ScreenAdapter {
             float velY = getVelocity_X(acceY);
 
             controller.setVelocityofPlayer1(acceX, velY);
-        }
-        if (Gdx.input.isTouched()) {
-            Gdx.app.log("Input","Screen touched");
-            controller.shoot();
         }
     }
 

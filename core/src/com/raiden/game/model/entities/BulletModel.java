@@ -8,8 +8,6 @@ import com.badlogic.gdx.Gdx;
 
 public class BulletModel extends MovingObjectModel {
 
-    private int damage;
-    
     /**
      * Creates a new ship model in a certain position;
      *

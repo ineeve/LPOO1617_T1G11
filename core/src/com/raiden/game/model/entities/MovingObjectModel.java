@@ -5,14 +5,20 @@ import com.raiden.game.physics_controller.movement.MoveBody;
 /**
  * A model representing a the user space ship.
  */
-public abstract class MovingObjectModel extends EntityModel {
+public abstract class MovingObjectModel extends EntityModel implements DamageObject{
     /**
      * Is this ship accelerating in this update delta
      */
     private boolean accelerating = true;
 
-    protected MoveBody.MovementType  movementType;
-    protected int hp;
+    private MoveBody.MovementType  movementType;
+
+    int hp = 0;
+
+    int damage = 0;
+
+    int armor = 0;
+
     /**
      * Creates a new ship model in a certain position
      *
@@ -53,4 +59,24 @@ public abstract class MovingObjectModel extends EntityModel {
     }
 
     public int getHp(){return hp;}
+
+    @Override
+    public int getDamage() {
+        return damage == 0 ? hp : damage;
+    }
+
+    @Override
+    public int getArmor(){
+        return armor == 0 ? hp :armor;
+    }
+
+    @Override
+    public void setArmor(int armor){
+        this.armor = armor;
+    }
+
+    @Override
+    public void setDamage(int damage){
+        this.damage = damage;
+    }
 }

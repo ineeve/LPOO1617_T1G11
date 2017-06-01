@@ -9,7 +9,7 @@ import static com.raiden.game.model.entities.EntityModel.ModelType.AIRPLANE_2;
  * Created by João on 27/05/2017.
  */
 
-class LevelManager {
+public class LevelManager {
 
     private double t = 0;
 
@@ -22,6 +22,8 @@ class LevelManager {
     private boolean finnishOfLevel = false;
 
     private boolean makeMore = true;
+
+    private static boolean endOfGame;
 
     public LevelManager(PVE_Screen screen){
         EnemiesFactory.makeEnemy_Group_Horizontal(screen, AIRPLANE_2, 3);
@@ -39,7 +41,7 @@ class LevelManager {
                     EnemiesFactory.makeEnemy_Group_Horizontal(screen, EntityModel.ModelType.getRandom(), numberOfEnemies);
                 }
                 t += delta;
-            if(t > 80){
+            if(t > 20 * dificulty){
                 t = 0;
                 lastSpawn = 0;
                 dificulty++;
@@ -54,5 +56,13 @@ class LevelManager {
     public void setFinnishOfLevel(boolean finnishOfLevel) {
         this.finnishOfLevel = finnishOfLevel;
         makeMore = false;
+    }
+
+    public static boolean isEndOfGame() {
+        return endOfGame;
+    }
+
+    public static void setEndOfGame(boolean endOfGame) {
+        LevelManager.endOfGame = endOfGame;
     }
 }
