@@ -12,13 +12,13 @@ public abstract class EntityModel implements Serializable {
         AIRPLANE_2,
         AIRPLANE_3,
         TANK,
-        BULLET,
+        ANY,
         COMET,
         OBSTACLE,
-        ANY;
+        BULLET;
 
         public static ModelType getRandom() {
-            return values()[(int) (Math.random() * values().length)];
+            return values()[(int) (Math.random() * values().length-1)];
         }
     }
 

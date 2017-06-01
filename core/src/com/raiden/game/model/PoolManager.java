@@ -87,7 +87,7 @@ public class PoolManager {
 
     public EntityModel obtain(EntityModel.ModelType type, float x, float y){
         EntityModel entityToReturn;
-        while (!allPools.containsKey(type))
+        while (!allPools.containsKey(type) && type != EntityModel.ModelType.BULLET)
             type = EntityModel.ModelType.getRandom();
         entityToReturn = allPools.get(type).obtain();
         entityToReturn.setPosition(x,y);
@@ -95,14 +95,14 @@ public class PoolManager {
     }
 
     public EntityModel obtain(EntityModel.ModelType type){
-        while (!allPools.containsKey(type))
+        while (!allPools.containsKey(type) && type != EntityModel.ModelType.BULLET)
             type = EntityModel.ModelType.getRandom();
         return allPools.get(type).obtain();
     }
 
     public Array<EntityModel> obtain(EntityModel.ModelType type, int numberOfObjects){
         Array<EntityModel> arrayToReturn = new Array<EntityModel>(numberOfObjects);
-        while (!allPools.containsKey(type))
+        while (!allPools.containsKey(type) && type != EntityModel.ModelType.BULLET)
             type = EntityModel.ModelType.getRandom();
         for(int i = 0; i < numberOfObjects; i++){
             arrayToReturn.add(allPools.get(type).obtain());
