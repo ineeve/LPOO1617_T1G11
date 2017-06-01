@@ -30,7 +30,6 @@ public class Arena extends Game{
 	 */
 	@Override
 	public void create () {
-
 		instance = this;
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();

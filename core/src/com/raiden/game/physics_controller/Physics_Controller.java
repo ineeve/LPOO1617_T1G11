@@ -132,7 +132,7 @@ public class Physics_Controller implements ContactListener{
         if(!LevelManager.isEndOfGame())
            airPlane1.shoot(delta);
         for(DynamicBody body : dynamicBodies){
-            MoveManager.getInstance().moveBody(body, delta);
+            MoveManager.moveBody(body, delta);
         }
 
         float frameTime = Math.min(delta, 0.25f);

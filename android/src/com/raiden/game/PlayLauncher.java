@@ -13,6 +13,8 @@ public class PlayLauncher extends AndroidApplication {
 
 	private static GoogleServices mGoogleServices;
 
+	public PlayLauncher(){}
+
 	PlayLauncher(GoogleServices mGoogleServices){
 		PlayLauncher.mGoogleServices = mGoogleServices;
 	}
