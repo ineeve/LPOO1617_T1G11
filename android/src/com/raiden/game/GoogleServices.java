@@ -70,7 +70,7 @@ public class GoogleServices implements Broadcast{
 
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
-        Log.d("","");
+        Log.d(TAG,"Start Sending Message from host");
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
 

@@ -88,7 +88,6 @@ public class GameModel {
     }
 
 
-
     public BulletModel createBullet(ShipModel ship) {
         BulletModel bullet = bulletPool.obtain();
         bullet.setPosition(

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
@@ -150,7 +149,7 @@ public class PVE_Screen extends ScreenAdapter {
             controller.update(delta);
             game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (Arena.getInstance().isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer());
+            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
         }
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
