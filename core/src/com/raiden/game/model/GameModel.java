@@ -45,15 +45,7 @@ public class GameModel implements Serializable {
 
     private ArrayList<Player> players = new ArrayList<Player>();
 
-    /**
-     * A pool of bullets
-     */
-    private Pool<BulletModel> bulletPool = new Pool<BulletModel>() {
-        @Override
-        protected BulletModel newObject() {
-            return new BulletModel(0, 0);
-        }
-    };
+
 
     /**
      *
@@ -90,7 +82,7 @@ public class GameModel implements Serializable {
 
 
     public BulletModel createBullet(ShipModel ship) {
-        BulletModel bullet = bulletPool.obtain();
+        BulletModel bullet = (BulletModel) PoolManager.getInstance().obtain(EntityModel.ModelType.BULLET);
         bullet.setPosition(
                 ship.getX() + (float) Math.sin(ship.getRotation()) * 2f,
                 ship.getY() + (float) Math.cos(ship.getRotation()) * 2f);
@@ -116,10 +108,10 @@ public class GameModel implements Serializable {
         if(model != null) {
             entityModels.remove(model);
             if(model instanceof BulletModel){
-                bulletPool.free((BulletModel)model);
+                PoolManager.getInstance().free((BulletModel)model);
             }else {
                 model.setFlaggedForRemoval(false);
-                EnemiesFactory.getInstance().getEnemyPool().free(model);
+                EnemiesFactory.getInstance().getPoolManager().free(model);
             }
         }
     }

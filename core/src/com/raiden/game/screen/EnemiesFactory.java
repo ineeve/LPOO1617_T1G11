@@ -2,7 +2,7 @@ package com.raiden.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.raiden.game.model.EnemyPool;
+import com.raiden.game.model.PoolManager;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
@@ -20,12 +20,12 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 public class EnemiesFactory {
     private static EnemiesFactory instance;
-    private EnemyPool enemyPool = new EnemyPool();
+    private PoolManager poolManager = new PoolManager();
 
     private MoveManager.MovementType nextMoveType;
 
-    public EnemyPool getEnemyPool() {
-        return enemyPool;
+    public PoolManager getPoolManager() {
+        return poolManager;
     }
 
     private float xOfNextSpawn;
@@ -40,7 +40,7 @@ public class EnemiesFactory {
     void makeBoss(PVE_Screen screen) {
         OrthographicCamera camera = screen.getCamera();
         updateCoodsOfNextSpawn(camera);
-        ShipModel boss = (ShipModel) enemyPool.obtain(EntityModel.ModelType.AIRPLANE_3, xOfNextSpawn, yOfNextSpawn);
+        ShipModel boss = (ShipModel) poolManager.obtain(EntityModel.ModelType.AIRPLANE_3, xOfNextSpawn, yOfNextSpawn);
         boss.setMovementType(HORIZONTAL);
         boss.setHp(boss.getHP_DEFAULT() * 5);
         boss.setArmor(boss.getARMOR_DEFAULT() * 5);
@@ -55,7 +55,7 @@ public class EnemiesFactory {
         Gdx.app.log("EnemiesFactory", "makeEnemy() -> creating new enemy");
         OrthographicCamera camera = screen.getCamera();
         updateCoodsOfNextSpawn(camera);
-        MovingObjectModel newEnemyModel = (MovingObjectModel) enemyPool.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn);
+        MovingObjectModel newEnemyModel = (MovingObjectModel) poolManager.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn);
         newEnemyModel.setMovementType(CIRCULAR);
         GameModel.getInstance().addEnemy(newEnemyModel);
         Physics_Controller controller = screen.getController();
@@ -91,7 +91,7 @@ public class EnemiesFactory {
         updateCoodsOfNextSpawn(camera);
         xOfNextSpawn -= (numberOfEnemies - 1) * 2.5f;
         for(int i = 0; i < numberOfEnemies; i++){
-            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn));
+            enemies.add((MovingObjectModel) poolManager.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn));
             xOfNextSpawn += 5f;
         }
         return enemies;
@@ -104,7 +104,7 @@ public class EnemiesFactory {
         updateCoodsOfNextSpawn(camera);
         yOfNextSpawn -= (numberOfEnemies - 1) / 2f * 5f;
         for(int i = 0; i < numberOfEnemies; i++){
-            enemies.add((MovingObjectModel) enemyPool.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn));
+            enemies.add((MovingObjectModel) poolManager.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn));
             yOfNextSpawn += 5f;
         }
         return enemies;
@@ -120,7 +120,7 @@ public class EnemiesFactory {
     }
 
     public void dispose(){
-        enemyPool.clear();
+        poolManager.clear();
     }
 
     private void updateCoodsOfNextSpawn(OrthographicCamera camera){

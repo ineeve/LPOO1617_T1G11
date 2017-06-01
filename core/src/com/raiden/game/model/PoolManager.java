@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.Airplane_2_Model;
 import com.raiden.game.model.entities.Airplane_3_Model;
+import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.TankModel;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 
-public class EnemyPool {
+public class PoolManager {
     private Pool<EntityModel> airplane_1_modelPool = new Pool<EntityModel>() {
         @Override
         protected Airplane_1_Model newObject() {
@@ -49,6 +50,23 @@ public class EnemyPool {
             return new TankModel(0,0);
         }
     };
+    private static PoolManager instance;
+    /**
+     * A pool of bullets
+     */
+    private Pool<EntityModel> bulletPool = new Pool<EntityModel>() {
+        @Override
+        protected BulletModel newObject() {
+            return new BulletModel(0, 0);
+        }
+    };
+
+    public static PoolManager getInstance(){
+        if (instance == null){
+            instance = new PoolManager();
+        }
+        return instance;
+    }
 
     private Hashtable<EntityModel.ModelType, Pool<EntityModel>> allPools = new Hashtable<EntityModel.ModelType, Pool<EntityModel>>() {
         {
@@ -57,6 +75,7 @@ public class EnemyPool {
             put(EntityModel.ModelType.AIRPLANE_3, airplane_3_modelPool);
             put(EntityModel.ModelType.COMET, cometModelPool);
             put(EntityModel.ModelType.TANK, tankPool);
+            put(EntityModel.ModelType.BULLET,bulletPool);
         }
     };
 
@@ -94,7 +113,7 @@ public class EnemyPool {
     public void free(EntityModel entity){
         if(entity != null)
             if(allPools.containsKey(entity.getType())) {
-                Gdx.app.log("EnemyPool.free()", "free model");
+                Gdx.app.log("PoolManager.free()", "free model");
                 allPools.get(entity.getType()).free(entity);
             }
     }
