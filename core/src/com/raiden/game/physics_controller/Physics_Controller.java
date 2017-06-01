@@ -14,6 +14,7 @@ import com.raiden.game.model.PVE_GameModel;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
+import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.entities.BulletBody;
 import com.raiden.game.physics_controller.entities.ControllerFactory;
 import com.raiden.game.physics_controller.entities.DynamicBody;
@@ -51,7 +52,7 @@ public class Physics_Controller implements ContactListener{
     /**
      * The spaceship body.
      */
-    private final ShipPhysics airPlane1;
+    private ShipPhysics airPlane1;
 
     /**
      * Accumulator used to calculate the simulation step.
@@ -124,7 +125,7 @@ public class Physics_Controller implements ContactListener{
      */
     public void update(float delta) {
         if(!LevelManager.isEndOfGame())
-            shoot();
+            shoot(model.getPlayer1());
         for(DynamicBody body : dynamicBodies){
             MoveBody.moveBody(body, delta);
         }
@@ -211,41 +212,6 @@ public class Physics_Controller implements ContactListener{
         return world;
     }
 
-    //TODO: Complete comment
-
-    /**
-     * Sets the player 1 spaceship velocity.
-     *
-     * @param velX The velocity in the X-Axis, which will be multiplied by a correction constant;
-     * @param velY The velocity in the Y-Axis
-     */
-
-    public void setVelocityofPlayer1(float velX, float velY) {
-        float vel_Correction = 5.5f;
-        airPlane1.setVelocity(-velX * vel_Correction, velY);
-    }
-
-    public float getXVelocityofPlayer1() {
-        return airPlane1.getBody().getLinearVelocity().x;
-    }
-
-    public float getYVelocityofPlayer1() {
-        return airPlane1.getBody().getLinearVelocity().y;
-    }
-
-    /**
-     * Shoots a bullet from the spaceship at 10m/s
-     */
-    private void shoot() {
-        if (timeToNextShoot < 0) {
-            BulletModel bullet = model.createBullet(model.getPlayer1());
-            bullet.setFlaggedForRemoval(false);
-            DynamicBody body = new BulletBody(world, bullet);
-            body.setVelocity(0,body.getMaxVelocity());
-            dynamicBodies.add(body);
-            timeToNextShoot = TIME_BETWEEN_SHOTS;
-        }
-    }
 
     /*
  * A contact between two objects was detected
@@ -298,4 +264,11 @@ public class Physics_Controller implements ContactListener{
     }
 
 
+    public void setAirPlane1(ShipPhysics airPlane1) {
+        this.airPlane1 = airPlane1;
+    }
+
+    public ShipPhysics getAirPlane1() {
+        return airPlane1;
+    }
 }

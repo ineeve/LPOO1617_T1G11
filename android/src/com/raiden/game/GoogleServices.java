@@ -12,6 +12,9 @@ import com.google.android.gms.games.multiplayer.realtime.RealTimeMessageReceived
 import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomStatusUpdateListener;
 import com.google.android.gms.games.multiplayer.realtime.RoomUpdateListener;
+import com.raiden.game.model.GameModel;
+import com.raiden.game.model.entities.EntityModel;
+import com.raiden.game.screen.PVE_Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,7 @@ import static com.google.android.gms.internal.zzt.TAG;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 
-public class GoogleServices{
+public class GoogleServices implements Broadcast{
 
     MainActivity mMainActivity;
 
@@ -42,9 +45,12 @@ public class GoogleServices{
     byte[] mMsgBuf = new byte[2];
 
     RealTimeMessageReceivedListener realTimeMessageReceivedListener = new RealTimeMessageReceivedListener() {
+
+        PVE_Screen screen;
+
         @Override
         public void onRealTimeMessageReceived(RealTimeMessage realTimeMessage) {
-
+            screen = PVE_Screen.getInstance();
         }
     };
 
@@ -208,5 +214,15 @@ public class GoogleServices{
         if (mParticipants != null) {
             //updatePeerScoresDisplay();
         }
+    }
+
+    @Override
+    public void sendMessage_from_Host(GameModel model) {
+
+    }
+
+    @Override
+    public void sendMessage_from_Client(EntityModel ship) {
+
     }
 }

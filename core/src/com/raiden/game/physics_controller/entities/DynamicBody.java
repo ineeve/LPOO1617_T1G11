@@ -211,4 +211,12 @@ public abstract class DynamicBody {
     public void setMaxVelocity(float maxVelocity) {
         this.maxVelocity = maxVelocity;
     }
+
+    public float getXVelocity() {
+        return body.getLinearVelocity().x;
+    }
+
+    public float getYVelocity() {
+        return body.getLinearVelocity().y;
+    }
 }

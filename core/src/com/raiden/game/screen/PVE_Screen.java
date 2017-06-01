@@ -190,27 +190,27 @@ public class PVE_Screen extends ScreenAdapter {
 
     //TODO: add comments inside the code
     private void updateCameraPosition(float delta) {
-
-        if (controller.getXVelocityofPlayer1() == 0) {
+        float xVelocity_player = controller.getAirPlane1().getXVelocity();
+        if (xVelocity_player == 0) {
             camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             return;
         }
 
         if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
-            if (controller.getXVelocityofPlayer1() < 0) {
-                camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            if (xVelocity_player < 0) {
+                camera.position.set(camera.position.x + xVelocity_player / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
                 camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             }
         } else if (model.getPlayer1().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
-            if (controller.getXVelocityofPlayer1() < 0) {
+            if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
                 camera.position.set(camera.position.x + CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             }
         } else {
-            if (controller.getXVelocityofPlayer1() > 0) {
-                camera.position.set(camera.position.x + controller.getXVelocityofPlayer1() / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
+            if (xVelocity_player > 0) {
+                camera.position.set(camera.position.x + xVelocity_player / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
                 camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             }
@@ -272,8 +272,8 @@ public class PVE_Screen extends ScreenAdapter {
             }
             Float acceY = Gdx.input.getAccelerometerY();
             float velY = getVelocity_X(acceY);
-
-            controller.setVelocityofPlayer1(acceX, velY);
+            float velX_Correction = 5.5f;
+            controller.getAirPlane1().setVelocity(acceX * velX_Correction , velY);
         }
     }
 
