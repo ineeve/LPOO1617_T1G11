@@ -15,6 +15,7 @@ public class PVE_GameModel extends GameModel {
      * Constructs a game with a.space ship in a certain position.
      */
     private PVE_GameModel(){
+        addPlayer(Physics_Controller.ARENA_WIDTH/2,5);
     }
 
     /**

@@ -64,7 +64,7 @@ public abstract class GameModel {
      * @return the space ship.
      */
     public ShipModel getPlayer1() {
-        return airplane11;
+        return (ShipModel)entityModels.get(0);
     }
 
 

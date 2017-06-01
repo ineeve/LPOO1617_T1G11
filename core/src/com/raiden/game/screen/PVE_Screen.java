@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.PVE_GameModel;
@@ -29,7 +30,7 @@ import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 public class PVE_Screen extends ScreenAdapter {
 
     private String scoreText;
-    private BitmapFont scoreBitmap;
+    BitmapFont scoreBitmap;
 
     /**
      * Used to debug the position of the physics fixtures
@@ -93,16 +94,13 @@ public class PVE_Screen extends ScreenAdapter {
         this.model = model;
         this.controller = controller;
         loadAssets();
-
         camera = createCamera();
         controller.setCamera(camera);
-
         levelManager = new LevelManager(this);
-
         instance = this;
-
         scoreText = "score: 0";
         scoreBitmap = new BitmapFont();
+        scoreBitmap.getData().setScale(5);
     }
 
     /**
@@ -192,7 +190,7 @@ public class PVE_Screen extends ScreenAdapter {
 
     private void drawScore() {
         scoreBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        scoreBitmap.draw(game.getBatch(), scoreText, 25, 100);
+        scoreBitmap.draw(game.getBatch(), scoreText, camera.position.x - 450, camera.position.y + 800);
     }
 
 
