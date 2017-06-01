@@ -19,6 +19,8 @@ public class Arena extends Game{
 
 	private static boolean multiplayer = false;
 
+    private static boolean host = false;
+
 	private Broadcast broadcast;
 
 	Arena(Broadcast broadcast){
@@ -91,4 +93,12 @@ public class Arena extends Game{
 	public static void setMultiplayer(boolean multiplayer) {
 		Arena.multiplayer = multiplayer;
 	}
+
+    public static boolean isHost() {
+        return host;
+    }
+
+    public static void setHost(boolean host) {
+        Arena.host = host;
+    }
 }

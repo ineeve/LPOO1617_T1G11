@@ -1,11 +1,13 @@
 package com.raiden.game.model;
 
 import com.badlogic.gdx.utils.Pool;
+import com.raiden.game.Player;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.BulletModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.ShipModel;
+import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public abstract class GameModel {
     private ShipModel airplane11;
     private ShipModel airplane12;
 
-    private ArrayList<ShipModel> players;
+    private ArrayList<Player> players;
 
     /**
      * A pool of bullets
@@ -42,9 +44,18 @@ public abstract class GameModel {
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
      */
-    public void addPlayer1(float x, float y){
-        airplane11 = new Airplane_1_Model(x,y);
-        entityModels.add(airplane11);
+    void addPlayer(float x, float y){
+        entityModels.add(new Airplane_1_Model(x,y));
+    }
+
+
+    void addPlayers(ArrayList<Player> players){
+        float xStart = Physics_Controller.ARENA_WIDTH - (players.size() - 1) * 5f / 2f;
+        for(Player player : players){
+            addPlayer(xStart, 5);
+            this.players.add(player);
+            xStart += 5;
+        }
     }
 
     /**
@@ -105,4 +116,5 @@ public abstract class GameModel {
                 entityModels.remove(model);
         }
     }
+
 }
