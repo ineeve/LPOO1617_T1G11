@@ -16,6 +16,7 @@ public class Player {
 
     public Player(String ID){
         this.ID = ID;
+        score = 0;
     }
 
     public ShipModel getMyShip() {
