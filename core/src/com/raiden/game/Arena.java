@@ -8,6 +8,8 @@ import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
 
+import java.util.ArrayList;
+
 /**
  * The game main class.
  */
@@ -22,6 +24,7 @@ public class Arena extends Game{
     private static boolean host = false;
 
 	private Broadcast broadcast;
+
 
 	Arena(Broadcast broadcast){
 		this.broadcast = broadcast;

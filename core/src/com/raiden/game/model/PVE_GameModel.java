@@ -14,8 +14,7 @@ public class PVE_GameModel extends GameModel {
     /**
      * Constructs a game with a.space ship in a certain position.
      */
-    private PVE_GameModel(ArrayList<Player> players) {
-        addPlayers(players);
+    private PVE_GameModel(){
     }
 
     /**

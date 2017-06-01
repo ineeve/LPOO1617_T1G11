@@ -50,7 +50,7 @@ public abstract class GameModel {
 
 
     void addPlayers(ArrayList<Player> players){
-        float xStart = Physics_Controller.ARENA_WIDTH - (players.size() - 1) * 5f / 2f;
+        float xStart = (Physics_Controller.ARENA_WIDTH - (players.size() - 1) * 5f) / 2f;
         for(Player player : players){
             addPlayer(xStart, 5);
             this.players.add(player);
