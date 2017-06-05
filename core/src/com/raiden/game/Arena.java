@@ -56,6 +56,7 @@ public class Arena extends Game{
 		ViewFactory.getInstance().dispose();
 		EnemiesFactory.getInstance().dispose();
 		assetManager.dispose();
+		broadcast.leaveRoom();
 	}
 
 	/**

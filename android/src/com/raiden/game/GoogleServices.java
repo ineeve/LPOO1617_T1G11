@@ -28,12 +28,21 @@ import static com.raiden.game.MainActivity.TAG;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 
-public class GoogleServices implements Broadcast{
+class GoogleServices implements Broadcast{
+
+    private static GoogleServices instance;
+
+    static GoogleServices getInstance(){
+        if(instance != null)
+            return instance;
+        return null;
+    }
 
     MainActivity mMainActivity;
 
     GoogleServices(MainActivity activity){
         mMainActivity = activity;
+        instance = this;
     }
 
     // The participants in the currently active game
@@ -41,7 +50,7 @@ public class GoogleServices implements Broadcast{
 
     // Room ID where the currently active game is taking place; null if we're
     // not playing.
-    String mRoomId = null;
+    static String mRoomId;
 
     // My participant ID in the currently active game
     String mMyId = null;
@@ -91,6 +100,11 @@ public class GoogleServices implements Broadcast{
             return false;
         sendMessage(mMsgBuf);
         return true;
+    }
+
+    @Override
+    public void leaveRoom() {
+        mMainActivity.leaveRoom();
     }
 
     private byte[] msgToArrayByte(Object o){
@@ -171,7 +185,7 @@ public class GoogleServices implements Broadcast{
                 createPlayer();
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.
-            if(mRoomId==null)
+            //if(mRoomId==null)
                 mRoomId = room.getRoomId();
 
             // print out the list of participants (for debug purposes)

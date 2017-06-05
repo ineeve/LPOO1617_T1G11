@@ -11,4 +11,6 @@ public interface Broadcast {
     boolean sendMessage_from_Host(GameModel model);
 
     boolean sendMessage_from_Client(EntityModel ship);
+
+    void leaveRoom();
 }
