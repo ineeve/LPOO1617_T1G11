@@ -28,7 +28,7 @@ allprojects {
 
         android_compile_version = 25
         android_version = '25.0.1'
-        android_min_sdk_version = 15
+        android_min_sdk_version = 9
 
         appcompat_library_version = '25.2.0'
         support_library_version = '25.3.1'
