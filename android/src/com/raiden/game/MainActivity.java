@@ -497,7 +497,7 @@ public class MainActivity extends AppCompatActivity
                         getString(R.string.is_inviting_you));*/
         //switchToScreen(mCurScreen); // This will show the invitation popup
     }
-
+    
     @Override
     public void onInvitationRemoved(String invitationId) {
 
