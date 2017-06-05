@@ -30,6 +30,8 @@ import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 public class GoogleServices implements Broadcast{
 
+    String LEADERBOARD = "CgkIro3w2P0YEAIQAQ";
+
     MainActivity mMainActivity;
 
     GoogleServices(MainActivity activity){
@@ -91,6 +93,12 @@ public class GoogleServices implements Broadcast{
             return false;
         sendMessage(mMsgBuf);
         return true;
+    }
+
+    @Override
+    public void submitScore(long score) {
+        Games.Leaderboards.submitScore(mGoogleApiClient,LEADERBOARD,score);
+
     }
 
     private byte[] msgToArrayByte(Object o){
@@ -319,5 +327,7 @@ public class GoogleServices implements Broadcast{
             //updatePeerScoresDisplay();
         }
     }
+
+
 
 }

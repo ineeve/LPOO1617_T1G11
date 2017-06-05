@@ -143,8 +143,9 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     private void updateScene(float delta){
-        if(!LevelManager.isEndOfGame())
+        if(!LevelManager.isEndOfGame()){
             handleInputs(delta);
+        }
         if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer() || !Arena.getInstance().isMultiplayer()){
             controller.update(delta);
             game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
@@ -154,6 +155,7 @@ public class PVE_Screen extends ScreenAdapter {
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
         camera.update();
+
     }
 
     /**
