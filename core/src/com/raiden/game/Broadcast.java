@@ -12,5 +12,8 @@ public interface Broadcast {
 
     boolean sendMessage_from_Client(EntityModel ship);
 
+    void submitScore(long score);
+
     void leaveRoom();
+
 }

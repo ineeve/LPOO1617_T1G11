@@ -3,6 +3,8 @@ package com.raiden.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.raiden.game.model.GameModel;
+import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
@@ -23,6 +25,7 @@ public class Arena extends Game{
     private String mPlayerID = "I_AM_THE_REAL_MVP";
 
 	private Broadcast broadcast;
+
 
     public void setBroadcast(Broadcast broadcast) {
         this.broadcast = broadcast;
@@ -48,7 +51,7 @@ public class Arena extends Game{
 	}
 
 	/**
-	 * Disposes of all assets.
+	 * Disposes of all assets. Submits score and leaves room;
 	 */
 	@Override
 	public void dispose () {
@@ -56,7 +59,9 @@ public class Arena extends Game{
 		ViewFactory.getInstance().dispose();
 		EnemiesFactory.getInstance().dispose();
 		assetManager.dispose();
+		broadcast.submitScore(GameModel.getInstance().getMyPlayer().getScore());
 		broadcast.leaveRoom();
+
 	}
 
 	/**

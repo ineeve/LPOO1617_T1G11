@@ -246,6 +246,7 @@ public class Physics_Controller implements ContactListener{
     private void checkIfGameEnd() {
         if(((MovingObjectModel) airPlane1.getUserData()).isFlaggedForRemoval()){
             LevelManager.setEndOfGame(true);
+
         }
     }
 

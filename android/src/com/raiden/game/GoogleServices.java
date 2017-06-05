@@ -32,17 +32,18 @@ class GoogleServices implements Broadcast{
 
     private static GoogleServices instance;
 
-    static GoogleServices getInstance(){
-        if(instance != null)
-            return instance;
-        return null;
-    }
+    String LEADERBOARD = "CgkIro3w2P0YEAIQAQ";
 
     MainActivity mMainActivity;
 
-    GoogleServices(MainActivity activity){
-        mMainActivity = activity;
-        instance = this;
+    /**
+     * Gets the GoogleServices instance
+     * @return Instance of google service if exists, null otherwise
+     */
+    public static GoogleServices getInstance(){
+        if(instance != null)
+            return instance;
+        return null;
     }
 
     // The participants in the currently active game
@@ -54,6 +55,13 @@ class GoogleServices implements Broadcast{
 
     // My participant ID in the currently active game
     String mMyId = null;
+
+
+    GoogleServices(MainActivity activity){
+        mMainActivity = activity;
+        instance = this;
+    }
+
 
     RealTimeMessageReceivedListener realTimeMessageReceivedListener = new RealTimeMessageReceivedListener() {
 
@@ -103,6 +111,10 @@ class GoogleServices implements Broadcast{
     }
 
     @Override
+
+    public void submitScore(long score) {
+        Games.Leaderboards.submitScore(mGoogleApiClient, LEADERBOARD, score);
+    }
     public void leaveRoom() {
         mMainActivity.leaveRoom();
     }
@@ -333,5 +345,7 @@ class GoogleServices implements Broadcast{
             //updatePeerScoresDisplay();
         }
     }
+
+
 
 }
