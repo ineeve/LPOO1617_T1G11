@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "858374538926-7nohnmtc4jcqidc8etndtk6ipdvgsfud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raiden.game",
+            "certificate_hash": "0a6671359012129e943e9ce59f7bdcda0285af0a"
+          }
+        },
+        {
           "client_id": "858374538926-5c75dr7bpou01jehvq1jkbotqpvsj0o1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
