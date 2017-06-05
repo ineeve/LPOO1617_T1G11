@@ -85,8 +85,9 @@ public class Physics_Controller implements ContactListener{
         for(EntityModel modelEntity : model.getEntityModels()){
             dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
         }
-
-        airPlane1 = (ShipBody) dynamicBodies.get(0);
+        if (dynamicBodies.size() > 0){
+            airPlane1 = (ShipBody) dynamicBodies.get(0);
+        }
         actualPlayer = model.getMyPlayer();
     }
 
@@ -187,10 +188,11 @@ public class Physics_Controller implements ContactListener{
     }
 
     /**
-     * Verifies if the body is inside the arena bounds and if not
-     * wraps it around to the other side.
+     * Verifies if the body is inside the arena bounds
      *
      * @param body The body to be verified.
+     * @param delete True if this body should be deleted when it crosses the y bounds, false otherwise;
+     * @return true if body should be deleted, 0 otherwise
      */
     private boolean verifyBounds(Body body, boolean delete) {
         float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
@@ -256,7 +258,7 @@ public class Physics_Controller implements ContactListener{
             bModel.decreaseHP((int) (aDamage * aDamagePercentage));
             if (bModel.getHp() <= 0) {
                 if (!bModel.isFlaggedForRemoval()){
-                    setScores(bodyA,bodyB);
+                    updateScores(bodyA,bodyB);
                 }
                 bModel.setFlaggedForRemoval(true);
 
@@ -268,7 +270,7 @@ public class Physics_Controller implements ContactListener{
 
     }
 
-    private void setScores(Body bodyA, Body bodyB){
+    private void updateScores(Body bodyA, Body bodyB){
         //B is dead
         MovingObjectModel aModel = (MovingObjectModel) bodyA.getUserData();
         MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
