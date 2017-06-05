@@ -194,9 +194,17 @@ public class Physics_Controller implements ContactListener{
      * @param delete True if this body should be deleted when it crosses the y bounds, false otherwise;
      * @return true if body should be deleted, 0 otherwise
      */
-    private boolean verifyBounds(Body body, boolean delete) {
-        float yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
-        float yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
+    public boolean verifyBounds(Body body, boolean delete) {
+        float yLowerBound;
+        float yUpperBound;
+        if (camera == null){
+            yLowerBound = 0;
+            yUpperBound = ARENA_HEIGHT;
+        }
+        else{
+            yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
+            yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
+        }
         if (body.getPosition().x < 0)
             body.setTransform(0, body.getPosition().y, body.getAngle());
 
