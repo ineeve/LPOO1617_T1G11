@@ -205,7 +205,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_achievements) {
 
-        } else if (id == R.id.nav_stats_account) {
+        } else if (id == R.id.nav_leaderboard) {
+            startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                    getResources().getString(R.string.LEADERBOARD_ID)), RC_LEADERBOARD);
+
 
         } else if (id == R.id.nav_share) {
 
@@ -246,6 +249,7 @@ public class MainActivity extends AppCompatActivity
     final static int RC_SELECT_PLAYERS = 10000;
     final static int RC_INVITATION_INBOX = 10001;
     final static int RC_WAITING_ROOM = 10002;
+    final static int RC_LEADERBOARD = 10003;
 
     // Request code used to invoke sign in user interactions.
     private static final int RC_SIGN_IN = 9001;
@@ -327,6 +331,9 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     BaseGameUtils.showActivityResultError(this,requestCode,responseCode, R.string.signin_other_error);
                 }
+                break;
+            case RC_LEADERBOARD:
+                Log.d(TAG, "Showing Leaderboard");
                 break;
         }
         super.onActivityResult(requestCode, responseCode, intent);
@@ -430,6 +437,12 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        stopKeepingScreenOn();
+    }
+
     // Handle back key to make sure we cleanly leave a game if we are in the middle of one
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e) {
@@ -449,7 +462,6 @@ public class MainActivity extends AppCompatActivity
     void leaveRoom() {
         Log.d(TAG, "Leaving room.");
         //mSecondsLeft = 0;
-        stopKeepingScreenOn();
         if (mGoogleServices.mRoomId != null) {
             Games.RealTimeMultiplayer.leave(mGoogleApiClient, mGoogleServices.roomUpdateListener, mGoogleServices.mRoomId);
             mGoogleServices.mRoomId = null;

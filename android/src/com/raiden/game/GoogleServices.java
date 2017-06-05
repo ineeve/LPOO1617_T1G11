@@ -32,7 +32,6 @@ class GoogleServices implements Broadcast{
 
     private static GoogleServices instance;
 
-    String LEADERBOARD = "CgkIro3w2P0YEAIQAQ";
 
     MainActivity mMainActivity;
 
@@ -111,9 +110,8 @@ class GoogleServices implements Broadcast{
     }
 
     @Override
-
     public void submitScore(long score) {
-        Games.Leaderboards.submitScore(mGoogleApiClient, LEADERBOARD, score);
+        Games.Leaderboards.submitScore(mGoogleApiClient, mMainActivity.getResources().getString(R.string.LEADERBOARD_ID), score);
     }
     public void leaveRoom() {
         mMainActivity.leaveRoom();
