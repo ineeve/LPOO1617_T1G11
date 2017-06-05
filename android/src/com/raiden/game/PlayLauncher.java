@@ -9,14 +9,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class PlayLauncher extends AndroidApplication {
 
-	private static GoogleServices mGoogleServices;
-
-	public PlayLauncher(){}
-
-	PlayLauncher(GoogleServices mGoogleServices){
-		PlayLauncher.mGoogleServices = mGoogleServices;
-	}
-
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,7 +26,7 @@ public class PlayLauncher extends AndroidApplication {
 		config.useCompass = true;
 		config.useImmersiveMode = true;
 		Arena arena = Arena.getInstance();
-		arena.setBroadcast(mGoogleServices);
+		arena.setBroadcast(GoogleServices.getInstance());
 		initialize(arena, config);
 	}
 }

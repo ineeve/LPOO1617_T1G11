@@ -36,6 +36,7 @@ import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.raiden.game.model.GameModel;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static android.R.drawable.sym_def_app_icon;
 
@@ -47,11 +48,12 @@ public class MainActivity extends AppCompatActivity
 
     DrawerLayout drawerLayout;
 
+    private View actualMenu;
+    private Stack<View> lastMenu = new Stack<>();
+
     private View mHView;
 
     private AdView mAdView;
-
-    private Intent mPlayLauncherIntent;
 
     private static final int[] CLICKABLES = {
             R.id.login_button, R.id.settings_button,
@@ -78,8 +80,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mPlayLauncherIntent = new Intent(this, new PlayLauncher(mGoogleServices).getClass());
 
         //LADO ESQUERDO
 
@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.login_button:
                 drawerLayout.openDrawer(Gravity.START);
@@ -135,8 +136,10 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.openDrawer(Gravity.END);
                 break;
             case R.id.play_button:
-                findViewById(R.id.main_menu_buttons).setVisibility(View.GONE);
-                findViewById(R.id.play_menu_buttons).setVisibility(View.VISIBLE);
+                lastMenu.push(findViewById(R.id.main_menu_buttons));
+                lastMenu.peek().setVisibility(View.GONE);
+                actualMenu = findViewById(R.id.play_menu_buttons);
+                actualMenu.setVisibility(View.VISIBLE);
                 findViewById(R.id.back_button).setVisibility(View.VISIBLE);
                 break;
             case R.id.hangar_button:
@@ -153,14 +156,17 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this, CLASSES[1]));
                 break;
             case R.id.pve_multiplayer_button:
-                findViewById(R.id.play_menu_buttons).setVisibility(View.GONE);
-                findViewById(R.id.multiplayer_menu_buttons).setVisibility(View.VISIBLE);
+                lastMenu.push(findViewById(R.id.play_menu_buttons));
+                lastMenu.peek().setVisibility(View.GONE);
+                actualMenu = findViewById(R.id.multiplayer_menu_buttons);
+                actualMenu.setVisibility(View.VISIBLE);
                 Arena.getInstance().setMultiplayer(true);
-                startQuickGame();
                 break;
             case R.id.pvp_multiplayer_button:
-                findViewById(R.id.play_menu_buttons).setVisibility(View.GONE);
-                findViewById(R.id.multiplayer_menu_buttons).setVisibility(View.VISIBLE);
+                lastMenu.push(findViewById(R.id.play_menu_buttons));
+                lastMenu.peek().setVisibility(View.GONE);
+                actualMenu = findViewById(R.id.multiplayer_menu_buttons);
+                actualMenu.setVisibility(View.VISIBLE);
                 Arena.getInstance().setMultiplayer(true);
                 break;
             case R.id.sign_in_button:
@@ -176,6 +182,17 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "Sign-in button clicked");
                 mSignInClicked = true;
                 mGoogleApiClient.connect();
+                break;
+            case R.id.quickstart_button:
+                startQuickGame();
+                break;
+            case R.id.invite_to_play_button:
+                intent = Games.RealTimeMultiplayer.getSelectOpponentsIntent(mGoogleApiClient, 1, 1);
+                startActivityForResult(intent, RC_SELECT_PLAYERS);
+                break;
+            case R.id.view_invitation_button:
+                intent = Games.Invitations.getInvitationInboxIntent(mGoogleApiClient);
+                startActivityForResult(intent, RC_INVITATION_INBOX);
         }
     }
 
@@ -246,9 +263,6 @@ public class MainActivity extends AppCompatActivity
     // Set to false to require the user to click the button in order to sign in.
     private boolean mAutoStartSignInFlow = true;
 
-    // Are we playing in multiplayer mode?
-    boolean mMultiplayer = false;
-
     // If non-null, this is the id of the invitation we received via the
     // invitation listener
     String mIncomingInvitationId = null;
@@ -291,7 +305,7 @@ public class MainActivity extends AppCompatActivity
                 if (responseCode == Activity.RESULT_OK) {
                     // ready to start playing
                     Log.d(TAG, "Starting game (waiting room returned OK).");
-                    startActivity(mPlayLauncherIntent);
+                    startActivity(new Intent(this, CLASSES[1]));
                 } else if (responseCode == GamesActivityResultCodes.RESULT_LEFT_ROOM) {
                     // player indicated that they want to leave the room
                     leaveRoom();
@@ -394,17 +408,6 @@ public class MainActivity extends AppCompatActivity
     public void onStop() {
         Log.d(TAG, "**** got onStop");
 
-        // if we're in a room, leave it.
-        leaveRoom();
-
-        // stop trying to keep the screen on
-        stopKeepingScreenOn();
-
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            //switchToMainScreen();
-        } else {
-            //switchToScreen(R.id.screen_sign_in);
-        }
         super.onStop();
     }
 
@@ -431,7 +434,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e) {
         if (keyCode == KeyEvent.KEYCODE_BACK) { // NEED to be verifyed if is on game screen to (&& mCurScreen == R.id.screen_game)
-            leaveRoom();
+            if(actualMenu == findViewById(R.id.main_menu_buttons))
+                return super.onKeyDown(keyCode, e);
+            actualMenu.setVisibility(View.GONE);
+            lastMenu.peek().setVisibility(View.VISIBLE);
+            actualMenu = lastMenu.peek();
+            lastMenu.pop();
             return true;
         }
         return super.onKeyDown(keyCode, e);

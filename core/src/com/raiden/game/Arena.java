@@ -51,7 +51,7 @@ public class Arena extends Game{
 	}
 
 	/**
-	 * Disposes of all assets.
+	 * Disposes of all assets. Submits score and leaves room;
 	 */
 	@Override
 	public void dispose () {
@@ -60,6 +60,8 @@ public class Arena extends Game{
 		EnemiesFactory.getInstance().dispose();
 		assetManager.dispose();
 		broadcast.submitScore(GameModel.getInstance().getMyPlayer().getScore());
+		broadcast.leaveRoom();
+
 	}
 
 	/**
