@@ -77,16 +77,17 @@ class GoogleServices implements Broadcast{
                 model.updatePlayerCoords(player2, realTimeMessage.getSenderParticipantId());
             }
             else {
-                ArrayList<EntityModel> modelReceived = (ArrayList<EntityModel>) arrayByteToMsg(buf);
+                GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
                 if(modelReceived == null)
                     return;
+                GameModel.getInstance().updateModel(modelReceived);
             }
         }
     };
 
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
-        Log.d(TAG,"Start Sending Message from host");
+        //Log.d(TAG,"Start Sending Message from host");
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
 
@@ -156,13 +157,13 @@ class GoogleServices implements Broadcast{
                 continue;
             if (p.getStatus() != Participant.STATUS_JOINED)
                 continue;
-            if (false) {
-                Log.d(TAG, "Sending Message from: " + mMyId);
+            if (true) {
+                //Log.d(TAG, "Sending Message from: " + mMyId);
                 // final score notification must be sent via reliable message
                 Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
                         mRoomId, p.getParticipantId());
             } else {
-                Log.d(TAG, "Sending Message from: " + mMyId);
+                //Log.d(TAG, "Sending Message from: " + mMyId);
                 // it's an interim score notification, so we can use unreliable
                 Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
                         p.getParticipantId());
@@ -170,7 +171,7 @@ class GoogleServices implements Broadcast{
         }
     }
 
-    private void createPlayer(){
+    private void createPlayers(){
         ArrayList<Player> players = new ArrayList<>();
         for (Participant p : mParticipants) {
             players.add(new Player(p.getParticipantId()));
@@ -192,7 +193,7 @@ class GoogleServices implements Broadcast{
             Arena.getInstance().setmPlayerID(mMyId);
             setHost();
             //if(Arena.isHost())
-                createPlayer();
+                createPlayers();
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.
             //if(mRoomId==null)

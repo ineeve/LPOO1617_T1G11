@@ -1,6 +1,5 @@
 package com.raiden.game.model;
 
-import com.badlogic.gdx.utils.Pool;
 import com.raiden.game.Arena;
 import com.raiden.game.Player;
 import com.raiden.game.model.entities.Airplane_1_Model;
@@ -127,6 +126,30 @@ public class GameModel implements Serializable {
         for (Player player : players){
             if(player.getID().compareTo(senderParticipantId)==0){
                 player.getMyShip().setPosition(playerUpdated.getX(),playerUpdated.getY());
+            }
+        }
+    }
+
+
+    public static void clearInstance(){
+        instance = null;
+    }
+
+    public void updateModel(GameModel modelReceived) {
+        for(int i = 0; i < modelReceived.getEntityModels().size(); i++){
+            if(i < entityModels.size()){
+                if(entityModels.get(i).getID() == modelReceived.getEntityModels().get(i).getID()){
+                    entityModels.get(i).setPosition(modelReceived.getEntityModels().get(i).getX(), modelReceived.getEntityModels().get(i).getY());
+                }
+                else if (entityModels.get(i).getID() < modelReceived.getEntityModels().get(i).getID()){
+                    entityModels.remove(i);
+                }
+                else {
+                    entityModels.add(i, modelReceived.getEntityModels().get(i));
+                }
+            }
+            else {
+                entityModels.add(modelReceived.getEntityModels().get(i));
             }
         }
     }

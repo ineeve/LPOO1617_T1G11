@@ -22,11 +22,14 @@ public abstract class EntityModel implements Serializable {
         }
     }
 
+    static long Next_ID = 0;
+
     /**
      * The x-coordinate of this model in meters.
      */
     private float x;
 
+    private long ID;
     /**
      * The y-coordinate of this model in meters.
      */
@@ -50,6 +53,7 @@ public abstract class EntityModel implements Serializable {
         this.x = x;
         this.y = y;
         flaggedForRemoval =false;
+        ID = Next_ID++;
     }
 
     /**
@@ -114,5 +118,9 @@ public abstract class EntityModel implements Serializable {
 
     public boolean isFlaggedForRemoval(){
         return flaggedForRemoval;
+    }
+
+    public long getID() {
+        return ID;
     }
 }

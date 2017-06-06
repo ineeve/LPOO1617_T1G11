@@ -134,7 +134,8 @@ public class Physics_Controller implements ContactListener{
     public void update(float delta) {
         removeFlaggedForRemoval();
 
-        if(!LevelManager.isEndOfGame() && airPlane1 != null){
+        if((!LevelManager.isEndOfGame() && Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer())
+                || !Arena.getInstance().isMultiplayer()){
             BulletModel bullet = airPlane1.shoot(delta);
             if (bullet != null){
                 bullet.setOwner(actualPlayer);
@@ -151,7 +152,6 @@ public class Physics_Controller implements ContactListener{
             accumulator -= 1/60f;
         }
 
-
         verifyPositionOfBodies();
 
     }
@@ -161,7 +161,7 @@ public class Physics_Controller implements ContactListener{
             DynamicBody body = dynamicBodies.get(i);
             EntityModel currentModel = (EntityModel)body.getUserData();
             if (currentModel.isFlaggedForRemoval()){
-                Gdx.app.log("Physics_COntroller.removeFlaggedForRemoval()","Destroying Dynamic Body");
+                Gdx.app.log("Physics_Controller.removeFlaggedForRemoval()","Destroying Dynamic Body");
                 destroyDynamicBody(body);
                 GameModel.getInstance().deleteEntityModel(currentModel);
                 i--;
@@ -329,5 +329,9 @@ public class Physics_Controller implements ContactListener{
 
     public ShipBody getAirPlane1() {
         return airPlane1;
+    }
+
+    public static void clearInstance(){
+        instance = null;
     }
 }
