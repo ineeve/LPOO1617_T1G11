@@ -22,8 +22,9 @@ public interface Broadcast {
         public EntityModel.ModelType type;
         public float x;
         public float y;
+        public float angle;
 
-        StructToSend(EntityModel.ModelType type, float x, float y){
+        StructToSend(EntityModel.ModelType type, float x, float y, float angle){
             this.type = type;
             this.x = x;
             this.y = y;

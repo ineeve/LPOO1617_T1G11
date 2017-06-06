@@ -93,9 +93,17 @@ class GoogleServices implements Broadcast{
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
         ArrayList<StructToSend> arrayToSend = new ArrayList<>();
-        arrayToSend.add(new StructToSend(model.getMyPlayer().getMyShip().getType(), model.getMyPlayer().getMyShip().getX(), model.getMyPlayer().getMyShip().getY()));
+        arrayToSend.add(new StructToSend(
+                model.getMyPlayer().getMyShip().getType(),
+                model.getMyPlayer().getMyShip().getX(),
+                model.getMyPlayer().getMyShip().getY(),
+                model.getMyPlayer().getMyShip().getRotation()));
         for(int i = 2; i < model.getEntityModels().size(); i++){
-            arrayToSend.add(new StructToSend(model.getEntityModels().get(i).getType(), model.getEntityModels().get(i).getX(), model.getEntityModels().get(i).getY()));
+            arrayToSend.add(new StructToSend(
+                    model.getEntityModels().get(i).getType(),
+                    model.getEntityModels().get(i).getX(),
+                    model.getEntityModels().get(i).getY(),
+                    model.getEntityModels().get(i).getRotation()));
         }
         byte[] mMsgBuf = msgToArrayByte(arrayToSend);
         if(mMsgBuf == null)
@@ -200,8 +208,13 @@ class GoogleServices implements Broadcast{
             Arena.getInstance().setmPlayerID(mMyId);
             Arena.getInstance().setMultiplayer(true);
             setHost();
-            //if(Arena.isHost())
+            if(Arena.getInstance().isHost())
                 createPlayers();
+            else {
+                GameModel.getInstance().addPlayers(new ArrayList<Player>() {{
+                    add(new Player(mMyId));
+                }});
+            }
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.
             //if(mRoomId==null)

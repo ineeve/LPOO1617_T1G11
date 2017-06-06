@@ -158,8 +158,11 @@ public class GameModel implements Serializable {
                 i--;
             }
         }
-        for (int i = 0; i < modelsReceived.size(); i++)
-        entityModels.add(PoolManager.getInstance().obtain(modelsReceived.get(i).type, modelsReceived.get(i).x, modelsReceived.get(i).y));
+        for (int i = 0; i < modelsReceived.size(); i++) {
+            EntityModel model = PoolManager.getInstance().obtain(modelsReceived.get(i).type, modelsReceived.get(i).x, modelsReceived.get(i).y);
+            model.setRotation(modelsReceived.get(i).angle);
+            entityModels.add(model);
+        }
     }
 
 }
