@@ -3,8 +3,6 @@ package com.raiden.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.raiden.game.model.entities.EntityModel;
 
-import static com.raiden.game.model.entities.EntityModel.ModelType.AIRPLANE_2;
-
 /**
  * Created by João on 27/05/2017.
  */
@@ -29,7 +27,6 @@ public class LevelManager {
 
     public LevelManager(PVE_Screen screen){
         enemiesFactory = new EnemiesFactory();
-        enemiesFactory.makeEnemy_Group_Horizontal(screen, AIRPLANE_2, 3);
     }
 
     void updateLevel(PVE_Screen screen, float delta){

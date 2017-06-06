@@ -2,10 +2,12 @@ package com.raiden.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
+import com.raiden.game.screen.LevelManager;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
 
@@ -40,6 +42,7 @@ public class Arena extends Game{
 		instance = this;
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
+		loadAssets();
 		startGame();
 	}
 
@@ -55,13 +58,40 @@ public class Arena extends Game{
 	 */
 	@Override
 	public void dispose () {
+		broadcast.submitScore(GameModel.getInstance().getMyPlayer().getScore());
 		batch.dispose();
 		ViewFactory.getInstance().dispose();
 		EnemiesFactory.getInstance().dispose();
+		PVE_Screen.clearInstance();
+		Physics_Controller.clearInstance();
+		GameModel.clearInstance();
+		LevelManager.setEndOfGame(false);
+		multiplayer = false;
 		assetManager.dispose();
-		broadcast.submitScore(GameModel.getInstance().getMyPlayer().getScore());
 		broadcast.leaveRoom();
 
+	}
+
+
+	private void loadOneAsset(String asset){
+		this.assetManager.load( asset , Texture.class);
+	}
+
+	/**
+	 * Loads the assets needed by this screen.
+	 */
+	private void loadAssets() {
+		loadOneAsset( "spaceship-no-thrust.png");
+		loadOneAsset( "spaceship-thrust.png");
+		loadOneAsset( "AirPlane_1.png");
+		loadOneAsset( "AirPlane_2.png");
+		loadOneAsset( "AirPlane_3.png");
+		loadOneAsset( "Tank.png");
+		loadOneAsset( "Bullet.png");
+		loadOneAsset( "background.png");
+		loadOneAsset( "commet.png");
+
+		this.assetManager.finishLoading();
 	}
 
 	/**

@@ -74,19 +74,21 @@ class GoogleServices implements Broadcast{
                 ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
                 if(player2 == null)
                     return;
+                Log.d(TAG, "Received player2 with pos x: " + player2.getX() + ", Y: " + player2.getY());
                 model.updatePlayerCoords(player2, realTimeMessage.getSenderParticipantId());
             }
             else {
-                ArrayList<EntityModel> modelReceived = (ArrayList<EntityModel>) arrayByteToMsg(buf);
+                /*GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
                 if(modelReceived == null)
                     return;
+                GameModel.getInstance().updateModel(modelReceived);*/
             }
         }
     };
 
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
-        Log.d(TAG,"Start Sending Message from host");
+        //Log.d(TAG,"Start Sending Message from host");
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
 
@@ -101,7 +103,7 @@ class GoogleServices implements Broadcast{
     public boolean sendMessage_from_Client(EntityModel ship) {
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
-
+        Log.d(TAG, "Send My pos x: " + ship.getX() + ", Y: " + ship.getY());
         byte[] mMsgBuf = msgToArrayByte(ship);
         if(mMsgBuf == null)
             return false;
@@ -126,25 +128,26 @@ class GoogleServices implements Broadcast{
             out.writeObject(o);
             out.flush();
             mMsgBuf = bos.toByteArray();
-            bos.close();
         }
         catch (IOException ex) {
+            Log.d(TAG, ex.getMessage());
             return null;
         }
         return mMsgBuf;
     }
 
     private Object arrayByteToMsg(byte[] buf){
+        Log.d(TAG, "Converting message");
         ByteArrayInputStream bis = new ByteArrayInputStream(buf);
         ObjectInput in = null;
         Object o;
         try {
             in = new ObjectInputStream(bis);
             o = in.readObject();
-            in.close();
         }
         catch (IOException | ClassNotFoundException ex) {
-                return null;
+            Log.d(TAG, ex.getMessage());
+            return null;
         }
         return o;
     }
@@ -162,7 +165,7 @@ class GoogleServices implements Broadcast{
                 Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
                         mRoomId, p.getParticipantId());
             } else {
-                Log.d(TAG, "Sending Message from: " + mMyId);
+                //Log.d(TAG, "Sending Message from: " + mMyId);
                 // it's an interim score notification, so we can use unreliable
                 Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
                         p.getParticipantId());
@@ -170,10 +173,12 @@ class GoogleServices implements Broadcast{
         }
     }
 
-    private void createPlayer(){
+    private void createPlayers(){
         ArrayList<Player> players = new ArrayList<>();
+        players.add((new Player(mMyId)));
         for (Participant p : mParticipants) {
-            players.add(new Player(p.getParticipantId()));
+            if(mMyId != p.getParticipantId())
+                players.add(new Player(p.getParticipantId()));
         }
         GameModel.getInstance().addPlayers(players);
     }
@@ -190,9 +195,10 @@ class GoogleServices implements Broadcast{
             mParticipants = room.getParticipants();
             mMyId = room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
             Arena.getInstance().setmPlayerID(mMyId);
+            Arena.getInstance().setMultiplayer(true);
             setHost();
             //if(Arena.isHost())
-                createPlayer();
+                createPlayers();
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.
             //if(mRoomId==null)
@@ -209,6 +215,9 @@ class GoogleServices implements Broadcast{
         public void onDisconnectedFromRoom(Room room) {
             mRoomId = null;
             mMainActivity.showGameError();
+            Arena.getInstance().setHost(false);
+            Arena.getInstance().setMultiplayer(false);
+            EntityModel.resetNxt_ID();
         }
 
         @Override

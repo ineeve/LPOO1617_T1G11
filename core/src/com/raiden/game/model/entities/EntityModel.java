@@ -7,6 +7,12 @@ import java.io.Serializable;
  * An abstract model representing an entity belonging to a game model.
  */
 public abstract class EntityModel implements Serializable {
+    private static final long serialVersionUID = 6L;
+
+    public static void resetNxt_ID() {
+        Next_ID = 0;
+    }
+
     public enum ModelType {
         AIRPLANE_1,
         AIRPLANE_2,
@@ -22,11 +28,14 @@ public abstract class EntityModel implements Serializable {
         }
     }
 
+    static long Next_ID = 0;
+
     /**
      * The x-coordinate of this model in meters.
      */
     private float x;
 
+    private long ID;
     /**
      * The y-coordinate of this model in meters.
      */
@@ -40,6 +49,8 @@ public abstract class EntityModel implements Serializable {
 
     private boolean flaggedForRemoval;
 
+    private boolean player = false;
+
     /**
      * Constructs a model with a position and a rotation.
      *
@@ -50,6 +61,7 @@ public abstract class EntityModel implements Serializable {
         this.x = x;
         this.y = y;
         flaggedForRemoval =false;
+        ID = Next_ID++;
     }
 
     /**
@@ -114,5 +126,17 @@ public abstract class EntityModel implements Serializable {
 
     public boolean isFlaggedForRemoval(){
         return flaggedForRemoval;
+    }
+
+    public long getID() {
+        return ID;
+    }
+
+    public boolean isPlayer() {
+        return player;
+    }
+
+    public void setPlayer(boolean bool){
+        player = bool;
     }
 }

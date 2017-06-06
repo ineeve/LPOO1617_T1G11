@@ -1,15 +1,14 @@
 package com.raiden.game.model.entities;
 
 
-import com.raiden.game.Player;
-
 /**
  * Created by ineeve on 24-04-2017.
  */
 
 public class BulletModel extends MovingObjectModel {
+    private static final long serialVersionUID = 4L;
 
-    private Player owner;
+    private ShipModel owner;
 
     /**
      * Creates a new ship model in a certain position;
@@ -34,11 +33,11 @@ public class BulletModel extends MovingObjectModel {
         return damage;
     }
 
-    public Player getOwner() {
+    public ShipModel getOwner() {
         return owner;
     }
 
-    public void setOwner(Player owner) {
+    public void setOwner(ShipModel owner) {
         this.owner = owner;
     }
 }

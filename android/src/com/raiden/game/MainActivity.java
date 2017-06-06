@@ -161,14 +161,12 @@ public class MainActivity extends AppCompatActivity
                 lastMenu.peek().setVisibility(View.GONE);
                 actualMenu = findViewById(R.id.multiplayer_menu_buttons);
                 actualMenu.setVisibility(View.VISIBLE);
-                Arena.getInstance().setMultiplayer(true);
                 break;
             case R.id.pvp_multiplayer_button:
                 lastMenu.push(findViewById(R.id.play_menu_buttons));
                 lastMenu.peek().setVisibility(View.GONE);
                 actualMenu = findViewById(R.id.multiplayer_menu_buttons);
                 actualMenu.setVisibility(View.VISIBLE);
-                Arena.getInstance().setMultiplayer(true);
                 break;
             case R.id.sign_in_button:
                 // user wants to sign in
@@ -497,7 +495,7 @@ public class MainActivity extends AppCompatActivity
                         getString(R.string.is_inviting_you));*/
         //switchToScreen(mCurScreen); // This will show the invitation popup
     }
-    
+
     @Override
     public void onInvitationRemoved(String invitationId) {
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
  */
 
 public class ObstacleModel extends EntityModel{
+    private static final long serialVersionUID = 8L;
 
     /**
      * Constructs a model with a position and a rotation.

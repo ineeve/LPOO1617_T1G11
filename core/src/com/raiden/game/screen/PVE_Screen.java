@@ -84,7 +84,6 @@ public class PVE_Screen extends ScreenAdapter {
     private PVE_Screen(Arena game, Physics_Controller controller) {
         this.game = game;
         this.controller = controller;
-        loadAssets();
         camera = createCamera();
         controller.setCamera(camera);
         levelManager = new LevelManager(this);
@@ -121,34 +120,13 @@ public class PVE_Screen extends ScreenAdapter {
         return camera;
     }
 
-    private void loadOneAsset(String asset){
-        this.game.getAssetManager().load( asset , Texture.class);
-    }
-
-    /**
-     * Loads the assets needed by this screen.
-     */
-    private void loadAssets() {
-        loadOneAsset( "spaceship-no-thrust.png");
-        loadOneAsset( "spaceship-thrust.png");
-        loadOneAsset( "AirPlane_1.png");
-        loadOneAsset( "AirPlane_2.png");
-        loadOneAsset( "AirPlane_3.png");
-        loadOneAsset( "Tank.png");
-        loadOneAsset( "Bullet.png");
-        loadOneAsset( "background.png");
-        loadOneAsset( "commet.png");
-
-        this.game.getAssetManager().finishLoading();
-    }
-
     private void updateScene(float delta){
         if(!LevelManager.isEndOfGame()){
             handleInputs(delta);
         }
-        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer() || !Arena.getInstance().isMultiplayer()){
-            controller.update(delta);
-            game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
+        controller.update(delta);
+        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()){
+            //game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (Arena.getInstance().isMultiplayer()){
             game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
         }
@@ -165,7 +143,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer() || !Arena.getInstance().isMultiplayer()){
+        if ((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);
@@ -316,6 +294,10 @@ public class PVE_Screen extends ScreenAdapter {
             instance = new PVE_Screen(Arena.getInstance(),Physics_Controller.getInstance());
         }
         return instance;
+    }
+
+    public static void clearInstance(){
+        instance = null;
     }
 
 }
