@@ -2,6 +2,7 @@ package com.raiden.game.model.entities;
 
 
 public class Airplane_1_Model extends ShipModel {
+    private static final long serialVersionUID = 1L;
     /**
      * Creates a new ship model in a certain position and having a certain rotation.
      *

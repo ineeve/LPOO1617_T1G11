@@ -133,16 +133,17 @@ public class Physics_Controller implements ContactListener{
      */
     public void update(float delta) {
         removeFlaggedForRemoval();
-
-        if((!LevelManager.isEndOfGame() && Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer())
-                || !Arena.getInstance().isMultiplayer()){
-            BulletModel bullet = airPlane1.shoot(delta);
-            if (bullet != null){
-                bullet.setOwner(actualPlayer);
+        int n = 0;
+        for(int i = 0; i < dynamicBodies.size() - n; i++) {
+            MoveManager.moveBody(dynamicBodies.get(i), delta);
+            if(dynamicBodies.get(i) instanceof ShipBody) {
+                BulletModel bullet = ((ShipBody) dynamicBodies.get(i)).shoot(delta);
+                if(bullet != null){
+                    DynamicBody body = Physics_Controller.getInstance().addDynamicBody(bullet);
+                    body.setVelocity(0, body.getMaxVelocity());
+                    n++;
+                }
             }
-        }
-        for(DynamicBody body : dynamicBodies){
-            MoveManager.moveBody(body, delta);
         }
 
         float frameTime = Math.min(delta, 0.25f);
@@ -153,7 +154,6 @@ public class Physics_Controller implements ContactListener{
         }
 
         verifyPositionOfBodies();
-
     }
 
     public void removeFlaggedForRemoval(){
@@ -175,9 +175,11 @@ public class Physics_Controller implements ContactListener{
             DynamicBody dynamicBody = dynamicBodies.get(i);
             Body body = dynamicBody.getBody();
             if(verifyBounds(body, true)) {
-                GameModel.getInstance().deleteEntityModel((EntityModel) body.getUserData());
-                destroyDynamicBody(dynamicBody);
-                i--;
+                if(!((EntityModel) body.getUserData()).isPlayer()) {
+                    GameModel.getInstance().deleteEntityModel((EntityModel) body.getUserData());
+                    destroyDynamicBody(dynamicBody);
+                    i--;
+                }
             }
             else {
                 ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
@@ -238,12 +240,14 @@ public class Physics_Controller implements ContactListener{
             for (EntityModel modelEntity : model.getEntityModels()) {
                 dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
             }
-            if (dynamicBodies.size() > 0) {
-                airPlane1 = (ShipBody) dynamicBodies.get(0);
-            }
+        }
+        else {
+            dynamicBodies.add(controllerFactory.makeController(world,model.getMyPlayer().getMyShip()));
+        }
+        if (dynamicBodies.size() > 0) {
+            airPlane1 = (ShipBody) dynamicBodies.get(0);
         }
         actualPlayer = model.getMyPlayer();
-        dynamicBodies.add(controllerFactory.makeController(world,model.getMyPlayer().getMyShip()));
     }
 
 
@@ -296,7 +300,7 @@ public class Physics_Controller implements ContactListener{
         MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
         if (aModel instanceof BulletModel){
             BulletModel bulletModel = (BulletModel) aModel;
-            if (bulletModel.getOwner() != null){
+            if (bulletModel.getOwner() == actualPlayer.getMyShip()){
                 actualPlayer.increaseScore();
             }
         }
@@ -333,5 +337,14 @@ public class Physics_Controller implements ContactListener{
 
     public static void clearInstance(){
         instance = null;
+    }
+
+    public Body getBodyByModel(EntityModel myShip) {
+        for(DynamicBody body : dynamicBodies){
+            if(((EntityModel) body.getUserData()).getID() == myShip.getID()){
+                return body.getBody();
+            }
+        }
+        return null;
     }
 }

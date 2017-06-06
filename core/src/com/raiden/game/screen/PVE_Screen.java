@@ -125,8 +125,8 @@ public class PVE_Screen extends ScreenAdapter {
             handleInputs(delta);
         }
         controller.update(delta);
-        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer() || !Arena.getInstance().isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
+        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()){
+            //game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (Arena.getInstance().isMultiplayer()){
             game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
         }
@@ -143,7 +143,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer() || !Arena.getInstance().isMultiplayer()){
+        if ((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);

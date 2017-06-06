@@ -66,6 +66,7 @@ public class Arena extends Game{
 		Physics_Controller.clearInstance();
 		GameModel.clearInstance();
 		LevelManager.setEndOfGame(false);
+		multiplayer = false;
 		assetManager.dispose();
 		broadcast.leaveRoom();
 

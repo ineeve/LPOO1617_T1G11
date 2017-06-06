@@ -6,6 +6,7 @@ import com.raiden.game.physics_controller.movement.MoveManager;
  * A model representing a the user space ship.
  */
 public abstract class MovingObjectModel extends EntityModel implements DamageObject{
+    private static final long serialVersionUID = 7L;
     /**
      * Is this ship accelerating in this update delta
      */

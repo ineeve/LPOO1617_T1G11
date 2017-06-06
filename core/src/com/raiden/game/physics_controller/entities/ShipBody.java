@@ -48,15 +48,15 @@ public abstract class ShipBody extends DynamicBody implements Shoot {
 
     @Override
     public BulletModel shoot(float deltaTime){
-        if (timeToNextShoot < 0) {
-            BulletModel bullet = GameModel.getInstance().createBullet((ShipModel)this.getUserData());
-            bullet.setFlaggedForRemoval(false);
-            DynamicBody body = Physics_Controller.getInstance().addDynamicBody(bullet);
-            body.setVelocity(0,body.getMaxVelocity());
-            timeToNextShoot = TIME_BETWEEN_SHOTS;
-            return bullet;
+        if(((ShipModel) this.getUserData()).canShoot()) {
+            if (timeToNextShoot < 0) {
+                BulletModel bullet = GameModel.getInstance().createBullet((ShipModel) this.getUserData());
+                bullet.setFlaggedForRemoval(false);
+                bullet.setOwner((ShipModel) this.getUserData());
+                timeToNextShoot = TIME_BETWEEN_SHOTS;
+                return bullet;
+            } else timeToNextShoot -= deltaTime;
         }
-        else timeToNextShoot -= deltaTime;
         return null;
     }
 }

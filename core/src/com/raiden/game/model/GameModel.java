@@ -1,5 +1,6 @@
 package com.raiden.game.model;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.raiden.game.Arena;
 import com.raiden.game.Player;
 import com.raiden.game.model.entities.Airplane_1_Model;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
  */
 
 public class GameModel implements Serializable {
+    private static final long serialVersionUID = 11L;
 
     private static GameModel instance;
 
@@ -45,6 +47,9 @@ public class GameModel implements Serializable {
     private ArrayList<Player> players = new ArrayList<Player>();
 
 
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
 
     /**
      *
@@ -52,8 +57,13 @@ public class GameModel implements Serializable {
      * @param y The y coordinate of the player ship in the world.
      */
     public void addPlayer(Player player,float x, float y){
-        player.setMyShip(new Airplane_1_Model(x,y));
+        Airplane_1_Model myShip = new Airplane_1_Model(x,y);
+        if((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer())
+            myShip.setCanShoot(true);
+        myShip.setPlayer(true);
+        player.setMyShip(myShip);
         entityModels.add(player.getMyShip());
+        this.players.add(player);
     }
 
 
@@ -61,7 +71,6 @@ public class GameModel implements Serializable {
         float xStart = (Physics_Controller.ARENA_WIDTH - (players.size() - 1) * 5f) / 2f;
         for(Player player : players){
             addPlayer(player, xStart, 5);
-            this.players.add(player);
             xStart += 5;
         }
     }
@@ -124,8 +133,10 @@ public class GameModel implements Serializable {
 
     public void updatePlayerCoords(ShipModel playerUpdated, String senderParticipantId) {
         for (Player player : players){
-            if(player.getID().compareTo(senderParticipantId)==0){
-                player.getMyShip().setPosition(playerUpdated.getX(),playerUpdated.getY());
+            if(player.getID().compareTo(senderParticipantId) == 0){
+                Body ship = Physics_Controller.getInstance().getBodyByModel(player.getMyShip());
+                ship.setTransform(playerUpdated.getX(),playerUpdated.getY(), ship.getAngle());
+                return;
             }
         }
     }

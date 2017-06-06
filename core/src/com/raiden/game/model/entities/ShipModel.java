@@ -5,6 +5,8 @@ package com.raiden.game.model.entities;
  */
 
 public abstract class ShipModel extends MovingObjectModel{
+    private static final long serialVersionUID = 9L;
+
     protected static final int WEIGHT_DEFAULT = 10;
 
     protected static final int ARMOR_DEFAULT = 10;
@@ -12,6 +14,8 @@ public abstract class ShipModel extends MovingObjectModel{
     protected static final int HP_DEFAULT = 50;
 
     protected int weight;
+
+    private boolean canShoot = false;
 
     private BulletModel bullet;
 
@@ -43,4 +47,14 @@ public abstract class ShipModel extends MovingObjectModel{
     public int getHP_DEFAULT() {
         return HP_DEFAULT;
     }
+
+    public void setCanShoot(boolean bool){
+        canShoot = bool;
+    }
+
+    public boolean canShoot(){
+        return  canShoot;
+    }
+
+
 }
