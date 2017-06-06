@@ -28,10 +28,10 @@ import static com.raiden.game.MainActivity.TAG;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 
+
 class GoogleServices implements Broadcast{
 
     private static GoogleServices instance;
-
 
     MainActivity mMainActivity;
 
@@ -78,21 +78,26 @@ class GoogleServices implements Broadcast{
                 model.updatePlayerCoords(player2, realTimeMessage.getSenderParticipantId());
             }
             else {
-                GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
-                if(modelReceived == null)
+                ArrayList<StructToSend> entitiesReceived = (ArrayList<StructToSend>) arrayByteToMsg(buf);
+                if(entitiesReceived == null)
                     return;
-                GameModel.getInstance().updateModel(modelReceived);
+                GameModel.getInstance().updateModel(entitiesReceived);
             }
         }
     };
+
 
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
         Log.d(TAG,"Start Sending Message from host");
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
-
-        byte[] mMsgBuf = msgToArrayByte(model);
+        ArrayList<StructToSend> arrayToSend = new ArrayList<>();
+        arrayToSend.add(new StructToSend(model.getMyPlayer().getMyShip().getType(), model.getMyPlayer().getMyShip().getX(), model.getMyPlayer().getMyShip().getY()));
+        for(int i = 2; i < model.getEntityModels().size(); i++){
+            arrayToSend.add(new StructToSend(model.getEntityModels().get(i).getType(), model.getEntityModels().get(i).getX(), model.getEntityModels().get(i).getY()));
+        }
+        byte[] mMsgBuf = msgToArrayByte(arrayToSend);
         if(mMsgBuf == null)
             return false;
         sendMessage(mMsgBuf);

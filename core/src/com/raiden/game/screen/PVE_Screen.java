@@ -19,6 +19,8 @@ import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
 
+import java.util.Iterator;
+
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -269,11 +271,14 @@ public class PVE_Screen extends ScreenAdapter {
      * Draws the entities to the screen.
      */
     private void drawEntities() {
-
-        for (EntityModel modelEntity : GameModel.getInstance().getEntityModels()) {
-            EntityView view = ViewFactory.getInstance().makeView(game, modelEntity);
-            view.update(modelEntity);
-            view.draw(game.getBatch());
+        synchronized(GameModel.getInstance().getEntityModels()) {
+            Iterator<EntityModel> iterator = GameModel.getInstance().getEntityModels().iterator();
+            while (iterator.hasNext()){
+                EntityModel model = iterator.next();
+                EntityView view = ViewFactory.getInstance().makeView(game, model);
+                view.update(model);
+                view.draw(game.getBatch());
+            }
         }
     }
 

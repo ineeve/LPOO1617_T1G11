@@ -3,6 +3,8 @@ package com.raiden.game;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
 
+import java.io.Serializable;
+
 /**
  * Created by João on 01/06/2017.
  */
@@ -15,5 +17,17 @@ public interface Broadcast {
     void submitScore(long score);
 
     void leaveRoom();
+
+    final class StructToSend implements Serializable {
+        public EntityModel.ModelType type;
+        public float x;
+        public float y;
+
+        StructToSend(EntityModel.ModelType type, float x, float y){
+            this.type = type;
+            this.x = x;
+            this.y = y;
+        }
+    }
 
 }
