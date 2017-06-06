@@ -1,6 +1,5 @@
 package com.raiden.game.model;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.raiden.game.Arena;
 import com.raiden.game.Player;
 import com.raiden.game.model.entities.Airplane_1_Model;
@@ -88,6 +87,13 @@ public class GameModel implements Serializable {
         }return null;
     }
 
+    public Player getOtherPlayer() {
+        for(Player player : players){
+            if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) != 0){
+                return player;
+            }
+        }return null;
+    }
 
     public BulletModel createBullet(ShipModel ship) {
         BulletModel bullet = (BulletModel) PoolManager.getInstance().obtain(EntityModel.ModelType.BULLET);
@@ -132,13 +138,8 @@ public class GameModel implements Serializable {
     }
 
     public void updatePlayerCoords(ShipModel playerUpdated, String senderParticipantId) {
-        for (Player player : players){
-            if(player.getID().compareTo(senderParticipantId) == 0){
-                Body ship = Physics_Controller.getInstance().getBodyByModel(player.getMyShip());
-                ship.setTransform(playerUpdated.getX(),playerUpdated.getY(), ship.getAngle());
-                return;
-            }
-        }
+        Physics_Controller.getInstance().getAirPlane2().setTransform(
+                playerUpdated.getX(), playerUpdated.getY(), Physics_Controller.getInstance().getAirPlane2().getBody().getAngle());
     }
 
 
@@ -164,4 +165,5 @@ public class GameModel implements Serializable {
             }
         }
     }
+
 }

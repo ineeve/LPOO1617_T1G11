@@ -175,10 +175,8 @@ class GoogleServices implements Broadcast{
 
     private void createPlayers(){
         ArrayList<Player> players = new ArrayList<>();
-        players.add((new Player(mMyId)));
         for (Participant p : mParticipants) {
-            if(mMyId != p.getParticipantId())
-                players.add(new Player(p.getParticipantId()));
+            players.add(new Player(p.getParticipantId()));
         }
         GameModel.getInstance().addPlayers(players);
     }
