@@ -4,6 +4,7 @@ package com.raiden.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -75,6 +76,8 @@ public class PVE_Screen extends ScreenAdapter {
 
     private LevelManager levelManager;
 
+    private Music myMusic;
+
     /**
      * Creates this screen.
      *
@@ -89,6 +92,9 @@ public class PVE_Screen extends ScreenAdapter {
         levelManager = new LevelManager(this);
         instance = this;
         initializeBitmapFont();
+        myMusic = game.getAssetManager().get("Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
+        myMusic.setLooping(true);
+        myMusic.play();
     }
 
     private void initializeBitmapFont() {
