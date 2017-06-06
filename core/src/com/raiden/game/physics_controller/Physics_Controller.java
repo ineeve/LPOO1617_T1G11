@@ -235,6 +235,10 @@ public class Physics_Controller implements ContactListener{
         return world;
     }
 
+    /**
+     * Uses the model to create the bodies for each Entity Model
+     * @param model the Game Model to use
+     */
     public void createBodiesFromModel(GameModel model){
         if ( Arena.getInstance().isHost() || !Arena.getInstance().isMultiplayer()) {
             for (EntityModel modelEntity : model.getEntityModels()) {

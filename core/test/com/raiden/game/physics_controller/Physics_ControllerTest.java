@@ -61,13 +61,14 @@ public class Physics_ControllerTest extends GameTest {
         assert (airplaneModel.getX() == 0 && airplaneModel.getY() == -1);
     }
 
-    @Test (timeout = 2000)
+    @Test (timeout = 100)
     public void testCometKillsPlayer(){
-        Player p = new Player("teste");
+        Player p = new Player("I_AM_THE_REAL_MVP");
         GameModel instance = GameModel.getInstance();
         instance.addPlayer(p,ARENA_WIDTH/2f,5);
         CometModel cometModel = new CometModel(ARENA_WIDTH/2,150);
         instance.addEnemy(cometModel);
+        controller.createBodiesFromModel(instance);
         while(true){
             controller.update(Gdx.graphics.getDeltaTime());
             if (LevelManager.isEndOfGame()){
