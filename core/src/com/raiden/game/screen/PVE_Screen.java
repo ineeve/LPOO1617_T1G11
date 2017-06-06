@@ -4,6 +4,7 @@ package com.raiden.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +18,8 @@ import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.entities.EntityView;
 import com.raiden.game.screen.entities.ViewFactory;
+
+import java.util.Iterator;
 
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
@@ -75,6 +78,8 @@ public class PVE_Screen extends ScreenAdapter {
 
     private LevelManager levelManager;
 
+    private Music myMusic;
+
     /**
      * Creates this screen.
      *
@@ -89,6 +94,9 @@ public class PVE_Screen extends ScreenAdapter {
         levelManager = new LevelManager(this);
         instance = this;
         initializeBitmapFont();
+        myMusic = game.getAssetManager().get("Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
+        myMusic.setLooping(true);
+        myMusic.play();
     }
 
     private void initializeBitmapFont() {
@@ -126,7 +134,7 @@ public class PVE_Screen extends ScreenAdapter {
         }
         controller.update(delta);
         if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()){
-            //game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
+            game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (Arena.getInstance().isMultiplayer()){
             game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
         }
@@ -263,11 +271,14 @@ public class PVE_Screen extends ScreenAdapter {
      * Draws the entities to the screen.
      */
     private void drawEntities() {
-
-        for (EntityModel modelEntity : GameModel.getInstance().getEntityModels()) {
-            EntityView view = ViewFactory.getInstance().makeView(game, modelEntity);
-            view.update(modelEntity);
-            view.draw(game.getBatch());
+        synchronized(GameModel.getInstance().getEntityModels()) {
+            Iterator<EntityModel> iterator = GameModel.getInstance().getEntityModels().iterator();
+            while (iterator.hasNext()){
+                EntityModel model = iterator.next();
+                EntityView view = ViewFactory.getInstance().makeView(game, model);
+                view.update(model);
+                view.draw(game.getBatch());
+            }
         }
     }
 

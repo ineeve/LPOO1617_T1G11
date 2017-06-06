@@ -1,6 +1,7 @@
 package com.raiden.game.model;
 
 import com.raiden.game.Arena;
+import com.raiden.game.Broadcast;
 import com.raiden.game.Player;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.BulletModel;
@@ -12,6 +13,8 @@ import com.raiden.game.screen.EnemiesFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -41,7 +44,8 @@ public class GameModel implements Serializable {
     /**
      * The space ship controlled by the user in this game.
      */
-    protected ArrayList<EntityModel> entityModels = new ArrayList<EntityModel>(0);
+    List<EntityModel> entityModels =
+            Collections.synchronizedList(new ArrayList<EntityModel>());
 
     private ArrayList<Player> players = new ArrayList<Player>();
 
@@ -104,7 +108,7 @@ public class GameModel implements Serializable {
         return bullet;
     }
 
-    public ArrayList<EntityModel> getEntityModels(){
+    public List<EntityModel> getEntityModels(){
         return entityModels;
     }
 
@@ -147,22 +151,17 @@ public class GameModel implements Serializable {
         instance = null;
     }
 
-    public void updateModel(GameModel modelReceived) {
-        for(int i = 0; i < modelReceived.getEntityModels().size(); i++){
-            if(i < entityModels.size()){
-                if(entityModels.get(i).getID() == modelReceived.getEntityModels().get(i).getID()){
-                    entityModels.get(i).setPosition(modelReceived.getEntityModels().get(i).getX(), modelReceived.getEntityModels().get(i).getY());
-                }
-                else if (entityModels.get(i).getID() < modelReceived.getEntityModels().get(i).getID()){
-                    entityModels.remove(i);
-                }
-                else {
-                    entityModels.add(i, modelReceived.getEntityModels().get(i));
-                }
+    public void updateModel(ArrayList<Broadcast.StructToSend> modelsReceived) {
+        for (int i = 0; i < entityModels.size(); i++) {
+            if(getMyPlayer().getMyShip() != entityModels.get(i)) {
+                entityModels.remove(i);
+                i--;
             }
-            else {
-                entityModels.add(modelReceived.getEntityModels().get(i));
-            }
+        }
+        for (int i = 0; i < modelsReceived.size(); i++) {
+            EntityModel model = PoolManager.getInstance().obtain(modelsReceived.get(i).type, modelsReceived.get(i).x, modelsReceived.get(i).y);
+            model.setRotation(modelsReceived.get(i).angle);
+            entityModels.add(model);
         }
     }
 

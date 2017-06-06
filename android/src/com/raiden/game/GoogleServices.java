@@ -28,10 +28,10 @@ import static com.raiden.game.MainActivity.TAG;
 import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 
+
 class GoogleServices implements Broadcast{
 
     private static GoogleServices instance;
-
 
     MainActivity mMainActivity;
 
@@ -78,21 +78,34 @@ class GoogleServices implements Broadcast{
                 model.updatePlayerCoords(player2, realTimeMessage.getSenderParticipantId());
             }
             else {
-                /*GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
-                if(modelReceived == null)
+                ArrayList<StructToSend> entitiesReceived = (ArrayList<StructToSend>) arrayByteToMsg(buf);
+                if(entitiesReceived == null)
                     return;
-                GameModel.getInstance().updateModel(modelReceived);*/
+                GameModel.getInstance().updateModel(entitiesReceived);
             }
         }
     };
 
+
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
-        //Log.d(TAG,"Start Sending Message from host");
+        Log.d(TAG,"Start Sending Message from host");
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
-
-        byte[] mMsgBuf = msgToArrayByte(model);
+        ArrayList<StructToSend> arrayToSend = new ArrayList<>();
+        arrayToSend.add(new StructToSend(
+                model.getMyPlayer().getMyShip().getType(),
+                model.getMyPlayer().getMyShip().getX(),
+                model.getMyPlayer().getMyShip().getY(),
+                model.getMyPlayer().getMyShip().getRotation()));
+        for(int i = 2; i < model.getEntityModels().size(); i++){
+            arrayToSend.add(new StructToSend(
+                    model.getEntityModels().get(i).getType(),
+                    model.getEntityModels().get(i).getX(),
+                    model.getEntityModels().get(i).getY(),
+                    model.getEntityModels().get(i).getRotation()));
+        }
+        byte[] mMsgBuf = msgToArrayByte(arrayToSend);
         if(mMsgBuf == null)
             return false;
         sendMessage(mMsgBuf);
@@ -165,7 +178,7 @@ class GoogleServices implements Broadcast{
                 Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
                         mRoomId, p.getParticipantId());
             } else {
-                //Log.d(TAG, "Sending Message from: " + mMyId);
+                Log.d(TAG, "Sending Message from: " + mMyId);
                 // it's an interim score notification, so we can use unreliable
                 Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
                         p.getParticipantId());
@@ -195,8 +208,13 @@ class GoogleServices implements Broadcast{
             Arena.getInstance().setmPlayerID(mMyId);
             Arena.getInstance().setMultiplayer(true);
             setHost();
-            //if(Arena.isHost())
+            if(Arena.getInstance().isHost())
                 createPlayers();
+            else {
+                GameModel.getInstance().addPlayers(new ArrayList<Player>() {{
+                    add(new Player(mMyId));
+                }});
+            }
 
             // save room ID if its not initialized in onRoomCreated() so we can leave cleanly before the game starts.
             //if(mRoomId==null)

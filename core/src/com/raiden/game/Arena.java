@@ -2,6 +2,7 @@ package com.raiden.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.raiden.game.model.GameModel;
@@ -90,6 +91,7 @@ public class Arena extends Game{
 		loadOneAsset( "Bullet.png");
 		loadOneAsset( "background.png");
 		loadOneAsset( "commet.png");
+        this.assetManager.load( "Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
 
 		this.assetManager.finishLoading();
 	}
