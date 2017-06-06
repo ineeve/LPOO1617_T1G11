@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.raiden.game.Player;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.Airplane_1_Model;
+import com.raiden.game.model.entities.Airplane_2_Model;
+import com.raiden.game.model.entities.Airplane_3_Model;
 import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.physics_controller.entities.AirPlane_1;
 import com.raiden.game.screen.LevelManager;
@@ -77,6 +79,83 @@ public class Physics_ControllerTest extends GameTest {
         }
 
     }
+
+    @Test (timeout = 100)
+    public void testCorrectHighscoreIncrement(){
+        controller.clearInstance();
+        controller = controller.getInstance();
+        Player p = new Player("I_AM_THE_REAL_MVP");
+        GameModel gameModel = GameModel.getInstance();
+        gameModel.addPlayer(p,ARENA_WIDTH/2f,5);
+        Airplane_2_Model enemy = new Airplane_2_Model(ARENA_WIDTH/2,150);
+        gameModel.addEnemy(enemy);
+        controller.createBodiesFromModel(gameModel);
+        while(true){
+            controller.update(Gdx.graphics.getDeltaTime());
+            if (p.getScore() > 0){
+                return;
+            }
+        }
+    }
+
+
+    @Test (timeout = 100)
+    public void testBulletMakesDamageToAirplane1(){
+        controller.clearInstance();
+        controller = controller.getInstance();
+        Player p = new Player("I_AM_THE_REAL_MVP");
+        GameModel gameModel = GameModel.getInstance();
+        gameModel.addPlayer(p,ARENA_WIDTH/2f,5);
+        Airplane_1_Model enemy = new Airplane_1_Model(ARENA_WIDTH/2,150);
+        gameModel.addEnemy(enemy);
+        float initialHP = enemy.getHp();
+        controller.createBodiesFromModel(gameModel);
+        while(true){
+            controller.update(Gdx.graphics.getDeltaTime());
+            if (enemy.getHp() < initialHP){
+                return;
+            }
+        }
+    }
+
+    @Test (timeout = 100)
+    public void testBulletMakesDamageToAirplane2(){
+        controller.clearInstance();
+        controller = controller.getInstance();
+        Player p = new Player("I_AM_THE_REAL_MVP");
+        GameModel gameModel = GameModel.getInstance();
+        gameModel.addPlayer(p,ARENA_WIDTH/2f,5);
+        Airplane_2_Model enemy = new Airplane_2_Model(ARENA_WIDTH/2,150);
+        gameModel.addEnemy(enemy);
+        float initialHP = enemy.getHp();
+        controller.createBodiesFromModel(gameModel);
+        while(true){
+            controller.update(Gdx.graphics.getDeltaTime());
+            if (enemy.getHp() < initialHP){
+                return;
+            }
+        }
+    }
+
+    @Test (timeout = 100)
+    public void testBulletMakesDamageToAirplane3(){
+        controller.clearInstance();
+        controller = controller.getInstance();
+        Player p = new Player("I_AM_THE_REAL_MVP");
+        GameModel gameModel = GameModel.getInstance();
+        gameModel.addPlayer(p,ARENA_WIDTH/2f,5);
+        Airplane_3_Model enemy = new Airplane_3_Model(ARENA_WIDTH/2,150);
+        gameModel.addEnemy(enemy);
+        float initialHP = enemy.getHp();
+        controller.createBodiesFromModel(gameModel);
+        while(true){
+            controller.update(Gdx.graphics.getDeltaTime());
+            if (enemy.getHp() < initialHP){
+                return;
+            }
+        }
+    }
+
 
 
 

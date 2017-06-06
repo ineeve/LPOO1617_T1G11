@@ -35,7 +35,9 @@
         <activity
             android:name="com.raiden.game.PlayLauncher"
             android:theme="@style/GdxTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:keepScreenOn="true">
+
         </activity>
 
         <meta-data android:name="com.google.android.gms.games.APP_ID"
