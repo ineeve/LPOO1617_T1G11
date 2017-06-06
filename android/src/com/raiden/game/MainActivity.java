@@ -203,7 +203,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_achievements) {
-
+            startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                    REQUEST_ACHIEVEMENTS);
         } else if (id == R.id.nav_leaderboard) {
             startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
                     getResources().getString(R.string.LEADERBOARD_ID)), RC_LEADERBOARD);
@@ -249,6 +250,7 @@ public class MainActivity extends AppCompatActivity
     final static int RC_INVITATION_INBOX = 10001;
     final static int RC_WAITING_ROOM = 10002;
     final static int RC_LEADERBOARD = 10003;
+    final static int REQUEST_ACHIEVEMENTS = 10004;
 
     // Request code used to invoke sign in user interactions.
     private static final int RC_SIGN_IN = 9001;
@@ -333,6 +335,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case RC_LEADERBOARD:
                 Log.d(TAG, "Showing Leaderboard");
+                break;
+            case REQUEST_ACHIEVEMENTS:
+                Log.d(TAG, "Showing Achievement");
                 break;
         }
         super.onActivityResult(requestCode, responseCode, intent);

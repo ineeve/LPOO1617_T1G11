@@ -148,21 +148,13 @@ public class GameModel implements Serializable {
     }
 
     public void updateModel(GameModel modelReceived) {
-        for(int i = 0; i < modelReceived.getEntityModels().size(); i++){
-            if(i < entityModels.size()){
-                if(entityModels.get(i).getID() == modelReceived.getEntityModels().get(i).getID()){
-                    entityModels.get(i).setPosition(modelReceived.getEntityModels().get(i).getX(), modelReceived.getEntityModels().get(i).getY());
-                }
-                else if (entityModels.get(i).getID() < modelReceived.getEntityModels().get(i).getID()){
-                    entityModels.remove(i);
-                }
-                else {
-                    entityModels.add(i, modelReceived.getEntityModels().get(i));
-                }
-            }
-            else {
-                entityModels.add(modelReceived.getEntityModels().get(i));
-            }
+        getOtherPlayer().getMyShip().setPosition(modelReceived.getOtherPlayer().getMyShip().getX(), modelReceived.getMyPlayer().getMyShip().getY());
+        for(int i = 2; i < entityModels.size(); i++){
+            entityModels.remove(i);
+            i--;
+        }
+        for(int i = 2; i < modelReceived.getEntityModels().size(); i++){
+            entityModels.add(modelReceived.getEntityModels().get(i));
         }
     }
 

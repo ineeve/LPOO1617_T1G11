@@ -78,17 +78,17 @@ class GoogleServices implements Broadcast{
                 model.updatePlayerCoords(player2, realTimeMessage.getSenderParticipantId());
             }
             else {
-                /*GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
+                GameModel modelReceived = (GameModel) arrayByteToMsg(buf);
                 if(modelReceived == null)
                     return;
-                GameModel.getInstance().updateModel(modelReceived);*/
+                GameModel.getInstance().updateModel(modelReceived);
             }
         }
     };
 
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
-        //Log.d(TAG,"Start Sending Message from host");
+        Log.d(TAG,"Start Sending Message from host");
         if (!Arena.getInstance().isMultiplayer())
             return false; // playing single-player mode
 
@@ -165,7 +165,7 @@ class GoogleServices implements Broadcast{
                 Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
                         mRoomId, p.getParticipantId());
             } else {
-                //Log.d(TAG, "Sending Message from: " + mMyId);
+                Log.d(TAG, "Sending Message from: " + mMyId);
                 // it's an interim score notification, so we can use unreliable
                 Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
                         p.getParticipantId());

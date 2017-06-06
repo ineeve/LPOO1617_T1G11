@@ -126,7 +126,7 @@ public class PVE_Screen extends ScreenAdapter {
         }
         controller.update(delta);
         if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()){
-            //game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
+            game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (Arena.getInstance().isMultiplayer()){
             game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
         }

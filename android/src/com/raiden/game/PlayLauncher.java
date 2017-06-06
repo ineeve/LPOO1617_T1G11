@@ -4,8 +4,11 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.android.gms.games.Games;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import static com.raiden.game.MainActivity.mGoogleApiClient;
 
 public class PlayLauncher extends AndroidApplication {
 
@@ -22,6 +25,7 @@ public class PlayLauncher extends AndroidApplication {
 	}
 
 	private void startGame(){
+		Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_first_run));
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useCompass = true;
 		config.useImmersiveMode = true;
