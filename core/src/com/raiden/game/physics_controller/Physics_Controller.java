@@ -57,12 +57,7 @@ public class Physics_Controller implements ContactListener{
      */
     private ShipBody airPlane1;
 
-
-    /**
-     * The player
-     */
-
-    private Player actualPlayer;
+    private ShipBody airPlane2;
 
     /**
      * Accumulator used to calculate the simulation step.
@@ -170,19 +165,22 @@ public class Physics_Controller implements ContactListener{
     }
 
     private void verifyPositionOfBodies(){
-        verifyBounds(airPlane1.getBody(), false);
         for (int i = 0; i < dynamicBodies.size(); i++) {
             DynamicBody dynamicBody = dynamicBodies.get(i);
             Body body = dynamicBody.getBody();
-            if(verifyBounds(body, true)) {
-                if(!((EntityModel) body.getUserData()).isPlayer()) {
+            if (dynamicBody == airPlane1 || dynamicBody == airPlane2){
+                verifyBounds(body, false);
+                ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
+            }
+            else {
+                if(verifyBounds(body, true)) {
                     GameModel.getInstance().deleteEntityModel((EntityModel) body.getUserData());
                     destroyDynamicBody(dynamicBody);
                     i--;
                 }
-            }
-            else {
-                ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
+                else {
+                    ((EntityModel) body.getUserData()).setPosition(body.getPosition().x, body.getPosition().y);
+                }
             }
         }
     }
@@ -240,18 +238,18 @@ public class Physics_Controller implements ContactListener{
      * @param model the Game Model to use
      */
     public void createBodiesFromModel(GameModel model){
-        if ( Arena.getInstance().isHost() || !Arena.getInstance().isMultiplayer()) {
-            for (EntityModel modelEntity : model.getEntityModels()) {
-                dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
+        for (Player player : model.getPlayers()){
+            DynamicBody newDynamicBody = controllerFactory.makeController(world,player.getMyShip());
+            dynamicBodies.add(newDynamicBody);
+            if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) == 0){
+                airPlane1 = (ShipBody) newDynamicBody;
+                airPlane1.getBody().setGravityScale(0);
+            }
+            else {
+                airPlane2 = (ShipBody) newDynamicBody;
+                airPlane2.getBody().setGravityScale(0);
             }
         }
-        else {
-            dynamicBodies.add(controllerFactory.makeController(world,model.getMyPlayer().getMyShip()));
-        }
-        if (dynamicBodies.size() > 0) {
-            airPlane1 = (ShipBody) dynamicBodies.get(0);
-        }
-        actualPlayer = model.getMyPlayer();
     }
 
 
@@ -304,21 +302,14 @@ public class Physics_Controller implements ContactListener{
         MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
         if (aModel instanceof BulletModel){
             BulletModel bulletModel = (BulletModel) aModel;
-            if (bulletModel.getOwner() == actualPlayer.getMyShip()){
-                actualPlayer.increaseScore();
+            if (bulletModel.getOwner() == GameModel.getInstance().getMyPlayer().getMyShip()){
+                GameModel.getInstance().getMyPlayer().increaseScore();
             }
         }
         else if (bodyA == airPlane1.getBody() && bModel instanceof ShipModel){
-            actualPlayer.increaseScore();
+            GameModel.getInstance().getMyPlayer().increaseScore();
         }
     }
-
-
-
-    public Player getActualPlayer() {
-        return actualPlayer;
-    }
-
 
     @Override
     public void endContact(Contact contact) {
@@ -343,12 +334,7 @@ public class Physics_Controller implements ContactListener{
         instance = null;
     }
 
-    public Body getBodyByModel(EntityModel myShip) {
-        for(DynamicBody body : dynamicBodies){
-            if(((EntityModel) body.getUserData()).getID() == myShip.getID()){
-                return body.getBody();
-            }
-        }
-        return null;
+    public ShipBody getAirPlane2() {
+        return airPlane2;
     }
 }

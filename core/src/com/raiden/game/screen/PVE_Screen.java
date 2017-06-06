@@ -165,7 +165,7 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     private void drawScore() {
-        scoreText = "score: " + controller.getActualPlayer().getScore();
+        scoreText = "score: " + GameModel.getInstance().getMyPlayer().getScore();
         scoreBitmap.draw(game.getBatch(), scoreText, camera.position.x - 450, camera.position.y + 800);
     }
 
