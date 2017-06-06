@@ -7,9 +7,8 @@ import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.Airplane_1_Model;
 import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.physics_controller.entities.AirPlane_1;
-import com.raiden.game.physics_controller.entities.CometBody;
 import com.raiden.game.screen.LevelManager;
-import com.raiden.game.screen.PVE_Screen;
+
 
 import org.junit.Test;
 
