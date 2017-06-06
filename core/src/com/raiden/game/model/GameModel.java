@@ -52,7 +52,7 @@ public class GameModel implements Serializable {
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
      */
-    private void addPlayer(Player player,float x, float y){
+    public void addPlayer(Player player,float x, float y){
         player.setMyShip(new Airplane_1_Model(x,y));
         entityModels.add(player.getMyShip());
     }

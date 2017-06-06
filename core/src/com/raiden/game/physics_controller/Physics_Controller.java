@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.raiden.game.Arena;
 import com.raiden.game.Player;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.BulletModel;
@@ -30,6 +31,9 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
  */
 
 public class Physics_Controller implements ContactListener{
+
+    private final int GRAVITY = -10;
+
     /**
      * The arena width in meters.
      */
@@ -80,15 +84,9 @@ public class Physics_Controller implements ContactListener{
 
     private Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
-        world = new World(new Vector2(0,-10),true);
+        world = new World(new Vector2(0,GRAVITY),true);
         world.setContactListener(this);
-        for(EntityModel modelEntity : model.getEntityModels()){
-            dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
-        }
-        if (dynamicBodies.size() > 0){
-            airPlane1 = (ShipBody) dynamicBodies.get(0);
-        }
-        actualPlayer = model.getMyPlayer();
+        createBodiesFromModel(model);
     }
 
     public static Physics_Controller getInstance() {
@@ -136,7 +134,7 @@ public class Physics_Controller implements ContactListener{
     public void update(float delta) {
         removeFlaggedForRemoval();
 
-        if(!LevelManager.isEndOfGame()){
+        if(!LevelManager.isEndOfGame() && airPlane1 != null){
             BulletModel bullet = airPlane1.shoot(delta);
             if (bullet != null){
                 bullet.setOwner(actualPlayer);
@@ -235,6 +233,19 @@ public class Physics_Controller implements ContactListener{
         return world;
     }
 
+    public void createBodiesFromModel(GameModel model){
+        if ( Arena.getInstance().isHost() || !Arena.getInstance().isMultiplayer()) {
+            for (EntityModel modelEntity : model.getEntityModels()) {
+                dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
+            }
+            if (dynamicBodies.size() > 0) {
+                airPlane1 = (ShipBody) dynamicBodies.get(0);
+            }
+        }
+        actualPlayer = model.getMyPlayer();
+        dynamicBodies.add(controllerFactory.makeController(world,model.getMyPlayer().getMyShip()));
+    }
+
 
     /*
  * A contact between two objects was detected
@@ -293,6 +304,8 @@ public class Physics_Controller implements ContactListener{
             actualPlayer.increaseScore();
         }
     }
+
+
 
     public Player getActualPlayer() {
         return actualPlayer;

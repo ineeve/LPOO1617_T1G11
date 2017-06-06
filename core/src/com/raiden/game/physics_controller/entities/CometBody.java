@@ -16,7 +16,7 @@ public class CometBody extends DynamicBody {
      * @param world The world this body lives on.
      * @param model The model representing the body.
      */
-    CometBody(World world, EntityModel model) {
+    public CometBody(World world, EntityModel model) {
         super(world, model);
         width = model.getWidth();
         height = model.getHeight();
