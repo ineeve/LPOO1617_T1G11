@@ -192,6 +192,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.view_invitation_button:
                 intent = Games.Invitations.getInvitationInboxIntent(mGoogleApiClient);
                 startActivityForResult(intent, RC_INVITATION_INBOX);
+                break;
+            case R.id.back_button:
+                onKeyDown(KeyEvent.KEYCODE_BACK, null);
+                break;
         }
     }
 
@@ -450,7 +454,7 @@ public class MainActivity extends AppCompatActivity
     // Handle back key to make sure we cleanly leave a game if we are in the middle of one
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent e) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) { // NEED to be verifyed if is on game screen to (&& mCurScreen == R.id.screen_game)
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(actualMenu == findViewById(R.id.main_menu_buttons))
                 return super.onKeyDown(keyCode, e);
             actualMenu.setVisibility(View.GONE);

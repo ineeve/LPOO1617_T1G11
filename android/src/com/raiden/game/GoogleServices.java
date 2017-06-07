@@ -66,26 +66,39 @@ class GoogleServices implements Broadcast{
 
         @Override
         public void onRealTimeMessageReceived(RealTimeMessage realTimeMessage) {
-            GameModel model = GameModel.getInstance();
             byte[] buf = realTimeMessage.getMessageData();
             String sender = realTimeMessage.getSenderParticipantId();
             Log.d(TAG, "Message received from: " + sender);
             if(Arena.getInstance().isHost()){
-                ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
-                if(player2 == null)
-                    return;
-                Log.d(TAG, "Received player2 with pos x: " + player2.getX() + ", Y: " + player2.getY());
-                model.updatePlayerCoords(player2, realTimeMessage.getSenderParticipantId());
+                receiveMsg_from_Client(buf);
             }
             else {
-                ArrayList<StructToSend> entitiesReceived = (ArrayList<StructToSend>) arrayByteToMsg(buf);
-                if(entitiesReceived == null)
-                    return;
-                GameModel.getInstance().updateModel(entitiesReceived);
+                receiveMsg_from_Host(buf);
             }
         }
     };
 
+
+    private void receiveMsg_from_Client(byte[] buf){
+        ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
+        if(player2 == null)
+            return;
+        Log.d(TAG, "Received player2 with pos x: " + player2.getX() + ", Y: " + player2.getY());
+        GameModel.getInstance().updatePlayerCoords(player2);
+    }
+
+    private void receiveMsg_from_Host(byte[] buf){
+        byte[] scoreBuf = new byte[4];
+        System.arraycopy(buf, 0, scoreBuf, 0, scoreBuf.length);
+        int playerScore = (int) arrayByteToMsg(scoreBuf);
+        boolean playerIsDead = buf[4] != 0;
+        byte[] entitiesBuff = new byte[buf.length - 5];
+        System.arraycopy(buf, 5, entitiesBuff, 0, entitiesBuff.length);
+        ArrayList<StructToSend> entitiesReceived = (ArrayList<StructToSend>) arrayByteToMsg(buf);
+        if(entitiesReceived == null)
+            return;
+        GameModel.getInstance().updateModel(entitiesReceived, playerScore, playerIsDead);
+    }
 
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
@@ -105,8 +118,14 @@ class GoogleServices implements Broadcast{
                     model.getEntityModels().get(i).getY(),
                     model.getEntityModels().get(i).getRotation()));
         }
-        byte[] mMsgBuf = msgToArrayByte(arrayToSend);
-        if(mMsgBuf == null)
+        byte[] userData = new byte[5];
+        userData[0] = (byte) GameModel.getInstance().getOtherPlayer().getScore();
+        userData[4] = (byte) (GameModel.getInstance().getOtherPlayer().getMyShip() == null ? 1 : 0);
+        byte[] entitiesData = msgToArrayByte(arrayToSend);
+        byte[] mMsgBuf = new byte[userData.length + entitiesData.length];
+        System.arraycopy(userData, 0, mMsgBuf, 0, userData.length);
+        System.arraycopy(entitiesData, 0, mMsgBuf, userData.length, entitiesData.length);
+        if(entitiesData == null)
             return false;
         sendMessage(mMsgBuf);
         return true;

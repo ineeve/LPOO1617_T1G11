@@ -30,9 +30,6 @@ import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
  */
 public class PVE_Screen extends ScreenAdapter {
 
-    private String scoreText;
-    BitmapFont scoreBitmap;
-
     /**
      * Used to debug the position of the physics fixtures
      */
@@ -60,7 +57,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private final OrthographicCamera camera;
 
-    public static final int CAMERA_Y_SPEED = 50;
+    private static final int CAMERA_Y_SPEED = 50;
     private static final int CAMERA_X_SPEED = 200;
 
     /**
@@ -74,11 +71,26 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private Matrix4 debugCamera;
 
-    private Float acceY_initial;
-
     private LevelManager levelManager;
 
-    private Music myMusic;
+    private String scoreText;
+
+    private BitmapFont scoreBitmap;
+
+    private boolean accelerometerAvail;
+
+
+    //-----------------------------------------METHODS------------------------------------------------//
+    public static PVE_Screen getInstance(){
+        if(instance == null){
+            instance = new PVE_Screen(Arena.getInstance(),Physics_Controller.getInstance());
+        }
+        return instance;
+    }
+
+    public static void clearInstance(){
+        instance = null;
+    }
 
     /**
      * Creates this screen.
@@ -91,10 +103,15 @@ public class PVE_Screen extends ScreenAdapter {
         this.controller = controller;
         camera = createCamera();
         controller.setCamera(camera);
-        levelManager = new LevelManager(this);
+        levelManager = new LevelManager();
         instance = this;
         initializeBitmapFont();
-        myMusic = game.getAssetManager().get("Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
+        accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+        loadMusicAndStartPlaying();
+    }
+
+    private void loadMusicAndStartPlaying(){
+        Music myMusic = game.getAssetManager().get("Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
         myMusic.setLooping(true);
         myMusic.play();
     }
@@ -128,6 +145,15 @@ public class PVE_Screen extends ScreenAdapter {
         return camera;
     }
 
+    /**
+     * Function to get Camera of the scene.
+     *
+     * @return Camera of scene.
+     */
+    OrthographicCamera getCamera() {
+        return camera;
+    }
+
     private void updateScene(float delta){
         if(!LevelManager.isEndOfGame()){
             handleInputs(delta);
@@ -145,12 +171,14 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     /**
-     * Renders this screen.
+     * Renders this screen, and update all game state.
      *
      * @param delta time since last renders in seconds.
      */
     @Override
     public void render(float delta) {
+        // Just the host in case of being a multi-player
+        // game or on single-player game update the level.
         if ((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
@@ -207,22 +235,36 @@ public class PVE_Screen extends ScreenAdapter {
         }
     }
 
-
-    //TODO: add comments inside the code
-    private void verifyCameraBounds(float delta) {
+    /**
+     * Verify and correct if necessary the position of camera in relation of X values.
+     *
+     * @param delta time since last renders in seconds.
+     */
+    private void verifyXCameraBounds(float delta){
         float camera_Upper_Bound_X = ARENA_WIDTH / PIXEL_TO_METER - camera.viewportWidth / 2f;
         float camera_Lower_Bound_X = camera.viewportWidth / 2f;
+
         if(camera_Upper_Bound_X < camera.position.x){
             camera.position.set(camera_Upper_Bound_X, camera.position.y + CAMERA_Y_SPEED * delta, 0);
         }
         else if(camera_Lower_Bound_X > camera.position.x){
             camera.position.set(camera_Lower_Bound_X, camera.position.y + CAMERA_Y_SPEED * delta, 0);
         }
+    }
 
-        float camera_Upper_Bound_Y = ARENA_HEIGHT / PIXEL_TO_METER- camera.viewportHeight / 2f;
+    /**
+     * Verify and correct if necessary the position of camera in relation of Y values.
+     *
+     * @param delta time since last renders in seconds.
+     */
+    private  void verifyYCameraBounds(float delta){
+        float camera_Upper_Bound_Y = ARENA_HEIGHT / PIXEL_TO_METER - camera.viewportHeight / 2f;
         float camera_Lower_Bound_Y = camera.viewportHeight / 2f;
+
         if(camera_Upper_Bound_Y < camera.position.y){
             camera.position.set(camera.position.x, camera_Upper_Bound_Y, 0);
+            //This is to implement on system of levels, when arrive the final of map they
+            //fight to a boss to pass level.
             levelManager.setFinnishOfLevel(true);
         }
         else if(camera_Lower_Bound_Y > camera.position.y){
@@ -230,19 +272,50 @@ public class PVE_Screen extends ScreenAdapter {
         }
     }
 
-    private float getVelocity_X(float acceY){
-        float acceY_correction = 2;
-        if(acceY_initial == null){
-            acceY_initial = acceY;
-            acceY = 0f;
-        } else
-            acceY = acceY - acceY_initial;
 
-        if(-acceY>=0) {
-            return  -acceY * acceY_correction + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
+    /**
+     * Verify and correct if necessary the position of camera
+     *
+     * @param delta time since last renders in seconds.
+     */
+    private void verifyCameraBounds(float delta) {
+        verifyXCameraBounds(delta);
+
+        verifyYCameraBounds(delta);
+    }
+
+    /**
+     * Attribute to calibrate the y axel of accelerometer.
+     */
+    private Float acceY_initial;
+
+    /**
+     * Variable to change the sensibility of y axel of accelerometer.
+     */
+    private float sensibility_Y = 2;
+
+    /**
+     * Functions to get the right value of velocity on Y axel.
+     * First correct the value of accelerometer by our calibration
+     * Last correct the value of velocity by multiplying accelerometer value with sensibility
+     *
+     * @param accelerometer_Y direct value of accelerometer getted
+     * @return the correct value of velocity
+     */
+    private float getVelocity_Y(float accelerometer_Y){
+
+        if(acceY_initial == null){
+            acceY_initial = accelerometer_Y;
+            accelerometer_Y = 0f;
+        } else
+            //Correct value of accelerometer
+            accelerometer_Y = accelerometer_Y - acceY_initial;
+
+        if(-accelerometer_Y>=0) {
+            return  -accelerometer_Y * sensibility_Y + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
         }
         else {
-            return  -(acceY * acceY_correction + CAMERA_Y_SPEED * PIXEL_TO_METER);
+            return  -(accelerometer_Y * sensibility_Y + CAMERA_Y_SPEED * PIXEL_TO_METER);
         }
     }
 
@@ -253,7 +326,6 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private void handleInputs(float delta) {
         //Gdx.app.log("Accelerometer", "Handling Inputs");
-        boolean accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         if (accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
             if (Math.abs(acceX) <= 0.15){
@@ -261,7 +333,7 @@ public class PVE_Screen extends ScreenAdapter {
                 //TODO: change something where to set acceleration to view
             }
             Float acceY = Gdx.input.getAccelerometerY();
-            float velY = getVelocity_X(acceY);
+            float velY = getVelocity_Y(acceY);
             float velX_Correction = -5.5f;
             controller.getAirPlane1().setVelocity(acceX * velX_Correction , velY);
         }
@@ -283,32 +355,12 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     /**
-     * Draws the background
+     * Draws the background of scene
      */
     private void drawBackground() {
         Texture background = game.getAssetManager().get("background.png", Texture.class);
         background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
-    }
-
-
-    public Physics_Controller getController() {
-        return controller;
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public static PVE_Screen getInstance(){
-        if(instance == null){
-            instance = new PVE_Screen(Arena.getInstance(),Physics_Controller.getInstance());
-        }
-        return instance;
-    }
-
-    public static void clearInstance(){
-        instance = null;
     }
 
 }

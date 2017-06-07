@@ -269,9 +269,15 @@ public class Physics_Controller implements ContactListener{
     }
 
     private void checkIfGameEnd() {
-        if(((MovingObjectModel) airPlane1.getUserData()).isFlaggedForRemoval()){
+        if (GameModel.getInstance().getMyPlayer().getMyShip().isFlaggedForRemoval()){
+            GameModel.getInstance().getMyPlayer().setMyShip(null);
             LevelManager.setEndOfGame(true);
-
+        }
+        if(Arena.getInstance().isMultiplayer() && Arena.getInstance().isHost()) {
+            if (GameModel.getInstance().getOtherPlayer().getMyShip().isFlaggedForRemoval()) {
+                GameModel.getInstance().getOtherPlayer().setMyShip(null);
+                LevelManager.setEndOfGame(true);
+            }
         }
     }
 
@@ -287,7 +293,6 @@ public class Physics_Controller implements ContactListener{
                     updateScores(bodyA,bodyB);
                 }
                 bModel.setFlaggedForRemoval(true);
-
             }
             if (bModel.getType() == EntityModel.ModelType.BULLET){
                 bModel.setFlaggedForRemoval(true);
@@ -305,9 +310,18 @@ public class Physics_Controller implements ContactListener{
             if (bulletModel.getOwner() == GameModel.getInstance().getMyPlayer().getMyShip()){
                 GameModel.getInstance().getMyPlayer().increaseScore();
             }
-        }
-        else if (bodyA == airPlane1.getBody() && bModel instanceof ShipModel){
-            GameModel.getInstance().getMyPlayer().increaseScore();
+            if(bulletModel.getOwner() == GameModel.getInstance().getOtherPlayer().getMyShip()){
+                GameModel.getInstance().getOtherPlayer().increaseScore();
+            }
+        } else {
+            if (aModel == GameModel.getInstance().getMyPlayer().getMyShip()
+                    && bModel instanceof ShipModel){
+                GameModel.getInstance().getMyPlayer().increaseScore();
+            }
+            else if (aModel == GameModel.getInstance().getOtherPlayer().getMyShip()
+                    && bModel instanceof ShipModel){
+                GameModel.getInstance().getOtherPlayer().increaseScore();
+            }
         }
     }
 

@@ -39,4 +39,8 @@ public class Player implements Serializable {
     public String getID() {
         return ID;
     }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

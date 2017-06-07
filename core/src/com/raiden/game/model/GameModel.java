@@ -22,9 +22,16 @@ import java.util.List;
  */
 
 public class GameModel implements Serializable {
+
     private static final long serialVersionUID = 11L;
 
     private static GameModel instance;
+
+    List<EntityModel> entityModels =
+            Collections.synchronizedList(new ArrayList<EntityModel>());
+
+    private ArrayList<Player> players = new ArrayList<Player>();
+
 
     /**
      * Returns a singleton instance of the game model
@@ -37,17 +44,9 @@ public class GameModel implements Serializable {
         return instance;
     }
 
-    public static void setInstance(GameModel instance) {
-        GameModel.instance = instance;
+    public static void clearInstance(){
+        instance = null;
     }
-
-    /**
-     * The space ship controlled by the user in this game.
-     */
-    List<EntityModel> entityModels =
-            Collections.synchronizedList(new ArrayList<EntityModel>());
-
-    private ArrayList<Player> players = new ArrayList<Player>();
 
 
     public ArrayList<Player> getPlayers() {
@@ -63,7 +62,6 @@ public class GameModel implements Serializable {
         Airplane_1_Model myShip = new Airplane_1_Model(x,y);
         if((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer())
             myShip.setCanShoot(true);
-        myShip.setPlayer(true);
         player.setMyShip(myShip);
         entityModels.add(player.getMyShip());
         this.players.add(player);
@@ -141,17 +139,16 @@ public class GameModel implements Serializable {
         }
     }
 
-    public void updatePlayerCoords(ShipModel playerUpdated, String senderParticipantId) {
+    public void updatePlayerCoords(ShipModel playerUpdated) {
         Physics_Controller.getInstance().getAirPlane2().setTransform(
                 playerUpdated.getX(), playerUpdated.getY(), Physics_Controller.getInstance().getAirPlane2().getBody().getAngle());
     }
 
 
-    public static void clearInstance(){
-        instance = null;
-    }
-
-    public void updateModel(ArrayList<Broadcast.StructToSend> modelsReceived) {
+    public void updateModel(ArrayList<Broadcast.StructToSend> modelsReceived, int playerScore, boolean playerIsDead) {
+        getOtherPlayer().setScore(playerScore);
+        if(playerIsDead)
+            getOtherPlayer().setMyShip(null);
         for (int i = 0; i < entityModels.size(); i++) {
             if(getMyPlayer().getMyShip() != entityModels.get(i)) {
                 entityModels.remove(i);

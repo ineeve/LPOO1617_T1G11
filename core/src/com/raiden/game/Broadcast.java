@@ -28,6 +28,17 @@ public interface Broadcast {
             this.type = type;
             this.x = x;
             this.y = y;
+            this.angle = angle;
+        }
+    }
+
+    final class UserDataToSend implements Serializable {
+        public int score;
+        public boolean isDead;
+
+        UserDataToSend(int score, boolean isDead){
+            this.score = score;
+            this.isDead = isDead;
         }
     }
 

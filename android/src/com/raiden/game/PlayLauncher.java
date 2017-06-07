@@ -25,7 +25,9 @@ public class PlayLauncher extends AndroidApplication {
 	}
 
 	private void startGame(){
-		Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_first_run));
+		if(mGoogleApiClient != null)
+			if(mGoogleApiClient.isConnected())
+				Games.Achievements.unlock(mGoogleApiClient, getResources().getString(R.string.achievement_first_run));;
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useCompass = true;
 		config.useImmersiveMode = true;

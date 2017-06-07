@@ -47,7 +47,7 @@ public class EnemiesFactory {
         boss.setWidth(boss.getWidth() * 5);
         boss.setHeight(boss.getHeight() * 5);
         GameModel.getInstance().addEnemy(boss);
-        Physics_Controller controller = screen.getController();
+        Physics_Controller controller = Physics_Controller.getInstance();
         controller.addDynamicBody(boss);
     }
 
@@ -58,7 +58,7 @@ public class EnemiesFactory {
         MovingObjectModel newEnemyModel = (MovingObjectModel) poolManager.obtain(typeOfEnemy, xOfNextSpawn, yOfNextSpawn);
         newEnemyModel.setMovementType(CIRCULAR);
         GameModel.getInstance().addEnemy(newEnemyModel);
-        Physics_Controller controller = screen.getController();
+        Physics_Controller controller = Physics_Controller.getInstance();
         controller.addDynamicBody(newEnemyModel);
     }
 
@@ -72,7 +72,7 @@ public class EnemiesFactory {
         setMovement(enemies);
         nextMoveType = null;
         GameModel.getInstance().addEnemies(enemies);
-        screen.getController().addDynamicBodies(enemies);
+        Physics_Controller.getInstance().addDynamicBodies(enemies);
     }
 
     private void updateNextMovementType(EntityModel.ModelType typeOfEnemy) {
@@ -125,9 +125,8 @@ public class EnemiesFactory {
 
     private void updateCoodsOfNextSpawn(OrthographicCamera camera){
         float randomValue = (float) Math.random();
-        if(randomValue < 0.5)
-            randomValue *= -1;
-        xOfNextSpawn = (camera.position.x + randomValue * (camera.viewportWidth / 2f)) * PIXEL_TO_METER;
+        xOfNextSpawn = (camera.position.x - camera.viewportWidth / 2f) * PIXEL_TO_METER;
+        xOfNextSpawn += randomValue * camera.viewportWidth * PIXEL_TO_METER;
         Gdx.app.log("EnemyFactory:updateCoodsOfNextSpawn", String.valueOf(xOfNextSpawn));
         yOfNextSpawn = (camera.position.y + camera.viewportHeight / 2f) * PIXEL_TO_METER;
     }

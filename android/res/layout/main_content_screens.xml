@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -61,9 +62,11 @@
                 android:background="@drawable/menu_buttons"
                 android:text="@string/play"
                 app:layout_constraintBottom_toTopOf="@+id/hangar_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <Button
                 android:id="@+id/hangar_button"
@@ -107,6 +110,10 @@
             android:id="@+id/play_menu_buttons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -126,9 +133,11 @@
                 android:background="@drawable/menu_buttons"
                 android:text="@string/pve_singleplayer"
                 app:layout_constraintBottom_toTopOf="@+id/pve_multiplayer_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <Button
                 android:id="@+id/pve_multiplayer_button"
@@ -143,6 +152,7 @@
                 android:background="@drawable/menu_buttons"
                 android:text="@string/pve_multiplayer"
                 app:layout_constraintBottom_toTopOf="@+id/pvp_multiplayer_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pve_singleplayer_button" />
@@ -170,6 +180,10 @@
             android:id="@+id/multiplayer_menu_buttons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -189,9 +203,11 @@
                 android:background="@drawable/menu_buttons"
                 android:text="@string/quick_start_game"
                 app:layout_constraintBottom_toTopOf="@+id/invite_to_play_button"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <Button
                 android:id="@+id/invite_to_play_button"
@@ -235,7 +251,7 @@
         android:id="@+id/bottombar_back_buttom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
