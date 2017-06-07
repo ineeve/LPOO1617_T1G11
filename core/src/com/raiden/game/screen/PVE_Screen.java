@@ -209,7 +209,7 @@ public class PVE_Screen extends ScreenAdapter {
     //TODO: add comments inside the code
     private void updateCameraPosition(float delta) {
         float xVelocity_player = controller.getAirPlane1().getXVelocity();
-        if (xVelocity_player == 0) {
+        if (xVelocity_player == 0 && GameModel.getInstance().getMyPlayer().getMyShip() == null) {
             camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             return;
         }

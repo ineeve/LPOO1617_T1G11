@@ -146,7 +146,8 @@ public class GameModel implements Serializable {
 
 
     public void updateModel(ArrayList<Broadcast.StructToSend> modelsReceived, int playerScore, boolean playerIsDead) {
-        getOtherPlayer().setScore(playerScore);
+        if(getOtherPlayer() != null)
+            getOtherPlayer().setScore(playerScore);
         if(playerIsDead)
             getOtherPlayer().setMyShip(null);
         for (int i = 0; i < entityModels.size(); i++) {

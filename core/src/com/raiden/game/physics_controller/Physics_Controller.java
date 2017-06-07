@@ -269,14 +269,14 @@ public class Physics_Controller implements ContactListener{
     }
 
     private void checkIfGameEnd() {
-        if (GameModel.getInstance().getMyPlayer().getMyShip().isFlaggedForRemoval()){
-            GameModel.getInstance().getMyPlayer().setMyShip(null);
-            LevelManager.setEndOfGame(true);
-        }
-        if(Arena.getInstance().isMultiplayer() && Arena.getInstance().isHost()) {
-            if (GameModel.getInstance().getOtherPlayer().getMyShip().isFlaggedForRemoval()) {
-                GameModel.getInstance().getOtherPlayer().setMyShip(null);
+        if(!LevelManager.isEndOfGame()) {
+            if (GameModel.getInstance().getMyPlayer().getMyShip().isFlaggedForRemoval()) {
                 LevelManager.setEndOfGame(true);
+            }
+            if (Arena.getInstance().isMultiplayer() && Arena.getInstance().isHost()) {
+                if (GameModel.getInstance().getOtherPlayer().getMyShip().isFlaggedForRemoval()) {
+                    LevelManager.setEndOfGame(true);
+                }
             }
         }
     }
@@ -310,17 +310,19 @@ public class Physics_Controller implements ContactListener{
             if (bulletModel.getOwner() == GameModel.getInstance().getMyPlayer().getMyShip()){
                 GameModel.getInstance().getMyPlayer().increaseScore();
             }
-            if(bulletModel.getOwner() == GameModel.getInstance().getOtherPlayer().getMyShip()){
-                GameModel.getInstance().getOtherPlayer().increaseScore();
+            if(Arena.getInstance().isMultiplayer()) {
+                if (bulletModel.getOwner() == GameModel.getInstance().getOtherPlayer().getMyShip())
+                    GameModel.getInstance().getOtherPlayer().increaseScore();
             }
         } else {
             if (aModel == GameModel.getInstance().getMyPlayer().getMyShip()
                     && bModel instanceof ShipModel){
                 GameModel.getInstance().getMyPlayer().increaseScore();
             }
-            else if (aModel == GameModel.getInstance().getOtherPlayer().getMyShip()
-                    && bModel instanceof ShipModel){
-                GameModel.getInstance().getOtherPlayer().increaseScore();
+            else if (Arena.getInstance().isMultiplayer()){
+                if(aModel == GameModel.getInstance().getOtherPlayer().getMyShip()
+                        && bModel instanceof ShipModel)
+                    GameModel.getInstance().getOtherPlayer().increaseScore();
             }
         }
     }

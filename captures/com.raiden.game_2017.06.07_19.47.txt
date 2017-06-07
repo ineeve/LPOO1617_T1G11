@@ -1,0 +1,71 @@
+AGGREGATED OVER LAST 24 HOURS:
+Per-Package Stats:
+  * com.raiden.game / u0a209:
+      * com.raiden.game / u0a209:
+               TOTAL: 98% (25MB-28MB-50MB/22MB-25MB-46MB over 675)
+                 Top: 98% (25MB-28MB-50MB/22MB-25MB-46MB over 675)
+            (Cached): 0,05%
+
+Summary:
+  * com.raiden.game / u0a209:
+           TOTAL: 98% (25MB-28MB-50MB/22MB-25MB-46MB over 675)
+             Top: 98% (25MB-28MB-50MB/22MB-25MB-46MB over 675)
+        (Cached): 0,05%
+
+Run time Stats:
+  SOff/Norm: +22h2m40s644ms
+       Mod : +1m2s37ms
+  SOn /Norm: +40m34s998ms
+       Mod : +2m0s473ms
+      TOTAL: +22h46m18s152ms
+
+          Start time: 2017-06-06 21:03:00
+  Total elapsed time: +22h46m18s152ms (partial) libdvm.so chromeview
+
+AGGREGATED OVER LAST 3 HOURS:
+Per-Package Stats:
+  * com.raiden.game / u0a209:
+      * com.raiden.game / u0a209:
+               TOTAL: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+                 Top: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+            (Cached): 0,01%
+
+Summary:
+  * com.raiden.game / u0a209:
+           TOTAL: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+             Top: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+        (Cached): 0,01%
+
+Run time Stats:
+  SOff/Norm: +1h16m14s205ms
+       Mod : +1m2s37ms
+  SOn /Norm: +20m2s171ms
+       Mod : +2m0s473ms
+      TOTAL: +1h39m18s886ms
+
+          Start time: 2017-06-07 18:10:00
+  Total elapsed time: +1h39m18s888ms (partial) libdvm.so chromeview
+
+CURRENT STATS:
+Per-Package Stats:
+  * com.raiden.game / u0a209:
+      * com.raiden.game / u0a209:
+               TOTAL: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+                 Top: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+            (Cached): 0,01%
+
+Summary:
+  * com.raiden.game / u0a209:
+           TOTAL: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+             Top: 97% (25MB-32MB-50MB/22MB-29MB-46MB over 56)
+        (Cached): 0,01%
+
+Run time Stats:
+  SOff/Norm: +1h16m14s205ms
+       Mod : +1m2s37ms
+  SOn /Norm: +20m2s3ms (running)
+       Mod : +2m0s473ms
+      TOTAL: +1h39m18s718ms
+
+          Start time: 2017-06-07 18:10:00
+  Total elapsed time: +1h39m18s914ms (partial) libdvm.so chromeview

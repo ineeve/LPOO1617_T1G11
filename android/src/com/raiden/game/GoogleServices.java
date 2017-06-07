@@ -21,6 +21,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,8 @@ class GoogleServices implements Broadcast{
 
 
     private void receiveMsg_from_Client(byte[] buf){
+        if(buf == null)
+            return;
         ShipModel player2 = (ShipModel) arrayByteToMsg(buf);
         if(player2 == null)
             return;
@@ -88,9 +91,11 @@ class GoogleServices implements Broadcast{
     }
 
     private void receiveMsg_from_Host(byte[] buf){
+        if(buf == null)
+            return;
         byte[] scoreBuf = new byte[4];
         System.arraycopy(buf, 0, scoreBuf, 0, scoreBuf.length);
-        int playerScore = (int) arrayByteToMsg(scoreBuf);
+        int playerScore = ByteBuffer.wrap(scoreBuf).getInt();
         boolean playerIsDead = buf[4] != 0;
         byte[] entitiesBuff = new byte[buf.length - 5];
         System.arraycopy(buf, 5, entitiesBuff, 0, entitiesBuff.length);
@@ -118,16 +123,16 @@ class GoogleServices implements Broadcast{
                     model.getEntityModels().get(i).getY(),
                     model.getEntityModels().get(i).getRotation()));
         }
-        byte[] userData = new byte[5];
-        userData[0] = (byte) GameModel.getInstance().getOtherPlayer().getScore();
+        byte[] userData;
+        userData = ByteBuffer.allocate(5).putInt(GameModel.getInstance().getOtherPlayer().getScore()).array();
         userData[4] = (byte) (GameModel.getInstance().getOtherPlayer().getMyShip() == null ? 1 : 0);
         byte[] entitiesData = msgToArrayByte(arrayToSend);
         byte[] mMsgBuf = new byte[userData.length + entitiesData.length];
         System.arraycopy(userData, 0, mMsgBuf, 0, userData.length);
         System.arraycopy(entitiesData, 0, mMsgBuf, userData.length, entitiesData.length);
-        if(entitiesData == null)
+        if(entitiesData == null || userData == null)
             return false;
-        sendMessage(mMsgBuf);
+        sendMessage(entitiesData);
         return true;
     }
 
