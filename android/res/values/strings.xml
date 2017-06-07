@@ -90,5 +90,12 @@
     <string name="banner_ad_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="LEADERBOARD_ID">CgkIro3w2P0YEAIQAQ</string>
     <string name="achievement_first_run">CgkIro3w2P0YEAIQAg</string>
+    <string name="sensibility_Y">Sensibility Y</string>
+    <string name="sensibility_X">Sensiblility X</string>
+    <string name="share">Share</string>
+    <string name="management">Management</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="achievements">Achievements</string>
 
 </resources>

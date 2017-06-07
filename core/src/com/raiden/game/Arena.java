@@ -59,6 +59,7 @@ public class Arena extends Game{
 	 */
 	@Override
 	public void dispose () {
+		broadcast.leaveRoom();
 		broadcast.submitScore(GameModel.getInstance().getMyPlayer().getScore());
 		batch.dispose();
 		ViewFactory.getInstance().dispose();
@@ -69,7 +70,6 @@ public class Arena extends Game{
 		LevelManager.setEndOfGame(false);
 		multiplayer = false;
 		assetManager.dispose();
-		broadcast.leaveRoom();
 	}
 
 

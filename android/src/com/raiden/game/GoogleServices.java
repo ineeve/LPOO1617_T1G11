@@ -70,11 +70,12 @@ class GoogleServices implements Broadcast{
             byte[] buf = realTimeMessage.getMessageData();
             String sender = realTimeMessage.getSenderParticipantId();
             Log.d(TAG, "Message received from: " + sender);
-            if(Arena.getInstance().isHost()){
-                receiveMsg_from_Client(buf);
-            }
-            else {
-                receiveMsg_from_Host(buf);
+            if(mRoomId != null) {
+                if (Arena.getInstance().isHost()) {
+                    receiveMsg_from_Client(buf);
+                } else {
+                    receiveMsg_from_Host(buf);
+                }
             }
         }
     };
@@ -96,13 +97,13 @@ class GoogleServices implements Broadcast{
         byte[] scoreBuf = new byte[4];
         System.arraycopy(buf, 0, scoreBuf, 0, scoreBuf.length);
         int playerScore = ByteBuffer.wrap(scoreBuf).getInt();
-        boolean playerIsDead = buf[4] != 0;
+        boolean playerIsAlive = buf[4] != 0;
         byte[] entitiesBuff = new byte[buf.length - 5];
         System.arraycopy(buf, 5, entitiesBuff, 0, entitiesBuff.length);
         ArrayList<StructToSend> entitiesReceived = (ArrayList<StructToSend>) arrayByteToMsg(buf);
         if(entitiesReceived == null)
             return;
-        GameModel.getInstance().updateModel(entitiesReceived, playerScore, playerIsDead);
+        GameModel.getInstance().updateModel(entitiesReceived, playerScore, playerIsAlive);
     }
 
     @Override
@@ -112,10 +113,10 @@ class GoogleServices implements Broadcast{
             return false; // playing single-player mode
         ArrayList<StructToSend> arrayToSend = new ArrayList<>();
         arrayToSend.add(new StructToSend(
-                model.getMyPlayer().getMyShip().getType(),
-                model.getMyPlayer().getMyShip().getX(),
-                model.getMyPlayer().getMyShip().getY(),
-                model.getMyPlayer().getMyShip().getRotation()));
+                model.getMyPlayer().getShip().getType(),
+                model.getMyPlayer().getShip().getX(),
+                model.getMyPlayer().getShip().getY(),
+                model.getMyPlayer().getShip().getRotation()));
         for(int i = 2; i < model.getEntityModels().size(); i++){
             arrayToSend.add(new StructToSend(
                     model.getEntityModels().get(i).getType(),
@@ -125,7 +126,7 @@ class GoogleServices implements Broadcast{
         }
         byte[] userData;
         userData = ByteBuffer.allocate(5).putInt(GameModel.getInstance().getOtherPlayer().getScore()).array();
-        userData[4] = (byte) (GameModel.getInstance().getOtherPlayer().getMyShip() == null ? 1 : 0);
+        userData[4] = (byte) (GameModel.getInstance().getOtherPlayer().isStillPlaying() ? 1 : 0);
         byte[] entitiesData = msgToArrayByte(arrayToSend);
         byte[] mMsgBuf = new byte[userData.length + entitiesData.length];
         System.arraycopy(userData, 0, mMsgBuf, 0, userData.length);
@@ -286,6 +287,7 @@ class GoogleServices implements Broadcast{
         @Override
         public void onPeerLeft(Room room, List<String> peersWhoLeft) {
             updateRoom(room);
+            setHost();
         }
 
         @Override

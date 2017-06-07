@@ -12,7 +12,7 @@ public class BulletBody extends DynamicBody {
     /**
      * The bullet speed
      */
-    private static final float BULLET_SPEED = 35f;
+    private static final float BULLET_SPEED = 50f;
 
     /**
      * Constructs a body representing a model in a certain world.

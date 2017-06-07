@@ -62,8 +62,8 @@ public class GameModel implements Serializable {
         Airplane_1_Model myShip = new Airplane_1_Model(x,y);
         if((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer())
             myShip.setCanShoot(true);
-        player.setMyShip(myShip);
-        entityModels.add(player.getMyShip());
+        player.setShip(myShip);
+        entityModels.add(player.getShip());
         this.players.add(player);
     }
 
@@ -122,6 +122,11 @@ public class GameModel implements Serializable {
 
     public void deleteEntityModel(EntityModel model){
         if(model != null) {
+            if(getMyPlayer().getShip() == model)
+                getMyPlayer().setStillPlaying(false);
+            if(getOtherPlayer() != null) {
+                getOtherPlayer().setStillPlaying(false);
+            }
             entityModels.remove(model);
             if(model instanceof BulletModel){
                 PoolManager.getInstance().free((BulletModel)model);
@@ -145,13 +150,17 @@ public class GameModel implements Serializable {
     }
 
 
-    public void updateModel(ArrayList<Broadcast.StructToSend> modelsReceived, int playerScore, boolean playerIsDead) {
-        if(getOtherPlayer() != null)
-            getOtherPlayer().setScore(playerScore);
-        if(playerIsDead)
-            getOtherPlayer().setMyShip(null);
+    public void updateModel(ArrayList<Broadcast.StructToSend> modelsReceived, int playerScore, boolean playerIsAlive) {
+        if(getMyPlayer() != null) {
+            getMyPlayer().setScore(playerScore);
+            if (!playerIsAlive && playerScore != 0) {
+                getMyPlayer().setStillPlaying(playerIsAlive);
+                Physics_Controller.getInstance().destroyDynamicBody(Physics_Controller.getInstance().getAirPlane1());
+                GameModel.getInstance().deleteEntityModel(GameModel.getInstance().getMyPlayer().getShip());
+            }
+        }
         for (int i = 0; i < entityModels.size(); i++) {
-            if(getMyPlayer().getMyShip() != entityModels.get(i)) {
+            if(getMyPlayer().getShip() != entityModels.get(i)) {
                 entityModels.remove(i);
                 i--;
             }

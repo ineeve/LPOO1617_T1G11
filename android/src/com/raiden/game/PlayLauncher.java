@@ -31,6 +31,7 @@ public class PlayLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useCompass = true;
 		config.useImmersiveMode = true;
+		config.useWakelock = true;
 		Arena arena = Arena.getInstance();
 		arena.setBroadcast(GoogleServices.getInstance());
 		initialize(arena, config);

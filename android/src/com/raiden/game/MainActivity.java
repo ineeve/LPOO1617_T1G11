@@ -14,9 +14,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -34,6 +37,7 @@ import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
 import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.raiden.game.model.GameModel;
+import com.raiden.game.screen.PVE_Screen;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity
 
         mImageManager = ImageManager.create(this);
 
+        addSeekBarTouchListener();
 
         //AdMob
         MobileAds.initialize(this, "ca-app-pub-1239322117847811~5610605481");
@@ -124,6 +129,48 @@ public class MainActivity extends AppCompatActivity
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(adRequest);
+    }
+
+    private void addSeekBarTouchListener() {
+
+        View.OnTouchListener touchListenter = new ListView.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                int action = event.getAction();
+                switch (action)
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow Drawer to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow Drawer to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        if(v == findViewById(R.id.sensibility_X_seekbar)){
+                            PVE_Screen.setSensibility_X(((SeekBar) v).getProgress());
+                        }
+                        else if(v == findViewById(R.id.sensibility_Y_seekbar)){
+                            PVE_Screen.setSensibility_Y(((SeekBar) v).getProgress());
+                        }
+                        break;
+                }
+
+                // Handle seekbar touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        };
+
+        ((SeekBar) findViewById(R.id.sensibility_X_seekbar)).setMax(20);
+        ((SeekBar) findViewById(R.id.sensibility_Y_seekbar)).setMax(15);
+        ((SeekBar) findViewById(R.id.sensibility_X_seekbar)).setProgress((int) PVE_Screen.getSensibility_X());
+        ((SeekBar) findViewById(R.id.sensibility_Y_seekbar)).setProgress((int) PVE_Screen.getSensibility_Y());
+        findViewById(R.id.sensibility_X_seekbar).setOnTouchListener(touchListenter);
+        findViewById(R.id.sensibility_Y_seekbar).setOnTouchListener(touchListenter);
+        findViewById(R.id.volune_seekbar).setOnTouchListener(touchListenter);
     }
 
     @Override
@@ -215,7 +262,13 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_share) {
-
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT, "Raide-Multiplayer");
+            String sAux = "\nThis game is amazing you must try: \n\n";
+            sAux = sAux + "https://play.google.com/store/apps/details?id=<AINDANAOTENHO:(> \n\n";
+            i.putExtra(Intent.EXTRA_TEXT, sAux);
+            startActivity(Intent.createChooser(i, getResources().getString(R.string.share)));
         } else if (id == R.id.nav_SignOut) {
             if(mGoogleApiClient != null) {
                 // user wants to sign out
@@ -471,7 +524,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "Leaving room.");
         //mSecondsLeft = 0;
         if (mGoogleServices.mRoomId != null) {
-            Games.RealTimeMultiplayer.leave(mGoogleApiClient, mGoogleServices.roomUpdateListener, mGoogleServices.mRoomId);
+            Games.RealTimeMultiplayer.leave(mGoogleApiClient, mGoogleServices.roomUpdateListener, GoogleServices.mRoomId);
             mGoogleServices.mRoomId = null;
             //switchToScreen(R.id.screen_wait);
         } else {

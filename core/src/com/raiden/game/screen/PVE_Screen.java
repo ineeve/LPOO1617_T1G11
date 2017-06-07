@@ -132,7 +132,7 @@ public class PVE_Screen extends ScreenAdapter {
         float viewport_width = 20;
         float viewport_height = viewport_width * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth());
         OrthographicCamera camera = new OrthographicCamera(viewport_width / PIXEL_TO_METER, viewport_height / PIXEL_TO_METER);
-        ShipModel myShip = GameModel.getInstance().getMyPlayer().getMyShip();
+        ShipModel myShip = GameModel.getInstance().getMyPlayer().getShip();
         camera.position.set(myShip.getX()/PIXEL_TO_METER, myShip.getY()/PIXEL_TO_METER, 0);
         camera.update();
 
@@ -162,7 +162,7 @@ public class PVE_Screen extends ScreenAdapter {
         if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()){
             game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
         }else if (Arena.getInstance().isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getMyShip());
+            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getShip());
         }
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
@@ -209,18 +209,18 @@ public class PVE_Screen extends ScreenAdapter {
     //TODO: add comments inside the code
     private void updateCameraPosition(float delta) {
         float xVelocity_player = controller.getAirPlane1().getXVelocity();
-        if (xVelocity_player == 0 && GameModel.getInstance().getMyPlayer().getMyShip() == null) {
+        if (xVelocity_player == 0 && GameModel.getInstance().getMyPlayer().getShip() == null) {
             camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             return;
         }
 
-        if (GameModel.getInstance().getMyPlayer().getMyShip().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
+        if (GameModel.getInstance().getMyPlayer().getShip().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x + xVelocity_player / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
                 camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             }
-        } else if (GameModel.getInstance().getMyPlayer().getMyShip().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
+        } else if (GameModel.getInstance().getMyPlayer().getShip().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
@@ -289,10 +289,28 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private Float acceY_initial;
 
+    private static float sensibility_X = 5.5f;
+
+    public static void setSensibility_X(float sensibility_X) {
+        PVE_Screen.sensibility_X = sensibility_X;
+    }
+
+    public static float getSensibility_X() {
+        return sensibility_X;
+    }
+
     /**
      * Variable to change the sensibility of y axel of accelerometer.
      */
-    private float sensibility_Y = 2;
+    private static float sensibility_Y = 2;
+
+    public static void setSensibility_Y(float sensibility_Y) {
+        PVE_Screen.sensibility_Y = sensibility_Y;
+    }
+
+    public static float getSensibility_Y() {
+        return sensibility_Y;
+    }
 
     /**
      * Functions to get the right value of velocity on Y axel.
@@ -311,7 +329,7 @@ public class PVE_Screen extends ScreenAdapter {
             //Correct value of accelerometer
             accelerometer_Y = accelerometer_Y - acceY_initial;
 
-        if(-accelerometer_Y>=0) {
+        if(accelerometer_Y<=0) {
             return  -accelerometer_Y * sensibility_Y + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
         }
         else {
@@ -334,8 +352,7 @@ public class PVE_Screen extends ScreenAdapter {
             }
             Float acceY = Gdx.input.getAccelerometerY();
             float velY = getVelocity_Y(acceY);
-            float velX_Correction = -5.5f;
-            controller.getAirPlane1().setVelocity(acceX * velX_Correction , velY);
+            controller.getAirPlane1().setVelocity(-acceX * sensibility_X, velY);
         }
     }
 

@@ -11,21 +11,22 @@ import java.io.Serializable;
 public class Player implements Serializable {
     private static final long serialVersionUID = 12L;
 
-    private ShipModel myShip;
+    private ShipModel ship;
     private String ID;
     private int score;
+    private boolean stillPlaying = true;
 
     public Player(String ID){
         this.ID = ID;
         score = 0;
     }
 
-    public ShipModel getMyShip() {
-        return myShip;
+    public ShipModel getShip() {
+        return ship;
     }
 
-    public void setMyShip(ShipModel myShip) {
-        this.myShip = myShip;
+    public void setShip(ShipModel ship) {
+        this.ship = ship;
     }
 
     public int getScore() {
@@ -42,5 +43,13 @@ public class Player implements Serializable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public boolean isStillPlaying() {
+        return stillPlaying;
+    }
+
+    public void setStillPlaying(boolean stillPlaying) {
+        this.stillPlaying = stillPlaying;
     }
 }
