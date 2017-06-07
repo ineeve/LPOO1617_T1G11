@@ -26,6 +26,7 @@ public class Tank extends ShipBody {
         maxVelocity = MAXVELOCITY_Default;
         width = model.getWidth();
         height = model.getHeight();
+        body.setFixedRotation(true);
         updatePhysics();
     }
 
@@ -40,7 +41,7 @@ public class Tank extends ShipBody {
 
         // Top Body
         createFixture(new float[]{
-                4*x_Correction,414*y_Correction, 244*x_Correction,655*y_Correction, 488*x_Correction,657*y_Correction, 244*x_Correction,173*y_Correction
+                4*x_Correction,414*y_Correction, 244*x_Correction,655*y_Correction, 488*x_Correction,414*y_Correction, 244*x_Correction,173*y_Correction
         }, width, height);
 
         // Cannon

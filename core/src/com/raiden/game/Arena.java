@@ -1,16 +1,21 @@
 package com.raiden.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.BufferUtils;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.LevelManager;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
+
+import java.nio.IntBuffer;
 
 /**
  * The game main class.
@@ -28,6 +33,8 @@ public class Arena extends Game{
     private String mPlayerID = "I_AM_THE_REAL_MVP";
 
 	private Broadcast broadcast;
+
+	private String background;
 
 
     public void setBroadcast(Broadcast broadcast) {
@@ -88,7 +95,29 @@ public class Arena extends Game{
 		loadOneAsset( "AirPlane_3.png");
 		loadOneAsset( "Tank.png");
 		loadOneAsset( "Bullet.png");
-		loadOneAsset( "background.png");
+		IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
+		Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
+		if (intBuffer.get() < 5900){
+			loadOneAsset( "background_xxxdpi.png");
+			background = "background_xxxdpi.png";
+		}else if(intBuffer.get() < 4710){
+			loadOneAsset( "background_xxdpi.png");
+			background = "background_xxdpi.png";
+		}else if(intBuffer.get() < 3500){
+			loadOneAsset( "background_xdpi.png");
+			background = "background_xdpi.png";
+		}else if(intBuffer.get() < 2400){
+			loadOneAsset( "background_hdpi.png");
+			background = "background_hdpi.png";
+		}
+		else if(intBuffer.get() < 1200){
+			loadOneAsset( "background_mdpi.png");
+			background = "background_mdpi.png";
+		}
+		else if(intBuffer.get() < 600){
+			loadOneAsset( "background_sdpi.png");
+			background = "background_sdpi.png";
+		}
 		loadOneAsset( "commet.png");
         this.assetManager.load( "Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
 
@@ -147,4 +176,8 @@ public class Arena extends Game{
     public void setmPlayerID(String mPlayerID) {
         this.mPlayerID = mPlayerID;
     }
+
+	public String getBackground() {
+		return background;
+	}
 }
