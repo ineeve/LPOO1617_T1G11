@@ -129,7 +129,7 @@ public class GameModel implements Serializable {
             }
             entityModels.remove(model);
             if(model instanceof BulletModel){
-                PoolManager.getInstance().free((BulletModel)model);
+                PoolManager.getInstance().free(model);
             }else {
                 model.setFlaggedForRemoval(false);
                 EnemiesFactory.getInstance().getPoolManager().free(model);

@@ -51,6 +51,8 @@ public class PVE_Screen extends ScreenAdapter {
      * The physics controller for this game.
      */
     private final Physics_Controller controller;
+    
+    private final GameModel model;
 
     /**
      * The camera used to show the viewport.
@@ -101,6 +103,7 @@ public class PVE_Screen extends ScreenAdapter {
     private PVE_Screen(Arena game, Physics_Controller controller) {
         this.game = game;
         this.controller = controller;
+        this.model = GameModel.getInstance();
         camera = createCamera();
         controller.setCamera(camera);
         levelManager = new LevelManager();
@@ -132,7 +135,7 @@ public class PVE_Screen extends ScreenAdapter {
         float viewport_width = 20;
         float viewport_height = viewport_width * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth());
         OrthographicCamera camera = new OrthographicCamera(viewport_width / PIXEL_TO_METER, viewport_height / PIXEL_TO_METER);
-        ShipModel myShip = GameModel.getInstance().getMyPlayer().getShip();
+        ShipModel myShip = model.getMyPlayer().getShip();
         camera.position.set(myShip.getX()/PIXEL_TO_METER, myShip.getY()/PIXEL_TO_METER, 0);
         camera.update();
 
@@ -159,10 +162,10 @@ public class PVE_Screen extends ScreenAdapter {
             handleInputs(delta);
         }
         controller.update(delta);
-        if (Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Host(GameModel.getInstance());
-        }else if (Arena.getInstance().isMultiplayer()){
-            game.getBroadcast().sendMessage_from_Client(GameModel.getInstance().getMyPlayer().getShip());
+        if (game.isHost() && game.isMultiplayer()){
+            game.getBroadcast().sendMessage_from_Host(model);
+        }else if (game.isMultiplayer()){
+            game.getBroadcast().sendMessage_from_Client(model.getMyPlayer().getShip());
         }
         updateCameraPosition(delta);
         verifyCameraBounds(delta);
@@ -179,7 +182,7 @@ public class PVE_Screen extends ScreenAdapter {
     public void render(float delta) {
         // Just the host in case of being a multi-player
         // game or on single-player game update the level.
-        if ((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer()){
+        if ((game.isHost() && game.isMultiplayer()) || !game.isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);
@@ -201,7 +204,7 @@ public class PVE_Screen extends ScreenAdapter {
     }
 
     private void drawScore() {
-        scoreText = "score: " + GameModel.getInstance().getMyPlayer().getScore();
+        scoreText = "score: " + model.getMyPlayer().getScore();
         scoreBitmap.draw(game.getBatch(), scoreText, camera.position.x - 450, camera.position.y + 800);
     }
 
@@ -209,18 +212,18 @@ public class PVE_Screen extends ScreenAdapter {
     //TODO: add comments inside the code
     private void updateCameraPosition(float delta) {
         float xVelocity_player = controller.getAirPlane1().getXVelocity();
-        if (xVelocity_player == 0 && GameModel.getInstance().getMyPlayer().getShip() == null) {
+        if (xVelocity_player == 0 && model.getMyPlayer().getShip() == null) {
             camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             return;
         }
 
-        if (GameModel.getInstance().getMyPlayer().getShip().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
+        if (model.getMyPlayer().getShip().getX() / PIXEL_TO_METER < camera.position.x - camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x + xVelocity_player / PIXEL_TO_METER * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
                 camera.position.set(camera.position.x, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             }
-        } else if (GameModel.getInstance().getMyPlayer().getShip().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
+        } else if (model.getMyPlayer().getShip().getX() / PIXEL_TO_METER < camera.position.x + camera.viewportWidth / 4f) {
             if (xVelocity_player < 0) {
                 camera.position.set(camera.position.x - CAMERA_X_SPEED * delta, camera.position.y + CAMERA_Y_SPEED * delta, 0);
             } else {
@@ -360,8 +363,8 @@ public class PVE_Screen extends ScreenAdapter {
      * Draws the entities to the screen.
      */
     private void drawEntities() {
-        synchronized(GameModel.getInstance().getEntityModels()) {
-            Iterator<EntityModel> iterator = GameModel.getInstance().getEntityModels().iterator();
+        synchronized(model.getEntityModels()) {
+            Iterator<EntityModel> iterator = model.getEntityModels().iterator();
             while (iterator.hasNext()){
                 EntityModel model = iterator.next();
                 EntityView view = ViewFactory.getInstance().makeView(game, model);
@@ -375,7 +378,7 @@ public class PVE_Screen extends ScreenAdapter {
      * Draws the background of scene
      */
     private void drawBackground() {
-        Texture background = game.getAssetManager().get(Arena.getInstance().getBackground(), Texture.class);
+        Texture background = game.getAssetManager().get(game.getBackground(), Texture.class);
         background.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
     }

@@ -75,7 +75,9 @@ public class Physics_Controller implements ContactListener{
 
     private static Physics_Controller instance;
 
-    private ControllerFactory controllerFactory = ControllerFactory.getInstance();
+    private final ControllerFactory controllerFactory = ControllerFactory.getInstance();
+
+    private final Arena arena = Arena.getInstance();
 
     private Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
@@ -241,7 +243,7 @@ public class Physics_Controller implements ContactListener{
         for (Player player : model.getPlayers()){
             DynamicBody newDynamicBody = controllerFactory.makeController(world,player.getShip());
             dynamicBodies.add(newDynamicBody);
-            if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) == 0){
+            if(player.getID().compareTo(arena.getmPlayerID()) == 0){
                 airPlane1 = (ShipBody) newDynamicBody;
                 airPlane1.getBody().setGravityScale(0);
             }
@@ -273,7 +275,7 @@ public class Physics_Controller implements ContactListener{
             if (GameModel.getInstance().getMyPlayer().getShip().isFlaggedForRemoval()) {
                 LevelManager.setEndOfGame(true);
             }
-            if (Arena.getInstance().isMultiplayer() && Arena.getInstance().isHost()) {
+            if (arena.isMultiplayer() && arena.isHost()) {
                 if (GameModel.getInstance().getOtherPlayer().getShip().isFlaggedForRemoval()) {
                     LevelManager.setEndOfGame(true);
                 }
@@ -308,12 +310,12 @@ public class Physics_Controller implements ContactListener{
             if(((BulletModel) aModel).getOwner() == GameModel.getInstance().getMyPlayer().getShip()){
                 if(bModel == GameModel.getInstance().getMyPlayer().getShip())
                     return true;
-                else if(Arena.getInstance().isMultiplayer()){
+                else if(arena.isMultiplayer()){
                     if(bModel == GameModel.getInstance().getOtherPlayer().getShip())
                         return true;
                 }
             }
-            else if (Arena.getInstance().isMultiplayer()){
+            else if (arena.isMultiplayer()){
                 if(((BulletModel) aModel).getOwner() == GameModel.getInstance().getOtherPlayer().getShip()){
                     if(bModel == GameModel.getInstance().getMyPlayer().getShip())
                         return true;
@@ -334,7 +336,7 @@ public class Physics_Controller implements ContactListener{
             if (bulletModel.getOwner() == GameModel.getInstance().getMyPlayer().getShip()){
                 GameModel.getInstance().getMyPlayer().increaseScore();
             }
-            if(Arena.getInstance().isMultiplayer()) {
+            if(arena.isMultiplayer()) {
                 if (bulletModel.getOwner() == GameModel.getInstance().getOtherPlayer().getShip())
                     GameModel.getInstance().getOtherPlayer().increaseScore();
             }
@@ -343,7 +345,7 @@ public class Physics_Controller implements ContactListener{
                     && bModel instanceof ShipModel){
                 GameModel.getInstance().getMyPlayer().increaseScore();
             }
-            else if (Arena.getInstance().isMultiplayer()){
+            else if (arena.isMultiplayer()){
                 if(aModel == GameModel.getInstance().getOtherPlayer().getShip()
                         && bModel instanceof ShipModel)
                     GameModel.getInstance().getOtherPlayer().increaseScore();
