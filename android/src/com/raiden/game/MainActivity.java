@@ -198,9 +198,6 @@ public class MainActivity extends AppCompatActivity
                 System.exit(0);
                 break;
             case R.id.pve_singleplayer_button:
-                GameModel.getInstance().addPlayers(new ArrayList<Player>(){{
-                    add(new Player(Arena.getInstance().getmPlayerID()));
-                }});
                 startActivity(new Intent(this, CLASSES[1]));
                 break;
             case R.id.pve_multiplayer_button:

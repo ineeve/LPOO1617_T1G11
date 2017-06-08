@@ -182,4 +182,5 @@ public class Arena extends Game{
 	public String getBackground() {
 		return background;
 	}
+
 }
