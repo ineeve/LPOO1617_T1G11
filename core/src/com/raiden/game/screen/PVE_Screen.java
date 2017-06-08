@@ -376,7 +376,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private void drawBackground() {
         Texture background = game.getAssetManager().get(Arena.getInstance().getBackground(), Texture.class);
-        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        background.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
     }
 

@@ -97,24 +97,26 @@ public class Arena extends Game{
 		loadOneAsset( "Bullet.png");
 		IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
 		Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
-		if (intBuffer.get() < 5900){
+		int maxSize = intBuffer.get();
+		Gdx.app.log("MaxGraphicsBuf_SIXE", String.valueOf(intBuffer.get()));
+		if (maxSize > 5900){
 			loadOneAsset( "background_xxxdpi.png");
 			background = "background_xxxdpi.png";
-		}else if(intBuffer.get() < 4710){
+		}else if(maxSize >= 4096){
 			loadOneAsset( "background_xxdpi.png");
 			background = "background_xxdpi.png";
-		}else if(intBuffer.get() < 3500){
+		}else if(maxSize >= 3500){
 			loadOneAsset( "background_xdpi.png");
 			background = "background_xdpi.png";
-		}else if(intBuffer.get() < 2400){
+		}else if(maxSize >= 2048){
 			loadOneAsset( "background_hdpi.png");
 			background = "background_hdpi.png";
 		}
-		else if(intBuffer.get() < 1200){
+		else if(maxSize >= 1024){
 			loadOneAsset( "background_mdpi.png");
 			background = "background_mdpi.png";
 		}
-		else if(intBuffer.get() < 600){
+		else if(maxSize >= 512){
 			loadOneAsset( "background_sdpi.png");
 			background = "background_sdpi.png";
 		}

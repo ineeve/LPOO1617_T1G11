@@ -42,7 +42,7 @@ public class Physics_Controller implements ContactListener{
     /**
      * The arena height in meters.
      */
-    public static final int ARENA_HEIGHT = 3530; //117
+    public static final int ARENA_HEIGHT = 3530; //117 3530
 
 
     /**
