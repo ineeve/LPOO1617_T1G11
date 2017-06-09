@@ -161,6 +161,8 @@ public class PVE_Screen extends ScreenAdapter {
         if(!LevelManager.isEndOfGame()){
             handleInputs(delta);
         }
+        else if (acceY_initial != null)
+            acceY_initial = null;
         controller.update(delta);
         if (game.isHost() && game.isMultiplayer()){
             game.getBroadcast().sendMessage_from_Host(model);
