@@ -9,9 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
@@ -23,7 +21,6 @@ import com.raiden.game.screen.entities.ViewFactory;
 
 import java.util.Iterator;
 
-import static com.badlogic.gdx.Input.Keys.R;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -375,12 +372,10 @@ public class PVE_Screen extends ScreenAdapter{
     }
 
     private void handleTouch() {
-        int acceX =  (int)(-20 + (40/camera.viewportWidth) * Gdx.input.getX());
-        int acceY = (int)(20 - (30/camera.viewportHeight) * Gdx.input.getY());
-        message = "acceX=" + acceX + " ; accelY = " + acceY;
+        float cordX = (camera.position.x + camera.viewportWidth / 2 - ((1 - Gdx.input.getX() / (float) Gdx.graphics.getWidth()) * camera.viewportWidth)) * PIXEL_TO_METER;
+        float cordY = (camera.position.y + camera.viewportHeight / 2 - (Gdx.input.getY() / (float) Gdx.graphics.getHeight() * camera.viewportHeight)) * PIXEL_TO_METER;
         Gdx.app.log("touch",message);
-        controller.getAirPlane1().applyForceToCenter(acceX,acceY,true);
-
+        controller.getAirPlane1().setTransform(cordX, cordY, controller.getAirPlane1().getAngle());
     }
 
 
