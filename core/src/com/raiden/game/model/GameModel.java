@@ -44,12 +44,6 @@ public class GameModel implements Serializable {
         return instance;
     }
 
-    GameModel(){
-        addPlayers(new ArrayList<Player>(){{
-            add(new Player(Arena.getInstance().getmPlayerID()));
-        }});
-    }
-
     public static void clearInstance(){
         instance = null;
     }

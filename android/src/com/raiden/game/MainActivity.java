@@ -38,6 +38,7 @@ import com.google.android.gms.games.multiplayer.Multiplayer;
 import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
 import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
+import com.raiden.game.model.GameModel;
 import com.raiden.game.screen.PVE_Screen;
 
 import java.util.ArrayList;
@@ -209,6 +210,7 @@ public class MainActivity extends AppCompatActivity
                 System.exit(0);
                 break;
             case R.id.pve_singleplayer_button:
+                GameModel.getInstance().addPlayers(new ArrayList<Player>(){{add(new Player(Arena.getInstance().getmPlayerID()));}});
                 startActivity(new Intent(this, CLASSES[1]));
                 break;
             case R.id.pve_multiplayer_button:
