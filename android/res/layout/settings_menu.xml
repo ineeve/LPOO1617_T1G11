@@ -13,35 +13,34 @@
         android:layout_margin="8dp">
 
         <ImageView
-            android:id="@+id/volume_image"
+            android:id="@+id/accelerometer_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_margin="8dp"
-            android:background="@drawable/settings_button"/>
+            android:background="@drawable/settings_button" />
 
         <TextView
+            android:id="@+id/accelerometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/volume"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/volume_image"
-            android:layout_toEndOf="@+id/volume_image"
-            android:id="@+id/volume_text"
-            android:layout_marginTop="8dp"
+            android:layout_centerInParent="true"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"/>
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@+id/accelerometer_switch"
+            android:layout_toRightOf="@+id/accelerometer_image"
+            android:layout_toStartOf="@+id/accelerometer_switch"
+            android:text="@string/Accelerometer" />
 
-        <SeekBar
-            android:id="@+id/volune_seekbar"
+        <Switch
+            android:id="@+id/accelerometer_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/volume_text"
-            android:layout_toRightOf="@+id/volume_image"
-            android:layout_toEndOf="@+id/volume_image"
-            android:layout_marginLeft="16dp" />
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:checked="true" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -132,42 +131,6 @@
         android:layout_margin="8dp">
 
         <ImageView
-            android:id="@+id/accelerometer_image"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/settings_button"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Accelerometer"
-            android:layout_toRightOf="@+id/accelerometer_image"
-            android:id="@+id/accelerometer"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="24dp"
-            android:layout_toLeftOf="@+id/accelerometer_switch"
-            android:layout_toStartOf="@+id/accelerometer_switch"
-            android:layout_centerInParent="true" />
-
-        <Switch
-            android:id="@+id/accelerometer_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:checked="true"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
-
-        <ImageView
             android:id="@+id/vibration_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -196,6 +159,43 @@
             android:layout_centerInParent="true"
             android:checked="false"/>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/volume_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/settings_button" />
+
+        <TextView
+            android:id="@+id/volume_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/volume_image"
+            android:layout_toRightOf="@+id/volume_image"
+            android:text="@string/volume" />
+
+        <SeekBar
+            android:id="@+id/volune_seekbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/volume_text"
+            android:layout_marginLeft="16dp"
+            android:layout_toEndOf="@+id/volume_image"
+            android:layout_toRightOf="@+id/volume_image" />
     </RelativeLayout>
 
 </LinearLayout>
