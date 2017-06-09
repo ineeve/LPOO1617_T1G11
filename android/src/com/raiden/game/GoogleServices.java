@@ -203,7 +203,7 @@ class GoogleServices implements Broadcast{
                 continue;
             if (p.getStatus() != Participant.STATUS_JOINED)
                 continue;
-            if (false) {
+            if (true) {
                 Log.d(TAG, "Sending Message from: " + mMyId);
                 // final score notification must be sent via reliable message
                 Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
