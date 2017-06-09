@@ -112,13 +112,14 @@ public class MainActivity extends AppCompatActivity
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         // [END customize_button]
 
-        // Create the Google Api Client with access to Games
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                .build();
-
+        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+            // Create the Google Api Client with access to Games
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                    .build();
+        }
         mImageManager = ImageManager.create(this);
 
         addSeekBarTouchListener();
@@ -332,7 +333,7 @@ public class MainActivity extends AppCompatActivity
     ImageManager mImageManager = null;
 
 
-    void startQuickGame() {
+    public void startQuickGame() {
         // quick-start a game with 1 randomly selected opponent
         final int MIN_OPPONENTS = 1, MAX_OPPONENTS = 1;
         Bundle autoMatchCriteria = RoomConfig.createAutoMatchCriteria(MIN_OPPONENTS,

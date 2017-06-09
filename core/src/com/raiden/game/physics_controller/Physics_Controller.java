@@ -271,15 +271,19 @@ public class Physics_Controller implements ContactListener{
     }
 
     private void checkIfGameEnd() {
+        boolean endGame = false;
         if(!LevelManager.isEndOfGame()) {
             if (GameModel.getInstance().getMyPlayer().getShip().isFlaggedForRemoval()) {
-                LevelManager.setEndOfGame(true);
+                LevelManager.setEndOfGame(true); endGame = true;
             }
             if (arena.isMultiplayer() && arena.isHost()) {
                 if (GameModel.getInstance().getOtherPlayer().getShip().isFlaggedForRemoval()) {
-                    LevelManager.setEndOfGame(true);
+                    LevelManager.setEndOfGame(true); endGame = true;
                 }
             }
+        }
+        if (endGame){
+            arena.getBroadcast().submitScore(GameModel.getInstance().getMyPlayer().getScore());
         }
     }
 

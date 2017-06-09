@@ -182,4 +182,8 @@ public class Arena extends Game{
 	public String getBackground() {
 		return background;
 	}
+
+	public void submitScore(long score){
+		broadcast.submitScore(score);
+	}
 }

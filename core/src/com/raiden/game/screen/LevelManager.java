@@ -1,6 +1,7 @@
 package com.raiden.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.raiden.game.Arena;
 import com.raiden.game.model.entities.EntityModel;
 
 /**
