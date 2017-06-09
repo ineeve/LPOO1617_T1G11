@@ -37,6 +37,11 @@ public class Arena extends Game {
 	private String background;
 
 
+
+
+	private boolean useAccelerometer = true;
+
+
 	public void setBroadcast(Broadcast broadcast) {
 		this.broadcast = broadcast;
 	}
@@ -52,6 +57,22 @@ public class Arena extends Game {
 		assetManager = new AssetManager();
 		loadAssets();
 		startGame();
+	}
+
+	/**
+	 * Sets accelerometer flag
+	 * @param useAccelerometer Set true to use the accelerometer, false to use the touch as input
+	 */
+	public void setUseAccelerometer(boolean useAccelerometer) {
+		this.useAccelerometer = useAccelerometer;
+	}
+
+	/**
+	 * Gets accelerometer switch state.
+	 * @return True if accelerometer switch is enabled, false otherwise
+	 */
+	public boolean isUseAccelerometer() {
+		return useAccelerometer;
 	}
 
 	/**

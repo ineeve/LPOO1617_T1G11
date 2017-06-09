@@ -132,6 +132,42 @@
         android:layout_margin="8dp">
 
         <ImageView
+            android:id="@+id/accelerometer_image"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/settings_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Accelerometer"
+            android:layout_toRightOf="@+id/accelerometer_image"
+            android:id="@+id/accelerometer"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="24dp"
+            android:layout_toLeftOf="@+id/accelerometer_switch"
+            android:layout_toStartOf="@+id/accelerometer_switch"
+            android:layout_centerInParent="true" />
+
+        <Switch
+            android:id="@+id/accelerometer_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:checked="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <ImageView
             android:id="@+id/vibration_image"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -141,7 +177,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vibration"
+            android:text="@string/Vibration"
             android:layout_toRightOf="@+id/vibration_image"
             android:id="@+id/vibration"
             android:layout_marginTop="8dp"
@@ -157,7 +193,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:checked="false"/>
 
     </RelativeLayout>
 

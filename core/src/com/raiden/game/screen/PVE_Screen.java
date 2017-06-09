@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
@@ -21,6 +23,7 @@ import com.raiden.game.screen.entities.ViewFactory;
 
 import java.util.Iterator;
 
+import static com.badlogic.gdx.Input.Keys.R;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_HEIGHT;
 import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
 
@@ -28,7 +31,7 @@ import static com.raiden.game.physics_controller.Physics_Controller.ARENA_WIDTH;
  * A view representing the game screen. Draws all the other views and
  * controls the camera.
  */
-public class PVE_Screen extends ScreenAdapter {
+public class PVE_Screen extends ScreenAdapter{
 
     /**
      * Used to debug the position of the physics fixtures
@@ -80,6 +83,9 @@ public class PVE_Screen extends ScreenAdapter {
     private BitmapFont scoreBitmap;
 
     private boolean accelerometerAvail;
+
+    private String message = "No gesture performed yet";
+
 
 
     //-----------------------------------------METHODS------------------------------------------------//
@@ -349,7 +355,7 @@ public class PVE_Screen extends ScreenAdapter {
      */
     private void handleInputs(float delta) {
         //Gdx.app.log("Accelerometer", "Handling Inputs");
-        if (accelerometerAvail){
+        if (game.isUseAccelerometer() && accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
             if (Math.abs(acceX) <= 0.15){
                 acceX = 0f;
@@ -359,7 +365,20 @@ public class PVE_Screen extends ScreenAdapter {
             float velY = getVelocity_Y(acceY);
             controller.getAirPlane1().setVelocity(-acceX * sensibility_X, velY);
         }
+        else if (Gdx.input.isTouched()){
+            handleTouch();
+        }
     }
+
+    private void handleTouch() {
+        int acceX =  (int)(-20 + (40/camera.viewportWidth) * Gdx.input.getX());
+        int acceY = (int)(20 - (30/camera.viewportHeight) * Gdx.input.getY());
+        message = "acceX=" + acceX + " ; accelY = " + acceY;
+        Gdx.app.log("touch",message);
+        controller.getAirPlane1().applyForceToCenter(acceX,acceY,true);
+
+    }
+
 
     /**
      * Draws the entities to the screen.

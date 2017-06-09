@@ -17,9 +17,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -47,7 +49,7 @@ import static android.R.drawable.sym_def_app_icon;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-        OnInvitationReceivedListener, ImageManager.OnImageLoadedListener {
+        OnInvitationReceivedListener, ImageManager.OnImageLoadedListener{
 
     DrawerLayout drawerLayout;
 
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity
     private View mHView;
 
     private AdView mAdView;
+
+    private Switch accelerometerSwitch;
 
     private static final int[] CLICKABLES = {
             R.id.login_button, R.id.settings_button,
@@ -128,6 +132,12 @@ public class MainActivity extends AppCompatActivity
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(adRequest);
+        accelerometerSwitch = (Switch) findViewById(R.id.accelerometer_switch);
+        accelerometerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d("Switch", "State changed");
+                Arena.getInstance().setUseAccelerometer(isChecked);
+            }});
     }
 
     private void addSeekBarTouchListener() {

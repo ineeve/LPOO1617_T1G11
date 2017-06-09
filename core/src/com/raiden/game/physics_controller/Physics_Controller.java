@@ -205,21 +205,29 @@ public class Physics_Controller implements ContactListener{
             yLowerBound = (camera.position.y - camera.viewportHeight/2.0f) * PIXEL_TO_METER;
             yUpperBound = (camera.position.y + camera.viewportHeight/2.0f) * PIXEL_TO_METER;
         }
-        if (body.getPosition().x < 0)
+        if (body.getPosition().x < 0){
             body.setTransform(0, body.getPosition().y, body.getAngle());
+            body.setLinearVelocity(0,body.getLinearVelocity().y);
+        }
 
         if (body.getPosition().y < yLowerBound) {
-            if (!delete)
+            if (!delete){
                 body.setTransform(body.getPosition().x, yLowerBound, body.getAngle());
+                body.setLinearVelocity(body.getLinearVelocity().x,2);
+            }
             else
                 return true;
         }
-        if (body.getPosition().x > ARENA_WIDTH)
+        if (body.getPosition().x > ARENA_WIDTH){
             body.setTransform(ARENA_WIDTH, body.getPosition().y, body.getAngle());
+            body.setLinearVelocity(0,body.getLinearVelocity().y);
+        }
 
         if (body.getPosition().y > yUpperBound) {
-            if (!delete)
+            if (!delete){
                 body.setTransform(body.getPosition().x, yUpperBound, body.getAngle());
+                body.setLinearVelocity(body.getLinearVelocity().x,0);
+            }
             else
                 return true;
         }
