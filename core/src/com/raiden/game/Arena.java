@@ -9,9 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.raiden.game.model.GameModel;
-import com.raiden.game.physics_controller.Physics_Controller;
 import com.raiden.game.screen.EnemiesFactory;
-import com.raiden.game.screen.LevelManager;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
 
@@ -71,10 +69,7 @@ public class Arena extends Game {
 		batch.dispose();
 		ViewFactory.getInstance().dispose();
 		EnemiesFactory.getInstance().dispose();
-		PVE_Screen.clearInstance();
-		Physics_Controller.clearInstance();
-		GameModel.clearInstance();
-		LevelManager.setEndOfGame(false);
+		PVE_Screen.getInstance().clean();
 		multiplayer = false;
 		assetManager.dispose();
 	}

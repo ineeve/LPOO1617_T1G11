@@ -1,6 +1,5 @@
 package com.raiden.game;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gms.games.Games;
@@ -156,9 +155,9 @@ class GoogleServices implements Broadcast{
             if ( mGoogleApiClient != null && mGoogleApiClient.isConnected()){
                 Games.Leaderboards.submitScore(mGoogleApiClient, mMainActivity.getResources().getString(R.string.LEADERBOARD_ID), score);
             }
-            Intent intent = new Intent(mMainActivity.getApplicationContext(),score.class);
-            intent.putExtra("SCORE",score);
-            mMainActivity.startActivity(intent);
+            //Intent intent = new Intent(mMainActivity.getApplicationContext(),score.class);
+            //intent.putExtra("SCORE",score);
+            //mMainActivity.startActivity(intent);
     }
     public void leaveRoom() {
         mMainActivity.leaveRoom();
