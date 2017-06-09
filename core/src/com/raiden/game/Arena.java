@@ -86,7 +86,6 @@ public class Arena extends Game {
 	@Override
 	public void dispose() {
 		broadcast.leaveRoom();
-		broadcast.submitScore(GameModel.getInstance().getMyPlayer().getScore());
 		batch.dispose();
 		ViewFactory.getInstance().dispose();
 		EnemiesFactory.getInstance().dispose();
