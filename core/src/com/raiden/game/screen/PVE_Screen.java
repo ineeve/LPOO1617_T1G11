@@ -117,6 +117,7 @@ public class PVE_Screen extends ScreenAdapter{
         initializeBitmapFont();
         accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         loadMusicAndStartPlaying();
+        EndGameShowScore.initButtons(this);
     }
 
     private void loadMusicAndStartPlaying(){
@@ -202,6 +203,9 @@ public class PVE_Screen extends ScreenAdapter{
         drawBackground();
         drawEntities();
         drawScore();
+        if(LevelManager.isEndOfGame()){
+            EndGameShowScore.render();
+        }
         game.getBatch().end();
 
         if (DEBUG_PHYSICS) {
@@ -404,4 +408,10 @@ public class PVE_Screen extends ScreenAdapter{
         game.getBatch().draw(background, 0, 0, 0, 0, (int)(ARENA_WIDTH / PIXEL_TO_METER), (int) (ARENA_HEIGHT / PIXEL_TO_METER));
     }
 
+    public void clean() {
+        clearInstance();
+        Physics_Controller.clearInstance();
+        GameModel.clearInstance();
+        LevelManager.setEndOfGame(false);
+    }
 }
