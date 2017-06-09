@@ -20,33 +20,33 @@ import java.nio.IntBuffer;
 /**
  * The game main class.
  */
-public class Arena extends Game{
+public class Arena extends Game {
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 
-    private static Arena instance;
+	private static Arena instance;
 
 	private boolean multiplayer = false;
 
-    private boolean host = false;
+	private boolean host = false;
 
-    private String mPlayerID = "I_AM_THE_REAL_MVP";
+	private String mPlayerID = "I_AM_THE_REAL_MVP";
 
 	private Broadcast broadcast;
 
 	private String background;
 
 
-    public void setBroadcast(Broadcast broadcast) {
-        this.broadcast = broadcast;
-    }
+	public void setBroadcast(Broadcast broadcast) {
+		this.broadcast = broadcast;
+	}
 
 	/**
 	 * Creates the game. Initializes the sprite batch and asset manager.
 	 * Also starts the game until we have a main menu.
 	 */
 	@Override
-	public void create () {
+	public void create() {
 		instance = this;
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
@@ -65,7 +65,7 @@ public class Arena extends Game{
 	 * Disposes of all assets. Submits score and leaves room;
 	 */
 	@Override
-	public void dispose () {
+	public void dispose() {
 		broadcast.leaveRoom();
 		broadcast.submitScore(GameModel.getInstance().getMyPlayer().getScore());
 		batch.dispose();
@@ -80,48 +80,46 @@ public class Arena extends Game{
 	}
 
 
-	private void loadOneAsset(String asset){
-		this.assetManager.load( asset , Texture.class);
+	private void loadOneAsset(String asset) {
+		this.assetManager.load(asset, Texture.class);
 	}
 
 	/**
 	 * Loads the assets needed by this screen.
 	 */
 	private void loadAssets() {
-		loadOneAsset( "spaceship-no-thrust.png");
-		loadOneAsset( "spaceship-thrust.png");
-		loadOneAsset( "AirPlane_1.png");
-		loadOneAsset( "AirPlane_2.png");
-		loadOneAsset( "AirPlane_3.png");
-		loadOneAsset( "Tank.png");
-		loadOneAsset( "Bullet.png");
+		loadOneAsset("spaceship-no-thrust.png");
+		loadOneAsset("spaceship-thrust.png");
+		loadOneAsset("AirPlane_1.png");
+		loadOneAsset("AirPlane_2.png");
+		loadOneAsset("AirPlane_3.png");
+		loadOneAsset("Tank.png");
+		loadOneAsset("Bullet.png");
 		IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
 		Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
 		int maxSize = intBuffer.get();
 		Gdx.app.log("MaxGraphicsBuf_SIXE", String.valueOf(intBuffer.get()));
-		if (maxSize > 5900){
-			loadOneAsset( "background_xxxdpi.png");
+		if (maxSize > 5900) {
+			loadOneAsset("background_xxxdpi.png");
 			background = "background_xxxdpi.png";
-		}else if(maxSize >= 4096){
-			loadOneAsset( "background_xxdpi.png");
+		} else if (maxSize >= 4096) {
+			loadOneAsset("background_xxdpi.png");
 			background = "background_xxdpi.png";
-		}else if(maxSize >= 3500){
-			loadOneAsset( "background_xdpi.png");
+		} else if (maxSize >= 3500) {
+			loadOneAsset("background_xdpi.png");
 			background = "background_xdpi.png";
-		}else if(maxSize >= 2048){
-			loadOneAsset( "background_hdpi.png");
+		} else if (maxSize >= 2048) {
+			loadOneAsset("background_hdpi.png");
 			background = "background_hdpi.png";
-		}
-		else if(maxSize >= 1024){
-			loadOneAsset( "background_mdpi.png");
+		} else if (maxSize >= 1024) {
+			loadOneAsset("background_mdpi.png");
 			background = "background_mdpi.png";
-		}
-		else if(maxSize >= 512){
-			loadOneAsset( "background_sdpi.png");
+		} else if (maxSize >= 512) {
+			loadOneAsset("background_sdpi.png");
 			background = "background_sdpi.png";
 		}
-		loadOneAsset( "commet.png");
-        this.assetManager.load( "Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
+		loadOneAsset("commet.png");
+		this.assetManager.load("Oxia-Domino (Robag's Lasika Cafa Nb).mp3", Music.class);
 
 		this.assetManager.finishLoading();
 	}
@@ -148,8 +146,8 @@ public class Arena extends Game{
 		return broadcast;
 	}
 
-	public static Arena getInstance(){
-		if(instance == null){
+	public static Arena getInstance() {
+		if (instance == null) {
 			instance = new Arena();
 		}
 		return instance;
@@ -163,27 +161,27 @@ public class Arena extends Game{
 		this.multiplayer = multiplayer;
 	}
 
-    public boolean isHost() {
-        return host;
-    }
+	public boolean isHost() {
+		return host;
+	}
 
-    public void setHost(boolean host) {
-        this.host = host;
-    }
+	public void setHost(boolean host) {
+		this.host = host;
+	}
 
-    public String getmPlayerID() {
-        return mPlayerID;
-    }
+	public String getmPlayerID() {
+		return mPlayerID;
+	}
 
-    public void setmPlayerID(String mPlayerID) {
-        this.mPlayerID = mPlayerID;
-    }
+	public void setmPlayerID(String mPlayerID) {
+		this.mPlayerID = mPlayerID;
+	}
 
 	public String getBackground() {
 		return background;
 	}
 
-	public void submitScore(long score){
+	public void submitScore(long score) {
 		broadcast.submitScore(score);
 	}
 }
