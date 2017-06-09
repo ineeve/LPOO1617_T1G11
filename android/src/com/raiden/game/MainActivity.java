@@ -36,7 +36,6 @@ import com.google.android.gms.games.multiplayer.Multiplayer;
 import com.google.android.gms.games.multiplayer.OnInvitationReceivedListener;
 import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
-import com.raiden.game.model.GameModel;
 import com.raiden.game.screen.PVE_Screen;
 
 import java.util.ArrayList;
@@ -112,14 +111,13 @@ public class MainActivity extends AppCompatActivity
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         // [END customize_button]
 
-        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
-            // Create the Google Api Client with access to Games
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(Games.API).addScope(Games.SCOPE_GAMES)
-                    .build();
-        }
+        // Create the Google Api Client with access to Games
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
+
         mImageManager = ImageManager.create(this);
 
         addSeekBarTouchListener();
