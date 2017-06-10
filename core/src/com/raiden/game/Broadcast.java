@@ -5,10 +5,11 @@ import com.raiden.game.model.entities.EntityModel;
 
 import java.io.Serializable;
 
-/**
- * Created by João on 01/06/2017.
- */
 
+/**
+ * An interface that defines the protocol of communication between the host and the client.
+ * It also allows to make calls to the GoogleApi from inside of the core module.
+ */
 public interface Broadcast {
     boolean sendMessage_from_Host(GameModel model);
 

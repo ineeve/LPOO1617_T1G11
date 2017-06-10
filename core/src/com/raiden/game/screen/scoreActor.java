@@ -6,9 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
- * Created by ineeve on 10-06-2017.
+ * Used to display the score in a pretty manner when the game ends.
  */
-
 public class scoreActor extends Actor {
 
     private BitmapFont font;

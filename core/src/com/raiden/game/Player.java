@@ -4,9 +4,6 @@ import com.raiden.game.model.entities.ShipModel;
 
 import java.io.Serializable;
 
-/**
- * Created by ineeve on 01-06-2017.
- */
 
 public class Player implements Serializable {
     private static final long serialVersionUID = 12L;

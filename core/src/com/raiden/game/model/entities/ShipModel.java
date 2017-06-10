@@ -1,5 +1,7 @@
 package com.raiden.game.model.entities;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+
 /**
  * Created by João on 19/05/2017.
  */
@@ -25,6 +27,7 @@ public abstract class ShipModel extends MovingObjectModel{
 
     //The bullet associated with this ship. Currently not in use.
     private BulletModel bullet;
+
 
     /**
      * Creates a new ship model in a certain position and creates a bullet for this ship.

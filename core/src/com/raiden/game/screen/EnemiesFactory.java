@@ -17,16 +17,14 @@ import static com.raiden.game.physics_controller.movement.MoveManager.MovementTy
 import static com.raiden.game.physics_controller.movement.MoveManager.MovementType.HORIZONTAL;
 import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
-
+/**
+ * A class that can generate waves of enemies and bosses.
+ */
 public class EnemiesFactory {
     private static EnemiesFactory instance;
     private PoolManager poolManager = new PoolManager();
 
     private MoveManager.MovementType nextMoveType;
-
-    public PoolManager getPoolManager() {
-        return poolManager;
-    }
 
     private float xOfNextSpawn;
     private float yOfNextSpawn;
@@ -35,6 +33,10 @@ public class EnemiesFactory {
         if(instance == null)
             instance = new EnemiesFactory();
         return instance;
+    }
+
+    public PoolManager getPoolManager() {
+        return poolManager;
     }
 
     void makeBoss(PVE_Screen screen) {

@@ -15,7 +15,7 @@ public class Airplane_1_View extends ShipView {
      */
     private static final float FRAME_TIME = 0.05f;
 
-
+    //Number of frames in the animation
     private final int numberOfAnimations = 4;
 
 

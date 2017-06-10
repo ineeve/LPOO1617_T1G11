@@ -1,5 +1,6 @@
 package com.raiden.game.model.entities;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.raiden.game.physics_controller.movement.MoveManager;
 
 /**
@@ -20,6 +21,7 @@ public abstract class MovingObjectModel extends EntityModel implements DamageObj
 
     //The initial armor of the object is 0.
     protected int armor = 0;
+
 
     /**
      * Creates a new Moving Object model in a certain position

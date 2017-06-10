@@ -1,5 +1,7 @@
 package com.raiden.game.model.entities;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+
 /**
  * A well balanced airplane
  */

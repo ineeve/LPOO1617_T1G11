@@ -15,9 +15,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import static com.badlogic.gdx.Gdx.app;
 
 /**
- * Created by João on 09/06/2017.
+ * A class that renders the final score in a pretty menu designed using libgdx.
  */
-
 abstract class EndGameShowScore{
     private static final int NUM_BUTTONS = 3;
     private static PVE_Screen screen;

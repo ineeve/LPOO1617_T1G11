@@ -1,13 +1,11 @@
 package com.raiden.game.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.raiden.game.Arena;
 import com.raiden.game.model.entities.EntityModel;
 
 /**
- * Created by João on 27/05/2017.
+ * A class responsible for managing the frequency in which enemy waves are generated.
  */
-
 public class LevelManager {
 
     private double t = 0;

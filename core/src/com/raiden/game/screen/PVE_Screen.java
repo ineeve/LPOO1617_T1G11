@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.raiden.game.Arena;
 import com.raiden.game.model.GameModel;
 import com.raiden.game.model.entities.EntityModel;
@@ -35,6 +36,9 @@ public class PVE_Screen extends ScreenAdapter{
      */
     private static final boolean DEBUG_PHYSICS = true;
 
+    /**
+     * The instance of this screen.
+     */
     private static PVE_Screen instance;
 
     /**
@@ -51,7 +55,10 @@ public class PVE_Screen extends ScreenAdapter{
      * The physics controller for this game.
      */
     private final Physics_Controller controller;
-    
+
+    /**
+     * A instance of the game model.
+     */
     private final GameModel model;
 
     /**
@@ -59,7 +66,9 @@ public class PVE_Screen extends ScreenAdapter{
      */
     private final OrthographicCamera camera;
 
+    //The camera speed in the y axis.
     private static final int CAMERA_Y_SPEED = 50;
+    //The camera speed max in the x axis.
     private static final int CAMERA_X_SPEED = 200;
 
     /**
@@ -73,17 +82,24 @@ public class PVE_Screen extends ScreenAdapter{
      */
     private Matrix4 debugCamera;
 
+    //An instance of the LevelManager class.
     private LevelManager levelManager;
 
+    //The text that is drawn using the scoreBitmap.
     private String scoreText;
 
+    //The bitmap font used to display the score during the game.
     private BitmapFont scoreBitmap;
 
+    /**
+     * Represents the availability of the accelerometer.
+     */
     private boolean accelerometerAvail;
 
-    private String message = "No gesture performed yet";
-
+    //Used to identify that a game end has just been detected.
     private boolean firstTime;
+
+    private ProgressBar healthBar;
 
 
 
@@ -113,7 +129,7 @@ public class PVE_Screen extends ScreenAdapter{
         controller.setCamera(camera);
         levelManager = new LevelManager();
         instance = this;
-        initializeBitmapFont();
+        initializeScoreBitmapFont();
         accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         loadMusicAndStartPlaying();
         EndGameShowScore.initButtons(this);
@@ -126,7 +142,7 @@ public class PVE_Screen extends ScreenAdapter{
         myMusic.play();
     }
 
-    private void initializeBitmapFont() {
+    private void initializeScoreBitmapFont() {
         scoreText = "score: 0";
         scoreBitmap = new BitmapFont();
         scoreBitmap.getData().setScale(5);
@@ -382,7 +398,6 @@ public class PVE_Screen extends ScreenAdapter{
     private void handleTouch() {
         float cordX = (camera.position.x + camera.viewportWidth / 2 - ((1 - Gdx.input.getX() / (float) Gdx.graphics.getWidth()) * camera.viewportWidth)) * PIXEL_TO_METER;
         float cordY = (camera.position.y + camera.viewportHeight / 2 - (Gdx.input.getY() / (float) Gdx.graphics.getHeight() * camera.viewportHeight)) * PIXEL_TO_METER;
-        Gdx.app.log("touch",message);
         controller.getAirPlane1().setTransform(cordX, cordY, controller.getAirPlane1().getAngle());
     }
 
@@ -400,6 +415,9 @@ public class PVE_Screen extends ScreenAdapter{
                 view.draw(game.getBatch());
             }
         }
+    }
+
+    private void drawHealthBars(){
     }
 
     /**

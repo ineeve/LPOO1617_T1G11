@@ -19,27 +19,29 @@ import java.nio.IntBuffer;
  * The game main class.
  */
 public class Arena extends Game {
+	//The SpriteBatch used to improve render performance.
 	private SpriteBatch batch;
+    //The asset manager responsible for managing all the assets.
 	private AssetManager assetManager;
-
+    //An Arena instance.
 	private static Arena instance;
-
+    //Flag to define this is a multiplayer game.
 	private boolean multiplayer = false;
-
+    //Flag to define if this instance will be the host or the client.
 	private boolean host = false;
-
+    //The player ID used by this instance of the game.
 	private String mPlayerID = "I_AM_THE_REAL_MVP";
-
+    //A Broadcast Interface used to communicate.
 	private Broadcast broadcast;
-
+    //String used to save the type (size) of background being loaded.
 	private String background;
-
-
-
-
+    //Flag used to check if the game input should be done by accelerometer.
 	private boolean useAccelerometer = true;
 
-
+    /**
+     * Defines the broadcast
+     * @param broadcast A class that implements the broadcast.
+     */
 	public void setBroadcast(Broadcast broadcast) {
 		this.broadcast = broadcast;
 	}
@@ -94,13 +96,16 @@ public class Arena extends Game {
 		assetManager.dispose();
 	}
 
-
+    /**
+     * Load one Asset to the assetManager.
+     * @param asset The name of the asset to be loaded.
+     */
 	private void loadOneAsset(String asset) {
 		this.assetManager.load(asset, Texture.class);
 	}
 
 	/**
-	 * Loads the assets needed by this screen.
+	 * Loads the assets needed by this screen. Images and Music.
 	 */
 	private void loadAssets() {
 		loadOneAsset("spaceship-no-thrust.png");
@@ -113,7 +118,6 @@ public class Arena extends Game {
 		IntBuffer intBuffer = BufferUtils.newIntBuffer(16);
 		Gdx.gl20.glGetIntegerv(GL20.GL_MAX_TEXTURE_SIZE, intBuffer);
 		int maxSize = intBuffer.get();
-		Gdx.app.log("MaxGraphicsBuf_SIXE", String.valueOf(intBuffer.get()));
 		if (maxSize > 5900) {
 			loadOneAsset("background_xxxdpi.png");
 			background = "background_xxxdpi.png";
@@ -157,10 +161,18 @@ public class Arena extends Game {
 		return batch;
 	}
 
+    /**
+     *
+     * @return The object responsible for the broadcast.
+     */
 	public Broadcast getBroadcast() {
 		return broadcast;
 	}
 
+    /**
+     *
+     * @return The instance of the arena, creating a new one if none exists.
+     */
 	public static Arena getInstance() {
 		if (instance == null) {
 			instance = new Arena();
@@ -168,34 +180,60 @@ public class Arena extends Game {
 		return instance;
 	}
 
+    /**
+     * @return True if this game is multiplayer, false otherwise.
+     */
 	public boolean isMultiplayer() {
 		return multiplayer;
 	}
 
+    /**
+     * @param multiplayer True if this game should be multiplayer, false otherwise.
+     */
 	public void setMultiplayer(boolean multiplayer) {
 		this.multiplayer = multiplayer;
 	}
 
+    /**
+     * @return True if this device is the host, false otherwise.
+     */
 	public boolean isHost() {
 		return host;
 	}
 
+    /**
+     * Defines this device as the host or as the client.
+     * @param host True if this device is the host, false if is a client.
+     */
 	public void setHost(boolean host) {
 		this.host = host;
 	}
 
+    /**
+     * @return The ID of the player playing in this device.
+     */
 	public String getmPlayerID() {
 		return mPlayerID;
 	}
 
+    /**
+     * @param mPlayerID The ID of the player playing in this device.
+     */
 	public void setmPlayerID(String mPlayerID) {
 		this.mPlayerID = mPlayerID;
 	}
 
+    /**
+     * @return A string containing the name of the background that shall be used.
+     */
 	public String getBackground() {
 		return background;
 	}
 
+    /**
+     * Used the broadcast object to submit the score via GoogleApi.
+     * @param score The score to submit.
+     */
 	public void submitScore(long score) {
 		broadcast.submitScore(score);
 	}
