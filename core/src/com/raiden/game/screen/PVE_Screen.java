@@ -83,6 +83,8 @@ public class PVE_Screen extends ScreenAdapter{
 
     private String message = "No gesture performed yet";
 
+    private boolean firstTime;
+
 
 
     //-----------------------------------------METHODS------------------------------------------------//
@@ -115,6 +117,7 @@ public class PVE_Screen extends ScreenAdapter{
         accelerometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
         loadMusicAndStartPlaying();
         EndGameShowScore.initButtons(this);
+        firstTime = true;
     }
 
     private void loadMusicAndStartPlaying(){
@@ -128,6 +131,7 @@ public class PVE_Screen extends ScreenAdapter{
         scoreBitmap = new BitmapFont();
         scoreBitmap.getData().setScale(5);
         scoreBitmap.setColor(0, 0, 0, 1.0f);
+        scoreBitmap.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     /**
@@ -201,6 +205,10 @@ public class PVE_Screen extends ScreenAdapter{
         drawEntities();
         drawScore();
         if(LevelManager.isEndOfGame()){
+            if (firstTime){
+                EndGameShowScore.setScore(model.getMyPlayer().getScore());
+                firstTime = false;
+            }
             EndGameShowScore.render();
         }
         game.getBatch().end();
