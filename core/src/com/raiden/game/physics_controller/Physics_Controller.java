@@ -1,6 +1,5 @@
 package com.raiden.game.physics_controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -32,6 +31,9 @@ import static com.raiden.game.screen.PVE_Screen.PIXEL_TO_METER;
 
 public class Physics_Controller implements ContactListener{
 
+    /**
+     * The gravity that is being applied to the world.
+     */
     private final int GRAVITY = -10;
 
     /**
@@ -50,13 +52,14 @@ public class Physics_Controller implements ContactListener{
      */
     protected final World world;
 
+
+    //An array with all the bodies active in the game.
     private ArrayList<DynamicBody> dynamicBodies;
 
-    /**
-     * The spaceship body.
-     */
+    //The player1 spaceship
     private ShipBody airPlane1;
 
+    //The player2 spaceship
     private ShipBody airPlane2;
 
     /**
@@ -64,6 +67,7 @@ public class Physics_Controller implements ContactListener{
      */
     private float accumulator;
 
+    //The camera used to render the view and to verify the position of all bodies.
     private OrthographicCamera camera;
 
     /**
@@ -71,14 +75,22 @@ public class Physics_Controller implements ContactListener{
      */
     private final float TIME_BETWEEN_SHOTS = .2f;
 
+    //Remaining time for the next shoot.
     private float timeToNextShoot;
 
+    //An instance of this controller.
     private static Physics_Controller instance;
 
+    //An instance of a controller factory, which is responsible for creating the bodies.
     private final ControllerFactory controllerFactory = ControllerFactory.getInstance();
 
+    //An instance of the arena.
     private final Arena arena = Arena.getInstance();
 
+    /**
+     * The constructor, creates a new world and the bodies from the GameModel provided.
+     * @param model The instance of GameModel, used to create the respective bodies.
+     */
     private Physics_Controller(GameModel model){
         dynamicBodies = new ArrayList<DynamicBody>();
         world = new World(new Vector2(0,GRAVITY),true);
@@ -86,12 +98,21 @@ public class Physics_Controller implements ContactListener{
         createBodiesFromModel(model);
     }
 
+    /**
+     * Return and Sets the physics_controller if needed.
+     * @return The current instance of the Physics Controller if exists, otherwise a new Physics_Controller.
+     */
     public static Physics_Controller getInstance() {
         if (instance == null)
             instance = new Physics_Controller(GameModel.getInstance());
         return instance;
     }
 
+    /**
+     * Adds a dynamic body to this controller.
+     * @param entityModel The model of the body to add.
+     * @return the DynamicBody created.
+     */
     public DynamicBody addDynamicBody(MovingObjectModel entityModel){
 
         DynamicBody body = controllerFactory.makeController(world, entityModel);
@@ -100,12 +121,20 @@ public class Physics_Controller implements ContactListener{
 
     }
 
+    /**
+     * Adds an entire list of bodies to this controller.
+     * @param entityModels The models used to generate the bodies.
+     */
     public void addDynamicBodies(ArrayList<MovingObjectModel> entityModels){
         for(EntityModel modelEntity : entityModels){
             dynamicBodies.add(controllerFactory.makeController(world, modelEntity));
         }
     }
 
+    /**
+     * Checks if a body exists, and removes it if so.
+     * @param body The body to be removed/destroyed.
+     */
     public void destroyDynamicBody(DynamicBody body){
         if (dynamicBodies.contains(body)){
             dynamicBodies.remove(body);
@@ -113,16 +142,24 @@ public class Physics_Controller implements ContactListener{
         }
     }
 
+    /**
+     * Removes and entire list of bodies from this controller.
+     * @param bodies The bodies to be removed.
+     */
     public void destroyDynamicBodies(ArrayList<DynamicBody> bodies){
         for(DynamicBody body : bodies){
-            dynamicBodies.remove(body);
-            world.destroyBody(body.getBody());
+            destroyDynamicBody(body);
         }
     }
 
+    /**
+     * Sets the camera that shall be used to verify the bodies positions.
+     * @param camera
+     */
     public void setCamera(OrthographicCamera camera){
         this.camera = camera;
     }
+
     /**
      * Calculates the next physics step of duration delta (in seconds).
      *
@@ -153,12 +190,15 @@ public class Physics_Controller implements ContactListener{
         verifyPositionOfBodies();
     }
 
+    /**
+     * Removes from this controller all the bodies that are flagged to be removed.
+     * Also removes the body from the game model.
+     */
     public void removeFlaggedForRemoval(){
         for(int i = 0; i < dynamicBodies.size(); i++){
             DynamicBody body = dynamicBodies.get(i);
             EntityModel currentModel = (EntityModel)body.getUserData();
             if (currentModel.isFlaggedForRemoval()){
-                Gdx.app.log("Physics_Controller.removeFlaggedForRemoval()","Destroying Dynamic Body");
                 destroyDynamicBody(body);
                 GameModel.getInstance().deleteEntityModel(currentModel);
                 i--;
@@ -166,6 +206,10 @@ public class Physics_Controller implements ContactListener{
         }
     }
 
+    /**
+     * Corrects the position of the players ships if they are out of the viewport.
+     * Destroys all the other bodies that are out of the viewport.
+     */
     private void verifyPositionOfBodies(){
         for (int i = 0; i < dynamicBodies.size(); i++) {
             DynamicBody dynamicBody = dynamicBodies.get(i);
@@ -188,7 +232,7 @@ public class Physics_Controller implements ContactListener{
     }
 
     /**
-     * Verifies if the body is inside the arena bounds
+     * Verifies if the body is inside the viewport and arena bounds
      *
      * @param body The body to be verified.
      * @param delete True if this body should be deleted when it crosses the y bounds, false otherwise;
@@ -247,27 +291,25 @@ public class Physics_Controller implements ContactListener{
      * Uses the model to create the bodies for each Entity Model
      * @param model the Game Model to use
      */
-    public void createBodiesFromModel(GameModel model){
-        for (Player player : model.getPlayers()){
-            DynamicBody newDynamicBody = controllerFactory.makeController(world,player.getShip());
+    public void createBodiesFromModel(GameModel model) {
+        for (Player player : model.getPlayers()) {
+            DynamicBody newDynamicBody = controllerFactory.makeController(world, player.getShip());
             dynamicBodies.add(newDynamicBody);
-            if(player.getID().compareTo(arena.getmPlayerID()) == 0){
+            if (player.getID().compareTo(arena.getmPlayerID()) == 0) {
                 airPlane1 = (ShipBody) newDynamicBody;
                 airPlane1.getBody().setGravityScale(0);
-            }
-            else {
+            } else {
                 airPlane2 = (ShipBody) newDynamicBody;
                 airPlane2.getBody().setGravityScale(0);
             }
         }
     }
 
-
     /*
- * A contact between two objects was detected
- *
- * @param contact the detected contact
- */
+    * A contact between two objects was detected
+    *
+    * @param contact the detected contact
+    */
     @Override
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
@@ -278,6 +320,9 @@ public class Physics_Controller implements ContactListener{
             checkIfGameEnd();
     }
 
+    /**
+     * Checks if the game has ended, if so -> tries to submit the score and communicates the game state to the level manager.
+     */
     private void checkIfGameEnd() {
         boolean endGame = false;
         if(!LevelManager.isEndOfGame()) {
@@ -295,6 +340,11 @@ public class Physics_Controller implements ContactListener{
         }
     }
 
+    /**
+     * Handle collision between 2 bodies.
+     * @param bodyA A body that collided
+     * @param bodyB A body that collided
+     */
     private void collisionHandler(Body bodyA, Body bodyB){
         MovingObjectModel aModel = (MovingObjectModel) bodyA.getUserData();
         MovingObjectModel bModel = (MovingObjectModel) bodyB.getUserData();
@@ -317,6 +367,12 @@ public class Physics_Controller implements ContactListener{
 
     }
 
+    /**
+     *
+     * @param aModel A model suspect of being part of friendly fire.
+     * @param bModel A model suspect of being part of friendly fire.
+     * @return true if friendly-fire between players has been detected, false otherwise.
+     */
     private boolean friendlyFire(EntityModel aModel, EntityModel bModel) {
         if (aModel instanceof BulletModel){
             if(((BulletModel) aModel).getOwner() == GameModel.getInstance().getMyPlayer().getShip()){
@@ -339,6 +395,11 @@ public class Physics_Controller implements ContactListener{
         return false;
     }
 
+    /**
+     * Increases score of a player, if is ship has killed some other body,
+     * @param bodyA A body suspect of being involved in the killing of another body.
+     * @param bodyB A body suspect of being involved in the killing of another body.
+     */
     private void updateScores(Body bodyA, Body bodyB){
         //B is dead
         MovingObjectModel aModel = (MovingObjectModel) bodyA.getUserData();
@@ -365,6 +426,29 @@ public class Physics_Controller implements ContactListener{
         }
     }
 
+
+    /**
+     *
+     * @return the player1 airplane's body.
+     */
+    public ShipBody getAirPlane1() {
+        return airPlane1;
+    }
+
+    /**
+     *
+     * @return the player2 airplane's body.
+     */
+    public ShipBody getAirPlane2() {
+        return airPlane2;
+    }
+    /**
+     * Sets the instance of this controller to null.
+     */
+    public static void clearInstance(){
+        instance = null;
+    }
+
     @Override
     public void endContact(Contact contact) {
 
@@ -380,15 +464,7 @@ public class Physics_Controller implements ContactListener{
 
     }
 
-    public ShipBody getAirPlane1() {
-        return airPlane1;
-    }
 
-    public static void clearInstance(){
-        instance = null;
-    }
 
-    public ShipBody getAirPlane2() {
-        return airPlane2;
-    }
+
 }

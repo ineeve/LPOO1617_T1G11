@@ -13,13 +13,16 @@ import com.raiden.game.physics_controller.Shoot;
  */
 
 public abstract class ShipBody extends DynamicBody implements Shoot {
-
+    //The default friction value for all ships.
     private float friction = 0.4f;
 
+    //The default restitution value for all ships.
     private float restitution = 0.5f;
 
+    //How much time's left to shoot again (in seconds).
     private float timeToNextShoot = 0;
 
+    //The time in seconds between different shots.
     private final float TIME_BETWEEN_SHOTS = 0.2f;
 
     /**
@@ -36,16 +39,30 @@ public abstract class ShipBody extends DynamicBody implements Shoot {
         movementType = model.getMovementType();
     }
 
-    public abstract void updatePhysics();
+    /**
+     * Defines all the fixtures of this body.
+     */
+    public abstract void setFixtureVertices();
 
+    /**
+     * @param friction The friction of the fixture. How slippery it is.
+     */
     public void setFriction(float friction) {
         this.friction = friction;
     }
 
+    /**
+     * @param restitution The restitution of the fixture. How much it bounces.
+     */
     public void setRestitution(float restitution) {
         this.restitution = restitution;
     }
 
+    /**
+     * Shoots a bullet from this body with attention to the fire rate defined.
+     * @param deltaTime The time elapsed in seconds since last game cycle.
+     * @return the bullet shoot or null if no bullet was created do to timeToNextShoot > 0.
+     */
     @Override
     public BulletModel shoot(float deltaTime){
         if(((ShipModel) this.getUserData()).canShoot()) {

@@ -36,9 +36,6 @@ abstract class EndGameShowScore{
         @Override
         public void clicked(InputEvent event, float x, float y)
         {
-            app.log("Listener Actor: ", String.valueOf(event.getListenerActor()));
-            app.log("Listener type: ", String.valueOf(event.getType()));
-            app.log("Listener keycode: ", String.valueOf(event.getKeyCode()));
             if (event.getListenerActor() == buttons[0]) {
                 app.exit();
             } else if (event.getListenerActor() == buttons[1]) {

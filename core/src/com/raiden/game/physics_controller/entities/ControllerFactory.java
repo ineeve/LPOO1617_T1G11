@@ -2,15 +2,15 @@ package com.raiden.game.physics_controller.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.raiden.game.model.entities.BulletModel;
+import com.raiden.game.model.entities.CometModel;
 import com.raiden.game.model.entities.EntityModel;
 import com.raiden.game.model.entities.MovingObjectModel;
 import com.raiden.game.model.entities.ShipModel;
 import com.raiden.game.model.entities.TankModel;
 
 /**
- * Created by João on 24/05/2017.
+ * Factory Responsible for creating bodies.
  */
-
 public class ControllerFactory {
 
     private static ControllerFactory instance;
@@ -34,7 +34,7 @@ public class ControllerFactory {
                     bodyToReturn = new BulletBody(world,(BulletModel) model);
                     break;
                 case COMET:
-                    bodyToReturn = new CometBody(world,(MovingObjectModel) model);
+                    bodyToReturn = new CometBody(world,(CometModel) model);
                     break;
                 case OBSTACLE:
                     //TODO: change this to the real view class

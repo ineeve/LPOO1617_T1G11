@@ -8,7 +8,9 @@ import com.raiden.game.model.entities.EntityModel;
  */
 
 public class CometBody extends DynamicBody {
-    private static float MAXVELOCITY_Default = AirPlane_1.MAXVELOCITY_Default * 5f;
+
+    //The max speed default value for the comet. It is related with airplane_1 max speed.
+    private static float MAXVELOCITY_Default = AirPlane_1.MAXSPEED_Default * 5f;
 
     /**
      * Constructs a body representing a model in a certain world.
@@ -26,6 +28,11 @@ public class CometBody extends DynamicBody {
         setDensity(30f);
         setFixtureVertices();
     }
+
+
+    /**
+     * Defines all the fixtures of this body.
+     */
     private void setFixtureVertices(){
         float tolerance = 0.2f;
         createFixture(new float[]{

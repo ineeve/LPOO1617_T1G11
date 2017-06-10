@@ -30,6 +30,11 @@ public class BulletBody extends DynamicBody {
         height = model.getHeight();
         setFixtureVertices();
     }
+
+
+    /**
+     * Defines all the fixtures of this body.
+     */
     private void setFixtureVertices(){
         createFixture(new float[]{
                 0,0, width,0, width,height,0,height

@@ -10,9 +10,11 @@ import com.raiden.game.model.entities.MovingObjectModel;
  */
 public class AirPlane_2 extends ShipBody {
 
-    private static float MAXVELOCITY_Default = AirPlane_1.MAXVELOCITY_Default * 1.3f;
+    //The max speed default value for this ship. It is related with airplane_1 max speed.
+    private static float MAXSPEED_Default = AirPlane_1.MAXSPEED_Default * 1.3f;
 
-    private final float density = 0.3f;
+    //The density of this body.
+    private final float density = 1.5f;
 
     /**
      * Constructs a space ship body according to
@@ -24,15 +26,18 @@ public class AirPlane_2 extends ShipBody {
     public AirPlane_2(World world, MovingObjectModel model) {
         super(world, model);
         super.setDensity(density);
-        maxVelocity = MAXVELOCITY_Default;
+        maxVelocity = MAXSPEED_Default;
         width = model.getWidth();
         height = model.getHeight();
         body.setFixedRotation(true);
-        updatePhysics();
+        setFixtureVertices();
     }
 
+    /**
+     * Defines all the fixtures of this body.
+     */
     @Override
-    public void updatePhysics(){
+    public void setFixtureVertices(){
         float x_Correction = width / 346f;
         float y_Correction = height / 532f;
         // Left wing

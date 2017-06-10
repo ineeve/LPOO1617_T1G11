@@ -22,14 +22,23 @@ public abstract class DynamicBody {
      */
     final Body body;
 
+    //The density of this body.
     private float density;
+    //The friction of this body.
     private float friction;
+    //The restitution of this body.
     private float restitution;
+    //The width of this body in pixels.
     protected int width;
+    //The height of this body in pixels.
     protected int height;
+    //The maxVelocity of this body in meters/second.
     protected float maxVelocity;
 
+    //Time acumulator, to be used with the movement.
     private float t = 0;
+
+    //A type of movement associated with this body.
     MoveManager.MovementType movementType = null;
 
     /**
@@ -80,8 +89,6 @@ public abstract class DynamicBody {
 
         polygon.dispose();
     }
-
-    //TODO: complete comments
 
     /**
      * @param density The density of the fixture. How heavy it is in relation to its area.
@@ -172,50 +179,100 @@ public abstract class DynamicBody {
         return body.getUserData();
     }
 
+    /**
+     * Sets the linear velocity for this body
+     * @param velX xVelocity in meters/second.
+     * @param velY yVelocity in meters/second.
+     */
     public void setVelocity(float velX, float velY){
         body.setLinearVelocity(velX, velY);
     }
 
+    /**
+     *
+     * @return the libgdx body associated with this DynamicBody.
+     */
     public Body getBody(){
         return body;
     }
 
+    /**
+     *
+     * @return the t varaible
+     */
     public float getT() {
         return t;
     }
 
+    /**
+     *
+     * @param t the t variable
+     */
     public void setT(float t) {
         this.t = t;
     }
 
+    /**
+     * Sets the movement type for this dynamic body.
+     * @param movementType the movement type.
+     */
     public void setMovementType(MoveManager.MovementType movementType) {
         this.movementType = movementType;
     }
 
+    /**
+     *
+     * @return The movement type associated with this body.
+     */
     public MoveManager.MovementType getMovementType() {
         return movementType;
     }
 
+    /**
+     *
+     * @param width The width in pixels
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     *
+     * @param height The height in pixels
+     */
     public void setHeight(int height) {
         this.height = height;
     }
+
+    /**
+     *
+     * @return The maximum velocity of this body.
+     */
 
     public float getMaxVelocity() {
         return maxVelocity;
     }
 
+    /**
+     *
+     * @param maxVelocity the max velocity to associate with this body.
+     */
     public void setMaxVelocity(float maxVelocity) {
         this.maxVelocity = maxVelocity;
     }
 
+    /**
+     *
+     * @return The speed in the x Axis in Meter/second.
+     */
     public float getXVelocity() {
         return body.getLinearVelocity().x;
     }
 
+    /**
+     *
+     * @return The speed in the y Axis in Meter/second.
+     */
     public float getYVelocity() {
         return body.getLinearVelocity().y;
     }

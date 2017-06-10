@@ -1,6 +1,5 @@
 package com.raiden.game.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.raiden.game.model.entities.Airplane_1_Model;

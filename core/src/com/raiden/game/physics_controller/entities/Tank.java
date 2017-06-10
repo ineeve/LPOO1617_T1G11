@@ -9,8 +9,10 @@ import com.raiden.game.model.entities.MovingObjectModel;
 
 public class Tank extends ShipBody {
 
-    private static float MAXVELOCITY_Default = AirPlane_1.MAXVELOCITY_Default * 0.6f;
+    //The max speed default value for this ship. It is related with airplane_1 max speed.
+    private static float MAXVELOCITY_Default = AirPlane_1.MAXSPEED_Default * 0.6f;
 
+    //The density of this body.
     private final float density = 2f;
 
     /**
@@ -27,11 +29,14 @@ public class Tank extends ShipBody {
         width = model.getWidth();
         height = model.getHeight();
         body.setFixedRotation(true);
-        updatePhysics();
+        setFixtureVertices();
     }
 
+    /**
+     * Defines all the fixtures of this body.
+     */
     @Override
-    public void updatePhysics(){
+    public void setFixtureVertices(){
         float x_Correction = width / 488f;
         float y_Correction = height / 657f;
         // Main Body
