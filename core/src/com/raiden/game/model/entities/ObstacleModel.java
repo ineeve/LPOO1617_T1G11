@@ -7,21 +7,25 @@ import com.badlogic.gdx.Gdx;
  */
 
 public class ObstacleModel extends EntityModel{
+    //Id used for serialization.
     private static final long serialVersionUID = 8L;
 
     /**
-     * Constructs a model with a position and a rotation.
+     * Constructs a obstacle model with a position.
      *
      * @param x        The x-coordinate of this entity in meters.
      * @param y        The y-coordinate of this entity in meters.
      */
     ObstacleModel(float x, float y) {
         super(x, y);
-        Gdx.app.log("ObstacleModel()", "Creating new.");
         width = 50;
         height = 50;
     }
 
+    /**
+     *
+     * @return The type of this object which is a OBSTACLE.
+     */
     @Override
     public ModelType getType() {
         return ModelType.OBSTACLE;

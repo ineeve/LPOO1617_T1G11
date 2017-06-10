@@ -7,10 +7,11 @@ import com.badlogic.gdx.Gdx;
  */
 
 public class CometModel extends MovingObjectModel {
+    //Id used for serialization.
     private static final long serialVersionUID = 5L;
     /**
-     * Creates a new ship model in a certain position and having a certain rotation.
-     *
+     * Creates a new comet model in a certain position.
+     * Comets have infinity damage and hp
      * @param x        the x-coordinate in meters
      * @param y        the y-coordinate in meters
      */
@@ -18,7 +19,6 @@ public class CometModel extends MovingObjectModel {
         super(x, y);
         width = 234;
         height = 400;
-        Gdx.app.log("CometModel()", "Creating new.");
         damage = Integer.MAX_VALUE;
         hp = Integer.MAX_VALUE;;
     }

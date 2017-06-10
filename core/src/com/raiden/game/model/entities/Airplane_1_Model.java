@@ -1,7 +1,11 @@
 package com.raiden.game.model.entities;
 
-
+/**
+ * A well balanced airplane
+ */
 public class Airplane_1_Model extends ShipModel {
+
+    //Id used for serialization
     private static final long serialVersionUID = 1L;
     /**
      * Creates a new ship model in a certain position and having a certain rotation.

@@ -3,7 +3,11 @@ package com.raiden.game.model.entities;
 
 import com.badlogic.gdx.Gdx;
 
+/**
+ * An airplane with good amount of armor
+ */
 public class Airplane_3_Model extends ShipModel {
+    //Id used for serialization.
     private static final long serialVersionUID = 3L;
 
     /**
@@ -14,7 +18,6 @@ public class Airplane_3_Model extends ShipModel {
      */
     public Airplane_3_Model(float x, float y) {
         super(x, y);
-        Gdx.app.log("Airplane_3_Model()", "Creating new.");
         hp = HP_DEFAULT;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAULT*2;

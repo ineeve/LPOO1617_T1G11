@@ -18,18 +18,21 @@ import java.util.List;
 
 
 /**
- * A model representing a game.
+ * A model representing a game, contains all the data about the current game.
  */
-
 public class GameModel implements Serializable {
 
+    //Id used for serialization.
     private static final long serialVersionUID = 11L;
 
+    //The actual instance of the game model.
     private static GameModel instance;
 
+    //A list containing all the models
     List<EntityModel> entityModels =
             Collections.synchronizedList(new ArrayList<EntityModel>());
 
+    //A ArrayList of the players playing this game.
     private ArrayList<Player> players = new ArrayList<Player>();
 
 
@@ -44,17 +47,22 @@ public class GameModel implements Serializable {
         return instance;
     }
 
+    /**
+     * Sets the instance to null.
+     */
     public static void clearInstance(){
         instance = null;
     }
 
-
+    /**
+     * @return An array with all the players.
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
     /**
-     *
+     * @param player The player that will join the game.
      * @param x The x coordinate of the player ship in the world.
      * @param y The y coordinate of the player ship in the world.
      */
@@ -67,7 +75,10 @@ public class GameModel implements Serializable {
         this.players.add(player);
     }
 
-
+    /**
+     * Adds a list of players, setting their ship positions automatically.
+     * @param players The ArrayList of the players to add
+     */
     public void addPlayers(ArrayList<Player> players){
         float xStart = (Physics_Controller.ARENA_WIDTH - (players.size() - 1) * 5f) / 2f;
         for(Player player : players){
@@ -77,9 +88,7 @@ public class GameModel implements Serializable {
     }
 
     /**
-     * Returns the player space ship.
-     *
-     * @return the space ship.
+     * @return the player which is running this instance of the game.
      */
     public Player getMyPlayer() {
         for(Player player : players){
@@ -89,6 +98,9 @@ public class GameModel implements Serializable {
         }return null;
     }
 
+    /**
+     * @return A player that running the game on other device, or null if it does not exist.
+     */
     public Player getOtherPlayer() {
         for(Player player : players){
             if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) != 0){
@@ -97,6 +109,11 @@ public class GameModel implements Serializable {
         }return null;
     }
 
+    /**
+     * Creates a bullet, sets its position and assigns it to a ship model.
+     * @param ship The ship that will get the bullet.
+     * @return The bullet model that was just created.
+     */
     public BulletModel createBullet(ShipModel ship) {
         BulletModel bullet = (BulletModel) PoolManager.getInstance().obtain(EntityModel.ModelType.BULLET);
         bullet.setPosition(
@@ -106,25 +123,41 @@ public class GameModel implements Serializable {
         return bullet;
     }
 
+    /**
+     *
+     * @return A list of all the models in the current game.
+     */
     public List<EntityModel> getEntityModels(){
         return entityModels;
     }
 
+    /**
+     * Adds an enemy to this game model and sets its rotation to 180º.
+     * @param newEnemy The enemy to be added.
+     */
     public void addEnemy(MovingObjectModel newEnemy){
         newEnemy.setRotation((float) Math.PI);
         entityModels.add(newEnemy);
     }
 
+    /**
+     * Adds a list of enemies and sets their rotations to 180º.
+     * @param newEnemies The list of enemies to be added.
+     */
     public void addEnemies(ArrayList <MovingObjectModel> newEnemies){
         for (MovingObjectModel newEnemy : newEnemies)
             this.addEnemy(newEnemy);
     }
 
+    /**
+     * Deletes a model from this game.
+     * @param model The model to be removed.
+     */
     public void deleteEntityModel(EntityModel model){
         if(model != null) {
             if(getMyPlayer().getShip() == model)
                 getMyPlayer().setStillPlaying(false);
-            if(getOtherPlayer() != null) {
+            if(getOtherPlayer() != null && getOtherPlayer().getShip() == model) {
                 getOtherPlayer().setStillPlaying(false);
             }
             entityModels.remove(model);
@@ -137,6 +170,10 @@ public class GameModel implements Serializable {
         }
     }
 
+    /**
+     * Removes a list of entity models from this game.
+     * @param models The models to be removed.
+     */
     public void deleteEntitiesModel(ArrayList<EntityModel> models){
         for(EntityModel model : models) {
             if (model != null)
@@ -144,17 +181,27 @@ public class GameModel implements Serializable {
         }
     }
 
+    /**
+     * Updates the coordinates of the client player.
+     * @param playerUpdated A ship model with the updated coordinates.
+     */
     public void updatePlayerCoords(ShipModel playerUpdated) {
         Physics_Controller.getInstance().getAirPlane2().setTransform(
                 playerUpdated.getX(), playerUpdated.getY(), Physics_Controller.getInstance().getAirPlane2().getBody().getAngle());
     }
 
-
+    /**
+     * Updates the player score, destroies the player his ship died, removes all existing models except the player ship,
+     * and adds the new models that are received as argument.
+     * @param modelsReceived The new models to add to this game.
+     * @param playerScore The last score of the player
+     * @param playerIsAlive True if the the player is alive, false otherwise.
+     */
     public void updateModel(ArrayList<Broadcast.StructToSend> modelsReceived, int playerScore, boolean playerIsAlive) {
         if(getMyPlayer() != null) {
             getMyPlayer().setScore(playerScore);
             if (!playerIsAlive && playerScore != 0) {
-                getMyPlayer().setStillPlaying(playerIsAlive);
+                getMyPlayer().setStillPlaying(false);
                 Physics_Controller.getInstance().destroyDynamicBody(Physics_Controller.getInstance().getAirPlane1());
                 GameModel.getInstance().deleteEntityModel(GameModel.getInstance().getMyPlayer().getShip());
             }

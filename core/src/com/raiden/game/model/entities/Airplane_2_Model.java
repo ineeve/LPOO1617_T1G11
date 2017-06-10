@@ -2,7 +2,12 @@ package com.raiden.game.model.entities;
 
 import com.badlogic.gdx.Gdx;
 
+/**
+ * A airplane with good amount of hp
+ */
 public class Airplane_2_Model extends ShipModel {
+
+    //Id used for serialization.
     private static final long serialVersionUID = 2L;
 
     /**
@@ -13,7 +18,6 @@ public class Airplane_2_Model extends ShipModel {
      */
     public Airplane_2_Model(float x, float y) {
         super(x, y);
-        Gdx.app.log("Airplane_2_Model()", "Creating new.");
         hp = HP_DEFAULT*2;
         weight = WEIGHT_DEFAULT;
         armor = ARMOR_DEFAULT;
