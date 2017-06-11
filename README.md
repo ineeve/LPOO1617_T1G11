@@ -10,8 +10,8 @@ We, for our class will recreate this game but will be more minimalist and multip
 * Joao Carvalho - 116:00h
 * Renato Campos - 55:30h
 
-##APK
-  [Raiden-Multiplayer APK](/android/Raiden-Multiplayer.apk)
+## APK
+  [Raiden-Multiplayer APK](/android/android-release.apk)
 
 ![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
