@@ -87,6 +87,10 @@ public class Physics_Controller implements ContactListener{
     //An instance of the arena.
     private final Arena arena = Arena.getInstance();
 
+    public ArrayList<DynamicBody> getDynamicBodies(){
+        return dynamicBodies;
+    }
+
     /**
      * The constructor, creates a new world and the bodies from the GameModel provided.
      * @param model The instance of GameModel, used to create the respective bodies.
@@ -95,7 +99,7 @@ public class Physics_Controller implements ContactListener{
         dynamicBodies = new ArrayList<DynamicBody>();
         world = new World(new Vector2(0,GRAVITY),true);
         world.setContactListener(this);
-        createBodiesFromModel(model);
+        createPlayersBodiesFromModel(model);
     }
 
     /**
@@ -288,10 +292,10 @@ public class Physics_Controller implements ContactListener{
     }
 
     /**
-     * Uses the model to create the bodies for each Entity Model
+     * Uses the model to create the bodies for the each player ship
      * @param model the Game Model to use
      */
-    public void createBodiesFromModel(GameModel model) {
+    public void createPlayersBodiesFromModel(GameModel model) {
         for (Player player : model.getPlayers()) {
             DynamicBody newDynamicBody = controllerFactory.makeController(world, player.getShip());
             dynamicBodies.add(newDynamicBody);
@@ -336,7 +340,9 @@ public class Physics_Controller implements ContactListener{
             }
         }
         if (endGame){
-            arena.getBroadcast().submitScore(GameModel.getInstance().getMyPlayer().getScore());
+            if (arena.getBroadcast() != null){
+                arena.getBroadcast().submitScore(GameModel.getInstance().getMyPlayer().getScore());
+            }
         }
     }
 

@@ -179,7 +179,9 @@ public class Arena extends Game {
      * @return The object responsible for the broadcast.
      */
 	public Broadcast getBroadcast() {
-		return configCore.getBroadcast();
+		if (configCore != null)
+			return configCore.getBroadcast();
+		return null;
 	}
 
     /**
