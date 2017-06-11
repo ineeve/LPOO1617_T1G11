@@ -325,29 +325,6 @@ public class PVE_Screen extends ScreenAdapter{
      */
     private Float acceY_initial;
 
-    private static float sensibility_X = 5.5f;
-
-    public static void setSensibility_X(float sensibility_X) {
-        PVE_Screen.sensibility_X = sensibility_X;
-    }
-
-    public static float getSensibility_X() {
-        return sensibility_X;
-    }
-
-    /**
-     * Variable to change the sensibility of y axel of accelerometer.
-     */
-    private static float sensibility_Y = 2;
-
-    public static void setSensibility_Y(float sensibility_Y) {
-        PVE_Screen.sensibility_Y = sensibility_Y;
-    }
-
-    public static float getSensibility_Y() {
-        return sensibility_Y;
-    }
-
     /**
      * Functions to get the right value of velocity on Y axel.
      * First correct the value of accelerometer by our calibration
@@ -366,10 +343,10 @@ public class PVE_Screen extends ScreenAdapter{
             accelerometer_Y = accelerometer_Y - acceY_initial;
 
         if(accelerometer_Y<=0) {
-            return  -accelerometer_Y * sensibility_Y + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
+            return  -accelerometer_Y * game.getConfigCore().getSensibility_Y() + 2 * CAMERA_Y_SPEED * PIXEL_TO_METER;
         }
         else {
-            return  -(accelerometer_Y * sensibility_Y + CAMERA_Y_SPEED * PIXEL_TO_METER);
+            return  -(accelerometer_Y * game.getConfigCore().getSensibility_Y() + CAMERA_Y_SPEED * PIXEL_TO_METER);
         }
     }
 
@@ -388,7 +365,7 @@ public class PVE_Screen extends ScreenAdapter{
             }
             Float acceY = Gdx.input.getAccelerometerY();
             float velY = getVelocity_Y(acceY);
-            controller.getAirPlane1().setVelocity(-acceX * sensibility_X, velY);
+            controller.getAirPlane1().setVelocity(-acceX * game.getConfigCore().getSensibility_X(), velY);
         }
         else if (Gdx.input.isTouched()){
             handleTouch();

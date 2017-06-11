@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.BufferUtils;
-import com.raiden.game.model.GameModel;
 import com.raiden.game.screen.EnemiesFactory;
 import com.raiden.game.screen.PVE_Screen;
 import com.raiden.game.screen.entities.ViewFactory;
@@ -32,18 +31,32 @@ public class Arena extends Game {
     //The player ID used by this instance of the game.
 	private String mPlayerID = "I_AM_THE_REAL_MVP";
     //A Broadcast Interface used to communicate.
-	private Broadcast broadcast;
+	private ConfigCore configCore;
     //String used to save the type (size) of background being loaded.
 	private String background;
     //Flag used to check if the game input should be done by accelerometer.
 	private boolean useAccelerometer = true;
 
-    /**
-     * Defines the broadcast
-     * @param broadcast A class that implements the broadcast.
+	private Arena(){}
+
+	public Arena(ConfigCore configCore) {
+		this.configCore = configCore;
+	}
+
+	/**
+     * Defines the configCore
+     * @param configCore A class that implements the ConfigCore that is responsable for the connection between modules.
      */
-	public void setBroadcast(Broadcast broadcast) {
-		this.broadcast = broadcast;
+	public void setConfigCore(ConfigCore configCore) {
+		this.configCore = configCore;
+	}
+
+	/**
+	 *
+	 * @return The object responsible for the configCore.
+	 */
+	public ConfigCore getConfigCore() {
+		return configCore;
 	}
 
 	/**
@@ -87,7 +100,7 @@ public class Arena extends Game {
 	 */
 	@Override
 	public void dispose() {
-		broadcast.leaveRoom();
+		getBroadcast().leaveRoom();
 		batch.dispose();
 		ViewFactory.getInstance().dispose();
 		EnemiesFactory.getInstance().dispose();
@@ -166,7 +179,7 @@ public class Arena extends Game {
      * @return The object responsible for the broadcast.
      */
 	public Broadcast getBroadcast() {
-		return broadcast;
+		return configCore.getBroadcast();
 	}
 
     /**
@@ -228,13 +241,5 @@ public class Arena extends Game {
      */
 	public String getBackground() {
 		return background;
-	}
-
-    /**
-     * Used the broadcast object to submit the score via GoogleApi.
-     * @param score The score to submit.
-     */
-	public void submitScore(long score) {
-		broadcast.submitScore(score);
 	}
 }

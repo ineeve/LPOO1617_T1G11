@@ -336,7 +336,7 @@ public class Physics_Controller implements ContactListener{
             }
         }
         if (endGame){
-            arena.submitScore(GameModel.getInstance().getMyPlayer().getScore());
+            arena.getBroadcast().submitScore(GameModel.getInstance().getMyPlayer().getScore());
         }
     }
 

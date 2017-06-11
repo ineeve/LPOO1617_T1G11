@@ -14,6 +14,7 @@ public interface ConfigCore {
 
     void setSensibility_Y(float sensibility_Y);
 
+
     Broadcast getBroadcast();
 
     void setBroadcast(Broadcast broadcast);

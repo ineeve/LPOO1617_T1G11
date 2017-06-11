@@ -27,8 +27,8 @@ public class ConnectionWithCore implements ConfigCore {
     }
 
 
-    float sensibility_X = 5.5f;
-    float sensibility_Y = 2;
+    private float sensibility_X = 5.5f;
+    private float sensibility_Y = 2;
 
     @Override
     public void setSensibility_X(float sensibility_X) {
@@ -42,12 +42,12 @@ public class ConnectionWithCore implements ConfigCore {
 
     @Override
     public float getSensibility_X() {
-        return 0;
+        return sensibility_X;
     }
 
     @Override
     public float getSensibility_Y() {
-        return 0;
+        return sensibility_Y;
     }
 
 
@@ -62,8 +62,6 @@ public class ConnectionWithCore implements ConfigCore {
     public boolean isUseAccelerometer() {
         return useAccelerometer;
     }
-
-    boolean multiplayer;
 
 
     //The player ID used by this instance of the game.
