@@ -7,6 +7,7 @@ We, for our class will recreate this game but will be more minimalist and multip
 
 ## APK
 To install the game you just need to download the apk file, copy to your phone and install. (Make sure to enable Unknown Sources)
+
 To start playing just open the game after installing.
 
   [Raiden-Multiplayer APK](/android/Raiden-Multiplayer.apk)
