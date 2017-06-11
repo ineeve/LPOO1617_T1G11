@@ -1,5 +1,6 @@
 package com.raiden.game.physics_controller;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -379,7 +380,7 @@ public class Physics_Controller implements ContactListener{
      * @param bModel A model suspect of being part of friendly fire.
      * @return true if friendly-fire between players has been detected, false otherwise.
      */
-    private boolean friendlyFire(EntityModel aModel, EntityModel bModel) {
+    public boolean friendlyFire(EntityModel aModel, EntityModel bModel) {
         if (aModel instanceof BulletModel){
             if(((BulletModel) aModel).getOwner() == GameModel.getInstance().getMyPlayer().getShip()){
                 if(bModel == GameModel.getInstance().getMyPlayer().getShip())
@@ -395,6 +396,15 @@ public class Physics_Controller implements ContactListener{
                         return true;
                     else if (bModel == GameModel.getInstance().getOtherPlayer().getShip())
                         return true;
+                }
+            }
+        }
+        else if (aModel instanceof ShipModel && bModel instanceof ShipModel){
+            if (arena.getConfigCore().isMultiplayer()){
+                ShipModel myShip = GameModel.getInstance().getMyPlayer().getShip();
+                ShipModel otherShip = GameModel.getInstance().getOtherPlayer().getShip();
+                if ((aModel == myShip && bModel == otherShip) || (aModel == otherShip && bModel == myShip)){
+                    return true;
                 }
             }
         }

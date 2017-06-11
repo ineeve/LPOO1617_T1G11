@@ -25,6 +25,7 @@ public class DefaultConfig implements ConfigCore {
         return instance;
     }
 
+
     Broadcast broadcast;
 
     @Override

@@ -34,6 +34,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test
     public void testAirplaneXBoundary(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         Airplane_1_Model airplaneModel = new Airplane_1_Model(-1f,0f);
         AirPlane_1 airplaneBody = new AirPlane_1(controller.getWorld(),airplaneModel);
         controller.verifyBounds(airplaneBody.getBody(),true);
@@ -46,6 +47,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test
     public void testEnemyAirplaneYBoundary(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         Airplane_1_Model airplaneModel = new Airplane_1_Model(0,ARENA_HEIGHT+1);
         AirPlane_1 airplaneBody = new AirPlane_1(controller.getWorld(),airplaneModel);
         assert(controller.verifyBounds(airplaneBody.getBody(),true) == true);
@@ -56,6 +58,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test
     public void testPlayerAirplaneYBoundary(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         Airplane_1_Model airplaneModel = new Airplane_1_Model(0,ARENA_HEIGHT+1);
         AirPlane_1 airplaneBody = new AirPlane_1(controller.getWorld(),airplaneModel);
         controller.verifyBounds(airplaneBody.getBody(),true);
@@ -70,6 +73,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test (timeout = 50)
     public void testCorrectHighscoreIncrement(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         GameModel.clearInstance();
         GameModel gameModel = GameModel.getInstance();
         Player p = new Player(cfg.getmPlayerID());
@@ -91,6 +95,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test (timeout = 50)
     public void testBulletMakesDamageToAirplane1(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         GameModel.clearInstance();
         GameModel gameModel = GameModel.getInstance();
         Player p = new Player(cfg.getmPlayerID());
@@ -112,6 +117,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test (timeout = 50)
     public void testBulletMakesDamageToAirplane2(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         GameModel.clearInstance();
         GameModel gameModel = GameModel.getInstance();
         Player p = new Player(cfg.getmPlayerID());
@@ -133,6 +139,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test (timeout = 50)
     public void testBulletMakesDamageToAirplane3(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         GameModel.clearInstance();
         GameModel gameModel = GameModel.getInstance();
         Player p = new Player(cfg.getmPlayerID());
@@ -154,6 +161,7 @@ public class Physics_ControllerTest extends GameTest {
     @Test (timeout=50)
     public void testCometKillsPlayer(){
         Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(false);
         GameModel.clearInstance();
         GameModel gameModel = GameModel.getInstance();
         Player p = new Player(cfg.getmPlayerID());
@@ -169,6 +177,46 @@ public class Physics_ControllerTest extends GameTest {
                 return;
             }
         }
+    }
+
+    //Test friendlyFire on multiplayer game
+    @Test
+    public void testOverlapFriendlyFire(){
+        Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(true);
+        cfg.setHost(true);
+        GameModel.clearInstance();
+        GameModel gameModel = GameModel.getInstance();
+        Player me = new Player(cfg.getmPlayerID());
+        Player other = new Player("Other player");
+        gameModel.addPlayer(me,ARENA_WIDTH/2f,5);
+        gameModel.addPlayer(other,ARENA_WIDTH/2f,5);
+        controller.clearInstance();
+        controller = controller.getInstance();
+        assert(controller.friendlyFire(me.getShip(),other.getShip()) == true);
+
+    }
+
+    @Test
+    public void testBulletFriendlyFire(){
+        Arena.getInstance().setConfigCore(cfg);
+        cfg.setMultiplayer(true);
+        cfg.setHost(true);
+        GameModel.clearInstance();
+        GameModel gameModel = GameModel.getInstance();
+        Player me = new Player(cfg.getmPlayerID());
+        Player other = new Player("Other player");
+        gameModel.addPlayer(me,ARENA_WIDTH/2f,5);
+        gameModel.addPlayer(other,ARENA_WIDTH/2f,20);
+        controller.clearInstance();
+        controller = controller.getInstance();
+        int otherPlayerInitialHp = other.getShip().getHp();
+        float timeAccumulator = 0;
+        while (timeAccumulator < 1000){
+            controller.update(Gdx.graphics.getDeltaTime());
+            timeAccumulator+=Gdx.graphics.getDeltaTime();
+        }
+        assert(otherPlayerInitialHp == other.getShip().getHp());
     }
 
 
