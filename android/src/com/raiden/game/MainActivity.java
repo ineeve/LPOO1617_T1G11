@@ -225,16 +225,13 @@ public class MainActivity extends AppCompatActivity
                 actualMenu.setVisibility(View.VISIBLE);
                 break;
             case R.id.pvp_multiplayer_button:
-                lastMenu.push(findViewById(R.id.play_menu_buttons));
+                /*lastMenu.push(findViewById(R.id.play_menu_buttons));
                 lastMenu.peek().setVisibility(View.GONE);
                 actualMenu = findViewById(R.id.multiplayer_menu_buttons);
-                actualMenu.setVisibility(View.VISIBLE);
+                actualMenu.setVisibility(View.VISIBLE);*/
+                BaseGameUtils.makeSimpleDialog(this, "\n" + "This type of game is not yet implemented").show();
                 break;
             case R.id.sign_in_button:
-                // user wants to sign in
-                // Check to see the developer who's running this sample code read the instructions :-)
-                // NOTE: this check is here only because this is a sample! Don't include this
-                // check in your actual production app.
                 if (!BaseGameUtils.verifySampleSetup(this, R.string.app_id)) {
                     Log.w(TAG, "*** Warning: setup problems detected. Sign in may not work!");
                 }
