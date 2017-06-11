@@ -357,7 +357,7 @@ public class PVE_Screen extends ScreenAdapter{
      */
     private void handleInputs(float delta) {
         //Gdx.app.log("Accelerometer", "Handling Inputs");
-        if (game.isUseAccelerometer() && accelerometerAvail){
+        if (game.getConfigCore().isUseAccelerometer() && accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
             if (Math.abs(acceX) <= 0.15){
                 acceX = 0f;

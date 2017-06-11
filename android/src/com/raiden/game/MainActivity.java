@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
         accelerometerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.d("Switch", "State changed");
-                Arena.getInstance().setUseAccelerometer(isChecked);
+                connectionWithCore.setUseAccelerometer(isChecked);
                 findViewById(R.id.sensibility_X_seekbar).setEnabled(isChecked);
                 findViewById(R.id.sensibility_Y_seekbar).setEnabled(isChecked);
             }});

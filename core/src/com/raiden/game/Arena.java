@@ -34,8 +34,6 @@ public class Arena extends Game {
 	private ConfigCore configCore;
     //String used to save the type (size) of background being loaded.
 	private String background;
-    //Flag used to check if the game input should be done by accelerometer.
-	private boolean useAccelerometer = true;
 
 	private Arena(){}
 
@@ -70,22 +68,6 @@ public class Arena extends Game {
 		assetManager = new AssetManager();
 		loadAssets();
 		startGame();
-	}
-
-	/**
-	 * Sets accelerometer flag
-	 * @param useAccelerometer Set true to use the accelerometer, false to use the touch as input
-	 */
-	public void setUseAccelerometer(boolean useAccelerometer) {
-		this.useAccelerometer = useAccelerometer;
-	}
-
-	/**
-	 * Gets accelerometer switch state.
-	 * @return True if accelerometer switch is enabled, false otherwise
-	 */
-	public boolean isUseAccelerometer() {
-		return useAccelerometer;
 	}
 
 	/**
