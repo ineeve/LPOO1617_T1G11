@@ -134,14 +134,18 @@ public class MainActivity extends AppCompatActivity
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(adRequest);
+
         accelerometerSwitch = (Switch) findViewById(R.id.accelerometer_switch);
         accelerometerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Log.d("Switch", "State changed");
-                Arena.getInstance().setUseAccelerometer(isChecked);
+                connectionWithCore.setUseAccelerometer(isChecked);
                 findViewById(R.id.sensibility_X_seekbar).setEnabled(isChecked);
                 findViewById(R.id.sensibility_Y_seekbar).setEnabled(isChecked);
             }});
+
+        connectionWithCore.setBroadcast(GoogleServices.getInstance());
+        Arena arena = new Arena(connectionWithCore);
     }
 
     private void addSeekBarTouchListener() {
@@ -211,7 +215,7 @@ public class MainActivity extends AppCompatActivity
                 System.exit(0);
                 break;
             case R.id.pve_singleplayer_button:
-                GameModel.getInstance().addPlayers(new ArrayList<Player>(){{add(new Player(Arena.getInstance().getmPlayerID()));}});
+                GameModel.getInstance().addPlayers(new ArrayList<Player>(){{add(new Player(connectionWithCore.getmPlayerID()));}});
                 startActivity(new Intent(this, CLASSES[1]));
                 break;
             case R.id.pve_multiplayer_button:
@@ -352,9 +356,7 @@ public class MainActivity extends AppCompatActivity
         rtmConfigBuilder.setMessageReceivedListener(mGoogleServices.realTimeMessageReceivedListener);
         rtmConfigBuilder.setRoomStatusUpdateListener(mGoogleServices.roomStatusUpdateListener);
         rtmConfigBuilder.setAutoMatchCriteria(autoMatchCriteria);
-        //switchToScreen(R.id.screen_wait);
         keepScreenOn();
-        //resetGameVars();
         Games.RealTimeMultiplayer.create(mGoogleApiClient, rtmConfigBuilder.build());
     }
 
@@ -416,7 +418,6 @@ public class MainActivity extends AppCompatActivity
     private void handleSelectPlayersResult(int response, Intent data) {
         if (response != Activity.RESULT_OK) {
             Log.w(TAG, "*** select players UI cancelled, " + response);
-            //switchToMainScreen();
             return;
         }
 
@@ -445,9 +446,7 @@ public class MainActivity extends AppCompatActivity
         if (autoMatchCriteria != null) {
             rtmConfigBuilder.setAutoMatchCriteria(autoMatchCriteria);
         }
-        //switchToScreen(R.id.screen_wait);
         keepScreenOn();
-        //resetGameVars();
         Games.RealTimeMultiplayer.create(mGoogleApiClient, rtmConfigBuilder.build());
         Log.d(TAG, "Room created, waiting for it to be ready...");
     }
@@ -457,7 +456,6 @@ public class MainActivity extends AppCompatActivity
     private void handleInvitationInboxResult(int response, Intent data) {
         if (response != Activity.RESULT_OK) {
             Log.w(TAG, "*** invitation inbox UI cancelled, " + response);
-            //switchToMainScreen();
             return;
         }
 
@@ -476,9 +474,7 @@ public class MainActivity extends AppCompatActivity
         roomConfigBuilder.setInvitationIdToAccept(invId)
                 .setMessageReceivedListener(mGoogleServices.realTimeMessageReceivedListener)
                 .setRoomStatusUpdateListener(mGoogleServices.roomStatusUpdateListener);
-        //switchToScreen(R.id.screen_wait);
         keepScreenOn();
-        //resetGameVars();
         Games.RealTimeMultiplayer.join(mGoogleApiClient, roomConfigBuilder.build());
     }
 
@@ -496,15 +492,14 @@ public class MainActivity extends AppCompatActivity
     // this flow simply succeeds and is imperceptible).
     @Override
     public void onStart() {
-        if (mGoogleApiClient == null) {
-            //switchToScreen(R.id.screen_sign_in);
-        } else if (!mGoogleApiClient.isConnected()) {
-            Log.d(TAG,"Connecting client.");
-            //switchToScreen(R.id.screen_wait);
-            mGoogleApiClient.connect();
-        } else {
-            Log.w(TAG,
-                    "GameHelper: client was already connected on onStart()");
+        if (mGoogleApiClient != null) {
+            if (!mGoogleApiClient.isConnected()) {
+                Log.d(TAG,"Connecting client.");
+                //switchToScreen(R.id.screen_wait);
+                mGoogleApiClient.connect();
+            } else {
+                Log.w(TAG, "GameHelper: client was already connected on onStart()");
+            }
         }
         super.onStart();
     }
@@ -537,9 +532,6 @@ public class MainActivity extends AppCompatActivity
         if (mGoogleServices.mRoomId != null) {
             Games.RealTimeMultiplayer.leave(mGoogleApiClient, mGoogleServices.roomUpdateListener, GoogleServices.mRoomId);
             mGoogleServices.mRoomId = null;
-            //switchToScreen(R.id.screen_wait);
-        } else {
-            //switchToMainScreen();
         }
     }
 
@@ -563,10 +555,7 @@ public class MainActivity extends AppCompatActivity
         // mIncomingInvitationId
         // and show the popup on the screen.
         mIncomingInvitationId = invitation.getInvitationId();
-        /*((TextView) findViewById(R.id.incoming_invitation_text)).setText(
-                invitation.getInviter().getDisplayName() + " " +
-                        getString(R.string.is_inviting_you));*/
-        //switchToScreen(mCurScreen); // This will show the invitation popup
+        // This will show the invitation popup
     }
 
     @Override
@@ -574,7 +563,7 @@ public class MainActivity extends AppCompatActivity
 
         if (mIncomingInvitationId.equals(invitationId)&&mIncomingInvitationId!=null) {
             mIncomingInvitationId = null;
-            //switchToScreen(mCurScreen); // This will hide the invitation popup
+            // This will hide the invitation popup
         }
 
     }
@@ -588,17 +577,12 @@ public class MainActivity extends AppCompatActivity
     public void onConnected(Bundle connectionHint) {
         Log.d(TAG, "onConnected() called. Sign in successful!");
 
-        Log.d(TAG, "Sign-in succeeded.");
-
         String personName = Games.Players.getCurrentPlayer(mGoogleApiClient).getDisplayName();
-        Log.d(TAG, "PersonName: " + personName);
         ((TextView) mHView.findViewById(R.id.account_nickname_textView)).setText(personName);
         String personEmail = Games.Players.getCurrentPlayer(mGoogleApiClient).getTitle();
-        Log.d(TAG, "PersonEmail: " + personEmail);
         ((TextView) mHView.findViewById(R.id.account_title_textView)).setText(personEmail);
         if(Games.Players.getCurrentPlayer(mGoogleApiClient).hasIconImage()) {
             Uri personPhoto = Games.Players.getCurrentPlayer(mGoogleApiClient).getHiResImageUri();
-            Log.d(TAG, "PersonPhoto: " + personPhoto);
             mImageManager.loadImage((ImageView) mHView.findViewById(R.id.accountImage), personPhoto);
         }
 
@@ -643,7 +627,6 @@ public class MainActivity extends AppCompatActivity
                     connectionResult, RC_SIGN_IN, getString(R.string.signin_other_error));
         }
 
-        //switchToScreen(R.id.screen_sign_in);
     }
 
 
@@ -664,9 +647,7 @@ public class MainActivity extends AppCompatActivity
     // Show error message about game being cancelled and return to main screen.
     void showGameError() {
         BaseGameUtils.makeSimpleDialog(this, getString(R.string.game_problem));
-        //switchToMainScreen();
     }
-
 
     @Override
     public void onImageLoaded(Uri uri, Drawable drawable, boolean b) {

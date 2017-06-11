@@ -188,9 +188,9 @@ public class PVE_Screen extends ScreenAdapter{
         else if (acceY_initial != null)
             acceY_initial = null;
         controller.update(delta);
-        if (game.isHost() && game.isMultiplayer()){
+        if (game.getConfigCore().isHost() && game.getConfigCore().isMultiplayer()){
             game.getBroadcast().sendMessage_from_Host(model);
-        }else if (game.isMultiplayer()){
+        }else if (game.getConfigCore().isMultiplayer()){
             game.getBroadcast().sendMessage_from_Client(model.getMyPlayer().getShip());
         }
         updateCameraPosition(delta);
@@ -208,7 +208,7 @@ public class PVE_Screen extends ScreenAdapter{
     public void render(float delta) {
         // Just the host in case of being a multi-player
         // game or on single-player game update the level.
-        if ((game.isHost() && game.isMultiplayer()) || !game.isMultiplayer()){
+        if ((game.getConfigCore().isHost() && game.getConfigCore().isMultiplayer()) || !game.getConfigCore().isMultiplayer()){
             levelManager.updateLevel(this, delta);
         }
         updateScene(delta);
@@ -357,7 +357,7 @@ public class PVE_Screen extends ScreenAdapter{
      */
     private void handleInputs(float delta) {
         //Gdx.app.log("Accelerometer", "Handling Inputs");
-        if (game.isUseAccelerometer() && accelerometerAvail){
+        if (game.getConfigCore().isUseAccelerometer() && accelerometerAvail){
             Float acceX = Gdx.input.getAccelerometerX();
             if (Math.abs(acceX) <= 0.15){
                 acceX = 0f;

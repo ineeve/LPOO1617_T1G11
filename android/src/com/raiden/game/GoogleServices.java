@@ -71,7 +71,7 @@ class GoogleServices implements Broadcast{
             String sender = realTimeMessage.getSenderParticipantId();
             Log.d(TAG, "Message received from: " + sender);
             if(mRoomId != null) {
-                if (Arena.getInstance().isHost()) {
+                if (ConnectionWithCore.getInstance().isHost()) {
                     receiveMsg_from_Client(buf);
                 } else {
                     receiveMsg_from_Host(buf);
@@ -109,7 +109,7 @@ class GoogleServices implements Broadcast{
     @Override
     public boolean sendMessage_from_Host(GameModel model) {
         Log.d(TAG,"Start Sending Message from host");
-        if (!Arena.getInstance().isMultiplayer())
+        if (!ConnectionWithCore.getInstance().isMultiplayer())
             return false; // playing single-player mode
         ArrayList<StructToSend> arrayToSend = new ArrayList<>();
         arrayToSend.add(new StructToSend(
@@ -117,12 +117,14 @@ class GoogleServices implements Broadcast{
                 model.getMyPlayer().getShip().getX(),
                 model.getMyPlayer().getShip().getY(),
                 model.getMyPlayer().getShip().getRotation()));
-        for(int i = 2; i < model.getEntityModels().size(); i++){
-            arrayToSend.add(new StructToSend(
-                    model.getEntityModels().get(i).getType(),
-                    model.getEntityModels().get(i).getX(),
-                    model.getEntityModels().get(i).getY(),
-                    model.getEntityModels().get(i).getRotation()));
+        synchronized(model.getEntityModels()) {
+            for (int i = 2; i < model.getEntityModels().size(); i++) {
+                arrayToSend.add(new StructToSend(
+                        model.getEntityModels().get(i).getType(),
+                        model.getEntityModels().get(i).getX(),
+                        model.getEntityModels().get(i).getY(),
+                        model.getEntityModels().get(i).getRotation()));
+            }
         }
         byte[] userData;
         userData = ByteBuffer.allocate(5).putInt(GameModel.getInstance().getOtherPlayer().getScore()).array();
@@ -139,7 +141,7 @@ class GoogleServices implements Broadcast{
 
     @Override
     public boolean sendMessage_from_Client(EntityModel ship) {
-        if (!Arena.getInstance().isMultiplayer())
+        if (!ConnectionWithCore.getInstance().isMultiplayer())
             return false; // playing single-player mode
         Log.d(TAG, "Send My pos x: " + ship.getX() + ", Y: " + ship.getY());
         byte[] mMsgBuf = msgToArrayByte(ship);
@@ -203,16 +205,18 @@ class GoogleServices implements Broadcast{
                 continue;
             if (p.getStatus() != Participant.STATUS_JOINED)
                 continue;
-            if (false) {
-                Log.d(TAG, "Sending Message from: " + mMyId);
-                // final score notification must be sent via reliable message
-                Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
-                        mRoomId, p.getParticipantId());
-            } else {
-                Log.d(TAG, "Sending Message from: " + mMyId);
-                // it's an interim score notification, so we can use unreliable
-                Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
-                        p.getParticipantId());
+            if(mGoogleApiClient != null && mRoomId != null) {
+                if (false) {
+                    Log.d(TAG, "Sending Message from: " + mMyId);
+                    // final score notification must be sent via reliable message
+                    Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
+                            mRoomId, p.getParticipantId());
+                } else {
+                    Log.d(TAG, "Sending Message from: " + mMyId);
+                    // it's an interim score notification, so we can use unreliable
+                    Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
+                            p.getParticipantId());
+                }
             }
         }
     }
@@ -236,10 +240,10 @@ class GoogleServices implements Broadcast{
             //get participants and my ID:
             mParticipants = room.getParticipants();
             mMyId = room.getParticipantId(Games.Players.getCurrentPlayerId(mGoogleApiClient));
-            Arena.getInstance().setmPlayerID(mMyId);
-            Arena.getInstance().setMultiplayer(true);
+            ConnectionWithCore.getInstance().setmPlayerID(mMyId);
+            ConnectionWithCore.getInstance().setMultiplayer(true);
             setHost();
-            if(Arena.getInstance().isHost())
+            if(ConnectionWithCore.getInstance().isHost())
                 createPlayers();
             else {
                 GameModel.getInstance().addPlayers(new ArrayList<Player>() {{
@@ -262,8 +266,9 @@ class GoogleServices implements Broadcast{
         public void onDisconnectedFromRoom(Room room) {
             mRoomId = null;
             mMainActivity.showGameError();
-            Arena.getInstance().setHost(false);
-            Arena.getInstance().setMultiplayer(false);
+            ConnectionWithCore.getInstance().setHost(false);
+            ConnectionWithCore.getInstance().setMultiplayer(false);
+            GameModel.getInstance().getMyPlayer().getShip().setCanShoot(true);
             EntityModel.resetNxt_ID();
         }
 
@@ -326,7 +331,7 @@ class GoogleServices implements Broadcast{
         }
         if(maxID.compareTo(mMyId) == 0){
             Log.d(TAG, "Set as Host");
-            Arena.getInstance().setHost(true);
+            ConnectionWithCore.getInstance().setHost(true);
         }
     }
 
