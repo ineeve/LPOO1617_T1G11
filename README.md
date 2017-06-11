@@ -13,6 +13,7 @@ We, for our class will recreate this game but will be more minimalist and multip
 ## APK
   [Raiden-Multiplayer APK](/android/Raiden-Multiplayer.apk)
 
+## UML Diagram
 ![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
 ![Alt text](/Info/DesignPatternsUsed.png?raw=true "Design Patterns Explained")
