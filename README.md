@@ -5,24 +5,27 @@ Raiden is a game based one a aircraft that have to destroy all enemys until the 
 
 We, for our class will recreate this game but will be more minimalist and multiplayer with Google API integration.
 
-## FEUP-LPOO - Working Hours
-
-* Joao Carvalho - 116:00h
-* Renato Campos - 55:30h
-
 ## APK
+To install the game you just need to download the apk file, copy to your phone and install. (Make sure to enable Unknown Sources)
+To start playing just open the game after installing.
+
   [Raiden-Multiplayer APK](/android/Raiden-Multiplayer.apk)
-
-## UML Diagram
-![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
-
+   
 ## Design Patterns
   * MVP
   * Object Pool
   * Abstarct Factory
   * Singleton
   * Strategy
-  
+
+## UML Diagram
+![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
+
+## FEUP-LPOO - Working Hours
+
+* Joao Carvalho - 116:00h
+* Renato Campos - 55:30h
+
 ## Some Imagens
 ![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_1.png?raw=true)
 ![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_2.png?raw=true)
