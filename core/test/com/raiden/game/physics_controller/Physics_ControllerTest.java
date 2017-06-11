@@ -179,7 +179,7 @@ public class Physics_ControllerTest extends GameTest {
         }
     }
 
-    //Test friendlyFire on multiplayer game
+    //Test friendlyFire overlapping on multiplayer game
     @Test
     public void testOverlapFriendlyFire(){
         Arena.getInstance().setConfigCore(cfg);
@@ -197,6 +197,7 @@ public class Physics_ControllerTest extends GameTest {
 
     }
 
+    //Test friendlyFire by bullet on multiplayer game
     @Test
     public void testBulletFriendlyFire(){
         Arena.getInstance().setConfigCore(cfg);
@@ -218,9 +219,5 @@ public class Physics_ControllerTest extends GameTest {
         }
         assert(otherPlayerInitialHp == other.getShip().getHp());
     }
-
-
-
-
 
 }

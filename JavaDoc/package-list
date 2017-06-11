@@ -1,0 +1,8 @@
+com.raiden.game
+com.raiden.game.model
+com.raiden.game.model.entities
+com.raiden.game.physics_controller
+com.raiden.game.physics_controller.entities
+com.raiden.game.physics_controller.movement
+com.raiden.game.screen
+com.raiden.game.screen.entities

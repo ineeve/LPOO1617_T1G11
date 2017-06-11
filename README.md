@@ -7,29 +7,27 @@ We, for our class will recreate this game but will be more minimalist and multip
 
 ## FEUP-LPOO - Working Hours
 
-* Joao Carvalho - 115:00h
+* Joao Carvalho - 116:00h
 * Renato Campos - 55:30h
 
-## Priorities:
-1. Colocar Single Player a Funcionar
-2. Colocar Login a Funcionar
-3. Implementar Multiplayer
-4. Implementar Hangar
+## APK
+  [Raiden-Multiplayer APK](/android/Raiden-Multiplayer.apk)
 
-![Alt text](LPOO-ClassDiagram.png?raw=true "Class Diagram")
+## UML Diagram
+![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
-![Alt text](DesignPatternsUsed.png?raw=true "Design Patterns Explained")
+![Alt text](/Info/DesignPatternsUsed.png?raw=true "Design Patterns Explained")
 
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_1.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_2.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_3.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_4.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_4.1.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_4.2.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_5.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_5.1.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_6.png?raw=true)
-![Alt text](/MOCKUPS/Mockups_Renders/MockUps_6.1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_2.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_3.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_4.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_4.1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_4.2.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_5.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_5.1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_6.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_6.1.png?raw=true)
 
 
-![Alt text](ListOfTestCases.png?raw=true "Expected Test Cases")
+![Alt text](/Info/ListOfTestCases.png?raw=true "Expected Test Cases")
