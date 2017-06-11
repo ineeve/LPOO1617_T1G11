@@ -10,11 +10,8 @@ We, for our class will recreate this game but will be more minimalist and multip
 * Joao Carvalho - 116:00h
 * Renato Campos - 55:30h
 
-## Priorities:
-1. Colocar Single Player a Funcionar
-2. Colocar Login a Funcionar
-3. Implementar Multiplayer
-4. Implementar Hangar
+## APK
+  [Raiden-Multiplayer APK](/android/android-release.apk)
 
 ![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
