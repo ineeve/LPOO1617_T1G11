@@ -68,7 +68,9 @@ public class GameModel implements Serializable {
      */
     public void addPlayer(Player player,float x, float y){
         Airplane_1_Model myShip = new Airplane_1_Model(x,y);
-        if((Arena.getInstance().isHost() && Arena.getInstance().isMultiplayer()) || !Arena.getInstance().isMultiplayer())
+        if((Arena.getInstance().getConfigCore().isHost()
+                && Arena.getInstance().getConfigCore().isMultiplayer())
+                || !Arena.getInstance().getConfigCore().isMultiplayer())
             myShip.setCanShoot(true);
         player.setShip(myShip);
         entityModels.add(player.getShip());
@@ -92,7 +94,7 @@ public class GameModel implements Serializable {
      */
     public Player getMyPlayer() {
         for(Player player : players){
-            if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) == 0){
+            if(player.getID().compareTo(Arena.getInstance().getConfigCore().getmPlayerID()) == 0){
                 return player;
             }
         }return null;
@@ -103,7 +105,7 @@ public class GameModel implements Serializable {
      */
     public Player getOtherPlayer() {
         for(Player player : players){
-            if(player.getID().compareTo(Arena.getInstance().getmPlayerID()) != 0){
+            if(player.getID().compareTo(Arena.getInstance().getConfigCore().getmPlayerID()) != 0){
                 return player;
             }
         }return null;

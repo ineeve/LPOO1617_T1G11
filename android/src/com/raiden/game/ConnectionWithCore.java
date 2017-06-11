@@ -14,6 +14,8 @@ public class ConnectionWithCore implements ConfigCore {
         return instance;
     }
 
+
+
     Broadcast broadcast;
 
     @Override
@@ -25,6 +27,7 @@ public class ConnectionWithCore implements ConfigCore {
     public void setBroadcast(Broadcast broadcast) {
         this.broadcast = broadcast;
     }
+
 
 
     private float sensibility_X = 5.5f;
@@ -51,6 +54,7 @@ public class ConnectionWithCore implements ConfigCore {
     }
 
 
+
     boolean useAccelerometer = true;
 
     @Override
@@ -64,6 +68,10 @@ public class ConnectionWithCore implements ConfigCore {
     }
 
 
+    //Flag to define this is a multiplayer game.
+    private boolean multiplayer = false;
+    //Flag to define if this instance will be the host or the client.
+    private boolean host = false;
     //The player ID used by this instance of the game.
     private String mPlayerID = "I_AM_THE_REAL_MVP";
 
@@ -73,6 +81,26 @@ public class ConnectionWithCore implements ConfigCore {
 
     public void setmPlayerID(String mPlayerID) {
         this.mPlayerID = mPlayerID;
+    }
+
+
+    public boolean isMultiplayer() {
+        return multiplayer;
+    }
+
+
+    public void setMultiplayer(boolean multiplayer) {
+        this.multiplayer = multiplayer;
+    }
+
+
+    public boolean isHost() {
+        return host;
+    }
+
+
+    public void setHost(boolean host) {
+        this.host = host;
     }
 
 }

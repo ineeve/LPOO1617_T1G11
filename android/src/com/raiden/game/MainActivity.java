@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(adRequest);
+
         accelerometerSwitch = (Switch) findViewById(R.id.accelerometer_switch);
         accelerometerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -142,6 +143,9 @@ public class MainActivity extends AppCompatActivity
                 findViewById(R.id.sensibility_X_seekbar).setEnabled(isChecked);
                 findViewById(R.id.sensibility_Y_seekbar).setEnabled(isChecked);
             }});
+
+        connectionWithCore.setBroadcast(GoogleServices.getInstance());
+        Arena arena = new Arena(connectionWithCore);
     }
 
     private void addSeekBarTouchListener() {
@@ -211,7 +215,7 @@ public class MainActivity extends AppCompatActivity
                 System.exit(0);
                 break;
             case R.id.pve_singleplayer_button:
-                GameModel.getInstance().addPlayers(new ArrayList<Player>(){{add(new Player(Arena.getInstance().getmPlayerID()));}});
+                GameModel.getInstance().addPlayers(new ArrayList<Player>(){{add(new Player(connectionWithCore.getmPlayerID()));}});
                 startActivity(new Intent(this, CLASSES[1]));
                 break;
             case R.id.pve_multiplayer_button:

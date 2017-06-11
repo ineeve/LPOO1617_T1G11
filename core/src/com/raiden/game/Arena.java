@@ -24,12 +24,6 @@ public class Arena extends Game {
 	private AssetManager assetManager;
     //An Arena instance.
 	private static Arena instance;
-    //Flag to define this is a multiplayer game.
-	private boolean multiplayer = false;
-    //Flag to define if this instance will be the host or the client.
-	private boolean host = false;
-    //The player ID used by this instance of the game.
-	private String mPlayerID = "I_AM_THE_REAL_MVP";
     //A Broadcast Interface used to communicate.
 	private ConfigCore configCore;
     //String used to save the type (size) of background being loaded.
@@ -39,6 +33,7 @@ public class Arena extends Game {
 
 	public Arena(ConfigCore configCore) {
 		this.configCore = configCore;
+		instance = this;
 	}
 
 	/**
@@ -87,7 +82,8 @@ public class Arena extends Game {
 		ViewFactory.getInstance().dispose();
 		EnemiesFactory.getInstance().dispose();
 		PVE_Screen.getInstance().clean();
-		multiplayer = false;
+		configCore.setMultiplayer(false);
+		configCore.setHost(true);
 		assetManager.dispose();
 	}
 
@@ -173,49 +169,6 @@ public class Arena extends Game {
 			instance = new Arena();
 		}
 		return instance;
-	}
-
-    /**
-     * @return True if this game is multiplayer, false otherwise.
-     */
-	public boolean isMultiplayer() {
-		return multiplayer;
-	}
-
-    /**
-     * @param multiplayer True if this game should be multiplayer, false otherwise.
-     */
-	public void setMultiplayer(boolean multiplayer) {
-		this.multiplayer = multiplayer;
-	}
-
-    /**
-     * @return True if this device is the host, false otherwise.
-     */
-	public boolean isHost() {
-		return host;
-	}
-
-    /**
-     * Defines this device as the host or as the client.
-     * @param host True if this device is the host, false if is a client.
-     */
-	public void setHost(boolean host) {
-		this.host = host;
-	}
-
-    /**
-     * @return The ID of the player playing in this device.
-     */
-	public String getmPlayerID() {
-		return mPlayerID;
-	}
-
-    /**
-     * @param mPlayerID The ID of the player playing in this device.
-     */
-	public void setmPlayerID(String mPlayerID) {
-		this.mPlayerID = mPlayerID;
 	}
 
     /**
