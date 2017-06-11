@@ -1,9 +1,9 @@
 package com.raiden.game;
 
-/**
- * Created by João on 11/06/2017.
- */
 
+/**
+ * Config core defines is an interface that is used to implement communication between the android and core modules.
+ */
 public interface ConfigCore {
 
     float getSensibility_X();

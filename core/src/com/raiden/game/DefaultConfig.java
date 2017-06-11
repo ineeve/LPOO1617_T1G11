@@ -1,17 +1,29 @@
 package com.raiden.game;
 
 
-public class ConnectionWithCore implements ConfigCore {
+/**
+ * Class that implements a default config to be used in the tests.
+ */
+public class DefaultConfig implements ConfigCore {
 
-    private static ConnectionWithCore instance;
 
-    public static ConnectionWithCore getInstance(){
+    private float sensibility_X = 5.5f;
+    private float sensibility_Y = 2;
+    boolean useAccelerometer = true;
+    //Flag to define this is a multiplayer game.
+    private boolean multiplayer = false;
+    //Flag to define if this instance will be the host or the client.
+    private boolean host = false;
+    //The player ID used by this instance of the game.
+    private String mPlayerID = "I_AM_THE_REAL_MVP";
+
+    private static DefaultConfig instance;
+
+    public static DefaultConfig getInstance(){
         if(instance == null)
-            instance = new ConnectionWithCore();
+            instance = new DefaultConfig();
         return instance;
     }
-
-
 
     Broadcast broadcast;
 
@@ -24,11 +36,6 @@ public class ConnectionWithCore implements ConfigCore {
     public void setBroadcast(Broadcast broadcast) {
         this.broadcast = broadcast;
     }
-
-
-
-    private float sensibility_X = 5.5f;
-    private float sensibility_Y = 2;
 
     @Override
     public void setSensibility_X(float sensibility_X) {
@@ -50,27 +57,14 @@ public class ConnectionWithCore implements ConfigCore {
         return sensibility_Y;
     }
 
-
-
-    boolean useAccelerometer = true;
-
     @Override
     public void setUseAccelerometer(boolean useAccelerometer) {
         this.useAccelerometer = useAccelerometer;
     }
-
     @Override
     public boolean isUseAccelerometer() {
         return useAccelerometer;
     }
-
-
-    //Flag to define this is a multiplayer game.
-    private boolean multiplayer = false;
-    //Flag to define if this instance will be the host or the client.
-    private boolean host = false;
-    //The player ID used by this instance of the game.
-    private String mPlayerID = "I_AM_THE_REAL_MVP";
 
     public String getmPlayerID() {
         return mPlayerID;
@@ -79,7 +73,6 @@ public class ConnectionWithCore implements ConfigCore {
     public void setmPlayerID(String mPlayerID) {
         this.mPlayerID = mPlayerID;
     }
-
 
     public boolean isMultiplayer() {
         return multiplayer;
