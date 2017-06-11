@@ -20,12 +20,15 @@ To start playing just open the game after installing.
   * Strategy
 
 ## UML Diagram
-![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
+![Alt text](/Info/DIAGRAMS/ControllerDiagramClass.png?raw=true "Controller Diagram")
+![Alt text](/Info/DIAGRAMS/ModelDiagramClass.png?raw=true "Model Diagram")
+![Alt text](/Info/DIAGRAMS/ScreenDiagramClass.png?raw=true "Screen Diagram")
+
 
 ## FEUP-LPOO - Working Hours
 
 * Joao Carvalho - 116:00h
-* Renato Campos - 55:30h
+* Renato Campos - 58:30h
 
 ## Some Imagens
 ![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_1.png?raw=true)
