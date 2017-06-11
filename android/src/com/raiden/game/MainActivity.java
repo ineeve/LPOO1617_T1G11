@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity
                 lastMenu.peek().setVisibility(View.GONE);
                 actualMenu = findViewById(R.id.multiplayer_menu_buttons);
                 actualMenu.setVisibility(View.VISIBLE);*/
+                BaseGameUtils.makeSimpleDialog(this, "\n" + "This type of game is not yet implemented").show();
                 break;
             case R.id.sign_in_button:
                 if (!BaseGameUtils.verifySampleSetup(this, R.string.app_id)) {

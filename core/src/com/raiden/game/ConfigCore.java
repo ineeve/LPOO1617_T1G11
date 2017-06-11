@@ -34,31 +34,31 @@ public interface ConfigCore {
     /**
      * @return True if this game is multiplayer, false otherwise.
      */
-    public boolean isMultiplayer();
+    boolean isMultiplayer();
 
     /**
      * @param multiplayer True if this game should be multiplayer, false otherwise.
      */
-    public void setMultiplayer(boolean multiplayer);
+    void setMultiplayer(boolean multiplayer);
 
     /**
      * @return True if this device is the host, false otherwise.
      */
-    public boolean isHost();
+    boolean isHost();
 
     /**
      * Defines this device as the host or as the client.
      * @param host True if this device is the host, false if is a client.
      */
-    public void setHost(boolean host);
+    void setHost(boolean host);
 
     /**
      * @return The ID of the player playing in this device.
      */
-    public String getmPlayerID();
+    String getmPlayerID();
 
     /**
      * @param mPlayerID The ID of the player playing in this device.
      */
-    public void setmPlayerID(String mPlayerID);
+    void setmPlayerID(String mPlayerID);
 }
