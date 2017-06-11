@@ -13,7 +13,7 @@ public interface DamageObject {
 
     /**
      * Retrieves the damage of the object
-     * @ The damage
+     * @return The damage
      */
     int getDamage();
 
