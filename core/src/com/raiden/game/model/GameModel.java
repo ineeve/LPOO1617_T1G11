@@ -33,7 +33,7 @@ public class GameModel implements Serializable {
             Collections.synchronizedList(new ArrayList<EntityModel>());
 
     //A ArrayList of the players playing this game.
-    private ArrayList<Player> players = new ArrayList<Player>();
+    private List<Player> players = Collections.synchronizedList(new ArrayList<Player>());
 
 
     /**
@@ -57,7 +57,7 @@ public class GameModel implements Serializable {
     /**
      * @return An array with all the players.
      */
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -76,7 +76,9 @@ public class GameModel implements Serializable {
         synchronized(entityModels) {
             entityModels.add(player.getShip());
         }
-        this.players.add(player);
+        synchronized(players) {
+            this.players.add(player);
+        }
     }
 
     /**
@@ -95,9 +97,11 @@ public class GameModel implements Serializable {
      * @return the player which is running this instance of the game.
      */
     public Player getMyPlayer() {
-        for(Player player : players){
-            if(player.getID().compareTo(Arena.getInstance().getConfigCore().getmPlayerID()) == 0){
-                return player;
+        synchronized (players) {
+            for (Player player : players) {
+                if (player.getID().compareTo(Arena.getInstance().getConfigCore().getmPlayerID()) == 0) {
+                    return player;
+                }
             }
         }return null;
     }
@@ -106,9 +110,11 @@ public class GameModel implements Serializable {
      * @return A player that running the game on other device, or null if it does not exist.
      */
     public Player getOtherPlayer() {
-        for(Player player : players){
-            if(player.getID().compareTo(Arena.getInstance().getConfigCore().getmPlayerID()) != 0){
-                return player;
+        synchronized(players) {
+            for (Player player : players) {
+                if (player.getID().compareTo(Arena.getInstance().getConfigCore().getmPlayerID()) != 0) {
+                    return player;
+                }
             }
         }return null;
     }

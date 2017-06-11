@@ -205,16 +205,18 @@ class GoogleServices implements Broadcast{
                 continue;
             if (p.getStatus() != Participant.STATUS_JOINED)
                 continue;
-            if (false) {
-                Log.d(TAG, "Sending Message from: " + mMyId);
-                // final score notification must be sent via reliable message
-                Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
-                        mRoomId, p.getParticipantId());
-            } else {
-                Log.d(TAG, "Sending Message from: " + mMyId);
-                // it's an interim score notification, so we can use unreliable
-                Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
-                        p.getParticipantId());
+            if(mGoogleApiClient != null && mRoomId != null) {
+                if (false) {
+                    Log.d(TAG, "Sending Message from: " + mMyId);
+                    // final score notification must be sent via reliable message
+                    Games.RealTimeMultiplayer.sendReliableMessage(mGoogleApiClient, null, mMsgBuf,
+                            mRoomId, p.getParticipantId());
+                } else {
+                    Log.d(TAG, "Sending Message from: " + mMyId);
+                    // it's an interim score notification, so we can use unreliable
+                    Games.RealTimeMultiplayer.sendUnreliableMessage(mGoogleApiClient, mMsgBuf, mRoomId,
+                            p.getParticipantId());
+                }
             }
         }
     }
@@ -266,6 +268,7 @@ class GoogleServices implements Broadcast{
             mMainActivity.showGameError();
             ConnectionWithCore.getInstance().setHost(false);
             ConnectionWithCore.getInstance().setMultiplayer(false);
+            GameModel.getInstance().getMyPlayer().getShip().setCanShoot(true);
             EntityModel.resetNxt_ID();
         }
 
