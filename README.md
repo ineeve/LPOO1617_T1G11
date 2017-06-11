@@ -15,13 +15,15 @@ To start playing just open the game after installing.
 ## Design Patterns
   * MVP
   * Object Pool
-  * Abstarct Factory
+  * Abstract Factory
   * Singleton
   * Strategy
 
-## UML Diagram
+## UML Controller Classes Diagram
 ![Alt text](/Info/DIAGRAMS/ControllerDiagramClass.png?raw=true "Controller Diagram")
+## UML Model Classes Diagram
 ![Alt text](/Info/DIAGRAMS/ModelDiagramClass.png?raw=true "Model Diagram")
+## UML Screen Classes Diagram
 ![Alt text](/Info/DIAGRAMS/ScreenDiagramClass.png?raw=true "Screen Diagram")
 
 
