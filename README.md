@@ -16,20 +16,20 @@ We, for our class will recreate this game but will be more minimalist and multip
 3. Implementar Multiplayer
 4. Implementar Hangar
 
-![Alt text](/info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
+![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
-![Alt text](/info/DesignPatternsUsed.png?raw=true "Design Patterns Explained")
+![Alt text](/Info/DesignPatternsUsed.png?raw=true "Design Patterns Explained")
 
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_1.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_2.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_3.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_4.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_4.1.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_4.2.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_5.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_5.1.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_6.png?raw=true)
-![Alt text](/info/MOCKUPS/Mockups_Renders/MockUps_6.1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_2.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_3.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_4.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_4.1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_4.2.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_5.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_5.1.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_6.png?raw=true)
+![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_6.1.png?raw=true)
 
 
-![Alt text](/info/ListOfTestCases.png?raw=true "Expected Test Cases")
+![Alt text](/Info/ListOfTestCases.png?raw=true "Expected Test Cases")
