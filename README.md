@@ -11,7 +11,7 @@ We, for our class will recreate this game but will be more minimalist and multip
 * Renato Campos - 55:30h
 
 ## APK
-  [Raiden-Multiplayer APK](/android/android-release.apk)
+  [Raiden-Multiplayer APK](/android/Raiden-Multiplayer.apk)
 
 ![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
