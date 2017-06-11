@@ -117,12 +117,14 @@ class GoogleServices implements Broadcast{
                 model.getMyPlayer().getShip().getX(),
                 model.getMyPlayer().getShip().getY(),
                 model.getMyPlayer().getShip().getRotation()));
-        for(int i = 2; i < model.getEntityModels().size(); i++){
-            arrayToSend.add(new StructToSend(
-                    model.getEntityModels().get(i).getType(),
-                    model.getEntityModels().get(i).getX(),
-                    model.getEntityModels().get(i).getY(),
-                    model.getEntityModels().get(i).getRotation()));
+        synchronized(model.getEntityModels()) {
+            for (int i = 2; i < model.getEntityModels().size(); i++) {
+                arrayToSend.add(new StructToSend(
+                        model.getEntityModels().get(i).getType(),
+                        model.getEntityModels().get(i).getX(),
+                        model.getEntityModels().get(i).getY(),
+                        model.getEntityModels().get(i).getRotation()));
+            }
         }
         byte[] userData;
         userData = ByteBuffer.allocate(5).putInt(GameModel.getInstance().getOtherPlayer().getScore()).array();

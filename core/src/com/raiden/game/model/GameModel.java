@@ -73,7 +73,9 @@ public class GameModel implements Serializable {
                 || !Arena.getInstance().getConfigCore().isMultiplayer())
             myShip.setCanShoot(true);
         player.setShip(myShip);
-        entityModels.add(player.getShip());
+        synchronized(entityModels) {
+            entityModels.add(player.getShip());
+        }
         this.players.add(player);
     }
 
@@ -121,7 +123,9 @@ public class GameModel implements Serializable {
         bullet.setPosition(
                 ship.getX() + (float) Math.sin(ship.getRotation()) * 2f,
                 ship.getY() + (float) Math.cos(ship.getRotation()) * 2f);
-        entityModels.add(bullet);
+        synchronized(entityModels) {
+            entityModels.add(bullet);
+        }
         return bullet;
     }
 
@@ -139,7 +143,9 @@ public class GameModel implements Serializable {
      */
     public void addEnemy(MovingObjectModel newEnemy){
         newEnemy.setRotation((float) Math.PI);
-        entityModels.add(newEnemy);
+        synchronized(entityModels) {
+            entityModels.add(newEnemy);
+        }
     }
 
     /**
@@ -162,7 +168,9 @@ public class GameModel implements Serializable {
             if(getOtherPlayer() != null && getOtherPlayer().getShip() == model) {
                 getOtherPlayer().setStillPlaying(false);
             }
-            entityModels.remove(model);
+            synchronized(entityModels) {
+                entityModels.remove(model);
+            }
             if(model instanceof BulletModel){
                 PoolManager.getInstance().free(model);
             }else {
@@ -179,7 +187,9 @@ public class GameModel implements Serializable {
     public void deleteEntitiesModel(ArrayList<EntityModel> models){
         for(EntityModel model : models) {
             if (model != null)
-                entityModels.remove(model);
+                synchronized(entityModels) {
+                    entityModels.remove(model);
+                }
         }
     }
 
@@ -208,17 +218,20 @@ public class GameModel implements Serializable {
                 GameModel.getInstance().deleteEntityModel(GameModel.getInstance().getMyPlayer().getShip());
             }
         }
-        for (int i = 0; i < entityModels.size(); i++) {
-            if(getMyPlayer().getShip() != entityModels.get(i)) {
-                entityModels.remove(i);
-                i--;
+        synchronized(entityModels) {
+            for (int i = 0; i < entityModels.size(); i++) {
+                if (getMyPlayer().getShip() != entityModels.get(i)) {
+                    entityModels.remove(i);
+                    i--;
+                }
             }
         }
         for (int i = 0; i < modelsReceived.size(); i++) {
             EntityModel model = PoolManager.getInstance().obtain(modelsReceived.get(i).type, modelsReceived.get(i).x, modelsReceived.get(i).y);
             model.setRotation(modelsReceived.get(i).angle);
-            entityModels.add(model);
+            synchronized(entityModels) {
+                entityModels.add(model);
+            }
         }
     }
-
 }
