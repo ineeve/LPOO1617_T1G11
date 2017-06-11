@@ -15,7 +15,7 @@ To start playing just open the game after installing.
 ## Design Patterns
   * MVP
   * Object Pool
-  * Abstarct Factory
+  * Abstract Factory
   * Singleton
   * Strategy
 
