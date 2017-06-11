@@ -16,8 +16,14 @@ We, for our class will recreate this game but will be more minimalist and multip
 ## UML Diagram
 ![Alt text](/Info/LPOO-ClassDiagram.png?raw=true "Class Diagram")
 
-![Alt text](/Info/DesignPatternsUsed.png?raw=true "Design Patterns Explained")
-
+## Design Patterns
+  * MVP
+  * Object Pool
+  * Abstarct Factory
+  * Singleton
+  * Strategy
+  
+## Some Imagens
 ![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_1.png?raw=true)
 ![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_2.png?raw=true)
 ![Alt text](/Info/MOCKUPS/Mockups_Renders/MockUps_3.png?raw=true)
